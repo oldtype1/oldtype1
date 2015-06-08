@@ -1,4 +1,4 @@
-package org.kosta.dashduo;
+package org.kosta.dashduo.controller;
 
 import java.text.DateFormat;
 import java.util.Date;
