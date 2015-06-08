@@ -1,0 +1,79 @@
+Valid Annotation을 이용한 Validation 체크
+why? - 클라이언트 전송 데이터를 바인딩하는 
+          객체의 유효성 검증을 위해 컨트롤러 단위(서버)에서 체크한다. 
+          브라우저에서 자바스크립트가 동작하지 않도록 만들 수 있고, 
+          폼을 조작해 오류가 있는 정보를 강제로 서버로 보낼 수 있기 때문. 
+          
+참고)MVC에서의 컨트롤러 역할 
+	 모든 클라이언트의 요청 진입점( Front Controller pattern ) 
+      클라이언트의 데이터 유효성 검증 (validation) 
+   	  클라이언트 요청 분석
+   	  요청에 따른 모델 연동 
+   	  연동결과를 View에 공유
+   	  적절한 view를 선택해 이동( jsp or ajax(json) or tiles or file down load) 
+          
+**필요라이브러리** 
+http://mvnrepository.com/
+
+	<dependency>
+			<groupId>javax.validation</groupId>
+			<artifactId>validation-api</artifactId>
+			<version>1.0.0.GA</version>
+		</dependency>
+
+		<dependency>
+			<groupId>org.hibernate</groupId>
+			<artifactId>hibernate-validator</artifactId>
+			<version>4.0.2.GA</version>
+		</dependency>
+
+*********************
+spring-config : servlet-context.xml 
+
+<bean id="messageSource" class="org.springframework.context.support.ReloadableResourceBundleMessageSource">
+<property name="basename" value="/WEB-INF/messages_ko"/>
+<property name="defaultEncoding" value="utf-8"></property>
+</bean>
+
+
+
+***********
+Spring Expression Language (SpEL)
+
+선언부 : <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>  
+
+***********
+
+ **Validation Annotation	 제약조건**
+@AssertFalse	 거짓인가?	 
+@Max	                   지정값이하인가?
+@AssertTrue	 참인가?	
+@Min	 	지정값이상인가?
+@DecimalMax	 지정값이하실수인가?	 
+@NotNull	 	Null이아닌가?
+@DecimalMin	 지정값이상실수인가?	 
+@Null	 	Null인가?
+@Digits(integer=, fraction=)	 대상수가지정된정수,소수자리수이내인가?	 @Pattern(regex=, flag=)	 정규식을만족하는가?
+@Future		 미래날짜인가?	
+@Size(min=, max=)   문자열, 배열등의크기가지정크기를만족하는가?
+@Past	 과거날짜인가?
+
+@NotEmpty	 Empty값이 아닌가?	 
+@Email	 Email 형식
+@URL	 URL 형식	 
+@Length(min=,max=)   문자열 길이 min과 max 사이인지
+@Range(min=,max=)   숫자범위 체크
+
+
+--------------------
+
+
+
+
+
+
+
+
+
+
+
