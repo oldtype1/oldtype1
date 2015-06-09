@@ -1,8 +1,6 @@
 <%@ page language="java" import="java.util.*" pageEncoding="UTF-8" isELIgnored="false"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <a href="index.jsp"><img src="smalllogo.gif" style="float: left;" height="45" width="45"></a>
-<!-- 헤더 -->
-<script src="http://code.jquery.com/jquery-1.11.3.js"></script>
 
 <div id='cssmenu' style="margin-right:40px; float: right ">
 <ul>
