@@ -5,6 +5,12 @@
 <html>
 <head>
 <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <script type="text/javascript" src="http://cdnjs.cloudflare.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+    <script type="text/javascript" src="http://netdna.bootstrapcdn.com/bootstrap/3.3.4/js/bootstrap.min.js"></script>
+    <link href="http://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.3.0/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+    <link href="http://pingendo.github.io/pingendo-bootstrap/themes/default/bootstrap.css"
+    rel="stylesheet" type="text/css">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <link rel="stylesheet" href="${initParam.root}css/styles.css">
@@ -17,8 +23,7 @@
 <link rel="stylesheet"
 	href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap-theme.min.css">
 <!-- 합쳐지고 최소화된 최신 자바스크립트 -->
-<script
-	src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/js/bootstrap.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/js/bootstrap.min.js"></script>
 
 <!-- 헤더에 마우스 오버시 효과주는 자바스크립트로 추정 -->
 <script src="http://code.jquery.com/jquery-latest.min.js" type="text/javascript"></script>
@@ -45,8 +50,40 @@
 <body>
 	<c:import url="template/header.jsp"></c:import>
 
-	<img id="img1" src="${initParam.root}img/house.jpg" style="position: relative; top: 80px; left: 330px;">
-
+	<%-- <img id="img1" src="${initParam.root}img/house.jpg" style="position: relative; top: 80px; left: 330px;"> --%>
+    <div id="carousel-example" data-interval="5000" class="carousel slide"
+    data-ride="carousel" style="position:relative; height: 500px; width:1350px;
+    margin-left: 0; margin-right: 0">
+      <div class="carousel-inner" >
+        <div class="item">
+          <img src="Koala.jpg">
+          <div class="carousel-caption">
+            <h2>Title</h2>
+            <p>Description</p>
+          </div>
+        </div>
+        <div class="hidden-xs item">
+          <img src="${initParam.root}img/house.jpg">
+          <div class="carousel-caption">
+            <h2>Title</h2>
+            <p>Description</p>
+          </div>
+        </div>
+        <div class="item active">
+          <img src="${initParam.root}img/house2.jpg">
+          <div class="carousel-caption">
+            <h2>Title</h2>
+            <p>Description</p>
+          </div>
+        </div>
+      </div>
+      <a class="left carousel-control" href="#carousel-example" data-slide="prev">
+      <i class="icon-prev  fa fa-angle-left"></i></a>
+      <a class="right carousel-control" href="#carousel-example" data-slide="next">
+      <i class="icon-next fa fa-angle-right"></i></a>
+    </div>
+    
+    
 	<div style="position: relative; top: 150px; left: 230px; opacity: 0.7">
 		<form class="navbar-form navbar-left" role="search">
 			<input type="text" class="form-control" placeholder="State"> <input
