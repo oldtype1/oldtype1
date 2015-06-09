@@ -1,6 +1,7 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ page session="false" %>
 <html>
+<script src="http://code.jquery.com/jquery-1.11.3.js"></script>
 <!-- 합쳐지고 최소화된 최신 CSS -->
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css">
 <!-- 부가적인 테마 -->
@@ -27,17 +28,17 @@
 				<!-- <li class="active"><a href="#">Link <span class="sr-only">(current)</span></a></li> -->
 				<li><a href="#">MyPage</a></li>
 				<li class="dropdown"><a href="#" class="dropdown-toggle"
-					data-toggle="dropdown" role="button" aria-expanded="false">Dropdown 안됨..
+					data-toggle="dropdown" role="button" aria-expanded="false">MyPageMenu??
 						<span class="caret"></span>
 				</a>
 					<ul class="dropdown-menu" role="menu">
-						<li><a href="#">Action</a></li>
-						<li><a href="#">Another action</a></li>
-						<li><a href="#">Something else here</a></li>
+						<li><a href="#">MyProfile</a></li>
+						<li><a href="#">MyReserve</a></li>
+						<li><a href="#">MyInn</a></li>
 						<li class="divider"></li>
-						<li><a href="#">Separated link</a></li>
+						<li><a href="#">etc..</a></li>
 						<li class="divider"></li>
-						<li><a href="#">One more separated link</a></li>
+						<li><a href="#">Logout</a></li>
 					</ul></li>
 			</ul>
 		</div>
