@@ -4,7 +4,13 @@
 
 
 <div id='cssmenu' style="margin-right:50px; float: right ; height: 50px; opacity=0.7">
-
+<script type="text/javascript">
+$(document).ready(function(){
+	$("#loginForm").submit(function(){
+	
+	}); //#loginForm
+});// ready
+</script>
 <ul>
  <c:if test="${sessionScope.mvo==null}">
    <li id="member_register"><a href='#'>회원가입</a></li>
@@ -42,7 +48,7 @@
         <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
         <h4 class="modal-title" id="exampleModalLabel">로그인</h4>
       </div>
-      <form action="">
+      <form action="login.do" id="loginForm" method="post">
       <div class="modal-body">
           <div class="form-group">
             <label for="recipient-name" class="control	-label" >아이디:</label>
@@ -50,7 +56,7 @@
           </div>
           <div class="form-group">
             <label for="message-text" class="control-label">비밀번호:</label>
-            <input type="text" class="form-control" id="memberPassword" name="memberPassword"  onfocus="this.value=''">
+            <input type="text" class="form-control" id="memberPass" name="memberPass"  onfocus="this.value=''">
           </div>
       </div>
       <div class="modal-footer">

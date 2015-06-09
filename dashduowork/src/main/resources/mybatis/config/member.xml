@@ -3,14 +3,25 @@
 PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="member">
+
+<resultMap type="mvo" id="memberResult">
+	<result property="memberId" column="member_id"/>
+	<result property="memberName" column="member_name"/>
+	<result property="memberTel" column="member_tel"/>
+	<result property="memberInfo" column="member_info"/>
+	<result property="memberPass" column="member_pass"/>
+</resultMap>
+
 	<sql id="selectMember">
-		select id,password,name,address from member
+		select member_id, member_name, member_tel, member_info, member_pass from member
 	</sql>
-	<select id="login" parameterType="mvo" resultType="mvo">
+	
+	<select id="login" parameterType="mvo" resultType="mvo" resultMap="memberResult">
 		<include refid="selectMember" />
-		where id=#{id} and password=#{password}
+		where member_id=#{memberId} and member_pass=#{memberPass}
 	</select>
-	<select id="getAddressKind" resultType="string">
+	
+	<!-- <select id="getAddressKind" resultType="string">
 		select distinct(address) from member
 	</select>
 	<select id="findByAddress" resultType="mvo">
@@ -31,15 +42,8 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	<update id="updateMember" parameterType="mvo">
 		update member set password=#{password},name=#{name},address=#{address}
 		where id=#{id}
-	</update>
+	</update> -->
 </mapper>
- 
- 
- 
- 
- 
- 
- 
  
  
  

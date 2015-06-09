@@ -31,7 +31,7 @@ public class MemberVO {
 		this.wishList = wishList;
 		this.book = book;
 		this.inn = inn;
-	}
+	}	
 
 	public String getMemberId() {
 		return memberId;

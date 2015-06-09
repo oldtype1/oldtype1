@@ -65,6 +65,9 @@ values('oldtype','방은수','011-1234-5678','데헷','oldtype')
 
 delete from member where member_id = 'oldtype';
 
+select member_id, member_name, member_tel, member_info, member_pass 
+from member where member_id='oldtype' and member_pass='oldtype'
+
 
 -----------------숙소테이블-----------------------
 create table inn(

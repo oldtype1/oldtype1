@@ -6,13 +6,13 @@ PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
 <!-- MyBatis  DataSource에 대한 설정 및  SQL 정의 xml 에 대한 매핑-->
 <configuration>	
 	<!-- 사용할 클래스에 대한 별칭을 명시한다.  -->
-<!-- 	<typeAliases>
-		<typeAlias type="org.kosta.dashduo.model.MemberVO" alias="mvo"/>		
-	</typeAliases>	 -->
-    <!-- sql mapping config xml 을 연결 -->
-<!-- 	<mappers>
+	<typeAliases>
+		<typeAlias type="org.kosta.dashduowork.model.vo.MemberVO" alias="mvo"/>		
+	</typeAliases>	
+<!--     sql mapping config xml 을 연결 -->
+	<mappers>
 		<mapper resource="mybatis/config/member.xml"/>		
-	</mappers> -->
+	</mappers>
 </configuration>
 
 
