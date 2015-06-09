@@ -2,7 +2,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <a href="index.jsp"><img src="smalllogo.gif" style="float: left;" height="45" width="45"></a>
 
-<div id='cssmenu' style="margin-right:40px; float: right "> 
+<div id='cssmenu' style="margin-right:40px; float: right ">
 <ul>
    <li><a href='#'>회원가입</a></li>
    <li data-toggle="modal" data-target="#exampleModal" data-whatever="@mdo"><a href='#'>로그인</a>
