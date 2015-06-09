@@ -1,11 +1,16 @@
 <%@ page language="java" import="java.util.*" pageEncoding="UTF-8" isELIgnored="false"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<a href="index.jsp"><img src="smalllogo.gif" style="float: left;" height="45" width="45"></a>
+<a href="home.do"><img src="smalllogo.gif" style="float: left;" height="45" width="45"></a>
 
-<div id='cssmenu' style="margin-right:40px; float: right ">
+
+<div id='cssmenu' style="margin-right:50px; float: right ; height: 50px; opacity=0.7">
+
 <ul>
-   <li><a href='#'>회원가입</a></li>
+ <c:if test="${sessionScope.mvo==null}">
+   <li id="member_register"><a href='#'>회원가입</a></li>
    <li data-toggle="modal" data-target="#exampleModal" data-whatever="@mdo"><a href='#'>로그인</a>
+  </c:if>
+   <c:if test="${sessionScope.mvo!=null}">
    <li><a href='#'>mypage</a>
       <ul>
          <li><a href='#'>내프로필</a>
@@ -23,8 +28,12 @@
    </li>
    <li><a href='#'>로그아웃</a></li>
    <li><a href='#'>숙소등록하기</a></li>
+   </c:if>
 </ul>
+
 </div>
+
+
 
 <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
   <div class="modal-dialog">
