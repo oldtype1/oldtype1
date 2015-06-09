@@ -1,6 +1,6 @@
 drop table member;
 drop table inn;
-drop table comment;
+drop table comments;
 drop table book;
 drop table wishlist;
 drop table profile_pic;
@@ -10,7 +10,7 @@ drop table amenity;
 
 select* from member
 select* from inn
-select* from comment
+select* from comments
 select* from book
 select* from wishlist
 select* from profile_pic
@@ -23,7 +23,7 @@ create table member(
 member_id varchar2(50) primary key,
 member_name varchar2(50) not null,
 member_tel number not null,
-member_info varchar2(50) not null,
+member_info varchar2(1000) not null,
 member_pass number not null
 )
 
@@ -37,16 +37,19 @@ inn_address varchar2(50) not null,
 inn_type varchar2(50) not null,
 inn_acceptable_no number not null,
 inn_price number not null,
-inn_info clob not null
---inn_availability CHAR(1) CHECK (id = "1" OR id = "2")  --몰라 구글 떴어--
+inn_info clob not null,
+inn_availability VARCHAR2(1)    
+                        CHECK (inn_availability IN ('Y', 'N'))
 )
+
+insert into INN(inn_no, inn_name, inn_city, inn_area, inn_address, inn_type, inn_acceptable_no, inn_price, inn_info,inn_availability) values(2, '판교역', '성남','판교','판교동','대저택',10000,0,'정말 넓고 쾌적해요','D')
 
 -----------------댓글테이블(member_id / inn_no ref) ----------------------
 create table comments(
 member_id varchar2(50) not null,
 inn_no number not null,
 comments_no number not null,
-comments_writer varchar2(50) not null,
+comments_writer varchar2(50) not null
 comments_date date not null,
 comments_content clob not null,
 comments_point number not null,
