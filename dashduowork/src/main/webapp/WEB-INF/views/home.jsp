@@ -50,7 +50,7 @@
 		style="position: relative; top: 80px; left: 330px;">
 
 <link rel="stylesheet" href="${initParam.root}css/styles.css">
-
+   
 <script src="http://code.jquery.com/jquery-1.11.3.js"></script>
 <!-- 합쳐지고 최소화된 최신 CSS -->
 <link rel="stylesheet"
