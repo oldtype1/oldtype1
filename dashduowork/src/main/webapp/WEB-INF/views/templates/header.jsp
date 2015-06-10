@@ -66,7 +66,7 @@ $(document).ready(function(){
           </div>
           <div class="form-group">
             <label for="message-text" class="control-label">비밀번호:</label>
-            <input type="text" class="form-control" id="memberPass" name="memberPass" placeholder="password"  onfocus="this.value=''">
+            <input type="password" class="form-control" id="memberPass" name="memberPass" placeholder="password"  onfocus="this.value=''">
           </div>
       </div>
       <div class="modal-footer">
