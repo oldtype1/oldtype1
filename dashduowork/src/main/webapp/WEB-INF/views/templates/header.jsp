@@ -26,6 +26,7 @@ $(document).ready(function(){
    <li data-toggle="modal" data-target="#exampleModal" data-whatever="@mdo"><a href='#'>로그인</a>
   </c:if>
    <c:if test="${sessionScope.mvo!=null}">
+   <li><a href='#'>${sessionScope.mvo.memberName}님</a></li>
    <li><a href='#'>MyPage</a>
       <ul>
          <li><a href='#'>내프로필</a>
