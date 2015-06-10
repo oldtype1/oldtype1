@@ -87,7 +87,7 @@ constraint fk_member_id foreign key(member_id) references member(member_id) on D
 
 insert into INN
 (inn_no, inn_name, inn_city, inn_area, inn_address, inn_type, inn_acceptable_no, 
-inn_price, inn_info,inn_availability,inn_id) 
+inn_price, inn_info,inn_availability,member_id) 
 values(inn_sequence.nextval,'판교역','성남','판교','판교동','집 전체',10000,0,'정말 넓고 쾌적해요','Y','oldtype')
 
 -----------------제공시설 테이블(inn_no ref) 오류-----------------------
