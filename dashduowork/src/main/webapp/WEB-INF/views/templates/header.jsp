@@ -7,17 +7,26 @@
 <script type="text/javascript">
 $(document).ready(function(){
 	$("#loginForm").submit(function(){
-	
+		//alert("val:"+$("#memberId").val());
+		if($("#memberId").val()==""){
+			alert("아이디를 입력하세요");
+			$("#memberId").focus();
+			return false;
+		}else if($("#memberPassword").val()==""){
+			alert("패스워드를 입력하세요");
+			$("#memberPassword").focus();
+			return false;
+		}
 	}); //#loginForm
 });// ready
 </script>
 <ul>
  <c:if test="${sessionScope.mvo==null}">
-   <li id="member_register"><a href='#'>회원가입</a></li>
+   <li id="member_register"><a href='member_register_form.do'>회원가입</a></li>
    <li data-toggle="modal" data-target="#exampleModal" data-whatever="@mdo"><a href='#'>로그인</a>
   </c:if>
    <c:if test="${sessionScope.mvo!=null}">
-   <li><a href='#'>mypage</a>
+   <li><a href='#'>MyPage</a>
       <ul>
          <li><a href='#'>내프로필</a>
 		<!-- 참고 세부 메뉴입니다. <ul>
@@ -32,7 +41,7 @@ $(document).ready(function(){
          <li><a href='#'>쪽지</a></li>        
       </ul>
    </li>
-   <li><a href='#'>로그아웃</a></li>
+   <li><a href='logout.do'>로그아웃</a></li>
    <li><a href='#'>숙소등록하기</a></li>
    </c:if>
 </ul>
@@ -52,11 +61,11 @@ $(document).ready(function(){
       <div class="modal-body">
           <div class="form-group">
             <label for="recipient-name" class="control	-label" >아이디:</label>
-            <input type="text" class="form-control" id="memberId"  name="memberId"  value="이메일" onfocus="this.value=''">
+            <input type="text" class="form-control" id="memberId"  name="memberId"  placeholder="e-mail" onfocus="this.value=''">
           </div>
           <div class="form-group">
             <label for="message-text" class="control-label">비밀번호:</label>
-            <input type="text" class="form-control" id="memberPass" name="memberPass"  onfocus="this.value=''">
+            <input type="text" class="form-control" id="memberPass" name="memberPass" placeholder="password"  onfocus="this.value=''">
           </div>
       </div>
       <div class="modal-footer">

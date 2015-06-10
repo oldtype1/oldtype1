@@ -27,4 +27,14 @@ public class MemberController {
 			return "home";
 		}		
 	}
+	
+	@RequestMapping("logout.do")
+	public String logoutMember(HttpServletRequest request){
+		HttpSession session=null;
+		session = request.getSession(false);
+		if(session!=null){
+			session.invalidate();
+		}
+		return "home";
+	}
 }
