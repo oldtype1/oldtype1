@@ -82,7 +82,7 @@ inn_price number not null,
 inn_info clob not null,
 inn_availability VARCHAR2(1) CHECK (inn_availability IN ('Y','N')),
 member_id varchar2(50) not null,
-constraint fk_member_id foreign key(inn_id) references member(member_id) on DELETE CASCADE
+constraint fk_member_id foreign key(member_id) references member(member_id) on DELETE CASCADE
 )
 
 insert into INN
