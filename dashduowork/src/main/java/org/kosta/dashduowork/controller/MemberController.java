@@ -115,4 +115,5 @@ public class MemberController {
 				
 			return new ModelAndView("home");
 		}
+
 }

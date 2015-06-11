@@ -9,5 +9,7 @@ public interface MemberService {
 	   public abstract MemberVO findMemberById(String memberId);
 	   public abstract void updateMemberInfo(MemberVO vo);
 	   public void memberSecession(String memberId);
-	   public void memberRegister(MemberVO mvo, ProfilePicVO pvo)
+	   public void memberRegister(MemberVO mvo, ProfilePicVO pvo);
+
+
 }

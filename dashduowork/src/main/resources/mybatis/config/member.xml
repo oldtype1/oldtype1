@@ -28,11 +28,17 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
    update member set member_name=#{memberName}, member_tel=#{memberTel}, member_info=#{memberInfo}, member_pass=#{memberPass} where member_id=#{memberId}
    </update>
    
-		<insert id="register" parameterType="mvo">
+	<insert id="register" parameterType="mvo">
 		insert into MEMBER
 		(member_id, member_name, member_tel, member_info, member_pass) 
 		values(#{memberId}, #{memberName}, #{memberTel}, #{memberInfo}, #{memberPass})
 	</insert>
+
+	
+	  <delete id="memberSecession" parameterType="String">
+   delete from member where member_id=#{value}
+   </delete>
+
 	
 	<!-- <select id="getAddressKind" resultType="string">
 		select distinct(address) from member

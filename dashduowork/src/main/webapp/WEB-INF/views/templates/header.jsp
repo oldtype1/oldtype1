@@ -3,7 +3,7 @@
 <a href="home.do"><img src="smalllogo.gif" style="float: left;" height="45" width="45"></a>
 
 
-<div id='cssmenu' style="margin-right:50px; float: right ; height: 50px; opacity=0.7">
+<div id='cssmenu' style="margin-right:50px; float: right ; height: 50px; opacity=0.7; z-index:2 ">
 <script type="text/javascript">
 $(document).ready(function(){
 	$("#loginForm").submit(function(){
@@ -29,13 +29,13 @@ $(document).ready(function(){
    <li><a href='#'>${sessionScope.mvo.memberName}님</a></li>
    <li><a href='#'>MyPage</a>
       <ul>
-         <li><a href='#'>내프로필</a>
+        <li><a href='member_myprofile.do?memberId=${sessionScope.mvo.memberId}'>내프로필</a>
 		<!-- 참고 세부 메뉴입니다. <ul>
                <li><a href='#'>Sub Product</a></li>
                <li><a href='#'>Sub Product</a></li>
             </ul> -->
          </li>
-         <li><a href='#'>등록숙소</a></li>
+         <li><a href='get_myinnlist.do'>등록숙소</a></li>
          <li><a href='#'>예약숙소</a></li>
          <li><a href='#'>거래내역</a></li>
          <li><a href='#'>위시리스트</a></li>

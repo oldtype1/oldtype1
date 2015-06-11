@@ -10,7 +10,7 @@ public interface MemberDAO {
 	   public abstract void updateMemberInfo(MemberVO vo);
 	   public void memberSecession(String memberId);
 		//6 .10 
-		
 		public abstract void insertMember(MemberVO vo);
 		public abstract void insertProfilePic(ProfilePicVO vo);
+
 }

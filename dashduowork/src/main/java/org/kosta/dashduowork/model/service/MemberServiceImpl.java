@@ -33,11 +33,12 @@ public class MemberServiceImpl implements MemberService {
 	   public void memberSecession(String memberId) {
 	      memberDAO.memberSecession(memberId);
 	   }
-		
+	
 	   @Override
 		public void memberRegister(MemberVO mvo, ProfilePicVO pvo) {
 			memberDAO.insertMember(mvo);
 			memberDAO.insertProfilePic(pvo);
 			
 		}
+
 }
