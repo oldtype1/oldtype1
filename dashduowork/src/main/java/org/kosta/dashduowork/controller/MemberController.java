@@ -72,7 +72,7 @@ public class MemberController {
 	      model.addAttribute("memberInfo", updateVO);
 	      HttpSession session=request.getSession();
 	      session.setAttribute("mvo", updateVO);
-	      return "member_myprofile_update_result";
+	      return "member_myprofile";
 	   }
 	
 	   @RequestMapping("memberSecession.do")
