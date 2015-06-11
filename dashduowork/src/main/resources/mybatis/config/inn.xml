@@ -23,10 +23,24 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		inn_price,inn_info,inn_availability,member_id from inn
 	</sql>
 	
-	<select id="getmyinnlist" parameterType="String" resultType="ivo" resultMap="innResult">
-		<include refid="innlist" />
-		where member_id=#{value}
+	<select id="getmyinnlist" parameterType="hashmap" resultType="ivo" resultMap="innResult">
+select inn_no,inn_name,inn_city,inn_area,inn_address,inn_type,inn_acceptable_no,
+		inn_price,inn_info,inn_availability,member_id from	
+		(
+ select  inn_no,inn_name,inn_city,inn_area,inn_address,inn_type,inn_acceptable_no,
+		inn_price,inn_info,inn_availability,member_id,ceil(rownum/5) as page
+ from
+ (
+  select  inn_no,inn_name,inn_city,inn_area,inn_address,inn_type,inn_acceptable_no,
+		inn_price,inn_info,inn_availability,member_id from inn where member_id=#{member_id}
+		order by inn_no desc	
+ )
+ )   where page=#{pageNo} 
 	</select>
+	
+	 <select id="getTotalPostingCount" resultType="int" parameterType="String">
+ 	select count(*) from inn where member_id=#{value}
+ 	</select>
 	
 	<!-- <select id="getAddressKind" resultType="string">
 		select distinct(address) from member

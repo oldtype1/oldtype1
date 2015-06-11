@@ -1,5 +1,6 @@
 package org.kosta.dashduowork.model.dao;
 
+import java.util.HashMap;
 import java.util.List;
 
 import javax.annotation.Resource;
@@ -13,11 +14,15 @@ import org.springframework.stereotype.Repository;
 public class InnDAOImpl implements InnDAO {
 	@Resource(name="sqlSessionTemplate")
 	private SqlSessionTemplate sqlSessionTemplate;	
-	
+
 	@Override
-	public List<InnVO> getmyinnlist(MemberVO vo) {
-		// TODO Auto-generated method stub
-		return sqlSessionTemplate.selectList("inn.getmyinnlist",vo.getMemberId());
+	public int getTotalPostingCount(MemberVO vo) {
+		return sqlSessionTemplate.selectOne("inn.getTotalPostingCount",vo.getMemberId());
+	}
+
+	@Override
+	public List<InnVO> getmyinnlist(HashMap<String, String> param) {
+		return sqlSessionTemplate.selectList("inn.getmyinnlist",param);
 	}
 	
 }
