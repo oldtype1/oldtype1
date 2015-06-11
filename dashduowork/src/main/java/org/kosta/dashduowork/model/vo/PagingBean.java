@@ -170,6 +170,14 @@ public class PagingBean {
 		}		
 		return flag;
 	}
+	
+	
+	public int getTotalContents() {
+		return totalContents;
+	}
+	public void setTotalContents(int totalContents) {
+		this.totalContents = totalContents;
+	}
 	public static void main(String args[]){         
 		  PagingBean p=new PagingBean(47,1);
 		  // 전체 페이지 수 : 10
