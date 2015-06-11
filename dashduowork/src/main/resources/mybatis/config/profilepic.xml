@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="profilePic">
+
+<resultMap type="mvo" id="memberResult">
+	<result property="memberId" column="member_id"/>
+	<result property="filePath" column="file_path"/>
+</resultMap>
+
+<insert id="insertProfilePic" parameterType="pvo">
+		insert into profile_pic
+		(member_id, file_path)
+		values(#{memberId}, #{filePath})
+</insert>
+	
+	
+</mapper>
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
