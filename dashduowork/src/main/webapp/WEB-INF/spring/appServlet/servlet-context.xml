@@ -46,7 +46,7 @@
 	<!-- upload path -->
 	<bean id="uploadPath" class="java.lang.String">
 		<constructor-arg>
-			<value>C:\\java-kosta\\oldtype-workspace\\dashduo-work\\src\\main\\webapp\\upload\\</value>
+			<value>C:\\java-kosta\\oldtype-workspace\\dashduowork\\src\\main\\webapp\\upload\\</value>
 		</constructor-arg>
 	</bean>
 	<bean id="beanNameViewResolver"

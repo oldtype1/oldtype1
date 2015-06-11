@@ -9,7 +9,6 @@ public class AmenityVO {
 	private String amenityBBQ;
 	public AmenityVO() {
 		super();
-		// TODO Auto-generated constructor stub
 	}
 	public AmenityVO(int innNo, String amenityWiFi, String amenityBed,
 			String amenityTV, String amenityKitchen, String amenityBBQ) {

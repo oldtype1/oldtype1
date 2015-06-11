@@ -83,6 +83,13 @@ public class MemberController {
 	      return "home";
 	   }
 	// 6/10 
+	   /*
+	    *  TODO 회원가입
+	    *   1. Redirect 적용
+	    *   2. 밸리데이션 적용
+	    *   3. 트랜잭션 적용(mvo 와 pvo insert시, 문제 생기면 callback 시켜야함)
+	    *   4. 각 상황 값에 맞는 필터 적용(공란 적용시, 아이디 중복, 패스워드 확인 등등)
+	    */
 		@RequestMapping(value="register.do",method=RequestMethod.POST)
 		public ModelAndView registerMember(ProfilePicVO pvo, MemberVO mvo){
 			
@@ -104,8 +111,8 @@ public class MemberController {
 				if(!fileName.equals("")){
 					try {
 						pvo.setFilePath(path+mvo.getMemberId()+fileName);
-						file.transferTo(new File(path+fileName));
-						System.out.println("fileupload ok:"+fileName);
+						file.transferTo(new File(path+pvo.getFilePath()));
+						System.out.println("fileupload ok:"+pvo.getFilePath());
 					} catch (Exception e) {					
 						e.printStackTrace();
 					}
@@ -113,7 +120,7 @@ public class MemberController {
 				
 			memberService.memberRegister(mvo, pvo);
 				
-			return new ModelAndView("home");
+			return new ModelAndView("redirect:home");
 		}
 
 }
