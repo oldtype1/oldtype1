@@ -8,10 +8,13 @@ PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
 	<!-- 사용할 클래스에 대한 별칭을 명시한다.  -->
 	<typeAliases>
 		<typeAlias type="org.kosta.dashduowork.model.vo.MemberVO" alias="mvo"/>		
+		<typeAlias type="org.kosta.dashduowork.model.vo.InnVO" alias="ivo"/>	
 	</typeAliases>	
 <!--     sql mapping config xml 을 연결 -->
 	<mappers>
 		<mapper resource="mybatis/config/member.xml"/>		
+		<mapper resource="mybatis/config/profilepic.xml"/>
+		<mapper resource="mybatis/config/inn.xml"/>			
 	</mappers>
 </configuration>
 
