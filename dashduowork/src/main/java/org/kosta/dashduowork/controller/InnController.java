@@ -29,8 +29,6 @@ public class InnController {
 		session = request.getSession(false);
 		MemberVO vo= (MemberVO)session.getAttribute("mvo");		
 		InnListVO lvo = innService.getmyinnlist(vo,pageNo);
-
-		System.out.println("내 등록숙소 list"+lvo);		
 		return new ModelAndView("member_inn_list","lvo",lvo);
 	
 	}
