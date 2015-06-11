@@ -16,6 +16,14 @@ public class MemberDAOImpl implements MemberDAO {
 	@Override
 	public MemberVO login(MemberVO vo){
 		return (MemberVO) sqlSessionTemplate.selectOne("member.login",vo);			
-	}	
+	}
+	
+	 public MemberVO findMemberById(String memberId) {
+	      return  (MemberVO) sqlSessionTemplate.selectOne("member.findMemberById",memberId);
+	   }
+	   @Override
+	   public void updateMemberInfo(MemberVO vo) {
+	      sqlSessionTemplate.update("member.updateMemberInfo", vo);
+	   }   
 	
 }

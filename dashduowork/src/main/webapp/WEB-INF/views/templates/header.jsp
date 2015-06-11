@@ -29,7 +29,7 @@ $(document).ready(function(){
    <li><a href='#'>${sessionScope.mvo.memberName}님</a></li>
    <li><a href='#'>MyPage</a>
       <ul>
-         <li><a href='#'>내프로필</a>
+        <li><a href='member_myprofile.do?memberId=${sessionScope.mvo.memberId}'>내프로필</a>
 		<!-- 참고 세부 메뉴입니다. <ul>
                <li><a href='#'>Sub Product</a></li>
                <li><a href='#'>Sub Product</a></li>
