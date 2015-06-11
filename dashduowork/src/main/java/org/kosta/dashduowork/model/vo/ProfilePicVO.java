@@ -1,63 +1,64 @@
 package org.kosta.dashduowork.model.vo;
 
-public class ProfilePicVO {
-	private int profilePicNo;
-	private String profilePicFilepath;
-	private String profilePicOgName;
-	private String profilePicCurrName;
 
+
+import org.springframework.web.multipart.MultipartFile;
+
+public class ProfilePicVO {
+	private String memberId;
+	private MultipartFile file;
+	private String filePath;
+	
+	
 	public ProfilePicVO() {
 		super();
 		// TODO Auto-generated constructor stub
 	}
 
-	public ProfilePicVO(int profilePicNo, String profilePicFilepath,
-			String profilePicOgName, String profilePicCurrName) {
+
+	public ProfilePicVO(String memberId, MultipartFile file, String filePath) {
 		super();
-		this.profilePicNo = profilePicNo;
-		this.profilePicFilepath = profilePicFilepath;
-		this.profilePicOgName = profilePicOgName;
-		this.profilePicCurrName = profilePicCurrName;
+		this.memberId = memberId;
+		this.file = file;
+		this.filePath = filePath;
 	}
 
-	public int getProfilePicNo() {
-		return profilePicNo;
+
+	public String getMemberId() {
+		return memberId;
 	}
 
-	public void setProfilePicNo(int profilePicNo) {
-		this.profilePicNo = profilePicNo;
+
+	public void setMemberId(String memberId) {
+		this.memberId = memberId;
 	}
 
-	public String getProfilePicFilepath() {
-		return profilePicFilepath;
+
+	public MultipartFile getFile() {
+		return file;
 	}
 
-	public void setProfilePicFilepath(String profilePicFilepath) {
-		this.profilePicFilepath = profilePicFilepath;
+
+	public void setFile(MultipartFile file) {
+		this.file = file;
 	}
 
-	public String getProfilePicOgName() {
-		return profilePicOgName;
+
+	public String getFilePath() {
+		return filePath;
 	}
 
-	public void setProfilePicOgName(String profilePicOgName) {
-		this.profilePicOgName = profilePicOgName;
+
+	public void setFilePath(String filePath) {
+		this.filePath = filePath;
 	}
 
-	public String getProfilePicCurrName() {
-		return profilePicCurrName;
-	}
-
-	public void setProfilePicCurrName(String profilePicCurrName) {
-		this.profilePicCurrName = profilePicCurrName;
-	}
 
 	@Override
 	public String toString() {
-		return "ProfilePicVO [profilePicNo=" + profilePicNo
-				+ ", profilePicFilepath=" + profilePicFilepath
-				+ ", profilePicOgName=" + profilePicOgName
-				+ ", profilePicCurrName=" + profilePicCurrName + "]";
+		return "ProfilePicVO [memberId=" + memberId + ", file=" + file
+				+ ", filePath=" + filePath + "]";
 	}
 
+	
 }

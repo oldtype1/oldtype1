@@ -21,6 +21,19 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		where member_id=#{memberId} and member_pass=#{memberPass}
 	</select>
 	
+	  <select id="findMemberById" resultType="mvo" parameterType="String" resultMap="memberResult">
+      <include refid="selectMember" /> where member_id=#{value}
+   </select> 
+   <update id="updateMemberInfo" parameterType="mvo">
+   update member set member_name=#{memberName}, member_tel=#{memberTel}, member_info=#{memberInfo}, member_pass=#{memberPass} where member_id=#{memberId}
+   </update>
+   
+		<insert id="register" parameterType="mvo">
+		insert into MEMBER
+		(member_id, member_name, member_tel, member_info, member_pass) 
+		values(#{memberId}, #{memberName}, #{memberTel}, #{memberInfo}, #{memberPass})
+	</insert>
+	
 	<!-- <select id="getAddressKind" resultType="string">
 		select distinct(address) from member
 	</select>

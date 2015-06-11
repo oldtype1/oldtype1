@@ -147,7 +147,7 @@ constraint fk_inn2 foreign key(inn_no) references inn(inn_no) on DELETE CASCADE
 -----------------프로필테이블(member_id ref)-----------------------
 create table profile_pic(
 member_id varchar2(50) primary key,
-profile_pic_name varchar2(50) not null,
+file_path varchar2(200) not null,
 constraint fk_member3 foreign key(member_id) references member(member_id) on DELETE CASCADE 
 )
 

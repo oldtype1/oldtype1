@@ -13,7 +13,7 @@
 		class="org.springframework.web.servlet.view.InternalResourceViewResolver">
 		<property name="prefix" value="/WEB-INF/views/" />
 		<property name="suffix" value=".jsp" />
- 		<property name="order" value="1"></property>
+ 		<property name="order" value="2"></property>
 	</bean>
 	<!-- Tile Framework 연동 설정 -->
  	<bean id="tilesConfig"
@@ -36,24 +36,23 @@
 		class="org.springframework.context.support.ReloadableResourceBundleMessageSource">
 		<property name="basename" value="classpath:messages_ko" />
 		<property name="defaultEncoding" value="utf-8"></property>
-	</bean>
+	</bean> -->
 	<bean id="multipartResolver"
 		class="org.springframework.web.multipart.commons.CommonsMultipartResolver">
 		<property name="defaultEncoding" value="utf-8"></property>
-		-1은 제한 없음 5*1024*1024
+		<!-- -1은 제한 없음 5*1024*1024 -->
 		<property name="maxUploadSize" value="-1"></property>
-	</bean> -->
+	</bean>
 	<!-- upload path -->
-	<!-- <bean id="uploadPath" class="java.lang.String">
+	<bean id="uploadPath" class="java.lang.String">
 		<constructor-arg>
-			<value>C:\\java-kosta\\spring-workspace2\\springmvc28-fileupload-inst\\src\\main\\webapp\\upload\\
-			</value>
+			<value>C:\\java-kosta\\oldtype-workspace\\dashduo-work\\src\\main\\webapp\\upload\\</value>
 		</constructor-arg>
-	</bean> -->
-<!-- 	<bean id="beanNameViewResolver"
+	</bean>
+	<bean id="beanNameViewResolver"
 		class="org.springframework.web.servlet.view.BeanNameViewResolver">
 		<property name="order" value="1"></property>
-	</bean> -->
+	</bean>
 	<!-- 파일다운로드를 위한 view를 설정 -->
-<!-- 	<bean name="downloadView" class="org.kosta.dashduo.controller.DownloadView"></bean> -->
+	<!-- <bean name="downloadView" class="org.kosta.dashduo.controller.DownloadView"></bean> -->
 </beans>

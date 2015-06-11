@@ -7,22 +7,22 @@
   <div class="container">
     <div class="row">
       <div class="col-md-12">
-        <form class="form-horizontal" role="form">
+        <form class="form-horizontal" role="form" action="register.do" enctype="multipart/form-data" method="post">
           <div class="form-group">
           <h1 align="center">회원가입</h1>
             <div class="col-sm-2">
               <label class="control-label">프로필 사진</label>
             </div>
             <div class="col-sm-8">
-              <input type="file" class="form-control">
+              <input type="file" class="form-control" name="file">
             </div>
           </div>
           <div class="form-group">
             <div class="col-sm-2">
-              <label for="inputEmail3" class="control-label">Email</label>
+              <label for="inputEmail3" class="control-label">id</label>
             </div>
             <div class="col-sm-8">
-              <input type="email" class="form-control" id="inputEmail3" placeholder="Email">
+              <input type="email" class="form-control" id="inputEmail3" placeholder="Email" name="memberId">
             </div>
           </div>
           <div class="form-group">
@@ -30,7 +30,7 @@
               <label for="inputPassword3" class="control-label">password</label>
             </div>
             <div class="col-sm-8">
-              <input type="password" class="form-control" id="inputPassword3" placeholder="Password">
+              <input type="password" class="form-control" id="inputPassword3" placeholder="Password" name="memberPass">
             </div>
           </div>
           <div class="form-group">
@@ -46,7 +46,7 @@
               <label for="inputName3" class="control-label">name</label>
             </div>
             <div class="col-sm-8">
-              <input type="text" class="form-control" id="inputName3" placeholder="name">
+              <input type="text" class="form-control" id="inputName3" placeholder="name" name="memberName">
             </div>
           </div>
           <div class="form-group">
@@ -54,7 +54,7 @@
               <label for="inputPhone3" class="control-label">phone</label>
             </div>
             <div class="col-sm-8">
-              <input type="text" class="form-control" id="inputPhone3" placeholder="phone">
+              <input type="text" class="form-control" id="inputPhone3" placeholder="phone" name="memberTel">
             </div>
           </div>
           <div class="form-group">
@@ -63,7 +63,7 @@
             </div>
             <div class="col-sm-8">
               <!--<input type="password" class="form-control" id="inputPassword3" placeholder="자기소개">-->
-              <textarea rows="4" cols="50" class="form-control"></textarea>
+              <textarea rows="4" cols="50" class="form-control" name="memberInfo"></textarea>
             </div>
           </div>
           <div class="form-group">

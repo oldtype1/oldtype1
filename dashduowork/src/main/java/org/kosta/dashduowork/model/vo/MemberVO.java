@@ -8,7 +8,7 @@ public class MemberVO {
 	private String memberName;
 	private String memberTel;
 	private String memberInfo;
-	private List<ProfilePicVO> profilePic;
+	private ProfilePicVO profilePicVO;
 	private List<WishListVO> wishList;
 	private List<BookVO> book;
 	private List<InnVO> inn;
@@ -19,7 +19,7 @@ public class MemberVO {
 	}
 
 	public MemberVO(String memberId, String memberPass, String memberName,
-			String memberTel, String memberInfo, List<ProfilePicVO> profilePic,
+			String memberTel, String memberInfo, ProfilePicVO profilePicVO,
 			List<WishListVO> wishList, List<BookVO> book, List<InnVO> inn) {
 		super();
 		this.memberId = memberId;
@@ -27,11 +27,11 @@ public class MemberVO {
 		this.memberName = memberName;
 		this.memberTel = memberTel;
 		this.memberInfo = memberInfo;
-		this.profilePic = profilePic;
+		this.profilePicVO = profilePicVO;
 		this.wishList = wishList;
 		this.book = book;
 		this.inn = inn;
-	}	
+	}
 
 	public String getMemberId() {
 		return memberId;
@@ -73,12 +73,12 @@ public class MemberVO {
 		this.memberInfo = memberInfo;
 	}
 
-	public List<ProfilePicVO> getProfilePic() {
-		return profilePic;
+	public ProfilePicVO getProfilePicVO() {
+		return profilePicVO;
 	}
 
-	public void setProfilePic(List<ProfilePicVO> profilePic) {
-		this.profilePic = profilePic;
+	public void setProfilePicVO(ProfilePicVO profilePicVO) {
+		this.profilePicVO = profilePicVO;
 	}
 
 	public List<WishListVO> getWishList() {
@@ -109,8 +109,9 @@ public class MemberVO {
 	public String toString() {
 		return "MemberVO [memberId=" + memberId + ", memberPass=" + memberPass
 				+ ", memberName=" + memberName + ", memberTel=" + memberTel
-				+ ", memberInfo=" + memberInfo + ", profilePic=" + profilePic
-				+ ", wishList=" + wishList + ", book=" + book + "]";
+				+ ", memberInfo=" + memberInfo + ", profilePicVO="
+				+ profilePicVO + ", wishList=" + wishList + ", book=" + book
+				+ ", inn=" + inn + "]";
 	}
 
 }
