@@ -1,22 +1,13 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
  <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
-<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
-<html>
-  
-  <head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
     <script type="text/javascript" src="http://cdnjs.cloudflare.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
     <script type="text/javascript" src="http://netdna.bootstrapcdn.com/bootstrap/3.3.4/js/bootstrap.min.js"></script>
     <link href="http://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.3.0/css/font-awesome.min.css"
     rel="stylesheet" type="text/css">
     <link href="http://pingendo.github.io/pingendo-bootstrap/themes/default/bootstrap.css"
     rel="stylesheet" type="text/css">
-  </head>
-  
-  <body>
-
+ 
         <div class="container">
           <div class="row text-center">
             <div class="col-md-12 text-center">
@@ -53,7 +44,7 @@
               </center>
             </div>
             <div class="col-md-5">
-              <h2>회원님 등록한 숙소 - * 개</h2>
+              <h2>${sessionScope.mvo.memberName}님 등록한 숙소 ${requestScope.lvo.pagingBean.totalContents}개</h2>
             </div>
           </div>
         </div>
@@ -68,7 +59,7 @@
                 <c:forEach var="ivo" items="${requestScope.lvo.list}">
                   <tr>
                     <td class="col-md-1 text-center" draggable="true">
-                      <h4>숙소번호</h4>
+                      <h4>${ivo.innNo}</h4>
                     </td>
                     <td class="col-md-1">
                       <a class="pull-left" href="#"><img class="media-object" src="http://pingendo.github.io/pingendo-bootstrap/assets/placeholder.png" height="150" width="150">
@@ -130,9 +121,6 @@
           </div>
         </div>
       </div>
-  </body>
-
-</html>
 
 
 
