@@ -28,6 +28,10 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
    update member set member_name=#{memberName}, member_tel=#{memberTel}, member_info=#{memberInfo}, member_pass=#{memberPass} where member_id=#{memberId}
    </update>
 	
+	  <delete id="memberSecession" parameterType="String">
+   delete from member where member_id=#{value}
+   </delete>
+	
 	<!-- <select id="getAddressKind" resultType="string">
 		select distinct(address) from member
 	</select>

@@ -25,5 +25,9 @@ public class MemberDAOImpl implements MemberDAO {
 	   public void updateMemberInfo(MemberVO vo) {
 	      sqlSessionTemplate.update("member.updateMemberInfo", vo);
 	   }   
+	   @Override
+	   public void memberSecession(String memberId) {
+	   sqlSessionTemplate.delete("member.memberSecession", memberId);
+	   }   
 	
 }

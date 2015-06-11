@@ -1,8 +1,14 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
  pageEncoding="UTF-8"%>
-<!--  <script>
- $(document).ready(function(){})
- </script> -->
+ 
+ <script>
+ $(document).ready(function(){
+    $("#memberSecession").click(function(){
+       location.href="memberSecession.do?memberId=${requestScope.memberInfo.memberId}";
+    });
+    
+ });
+ </script>
 <div style="position: relative; top: 100px; left: 150px; opacity: 0.7">
      <div class="section">
          <div class="container">
@@ -38,7 +44,7 @@
                          </div>
                          <input type="hidden" name="memberId" id="memberId" value="${requestScope.memberInfo.memberId}">
                     <button type="submit" class="btn btn-default">수정하러 가기</button>
-                    <button type="button" class="btn btn-default">회원 탈퇴</button>
+               <button type="button" id="memberSecession" class="btn btn-default">회원 탈퇴</button>
                      </form>            
                  </div>                   
              </div>

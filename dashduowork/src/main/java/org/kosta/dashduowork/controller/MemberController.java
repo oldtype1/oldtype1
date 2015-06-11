@@ -69,6 +69,12 @@ public class MemberController {
 	      return "member_myprofile_update_result";
 	   }
 	
-	
+	   @RequestMapping("memberSecession.do")
+	   public String memberSecession(String memberId, HttpServletRequest request){
+	      HttpSession session=request.getSession();
+	      memberService.memberSecession(memberId);
+	      session.invalidate();
+	      return "home";
+	   }
 	
 }

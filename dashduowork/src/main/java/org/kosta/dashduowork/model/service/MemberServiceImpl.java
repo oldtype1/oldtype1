@@ -28,6 +28,9 @@ public class MemberServiceImpl implements MemberService {
 	   memberDAO.updateMemberInfo(vo);
 	   }
 	
-	
+	   @Override
+	   public void memberSecession(String memberId) {
+	      memberDAO.memberSecession(memberId);
+	   }
 	
 }
