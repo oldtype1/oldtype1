@@ -31,13 +31,14 @@
 <div style="position: relative; top: 100px; left: 150px; opacity: 0.7">
      <div class="section">
          <div class="container">
+         <form role="form" action="member_updateInfo.do">
              <div class="col-md-4">
                <img src="${requestScope.memberInfo.profilePicVO.filePath}"
-                class="img-circle img-responsive" width="200" height="200">
+                class="img-circle img-responsive" width="200" height="200" style="margin-bottom: 25px">
+                <input type="file" class="form-control" name="file">
              </div>  
              <div class="row">
-                 <div class="col-md-4">
-                     <form role="form" action="member_updateInfo.do">
+                 <div class="col-md-4">                    
                          <div class="form-group">
                              <label class="control-label" for="exampleInputEmail1">Name</label>
                              <input class="form-control" id="exampleInputEmail1"  placeholder="${requestScope.memberInfo.memberName}"
@@ -63,12 +64,10 @@
                              <textarea rows="4" cols="70" class="form-control"placeholder="${requestScope.memberInfo.memberInfo}" name="memberInfo" >${requestScope.memberInfo.memberInfo}</textarea>
                          </div>
           
-                       <br><button type="submit" class="btn btn-default">수정하기page</button>
-                     </form>
-                    
-                 </div>
-                    
+                       <br><button type="submit" class="btn btn-default">수정하기page</button>                                     
+                 </div>                   
              </div>
+             </form>
          </div>
      </div>
    </div>

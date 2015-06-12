@@ -86,13 +86,12 @@ public class MemberController {
          HttpServletRequest request) {
       System.out.println(membervo + "member_updateInfo.do 페이지 들어옴!!!!!!");
       memberService.updateMemberInfo(membervo);
-      MemberVO updateVO = memberService
-            .findMemberById(membervo.getMemberId());
-      model.addAttribute("memberInfo", updateVO);
+      MemberVO updateVO = memberService.findMemberById(membervo.getMemberId());
       HttpSession session = request.getSession();
       session.setAttribute("mvo", updateVO);
-      return "member_myprofile";
+      return "redirect:member_myprofile.do?memberId="+membervo.getMemberId();
    }
+
 
    @RequestMapping("memberPasswordcheck.do")
    public String memberPasswordcheck(String memberPass, String memberId, Model model){
