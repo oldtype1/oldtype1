@@ -6,6 +6,7 @@ import java.util.List;
 import javax.annotation.Resource;
 
 import org.kosta.dashduowork.model.dao.InnDAO;
+import org.kosta.dashduowork.model.vo.AmenityVO;
 import org.kosta.dashduowork.model.vo.InnListVO;
 import org.kosta.dashduowork.model.vo.InnVO;
 import org.kosta.dashduowork.model.vo.MemberVO;
@@ -33,6 +34,14 @@ public class InnServiceImpl implements InnService {
 		PagingBean pagingBean=new PagingBean(total,pn);
 		
 		return new InnListVO(list,pagingBean);
+	}
+	
+	@Override //은식, 동원
+	public List<InnVO> findInnByCheckedAmenity(AmenityVO vo) {
+		System.out.println("Service의 findInnByCheckedAmenity");
+		List<InnVO> list =  innDAO.selectInnByCheckedAmenity(vo);
+		System.out.println(list);
+		return list;
 	}
 
 }

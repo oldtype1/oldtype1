@@ -8,10 +8,12 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import org.kosta.dashduowork.model.service.InnService;
+import org.kosta.dashduowork.model.vo.AmenityVO;
 import org.kosta.dashduowork.model.vo.InnListVO;
 import org.kosta.dashduowork.model.vo.InnVO;
 import org.kosta.dashduowork.model.vo.MemberVO;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 
@@ -22,7 +24,6 @@ public class InnController {
 	private InnService innService;
 	
 	@RequestMapping(value="get_myinnlist.do")
-	
 	public ModelAndView getMyInnList(String pageNo,HttpServletRequest request){
 		
 		HttpSession session=null;
@@ -31,6 +32,15 @@ public class InnController {
 		InnListVO lvo = innService.getmyinnlist(vo,pageNo);
 		return new ModelAndView("member_inn_list","lvo",lvo);
 	
+	}
+	
+	@RequestMapping(value ="selectInnByCheckedAmenity.do") //은식,동원
+	public String selectInnByCheckedAmenity(AmenityVO vo, Model model) {
+//		System.out.println(vo);
+		List<InnVO> list =innService.findInnByCheckedAmenity(vo);
+//		System.out.println(list);
+		model.addAttribute("list", list);
+		return "inn_search_result";
 	}
 
 }

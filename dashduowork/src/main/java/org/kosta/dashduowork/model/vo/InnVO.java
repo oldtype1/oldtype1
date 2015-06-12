@@ -12,7 +12,7 @@ public class InnVO {
 	private String acceptableNo;
 	private int innPrice;
 	private String innInfo;
-	private String innavailability;
+	private String innAvailability;
 	private String memberId;
 /*	private List<AvailableDateVO> availableDateVO;
 	private AmenityVO amenityVO;
@@ -24,7 +24,7 @@ public class InnVO {
 	}
 	public InnVO(int innNo, String innName, String innCity, String innArea,
 			String innAddress, String innType, String acceptableNo,
-			int innPrice, String innInfo, String innavailability,
+			int innPrice, String innInfo, String innAvailability,
 			String memberId, List<AvailableDateVO> availableDateVO,
 			AmenityVO amenityVO, List<InnPicCompVO> innPicCompVO,
 			List<CommentVO> commentVO) {
@@ -38,7 +38,7 @@ public class InnVO {
 		this.acceptableNo = acceptableNo;
 		this.innPrice = innPrice;
 		this.innInfo = innInfo;
-		this.innavailability = innavailability;
+		this.innAvailability = innAvailability;
 		this.memberId = memberId;
 	/*	this.availableDateVO = availableDateVO;
 		this.amenityVO = amenityVO;
@@ -99,11 +99,11 @@ public class InnVO {
 	public void setInnInfo(String innInfo) {
 		this.innInfo = innInfo;
 	}
-	public String getInnavailability() {
-		return innavailability;
+	public String getInnAvailability() {
+		return innAvailability;
 	}
-	public void setInnavailability(String innavailability) {
-		this.innavailability = innavailability;
+	public void setInnAvailability(String innavailability) {
+		this.innAvailability = innAvailability;
 	}
 	public String getMemberId() {
 		return memberId;
@@ -117,7 +117,7 @@ public class InnVO {
 				+ innCity + ", innArea=" + innArea + ", innAddress="
 				+ innAddress + ", innType=" + innType + ", acceptableNo="
 				+ acceptableNo + ", innPrice=" + innPrice + ", innInfo="
-				+ innInfo + ", innavailability=" + innavailability
+				+ innInfo + ", innAvailability=" + innAvailability
 				+ ", memberId=" + memberId + "]";
 	}
 	
