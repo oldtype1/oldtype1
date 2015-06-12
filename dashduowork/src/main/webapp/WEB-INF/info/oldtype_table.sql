@@ -153,11 +153,8 @@ constraint fk_member3 foreign key(member_id) references member(member_id) on DEL
 
 -----------------숙소 사진 테이블(inn_no ref)-----------------------
 create table inn_pic(
-inn_pic number primary key,
-inn_no number not null,
-inn_pic_filepath varchar2(50),
-inn_pic_ogname varchar2(50),
-inn_pic_currname varchar2(50),
+inn_no number primary key,
+file_path varchar2(50),
 constraint fk_inn4 foreign key(inn_no) references inn(inn_no) on DELETE CASCADE 
 )
 
