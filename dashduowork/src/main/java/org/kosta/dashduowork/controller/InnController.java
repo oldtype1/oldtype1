@@ -8,6 +8,7 @@ import javax.servlet.http.HttpSession;
 
 import org.kosta.dashduowork.model.service.InnService;
 import org.kosta.dashduowork.model.vo.AmenityVO;
+import org.kosta.dashduowork.model.vo.BookListVO;
 import org.kosta.dashduowork.model.vo.InnListVO;
 import org.kosta.dashduowork.model.vo.InnVO;
 import org.kosta.dashduowork.model.vo.MemberVO;
@@ -51,6 +52,20 @@ public class InnController {
 		//model.addAttribute("list", list);
 		return list;
 	}
+	
+	@RequestMapping(value="get_mybooklist.do")
+	public String getMyBookList(String pageNo,HttpServletRequest request,Model model){
+		System.out.println("get_mybooklist.do  콘트롤러왔음!!!!!!!!!!!!!!!!!"+pageNo);
+		HttpSession session=null;
+		session = request.getSession(false);
+		MemberVO vo= (MemberVO)session.getAttribute("mvo");
+		System.out.println("get_mybooklist.do 콘트롤러에 들어온 vo!!!!!!!!!!!!!!!!"+vo);
+		BookListVO blvo=innService.getmybooklist(vo, pageNo);
+		System.out.println("get_mybooklist.do 콘트롤러에서 찾은 bvo!!!!!!!!!!!!!!!"+blvo.getPagingBean().getNowPage());
+		model.addAttribute("blvo", blvo);
+		return"member_book_list";
+	}
+
 
 }
 

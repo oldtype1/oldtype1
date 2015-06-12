@@ -17,6 +17,17 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	<result property="innAvailability" column="inn_availability"/>
 	<result property="memberId" column="member_id"/>
 </resultMap>
+<resultMap type="bvo" id="bookResult">
+<result property="bookNo" column="book_no"/>
+<result property="bookCheckIn" column="book_checkin"/>
+<result property="bookCheckOut" column="book_checkout"/>
+<result property="bookCount" column="book_count"/>
+<result property="memberId" column="member_id"/>
+<result property="innNo" column="inn_no"/>
+<result property="innName" column="inn_name"/>
+</resultMap>
+
+
 
 	<sql id="innlist">
 		select inn_no,inn_name,inn_city,inn_area,inn_address,inn_type,inn_acceptable_no,
@@ -71,6 +82,18 @@ where i.inn_no=a.inn_no)
 where availabledate_st>= #{startDate} and availabledate_end <= #{endDate})
 where inn_city=#{innCity} and inn_acceptable_no=#{acceptableNo}]]>
 	</select>
+	
+		<select  id="getmybooklist" parameterType="hashmap" resultType="bvo" resultMap="bookResult">
+	 select book_no, book_checkin, book_checkout, book_count, member_id, inn_no, inn_name from(
+ select book_no, book_checkin, book_checkout, book_count, member_id, inn_no, inn_name, page from(
+ select b.book_no, b.book_checkin, b.book_checkout, b.book_count, b.member_id, b.inn_no, i.inn_name, ceil(rownum/5) as page from book b, inn i 
+ where b.inn_no=i.inn_no
+ ) where member_id=#{member_id}
+ ) where page=#{pageNo} 
+	</select>
+	
+	
+	
 	
 	<!-- <select id="getAddressKind" resultType="string">
 		select distinct(address) from member

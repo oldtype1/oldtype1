@@ -36,7 +36,7 @@ $(document).ready(function(){
             </ul> -->
          </li>
          <li><a href='get_myinnlist.do'>등록숙소</a></li>
-         <li><a href='#'>예약숙소</a></li>
+    <li><a href='get_mybooklist.do'>예약숙소</a></li>
          <li><a href='#'>거래내역</a></li>
          <li><a href='#'>위시리스트</a></li>
          <li><a href='#'>쪽지</a></li>        

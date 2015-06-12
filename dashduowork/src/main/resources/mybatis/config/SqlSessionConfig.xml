@@ -12,6 +12,7 @@ PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
 		<typeAlias type="org.kosta.dashduowork.model.vo.InnVO" alias="ivo"/>	
 		<typeAlias type="org.kosta.dashduowork.model.vo.AmenityVO" alias="avo"/>
 		<typeAlias type="org.kosta.dashduowork.model.vo.SearchVO" alias="svo"/>
+		<typeAlias type="org.kosta.dashduowork.model.vo.BookVO" alias="bvo"/>
 	</typeAliases>	
 <!--     sql mapping config xml 을 연결 -->
 	<mappers>
