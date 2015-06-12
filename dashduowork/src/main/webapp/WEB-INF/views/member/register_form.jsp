@@ -65,8 +65,7 @@
               <label for="inputInfo3" class="control-label">자기 소개</label>
             </div>
             <div class="col-sm-8">
-              <input type="password" class="form-control" id="inputPassword3" placeholder="자기소개">
-              <textarea rows="4" cols="50" class="form-control" name="memberInfo"></textarea>
+                <textarea rows="4" cols="50" class="form-control" name="memberInfo" placeholder="자기소개"></textarea>
             </div>
           </div>
           <div class="form-group">
