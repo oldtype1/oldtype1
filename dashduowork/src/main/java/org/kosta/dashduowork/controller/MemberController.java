@@ -55,10 +55,6 @@ public class MemberController {
    public String member_myprofile(String memberId, Model model){
       MemberVO mvo=memberService.findMemberById(memberId);
      ProfilePicVO pvo = memberService.selectProfilePic(memberId);
-     
-     System.out.println("memberid "+memberId);
-     System.out.println("pvo: "+pvo);
-     
      if(pvo!=null){
       mvo.setProfilePicVO(pvo);
      }
@@ -74,9 +70,15 @@ public class MemberController {
    // 업데이트하는 폼으로 보낸다. (프로필 보기 와 굉장히 비슷)
    public String member_myprofile_update_form(String memberId, Model model) {
       MemberVO mvo = memberService.findMemberById(memberId);
-      System.out.println(mvo);
+      ProfilePicVO pvo = memberService.selectProfilePic(memberId);
+      if(pvo!=null){
+          mvo.setProfilePicVO(pvo);
+         }
+         else{
+         mvo.setProfilePicVO(new ProfilePicVO(memberId,"http://pingendo.github.io/pingendo-bootstrap/assets/placeholder.png"));
+         }
       model.addAttribute("memberInfo", mvo);
-      return "member_myprofile_update_form";
+      return "member_myprofile_update_form";    
    }
 
    @RequestMapping("member_updateInfo.do")

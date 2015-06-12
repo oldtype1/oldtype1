@@ -1,12 +1,40 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
  pageEncoding="UTF-8"%>
+ 
+ <div class="container">
+          <div class="row text-center">
+            <div class="col-md-12 text-center">
+              <ul class="lead nav nav-justified nav-tabs">
+                <li>
+                  <a href="#">내프로필</a>
+                </li>
+                <li>
+                  <a href="#">숙소등록</a>
+                </li>
+                <li>
+                  <a href="#">예약숙소</a>
+                </li>
+                <li>
+                  <a href="#">거래내역</a>
+                </li>
+                <li>
+                  <a href="#">위시리스트</a>
+                </li>
+                <li>
+                  <a href="#">쪽지</a>
+                </li>
+              </ul>
+            </div>
+          </div>
+        </div>
+ 
 <div style="position: relative; top: 100px; left: 150px; opacity: 0.7">
      <div class="section">
          <div class="container">
              <div class="col-md-4">
-                 <img src="http://pingendo.github.io/pingendo-bootstrap/assets/placeholder.png"
-                 class="img-responsive">
-             </div>
+               <img src="${requestScope.memberInfo.profilePicVO.filePath}"
+                class="img-circle img-responsive" width="200" height="200">
+             </div>  
              <div class="row">
                  <div class="col-md-4">
                      <form role="form" action="member_updateInfo.do">
