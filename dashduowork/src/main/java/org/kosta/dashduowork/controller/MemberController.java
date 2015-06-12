@@ -78,12 +78,27 @@ public class MemberController {
 		return "member_myprofile";
 	}
 
+	@RequestMapping("memberPasswordcheck.do")
+	public String memberPasswordcheck(String memberPass, String memberId, Model model){
+		String memberPassword=memberService.memberPasswordcheck(memberId);
+		System.out.println(memberPassword);
+		System.out.println(memberId+"        "+memberPass+"       memberPasswordcheck컨트롤러 들어옴");
+		if(!(memberPass.equals(memberPassword))){
+			return "member_memberCheckPassword_fail";
+		}else{
+			//비밀번호 재확인 시 비번 맞을경우
+			model.addAttribute("memberId", memberId);
+			return "redirect:memberSecession.do";
+		}
+	}
+		
 	@RequestMapping("memberSecession.do")
-	public String memberSecession(String memberId, HttpServletRequest request) {
-		HttpSession session = request.getSession();
+	public String memberSecession(String memberId, HttpServletRequest request){
+		System.out.println("memberSecession콘트롤러들어옴");
+		HttpSession session=request.getSession();
 		memberService.memberSecession(memberId);
 		session.invalidate();
-		return "home";
+		return "member_memberSecession_result";
 	}
 
 	// 6/11 - 밸리데이션 적용

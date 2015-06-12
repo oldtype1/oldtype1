@@ -1,14 +1,20 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
  pageEncoding="UTF-8"%>
- 
- <script>
- $(document).ready(function(){
-    $("#memberSecession").click(function(){
-       location.href="memberSecession.do?memberId=${requestScope.memberInfo.memberId}";
-    });
-    
- });
- </script>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<script  type="text/javascript">
+	$(document).ready(function(){ 
+		$("#memberPasswordcheck").click(function(){
+			if($("#memberPassWord1").val()==""){
+				alert("패스워드를 입력하세요");
+				//$("#memberPass").focus();
+				return false;
+			}
+			else{
+				$("#memberPasswordcheckForm").submit();
+			}
+		})	
+});// ready 
+</script>
 <div style="position: relative; top: 100px; left: 150px; opacity: 0.7">
      <div class="section">
          <div class="container">
@@ -44,10 +50,39 @@
                          </div>
                          <input type="hidden" name="memberId" id="memberId" value="${requestScope.memberInfo.memberId}">
                     <button type="submit" class="btn btn-default">수정하러 가기</button>
-               <button type="button" id="memberSecession" class="btn btn-default">회원 탈퇴</button>
+               <button type="button" data-target="#exampleModal2" data-toggle="modal" id="memberSecession" class="btn btn-default">회원 탈퇴</button>
                      </form>            
                  </div>                   
              </div>
          </div>
      </div>
    </div>
+   
+   
+<div class="modal fade" id="exampleModal2" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel2" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title" id="exampleModalLabel2">비밀번호 재확인</h4>
+      </div>
+      <form action="memberPasswordcheck.do" id="memberPasswordcheckForm" method="post" >
+      <div class="modal-body" id="checkpassword">
+          <div class="form-group">
+            <label for="message-text" class="control-label">비밀번호:</label>
+            <input type="password" class="form-control" id="memberPassWord1" name="memberPass" placeholder="password">
+          </div>
+          <input type="hidden" value="${requestScope.memberInfo.memberId}" name="memberId">
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal"  id="close">Close</button>
+        <button type=button class="btn btn-primary" id="memberPasswordcheck">회원탈퇴</button>
+      </div>
+     </form>
+    </div>
+  </div>
+</div>
+   
+   
+   
+   

@@ -33,12 +33,12 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		(member_id, member_name, member_tel, member_info, member_pass) 
 		values(#{memberId}, #{memberName}, #{memberTel}, #{memberInfo}, #{memberPass})
 	</insert>
-
-	
-	  <delete id="memberSecession" parameterType="String">
-   delete from member where member_id=#{value}
-   </delete>
-
+	<delete id="memberSecession" parameterType="String">
+	delete from member where member_id=#{value}
+	</delete>
+	<select id="memberPasswordcheck" parameterType="String" resultType="String">
+	select member_pass from member where member_id=#{value}
+	</select>
 	
 	<!-- <select id="getAddressKind" resultType="string">
 		select distinct(address) from member

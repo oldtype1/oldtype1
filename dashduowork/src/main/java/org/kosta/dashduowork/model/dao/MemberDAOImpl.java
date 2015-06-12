@@ -36,9 +36,12 @@ public class MemberDAOImpl implements MemberDAO {
 
 	@Override
 	public void memberSecession(String memberId) {
-		sqlSessionTemplate.delete("member.memberSecession", memberId);
+	sqlSessionTemplate.delete("member.memberSecession", memberId);
 	}
-
+	@Override
+	public String memberPasswordcheck(String memberId) {
+		return sqlSessionTemplate.selectOne("member.memberPasswordcheck", memberId);
+	}	
 	@Override
 	public void insertMember(MemberVO vo) {
 		sqlSessionTemplate.insert("member.register", vo);

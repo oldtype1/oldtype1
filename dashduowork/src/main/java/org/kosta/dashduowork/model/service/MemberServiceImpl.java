@@ -30,10 +30,15 @@ public class MemberServiceImpl implements MemberService {
 	   memberDAO.updateMemberInfo(vo);
 	   }
 	
-	   @Override
-	   public void memberSecession(String memberId) {
-	      memberDAO.memberSecession(memberId);
-	   }
+		@Override
+		public void memberSecession(String memberId) {
+			memberDAO.memberSecession(memberId);
+		}
+
+		@Override
+		public String memberPasswordcheck(String memberId) {
+			return memberDAO.memberPasswordcheck(memberId);
+		}
 	   @Transactional		// 트랜잭션 적용
 	   @Override
 		public void memberRegister(MemberVO mvo, ProfilePicVO pvo) {

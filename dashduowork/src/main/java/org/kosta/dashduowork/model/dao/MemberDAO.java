@@ -8,7 +8,8 @@ public interface MemberDAO {
 	public abstract MemberVO login(MemberVO vo);
 	   public abstract MemberVO findMemberById(String memberId);
 	   public abstract void updateMemberInfo(MemberVO vo);
-	   public void memberSecession(String memberId);
+		public abstract void memberSecession(String memberId);
+		public abstract String memberPasswordcheck(String memberId);
 		//6 .10 
 		public abstract void insertMember(MemberVO vo);
 		public abstract void insertProfilePic(ProfilePicVO vo);
