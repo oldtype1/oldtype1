@@ -2,11 +2,23 @@ package org.kosta.dashduowork.model.vo;
 
 import java.util.List;
 
+import org.hibernate.validator.constraints.Email;
+import org.hibernate.validator.constraints.NotEmpty;
+import org.springframework.format.annotation.NumberFormat;
+import org.springframework.format.annotation.NumberFormat.Style;
+
 public class MemberVO {
+	@Email
+	@NotEmpty
 	private String memberId;
+	@NotEmpty
 	private String memberPass;
+	@NotEmpty
 	private String memberName;
+	@NumberFormat(style=Style.NUMBER)
+	@NotEmpty
 	private String memberTel;
+	@NotEmpty
 	private String memberInfo;
 	private ProfilePicVO profilePicVO;
 	private List<WishListVO> wishList;

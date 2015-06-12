@@ -6,6 +6,7 @@ import org.kosta.dashduowork.model.dao.MemberDAO;
 import org.kosta.dashduowork.model.vo.MemberVO;
 import org.kosta.dashduowork.model.vo.ProfilePicVO;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 @Service
 public class MemberServiceImpl implements MemberService {
@@ -33,7 +34,7 @@ public class MemberServiceImpl implements MemberService {
 	   public void memberSecession(String memberId) {
 	      memberDAO.memberSecession(memberId);
 	   }
-	
+	   @Transactional		// 트랜잭션 적용
 	   @Override
 		public void memberRegister(MemberVO mvo, ProfilePicVO pvo) {
 			memberDAO.insertMember(mvo);

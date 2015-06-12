@@ -4,7 +4,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="profilePic">
 
-<resultMap type="mvo" id="memberResult">
+<resultMap type="pvo" id="memberResult">
 	<result property="memberId" column="member_id"/>
 	<result property="filePath" column="file_path"/>
 </resultMap>

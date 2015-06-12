@@ -5,12 +5,14 @@ import java.io.File;
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
+import javax.validation.Valid;
 
 import org.kosta.dashduowork.model.service.MemberService;
 import org.kosta.dashduowork.model.vo.MemberVO;
 import org.kosta.dashduowork.model.vo.ProfilePicVO;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.multipart.MultipartFile;
@@ -82,16 +84,17 @@ public class MemberController {
 	      session.invalidate();
 	      return "home";
 	   }
+	 // 6/11 - 밸리데이션 적용
+		@RequestMapping(value="member_register_form.do",method=RequestMethod.GET)
+		public ModelAndView registerForm(){	
+			// Validation 을 위해 register_form.jsp 에서 사용할 수 있도록 객체를 생성해 전달한다. 
+			//<form:form action="register.do" commandName="memberVO">
+			return new ModelAndView("member_register_form","memberVO",new MemberVO());
+	
+		}
 	// 6/10 
-	   /*
-	    *  TODO 회원가입
-	    *   1. Redirect 적용
-	    *   2. 밸리데이션 적용
-	    *   3. 트랜잭션 적용(mvo 와 pvo insert시, 문제 생기면 callback 시켜야함)
-	    *   4. 각 상황 값에 맞는 필터 적용(공란 적용시, 아이디 중복, 패스워드 확인 등등)
-	    */
-		@RequestMapping(value="register.do",method=RequestMethod.POST)
-		public ModelAndView registerMember(ProfilePicVO pvo, MemberVO mvo){
+		@RequestMapping(value="member_register.do",method=RequestMethod.POST)
+		public String registerMember(ProfilePicVO pvo, @Valid MemberVO mvo, BindingResult result){
 			
 			
 			/* 
@@ -107,20 +110,40 @@ public class MemberController {
 			MultipartFile file = pvo.getFile();
 			//System.out.println(list.get(i).getOriginalFilename().equals(""));
 				String fileName=file.getOriginalFilename();	
+			
 				System.out.println(file.isEmpty());
 				if(!fileName.equals("")){
 					try {
-						pvo.setFilePath(path+mvo.getMemberId()+fileName);
-						file.transferTo(new File(path+pvo.getFilePath()));
-						System.out.println("fileupload ok:"+pvo.getFilePath());
+						pvo.setFilePath(path+fileName);
+						file.transferTo(new File(path+fileName));
+						System.out.println("fileupload ok:"+fileName);
 					} catch (Exception e) {					
 						e.printStackTrace();
 					}
 				} // if -- 파일 업로드 끝 부분
 				
-			memberService.memberRegister(mvo, pvo);
+			
 				
-			return new ModelAndView("redirect:home");
+			if(result.hasErrors()){
+				return "member_register_form"; // 유효성 검사에 에러가 있으면 가입폼으로 다시 보낸다. 
+			}
+			memberService.memberRegister(mvo, pvo);
+			return "home";// 문제 없으면 결과 페이지로 이동한다. 
 		}
+	
+		
+/*		@RequestMapping(value="member_register_form.do",method=RequestMethod.GET)
+		public ModelAndView registerForm(){	
+			// Validation 을 위해 register_form.jsp 에서 사용할 수 있도록 객체를 생성해 전달한다. 
+			//<form:form action="register.do" commandName="memberVO">
+			return new ModelAndView("member_register_form","memberVO",new MemberVO());
+		}*/
+/*		@RequestMapping(value="register.do",method=RequestMethod.POST)
+		public String register(@Valid MemberVO memberVO,BindingResult result){
+			if(result.hasErrors()){
+				return "member_register_form"; // 유효성 검사에 에러가 있으면 가입폼으로 다시 보낸다. 
+			}
+			return "home";// 문제 없으면 결과 페이지로 이동한다. 
+		}*/
 
 }

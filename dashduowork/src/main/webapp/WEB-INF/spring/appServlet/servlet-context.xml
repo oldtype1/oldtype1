@@ -32,11 +32,11 @@
 		<property name="order" value="0" />
 	</bean>
 	<!-- Spring Validation -->
-<!-- 	<bean id="messageSource"
+	<bean id="messageSource"
 		class="org.springframework.context.support.ReloadableResourceBundleMessageSource">
 		<property name="basename" value="classpath:messages_ko" />
 		<property name="defaultEncoding" value="utf-8"></property>
-	</bean> -->
+	</bean>
 	<bean id="multipartResolver"
 		class="org.springframework.web.multipart.commons.CommonsMultipartResolver">
 		<property name="defaultEncoding" value="utf-8"></property>
