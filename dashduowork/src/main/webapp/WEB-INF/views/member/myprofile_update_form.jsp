@@ -1,6 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
  pageEncoding="UTF-8"%>
- 
+ <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
  <div class="container">
           <div class="row text-center">
             <div class="col-md-12 text-center">
@@ -31,7 +31,8 @@
 <div style="position: relative; top: 100px; left: 150px; opacity: 0.7">
      <div class="section">
          <div class="container">
-         <form role="form" action="member_updateInfo.do">
+      <form:form class="form-horizontal" role="form" action="member_updateInfo.do" 
+        enctype="multipart/form-data" method="post" commandName="memberVO">  
              <div class="col-md-4">
                <img src="${requestScope.memberInfo.profilePicVO.filePath}"
                 class="img-circle img-responsive" width="200" height="200" style="margin-bottom: 25px">
@@ -67,7 +68,7 @@
                        <br><button type="submit" class="btn btn-default">수정하기page</button>                                     
                  </div>                   
              </div>
-             </form>
+             </form:form>
          </div>
      </div>
    </div>

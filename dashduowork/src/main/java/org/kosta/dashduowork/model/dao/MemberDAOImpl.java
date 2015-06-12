@@ -33,7 +33,11 @@ public class MemberDAOImpl implements MemberDAO {
    public void updateMemberInfo(MemberVO vo) {
       sqlSessionTemplate.update("member.updateMemberInfo", vo);
    }
-
+   @Override
+   public void updateProfilePic(ProfilePicVO pvo) {
+   	 sqlSessionTemplate.update("profilePic.updateProfilePic",pvo);
+   }
+   
    @Override
    public void memberSecession(String memberId) {
    sqlSessionTemplate.delete("member.memberSecession", memberId);
@@ -57,7 +61,8 @@ public class MemberDAOImpl implements MemberDAO {
 		// TODO Auto-generated method stub
 		return sqlSessionTemplate.selectOne("profilePic.selectProfilePic",memberId);
 	}
-   
+
+
 }
 
 

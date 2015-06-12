@@ -59,7 +59,7 @@ public class MemberController {
       mvo.setProfilePicVO(pvo);
      }
      else{
-     mvo.setProfilePicVO(new ProfilePicVO(memberId,"http://pingendo.github.io/pingendo-bootstrap/assets/placeholder.png"));
+     mvo.setProfilePicVO(new ProfilePicVO(memberId,"http://pingendo.github.io/pingendo-bootstrap/assets/user_placeholder.png"));
      }
      model.addAttribute("memberInfo", mvo); 
       //mvo.getProfilePicVO().getFilePath()
@@ -75,21 +75,50 @@ public class MemberController {
           mvo.setProfilePicVO(pvo);
          }
          else{
-         mvo.setProfilePicVO(new ProfilePicVO(memberId,"http://pingendo.github.io/pingendo-bootstrap/assets/placeholder.png"));
+         mvo.setProfilePicVO(new ProfilePicVO(memberId,"http://pingendo.github.io/pingendo-bootstrap/assets/user_placeholder.png"));
          }
       model.addAttribute("memberInfo", mvo);
       return "member_myprofile_update_form";    
    }
 
+   //업데이트 컨트롤러
    @RequestMapping("member_updateInfo.do")
-   public String member_updateInfo(MemberVO membervo, Model model,
+   public String member_updateInfo(ProfilePicVO pvo,MemberVO mvo, Model model, BindingResult result,
          HttpServletRequest request) {
-      System.out.println(membervo + "member_updateInfo.do 페이지 들어옴!!!!!!");
-      memberService.updateMemberInfo(membervo);
-      MemberVO updateVO = memberService.findMemberById(membervo.getMemberId());
+	   	System.out.println("mvo : " + mvo);
+	      System.out.println("pvo : " + pvo);	
+	      
+	      MultipartFile file = pvo.getFile();
+	      String fileName = mvo.getMemberId()+"_"+file.getOriginalFilename();
+	      System.out.println(file.isEmpty());
+	      
+	      if(file.getOriginalFilename().equals("")){
+	    	  pvo.setFilePath("http://pingendo.github.io/pingendo-bootstrap/assets/user_placeholder.png");
+	      }
+	      else if (!fileName.equals("")) {
+	         try {
+	        	 pvo.setFilePath(viewPath+fileName);
+	        	 //mvo.getProfilePicVO().setFilePath(viewPath+fileName);
+				file.transferTo(new File(uploadPath+fileName));
+				System.out.println("fileupload ok:"+fileName);
+	         } catch (Exception e) {
+	            e.printStackTrace();
+	         }
+	      }
+	      else {
+	    	  //mvo.getProfilePicVO().setFilePath("http://pingendo.github.io/pingendo-bootstrap/assets/placeholder.png");
+	    	  pvo.setFilePath("none");     
+	      }  
+      memberService.updateMemberInfo(mvo,pvo);
+      MemberVO updateVO = memberService.findMemberById(mvo.getMemberId());
       HttpSession session = request.getSession();
       session.setAttribute("mvo", updateVO);
-      return "redirect:member_myprofile.do?memberId="+membervo.getMemberId();
+      
+      if (result.hasErrors()) {
+          return "member_myprofile_update_form"; // 유효성 검사에 에러가 있으면 가입폼으로 다시 보낸다.
+       }
+      return "redirect:member_myprofile.do?memberId="+mvo.getMemberId();
+      
    }
 
 
