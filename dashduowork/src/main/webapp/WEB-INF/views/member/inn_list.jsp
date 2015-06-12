@@ -5,9 +5,7 @@
     <script type="text/javascript" src="http://netdna.bootstrapcdn.com/bootstrap/3.3.4/js/bootstrap.min.js"></script>
     <link href="http://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.3.0/css/font-awesome.min.css"
     rel="stylesheet" type="text/css">
-    <link href="http://pingendo.github.io/pingendo-bootstrap/themes/default/bootstrap.css"
-    rel="stylesheet" type="text/css">
- 
+    
         <div class="container">
           <div class="row text-center">
             <div class="col-md-12 text-center">
@@ -34,16 +32,17 @@
             </div>
           </div>
         </div>
+        
       <div class="section">
         <div class="container">
           <div class="row">
             <div class="col-md-1">
-              <center>
+                 <center>
                 <img src="http://pingendo.github.io/pingendo-bootstrap/assets/user_placeholder.png"
-                class="img-circle img-responsive" width="50" height="70">
+                class="img-circle img-responsive" style="margin-top: 50px; margin-bottom: 50px; " width="50" height="70" >
               </center>
             </div>
-            <div class="col-md-5">
+            <div class="col-md-5" style="margin-top: 50px; margin-bottom: 50px; ">
               <h2>${sessionScope.mvo.memberName}님 등록한 숙소 ${requestScope.lvo.pagingBean.totalContents}개</h2>
             </div>
           </div>

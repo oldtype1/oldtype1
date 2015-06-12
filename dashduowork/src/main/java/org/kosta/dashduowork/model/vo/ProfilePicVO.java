@@ -23,6 +23,12 @@ public class ProfilePicVO {
 		this.filePath = filePath;
 	}
 
+	public ProfilePicVO(String memberId, String filePath) {
+		super();
+		this.memberId = memberId;
+		this.filePath = filePath;
+	}
+
 
 	public String getMemberId() {
 		return memberId;

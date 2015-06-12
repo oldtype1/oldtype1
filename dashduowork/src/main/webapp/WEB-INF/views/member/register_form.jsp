@@ -4,6 +4,7 @@
  <%-- Spring Expression Language (SpEL) 선언부 --%>
     <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
 <!--여기서부터 register_form 시작-->
+
 <div class="section">
   <div class="container">
     <div class="row">

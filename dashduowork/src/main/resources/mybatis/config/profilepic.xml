@@ -14,7 +14,14 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		(member_id, file_path)
 		values(#{memberId}, #{filePath})
 </insert>
+
+<select id="selectProfilePic" parameterType="String"  resultType="pvo" resultMap="memberResult">
+		select member_Id,file_path from profile_pic where member_id=#{value}
+</select>
 	
+<update id="updateProfilePic" parameterType="pvo" >
+	update profile_pic set file_path=#{filePath} where member_id=#{memberId}
+	</update>
 	
 </mapper>
  
@@ -23,22 +30,4 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
  
  
  
- 
- 
- 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
