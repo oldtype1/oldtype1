@@ -7,29 +7,68 @@
 		$("#checkin, #checkout").datepicker({
 			dateFormat : 'yy-mm-dd'
 		});
+		$("#filterForm").change(function() {
+			$.ajax({
+				type : "Post",
+				url : "selectInnByCheckedAmenity.do",
+				data : $("#filterForm").serialize(),
+				dataType : "json",
+				success : function(innInfoList) {
+					if (innInfoList.length != 0) {
+						$.each(innInfoList, function(index, info) {
+							$("#showInnNo").html(info.innNo);
+							$("#showInnName").html(info.innName);
+							$("#showInnCity").html(info.innCity);
+							$("#showInnArea").html(info.innArea);
+							$("#showInnInfo").html(info.innInfo);
+							$("#showInnType").html(info.innType);
+							$("#showInnAcceptable").html(info.innAvailability);
+							$("#showInnPrice").html(info.innPrice);
+						}); //each
+					}//if
+					else if(innInfoList.length == 0){
+						$("#showInnNo").html("");
+						$("#showInnName").html("");
+						$("#showInnCity").html("");
+						$("#showInnArea").html("");
+						$("#showInnInfo").html("");
+						$("#showInnType").html("");
+						$("#showInnAcceptable").html("");
+						$("#showInnPrice").html("");
+					}
+				}
+			});//ajax 			 	 			
+		}); //change
 	});
 </script>
 <div class="section">
 	<div class="container">
-	<form action="searchByCityDateNo.do" class="navbar-form navbar-left" role="search">
+	<form action="searchByCityDateNo.do" id="searchForm" class="navbar-form navbar-left" role="search">
 			<input type="text" class="form-control" name="innCity" placeholder="State" style="width: 300px;"><br>
 			<input
 			type="text" class="form-control" name="startDate" id="checkin" size="15"
 			onfocus="this.value=''" placeholder="Checkin" style="width: 150px;"> <input type="text"
 			class="form-control" name="endDate" size="15" id="checkout"
-			onfocus="this.value=''" placeholder="Checkout" style="width: 150px;">
+			onfocus="this.value=''" placeholder="Checkout" style="width: 150px;"><select
+			class="form-control" name="acceptableNo" id="select">
+			<option value="1">게스트 1명</option>
+			<option value="2">게스트 2명</option>
+			<option value="3">게스트 3명</option>
+			<option value="4">게스트 4명</option>
+			<option value="5">게스트 5명</option>
+		</select>
+			<button type="submit" class="btn btn-default">검색</button>
 			</form>
 	</div>
 </div>
 <div class="section">
 	<div class="container">
-			<form id="searchForm" action="selectInnByCheckedAmenity.do">	
+			<form id="filterForm" action="selectInnByCheckedAmenity.do">	
 				<input type="checkbox" name="amenityWiFi" value="Y">WiFi <input
 					type="checkbox" name="amenityBed" value="Y">Bed <input
 					type="checkbox" name="amenityTV" value="Y">TV <input
 					type="checkbox" name="amenityKitchen" value="Y">주방 <input
-					type="checkbox" name="amenityBBQ" value="Y">바베큐 <input
-					type="button" id="searchBtn" value="검색">
+					type="checkbox" name="amenityBBQ" value="Y">바베큐
 			</form>
 	</div>
 </div>
@@ -62,14 +101,14 @@
 					<c:otherwise>
 						<c:forEach var="list" items="${requestScope.list}">
 							<tr>
-								<td><!-- <div id="showInnNo"></div> -->${list.innNo }</td>
-								<td><!-- <div id="showInnName"></div> -->${list.innName }</td>
-								<td><!-- <div id="showInnCity"></div> -->${list.innCity }</td>
-								<td><!-- <div id="showInnArea"></div> -->${list.innArea }</td>
-								<td><!-- <div id="showInnInfo"></div> -->${list.innAddress }</td>
-								<td><!-- <div id="showInnType"></div> -->${list.innType }</td>
-								<td><!-- <div id="showInnAcceptable"></div> -->${list.acceptableNo }</td>
-								<td><!-- <div id="showInnPrice"></div> -->${list.innPrice }</td>
+								<td><div id="showInnNo">${list.innNo }</div></td>
+								<td><div id="showInnName">${list.innName }</div></td>
+								<td><div id="showInnCity">${list.innCity }</div></td>
+								<td><div id="showInnArea">${list.innArea }</div></td>
+								<td><div id="showInnInfo">${list.innAddress }</div></td>
+								<td><div id="showInnType">${list.innType }</div></td>
+								<td><div id="showInnAcceptable">${list.acceptableNo }</div></td>
+								<td><div id="showInnPrice">${list.innPrice }</div></td>
 							</tr>
 						</c:forEach>
 					</c:otherwise>
