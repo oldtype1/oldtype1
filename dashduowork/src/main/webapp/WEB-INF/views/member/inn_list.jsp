@@ -11,19 +11,19 @@
             <div class="col-md-12 text-center">
               <ul class="lead nav nav-justified nav-tabs">
                 <li>
-                  <a href="#">내프로필</a>
+                  <a href='member_myprofile.do?memberId=${sessionScope.mvo.memberId}'>내프로필</a>
                 </li>
                 <li>
-                  <a href="#">숙소등록</a>
+                  <a href='get_myinnlist.do'>숙소등록</a>
                 </li>
                 <li>
-                  <a href="#">예약숙소</a>
+                  <a href='get_mybooklist.do'>예약숙소</a>
                 </li>
                 <li>
                   <a href="#">거래내역</a>
                 </li>
                 <li>
-                  <a href="#">위시리스트</a>
+                  <a href='get_mywishlist.do'>위시리스트</a>
                 </li>
                 <li>
                   <a href="#">쪽지</a>
@@ -32,7 +32,6 @@
             </div>
           </div>
         </div>
-        
       <div class="section">
         <div class="container">
           <div class="row">

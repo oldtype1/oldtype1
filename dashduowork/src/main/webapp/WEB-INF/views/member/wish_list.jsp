@@ -44,7 +44,7 @@
               </center>
             </div>
             <div class="col-md-5">
-              <h2>${sessionScope.mvo.memberName}님 예약한 숙소</h2>
+              <h2>${sessionScope.mvo.memberName}님의 WISH LIST</h2>
             </div>
           </div>
         </div>
@@ -56,36 +56,28 @@
               <table class="table">
               <thead>
               <tr>
-              <td>예약 번호</td>
+              <td>위시리스트 번호</td>
               <td>숙소 사진</td>
               <td>숙소 이름</td>
-              <td>체크인 날짜</td>
-              <td>체크아웃 날짜</td>
-              <td>인원수</td>
+              <td>삭제</td>
               </tr>
               </thead>
                 <tbody>
                 
-                <c:forEach var="bvo" items="${requestScope.blvo.list}">
+                <c:forEach var="wvo" items="${requestScope.wlvo.list}">
                   <tr>
                     <td class="col-md-1 text-center" draggable="true">
-                      <h4>${bvo.bookNo}</h4>
+                        <p class="text-center">${wvo.wishListNo}</p>
                     </td>
                     <td class="col-md-1">
-                      <a class="pull-left" href="#"><img class="media-object" src="http://pingendo.github.io/pingendo-bootstrap/assets/placeholder.png" height="150" width="150">
+                      <a class="pull-center" href="#"><img class="media-object" src="http://pingendo.github.io/pingendo-bootstrap/assets/placeholder.png" height="150" width="150">
                   </a>
                     </td>
-                    <td class="col-md-7">
-                        <p class="text-center">${bvo.innName}</p>
-                    </td>
                     <td class="col-md-1">
-                      <h4 class="text-center">${bvo.bookCheckIn}</h4>
+                        <p class="text-center">${wvo.innName}</p>
                     </td>
-                    <td class="col-md-1">
-                      <h4 class="text-center">${bvo.bookCheckOut}</h4>
-                    </td>
-                      <td class="col-md-1">
-                      <h4 class="text-center">${bvo.bookCount}</h4>
+                     <td class="col-md-1">
+                        <h4 class="text-center"><a href="wishlistdelete.do?wishListNo=${wvo.wishListNo}">삭제</a></h4>
                     </td>
                   </tr>
     				</c:forEach>
@@ -102,7 +94,7 @@
             <div class="col-md-12 text-center">
               <ul class="pagination pagination-sm">
                   
-                  <c:set var="pb" value="${requestScope.blvo.pagingBean}"></c:set>
+                  <c:set var="pb" value="${requestScope.wlvo.pagingBean}"></c:set>
 						
 						<c:if test="${pb.previousPageGroup}">
 						<li><a

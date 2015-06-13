@@ -13,6 +13,8 @@ import org.kosta.dashduowork.model.vo.InnListVO;
 import org.kosta.dashduowork.model.vo.InnVO;
 import org.kosta.dashduowork.model.vo.MemberVO;
 import org.kosta.dashduowork.model.vo.SearchVO;
+import org.kosta.dashduowork.model.vo.WishListDeleteVO;
+import org.kosta.dashduowork.model.vo.WishListListVO;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -80,6 +82,32 @@ public class InnController {
 		return"member_book_list";
 	}
 
+	
+	@RequestMapping(value="get_mywishlist.do")
+	public String getMyWishList(String pageNo,HttpServletRequest request,Model model){
+		System.out.println("getMyWishList.do  콘트롤러왔음!!!!!!!!!!!!!!!!!"+pageNo);
+		HttpSession session=null;
+		session = request.getSession(false);
+		MemberVO vo= (MemberVO)session.getAttribute("mvo");
+		System.out.println("getMyWishList.do 콘트롤러에 들어온 vo!!!!!!!!!!!!!!!!"+vo);
+		WishListListVO wlvo=innService.getmywishlist(vo, pageNo);
+		System.out.println("getMyWishList.do 콘트롤러에서 찾은 wlvo!!!!!!!!!!!!!!!"+wlvo.getPagingBean().getNowPage());
+		model.addAttribute("wlvo", wlvo);
+		return"member_wish_list";
+	}
+@RequestMapping(value="wishlistdelete.do")
+public String wishListDelete(int wishListNo, HttpServletRequest request){
+	System.out.println("wishListDelete 컨트롤러 들어옴.");
+	HttpSession session=null;
+	session = request.getSession(false);
+	MemberVO vo= (MemberVO)session.getAttribute("mvo");
+	System.out.println(vo+"        찾아들어옴");
+	WishListDeleteVO wdvo=new WishListDeleteVO(vo.getMemberId(), wishListNo);
+	System.out.println(wdvo+"삭제할 것을 VO에 넣어줌");
+	//삭제하고 보내주기
+	innService.wishListDelete(wdvo);
+	return "redirect:get_mywishlist.do";
+}
 
 }
 

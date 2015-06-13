@@ -26,7 +26,12 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 <result property="innNo" column="inn_no"/>
 <result property="innName" column="inn_name"/>
 </resultMap>
-
+<resultMap type="wvo" id="wishListResult">
+<result property="wishListNo" column="wishlist_no"/>
+<result property="memberId" column="member_id"/>
+<result property="innNo" column="inn_no"/>
+<result property="innName" column="inn_name"/>
+</resultMap>
 
 
 	<sql id="innlist">
@@ -84,7 +89,17 @@ where inn_city=#{innCity} and inn_acceptable_no=#{acceptableNo}]]>
  ) where page=#{pageNo} 
 	</select>
 	
-	
+		<select id="getmywishlist" parameterType="hashmap" resultType="wvo" resultMap="wishListResult">
+	 select inn_no, wishlist_no, member_id, inn_name from(
+ select  inn_no, wishlist_no, member_id, inn_name, page from(
+ select i.inn_no, w.wishlist_no, w.member_id, i.inn_name, ceil(rownum/5) as page from wishlist w, inn i 
+ where i.inn_no=w.inn_no
+ ) where member_id=#{member_id}
+ ) where page=#{pageNo}
+	</select>
+	<delete id="wishListDelete" parameterType="wdvo">
+	 delete from wishlist where member_id=#{memberId} and wishlist_no=#{wishListNo}
+	</delete>
 	
 	
 	<!-- <select id="getAddressKind" resultType="string">

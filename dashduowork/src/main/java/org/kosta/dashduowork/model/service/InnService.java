@@ -8,6 +8,8 @@ import org.kosta.dashduowork.model.vo.InnListVO;
 import org.kosta.dashduowork.model.vo.InnVO;
 import org.kosta.dashduowork.model.vo.MemberVO;
 import org.kosta.dashduowork.model.vo.SearchVO;
+import org.kosta.dashduowork.model.vo.WishListDeleteVO;
+import org.kosta.dashduowork.model.vo.WishListListVO;
 
 public interface InnService {
 	public InnListVO getmyinnlist(MemberVO vo, String pageNo);
@@ -15,4 +17,6 @@ public interface InnService {
 	public List<InnVO> findInnByCityAndAcceptableNo(SearchVO vo); //은식, 동원
 	public List<InnVO> findInnByCityAndDateAndAcceptableNo(SearchVO vo); //은식, 동원
 	public BookListVO getmybooklist(MemberVO vo, String pageNo);
+	public WishListListVO getmywishlist(MemberVO vo, String pageNo);
+	public void wishListDelete(WishListDeleteVO wdvo);
 }

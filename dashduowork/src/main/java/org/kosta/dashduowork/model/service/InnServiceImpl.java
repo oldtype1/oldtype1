@@ -7,6 +7,7 @@ import javax.annotation.Resource;
 
 import org.kosta.dashduowork.model.dao.BookDAO;
 import org.kosta.dashduowork.model.dao.InnDAO;
+import org.kosta.dashduowork.model.dao.WishListDAO;
 import org.kosta.dashduowork.model.vo.AmenityVO;
 import org.kosta.dashduowork.model.vo.BookListVO;
 import org.kosta.dashduowork.model.vo.BookVO;
@@ -15,6 +16,9 @@ import org.kosta.dashduowork.model.vo.InnVO;
 import org.kosta.dashduowork.model.vo.MemberVO;
 import org.kosta.dashduowork.model.vo.PagingBean;
 import org.kosta.dashduowork.model.vo.SearchVO;
+import org.kosta.dashduowork.model.vo.WishListDeleteVO;
+import org.kosta.dashduowork.model.vo.WishListListVO;
+import org.kosta.dashduowork.model.vo.WishListVO;
 import org.springframework.stereotype.Service;
 @Service
 public class InnServiceImpl implements InnService {
@@ -22,6 +26,9 @@ public class InnServiceImpl implements InnService {
 	private InnDAO innDAO;
 	@Resource(name="bookDAOImpl")
 	private BookDAO bookDAO;
+	@Resource(name="wishListDAOImpl")
+	private WishListDAO wishListDAO;
+	
 	
 	@Override
 	public InnListVO getmyinnlist(MemberVO vo, String pageNo) {
@@ -78,4 +85,29 @@ public class InnServiceImpl implements InnService {
 		PagingBean pagingBean=new PagingBean(total,pn);
 		return new BookListVO(list, pagingBean);
 	}
+	
+	@Override
+	public WishListListVO getmywishlist(MemberVO vo, String pageNo) {
+
+		int pn=1;
+		if(pageNo!=null){
+			pn=Integer.parseInt(pageNo);
+		}
+		System.out.println("pageNo?"+ pn);
+		HashMap<String,String> param = new HashMap<String,String>();
+		param.put("pageNo",Integer.toString(pn));
+		param.put("member_id",vo.getMemberId());
+		List<WishListVO> list=wishListDAO.getmywishlist(param);
+		int total=wishListDAO.getTotalPostingCount(vo);
+		PagingBean pagingBean=new PagingBean(total,pn);
+		return new WishListListVO(list, pagingBean);
+	}
+
+	@Override
+	public void wishListDelete(WishListDeleteVO wdvo) {
+	System.out.println("wishListDelete 서비스 들어옴!!!!!!       "+wdvo);
+	wishListDAO.wishListDelete(wdvo);
+	}
+
+
 }
