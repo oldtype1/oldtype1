@@ -81,12 +81,23 @@ where inn_city=#{innCity} and inn_acceptable_no=#{acceptableNo}]]>
 	</select>
 	
 		<select  id="getmybooklist" parameterType="hashmap" resultType="bvo" resultMap="bookResult">
-	 select book_no, book_checkin, book_checkout, book_count, member_id, inn_no, inn_name from(
+<!-- 체크인 체크아웃 날짜 시간 안나오게 수정함 -->
+<!-- 	 select book_no, book_checkin, book_checkout, book_count, member_id, inn_no, inn_name from(
  select book_no, book_checkin, book_checkout, book_count, member_id, inn_no, inn_name, page from(
  select b.book_no, b.book_checkin, b.book_checkout, b.book_count, b.member_id, b.inn_no, i.inn_name, ceil(rownum/5) as page from book b, inn i 
  where b.inn_no=i.inn_no
  ) where member_id=#{member_id}
  ) where page=#{pageNo} 
+  -->
+ select book_no, book_checkin, book_checkout, book_count, member_id, inn_no, inn_name from(
+select book_no, book_checkin, book_checkout, book_count, member_id, inn_no, inn_name,
+ceil(rownum/5) as page from
+(
+ select b.book_no, to_char(b.book_checkin,'YYYY-MM-DD') as book_checkin, to_char(b.book_checkout,'YYYY-MM-DD') 
+ as book_checkout,  b.book_count, b.member_id, b.inn_no, i.inn_name from book b, inn i where b.inn_no=i.inn_no
+ ) 
+ where member_id=#{member_id}
+ ) where page=#{pageNo}
 	</select>
 	
 		<select id="getmywishlist" parameterType="hashmap" resultType="wvo" resultMap="wishListResult">
@@ -103,6 +114,22 @@ where inn_city=#{innCity} and inn_acceptable_no=#{acceptableNo}]]>
 		<delete id="bookDelete" parameterType="bdvo">
 	 delete from book where member_id=#{memberId} and book_no=#{bookNo}
 	</delete>
+	
+<insert id="register" parameterType="ivo" >
+	 <selectKey keyProperty="innNo"  resultType="int"  order="BEFORE">
+       select inn_sequence.nextval from dual
+   </selectKey>
+	insert into INN
+	(inn_no, inn_name, inn_city, inn_area, inn_address, inn_type, inn_acceptable_no, 
+	inn_price, inn_info,inn_availability,member_id) 
+	values(#{innNo},#{innName},#{innCity},#{innArea},#{innAddress},#{innType},
+	#{acceptableNo},#{innPrice},#{innInfo},#{innAvailability},#{memberId})
+	</insert>
+	<select id="select_inn_by_member_id" resultMap="innResult" parameterType="ivo">
+	select inn_no, inn_name, inn_city, inn_area, inn_address, inn_type, inn_acceptable_no, 
+	inn_price, inn_info,inn_availability,member_id from INN where member_id=#{memberId} 
+	</select>
+	
 	
 	<!-- <select id="getAddressKind" resultType="string">
 		select distinct(address) from member
@@ -126,6 +153,7 @@ where inn_city=#{innCity} and inn_acceptable_no=#{acceptableNo}]]>
 		update member set password=#{password},name=#{name},address=#{address}
 		where id=#{id}
 	</update> -->
+	
 </mapper>
  
  
