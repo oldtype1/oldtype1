@@ -98,14 +98,14 @@
 						
 						<c:if test="${pb.previousPageGroup}">
 						<li><a
-							href="get_myinnlist.do?pageNo=${pb.startPageOfPageGroup-1}">Prev</a>
+							href="get_mywishlist.do?pageNo=${pb.startPageOfPageGroup-1}">Prev</a>
 						</li>
 						</c:if>
 						
 						<c:forEach var="i" begin="${pb.startPageOfPageGroup}"
 							end="${pb.endPageOfPageGroup}">
 							<c:if test="${pb.nowPage!=i}">
-								<li><a href="get_myinnlist.do?pageNo=${i}">${i}</a>
+								<li><a href="get_mywishlist.do?pageNo=${i}">${i}</a>
 								<li>
 							</c:if>
 							<c:if test="${pb.nowPage==i}">
@@ -116,7 +116,7 @@
 			
 					<c:if test="${pb.nextPageGroup}">
 						<li>
-							<a href="get_myinnlist.do?pageNo=${pb.endPageOfPageGroup+1}">Next</a>
+							<a href="get_mywishlist.do?pageNo=${pb.endPageOfPageGroup+1}">Next</a>
 						</li>
 					</c:if>
 

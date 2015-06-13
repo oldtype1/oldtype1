@@ -62,6 +62,7 @@
               <td>체크인 날짜</td>
               <td>체크아웃 날짜</td>
               <td>인원수</td>
+              <td>예약 취소</td>
               </tr>
               </thead>
                 <tbody>
@@ -75,7 +76,7 @@
                       <a class="pull-left" href="#"><img class="media-object" src="http://pingendo.github.io/pingendo-bootstrap/assets/placeholder.png" height="150" width="150">
                   </a>
                     </td>
-                    <td class="col-md-7">
+                    <td class="col-md-1">
                         <p class="text-center">${bvo.innName}</p>
                     </td>
                     <td class="col-md-1">
@@ -86,6 +87,9 @@
                     </td>
                       <td class="col-md-1">
                       <h4 class="text-center">${bvo.bookCount}</h4>
+                    </td>
+                     <td class="col-md-1">
+                   <h4 class="text-center"><a href="bookdelete.do?bookNo=${bvo.bookNo}">예약 취소</a></h4>
                     </td>
                   </tr>
     				</c:forEach>
@@ -106,14 +110,14 @@
 						
 						<c:if test="${pb.previousPageGroup}">
 						<li><a
-							href="get_myinnlist.do?pageNo=${pb.startPageOfPageGroup-1}">Prev</a>
+							href="get_mybooklist.do?pageNo=${pb.startPageOfPageGroup-1}">Prev</a>
 						</li>
 						</c:if>
 						
 						<c:forEach var="i" begin="${pb.startPageOfPageGroup}"
 							end="${pb.endPageOfPageGroup}">
 							<c:if test="${pb.nowPage!=i}">
-								<li><a href="get_myinnlist.do?pageNo=${i}">${i}</a>
+								<li><a href="get_mybooklist.do?pageNo=${i}">${i}</a>
 								<li>
 							</c:if>
 							<c:if test="${pb.nowPage==i}">
@@ -124,7 +128,7 @@
 			
 					<c:if test="${pb.nextPageGroup}">
 						<li>
-							<a href="get_myinnlist.do?pageNo=${pb.endPageOfPageGroup+1}">Next</a>
+							<a href="get_mybooklist.do?pageNo=${pb.endPageOfPageGroup+1}">Next</a>
 						</li>
 					</c:if>
 

@@ -9,6 +9,7 @@ import org.kosta.dashduowork.model.dao.BookDAO;
 import org.kosta.dashduowork.model.dao.InnDAO;
 import org.kosta.dashduowork.model.dao.WishListDAO;
 import org.kosta.dashduowork.model.vo.AmenityVO;
+import org.kosta.dashduowork.model.vo.BookDeleteVO;
 import org.kosta.dashduowork.model.vo.BookListVO;
 import org.kosta.dashduowork.model.vo.BookVO;
 import org.kosta.dashduowork.model.vo.InnListVO;
@@ -108,6 +109,12 @@ public class InnServiceImpl implements InnService {
 	System.out.println("wishListDelete 서비스 들어옴!!!!!!       "+wdvo);
 	wishListDAO.wishListDelete(wdvo);
 	}
+	@Override
+	public void bookDelete(BookDeleteVO bdvo) {
+		bookDAO.bookDelete(bdvo);
+	}
+
+
 
 
 }

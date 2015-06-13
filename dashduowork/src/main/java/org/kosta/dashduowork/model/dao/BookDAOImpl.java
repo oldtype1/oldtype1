@@ -5,6 +5,7 @@ import java.util.List;
 
 import javax.annotation.Resource;
 
+import org.kosta.dashduowork.model.vo.BookDeleteVO;
 import org.kosta.dashduowork.model.vo.BookVO;
 import org.kosta.dashduowork.model.vo.MemberVO;
 import org.mybatis.spring.SqlSessionTemplate;
@@ -30,5 +31,9 @@ public class BookDAOImpl implements BookDAO {
 	@Override
 	public List<BookVO> getmybooklist(HashMap<String, String> param) {
 		return sqlSessionTemplate.selectList("inn.getmybooklist",param);
+	}
+	@Override
+	public void bookDelete(BookDeleteVO bdvo) {
+	sqlSessionTemplate.delete("inn.bookDelete", bdvo);
 	}
 }

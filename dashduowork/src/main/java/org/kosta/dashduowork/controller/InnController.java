@@ -8,6 +8,7 @@ import javax.servlet.http.HttpSession;
 
 import org.kosta.dashduowork.model.service.InnService;
 import org.kosta.dashduowork.model.vo.AmenityVO;
+import org.kosta.dashduowork.model.vo.BookDeleteVO;
 import org.kosta.dashduowork.model.vo.BookListVO;
 import org.kosta.dashduowork.model.vo.InnListVO;
 import org.kosta.dashduowork.model.vo.InnVO;
@@ -107,6 +108,16 @@ public String wishListDelete(int wishListNo, HttpServletRequest request){
 	//삭제하고 보내주기
 	innService.wishListDelete(wdvo);
 	return "redirect:get_mywishlist.do";
+}
+
+@RequestMapping(value="bookdelete.do")
+public String bookDelete(int bookNo, HttpServletRequest request){
+	HttpSession session=null;
+	session = request.getSession(false);
+	MemberVO vo= (MemberVO)session.getAttribute("mvo");
+	BookDeleteVO bdvo=new BookDeleteVO(bookNo, vo.getMemberId());
+	innService.bookDelete(bdvo);
+	return "redirect:get_mybooklist.do";
 }
 
 }
