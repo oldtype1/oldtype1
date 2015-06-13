@@ -43,4 +43,10 @@ public class InnDAOImpl implements InnDAO {
 	public List<InnVO> selectInnByCityAndDateAndAcceptableNo(SearchVO vo){ //은식,동원
 		return sqlSessionTemplate.selectList("inn.selectInnByCityAndDateAndAcceptableNo", vo);
 	}
+
+	@Override
+	public void register(InnVO vo){
+		System.out.println("inndao : "+vo);
+		sqlSessionTemplate.insert("inn.register", vo);
+	}
 }

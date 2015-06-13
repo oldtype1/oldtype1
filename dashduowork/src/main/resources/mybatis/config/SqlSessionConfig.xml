@@ -16,12 +16,17 @@ PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
 		<typeAlias type="org.kosta.dashduowork.model.vo.WishListVO" alias="wvo"/>
 		<typeAlias type="org.kosta.dashduowork.model.vo.WishListDeleteVO" alias="wdvo"/>
 		<typeAlias type="org.kosta.dashduowork.model.vo.BookDeleteVO" alias="bdvo"/>
+		<typeAlias type="org.kosta.dashduowork.model.vo.InnPicCompVO" alias="ipvo"/>	
+		<typeAlias type="org.kosta.dashduowork.model.vo.AvailableDateVO" alias="avvo"/>
 	</typeAliases>	
 <!--     sql mapping config xml 을 연결 -->
 	<mappers>
 		<mapper resource="mybatis/config/member.xml"/>		
 		<mapper resource="mybatis/config/profilepic.xml"/>
 		<mapper resource="mybatis/config/inn.xml"/>	
+		<mapper resource="mybatis/config/innPic.xml"/>	
+		<mapper resource="mybatis/config/availabledate.xml"/>	
+		<mapper resource="mybatis/config/amenity.xml"/>	
 	</mappers>
 </configuration>
 

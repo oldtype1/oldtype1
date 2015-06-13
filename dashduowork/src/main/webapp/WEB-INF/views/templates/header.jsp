@@ -43,7 +43,7 @@ $(document).ready(function(){
       </ul>
    </li>
    <li><a href='logout.do'>로그아웃</a></li>
-   <li><a href='#'>숙소등록하기</a></li>
+   <li><a href='inn_register_from.do'>숙소등록하기</a></li>
    </c:if>
 </ul>
 

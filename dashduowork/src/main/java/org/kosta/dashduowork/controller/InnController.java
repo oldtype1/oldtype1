@@ -1,5 +1,7 @@
 package org.kosta.dashduowork.controller;
 
+import java.io.File;
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.annotation.Resource;
@@ -8,19 +10,23 @@ import javax.servlet.http.HttpSession;
 
 import org.kosta.dashduowork.model.service.InnService;
 import org.kosta.dashduowork.model.vo.AmenityVO;
+import org.kosta.dashduowork.model.vo.AvailableDateVO;
 import org.kosta.dashduowork.model.vo.BookDeleteVO;
 import org.kosta.dashduowork.model.vo.BookListVO;
 import org.kosta.dashduowork.model.vo.InnListVO;
+import org.kosta.dashduowork.model.vo.InnPicCompVO;
 import org.kosta.dashduowork.model.vo.InnVO;
 import org.kosta.dashduowork.model.vo.MemberVO;
 import org.kosta.dashduowork.model.vo.SearchVO;
 import org.kosta.dashduowork.model.vo.WishListDeleteVO;
 import org.kosta.dashduowork.model.vo.WishListListVO;
 import org.springframework.stereotype.Controller;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
 @Controller
@@ -28,6 +34,63 @@ public class InnController {
 	
 	@Resource(name="innServiceImpl")
 	private InnService innService;
+	
+	@RequestMapping("inn_register_from.do")
+	public String innRegister() {
+		System.out.println("registerfrom으로");
+		return "inn_register_from";
+	}
+	
+	@Resource(name = "uploadPath")
+	private String path;
+	
+	@Transactional
+	@RequestMapping(value = "inn_register.do", method = RequestMethod.POST)
+	public ModelAndView register(HttpServletRequest request, InnVO ivo,
+			InnPicCompVO ipvo, AmenityVO avo, AvailableDateVO avvo) {
+		System.out.println("Inn register start....");
+		List<MultipartFile> file = ipvo.getFile();
+		System.out.println("notice");
+		HttpSession session = request.getSession(false);
+		MemberVO mvo = (MemberVO) session.getAttribute("mvo");
+		ivo.setMemberId(mvo.getMemberId());
+		innService.registerInn(ivo);
+
+		ipvo.setInnNo(ivo.getInnNo());
+		avo.setInnNo(ivo.getInnNo());
+		avvo.setInnNo(ivo.getInnNo());
+
+		ivo.setMemberId(mvo.getMemberId());
+		System.out.println(ivo.getMemberId());
+		System.out.println("ivo:" + ivo);
+		
+		
+		List<String> nameList = new ArrayList<String>();
+		for (int i = 0; i < file.size(); i++) {
+			// System.out.println(list.get(i).getOriginalFilename().equals(""));
+			// TODO 파일 이름이 겹치는 상황에 대한 대처를 생각해본다.
+			int a = (int) (Math.random() * 10);
+			int b = (int) (Math.random() * 10);
+			int c = (int) (Math.random() * 10);
+			String fileName = path+a + "" + b + "" + c + "_"
+					+ file.get(i).getOriginalFilename();
+			if (!fileName.equals("")) {
+				try {
+					nameList.add(fileName);
+					file.get(i).transferTo(new File(fileName));
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+			}
+		}
+		ipvo.setFilePathes(nameList);
+		for(int i=0;i<nameList.size();i++){
+			ipvo.setFilePath(ipvo.getFilePathes().get(i));
+			innService.registerInnPic(ipvo);
+		}
+		innService.registerInnEtc(avo, avvo);
+		return new ModelAndView("redirect:get_myinnlist.do");
+	}
 	
 	@RequestMapping(value="get_myinnlist.do")
 	public ModelAndView getMyInnList(String pageNo,HttpServletRequest request){

@@ -131,6 +131,22 @@ ceil(rownum/5) as page from
 	</select>
 	
 	
+<insert id="register" parameterType="ivo" >
+	 <selectKey keyProperty="innNo"  resultType="int"  order="BEFORE">
+       select inn_sequence.nextval from dual
+   </selectKey>
+	insert into INN
+	(inn_no, inn_name, inn_city, inn_area, inn_address, inn_type, inn_acceptable_no, 
+	inn_price, inn_info,inn_availability,member_id) 
+	values(#{innNo},#{innName},#{innCity},#{innArea},#{innAddress},#{innType},
+	#{acceptableNo},#{innPrice},#{innInfo},#{innAvailability},#{memberId})
+	</insert>
+	<select id="select_inn_by_member_id" resultMap="innResult" parameterType="ivo">
+	select inn_no, inn_name, inn_city, inn_area, inn_address, inn_type, inn_acceptable_no, 
+	inn_price, inn_info,inn_availability,member_id from INN where member_id=#{memberId} 
+	</select>
+	
+	
 	<!-- <select id="getAddressKind" resultType="string">
 		select distinct(address) from member
 	</select>

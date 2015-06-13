@@ -1,5 +1,7 @@
 package org.kosta.dashduowork.model.dao;
 
-public interface AmenityDAO {
+import org.kosta.dashduowork.model.vo.AmenityVO;
 
+public interface AmenityDAO {
+	public abstract void register(AmenityVO vo);
 }
