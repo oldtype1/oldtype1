@@ -7,6 +7,7 @@
 <meta charset="utf-8" />
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1">
+
 <link rel="stylesheet" href="${initParam.root}css/styles.css">
     
 <script src="http://code.jquery.com/jquery-1.11.3.js"></script>
@@ -34,20 +35,12 @@
 	href="http://code.jquery.com/ui/1.8.18/themes/base/jquery-ui.css"
 	type="text/css" media="all" />
 	<!-- 달력 자바스크립트로 추정 -->
-<script>
-	$(function() {
-		$("#member_register").click(function(){
-			location.href="member_register_form.do";
-		});
-	});
-</script>
 </head>
 <body>
 <div id="container">
 	<div id="header"><tiles:insertAttribute name="header"/></div>
-	<%-- <div id="left"><tiles:insertAttribute name="left"/></div> --%>
 	<div id="main"><tiles:insertAttribute name="main"/></div>
-	<%-- <div id="footer"><tiles:insertAttribute name="footer"/></div> --%>
+	<div id="footer"><tiles:insertAttribute name="footer"/></div>
 </div>
 <%-- table layout 방식을 css 로 변경 --%>
 <%-- <table width="100%" border="1" cellpadding="5">
