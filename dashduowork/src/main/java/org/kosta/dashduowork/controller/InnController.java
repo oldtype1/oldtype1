@@ -12,6 +12,7 @@ import org.kosta.dashduowork.model.vo.BookListVO;
 import org.kosta.dashduowork.model.vo.InnListVO;
 import org.kosta.dashduowork.model.vo.InnVO;
 import org.kosta.dashduowork.model.vo.MemberVO;
+import org.kosta.dashduowork.model.vo.SearchVO;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -51,6 +52,19 @@ public class InnController {
 		List<InnVO> list =innService.findInnByCheckedAmenity(vo);
 		//model.addAttribute("list", list);
 		return list;
+	}
+	@RequestMapping(value="searchByCityDateNo.do")
+	public String searchByCityDateNo(SearchVO vo, Model model){
+		System.out.println(vo);
+		List<InnVO> list=null;
+		if(vo.getStartDate()==""){
+			//날짜 안들어간경우		
+			list=innService.findInnByCityAndAcceptableNo(vo);
+		}else{//날짜 들어간경우
+			list=innService.findInnByCityAndDateAndAcceptableNo(vo);
+		}
+		model.addAttribute("list", list);
+		return "inn_search_result";
 	}
 	
 	@RequestMapping(value="get_mybooklist.do")

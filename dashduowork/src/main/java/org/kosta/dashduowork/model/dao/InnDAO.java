@@ -17,7 +17,7 @@ public interface InnDAO {
 	
 	public abstract List<InnVO> selectInnByCityAndAcceptableNo(InnVO vo); //은식,동원
 	public abstract List<InnVO> selectInnByCheckedAmenity(AmenityVO vo); //은식,동원
-	public abstract List<InnVO> selectInnByCityAndDate(SearchVO vo); //은식,동원
+	public abstract List<InnVO> selectInnByCityAndAcceptableNo(SearchVO vo); //은식,동원
 	public abstract List<InnVO> selectInnByCityAndDateAndAcceptableNo(SearchVO vo); //은식,동원
 
 }

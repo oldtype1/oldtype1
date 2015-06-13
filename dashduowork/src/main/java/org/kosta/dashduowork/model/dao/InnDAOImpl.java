@@ -37,8 +37,8 @@ public class InnDAOImpl implements InnDAO {
 		return sqlSessionTemplate.selectList("inn.selectInnByCheckedAmenity", vo);
 	}
 	//plus+++++++++++++++++++++++++++++++++++++++++++
-	public List<InnVO> selectInnByCityAndDate(SearchVO vo){ //은식,동원
-		return sqlSessionTemplate.selectList("inn.selectInnByCityAndDate", vo);
+	public List<InnVO> selectInnByCityAndAcceptableNo(SearchVO vo){
+		return sqlSessionTemplate.selectList("inn.selectInnByCityAndAcceptableNo", vo);
 	}
 	public List<InnVO> selectInnByCityAndDateAndAcceptableNo(SearchVO vo){ //은식,동원
 		return sqlSessionTemplate.selectList("inn.selectInnByCityAndDateAndAcceptableNo", vo);

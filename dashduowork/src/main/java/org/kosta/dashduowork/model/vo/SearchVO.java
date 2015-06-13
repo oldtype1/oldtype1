@@ -24,6 +24,12 @@ public class SearchVO {
 		this.startDate = startDate;
 		this.endDate = endDate;
 	}
+	
+	public SearchVO(String innCity, String acceptableNo) {
+		super();
+		this.innCity = innCity;
+		this.acceptableNo = acceptableNo;
+	}
 	public String getInnCity() {
 		return innCity;
 	}
