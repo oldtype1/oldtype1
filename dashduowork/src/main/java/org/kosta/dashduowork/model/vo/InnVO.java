@@ -102,7 +102,7 @@ public class InnVO {
 	public String getInnAvailability() {
 		return innAvailability;
 	}
-	public void setInnAvailability(String innavailability) {
+	public void setInnAvailability(String innAvailability) {
 		this.innAvailability = innAvailability;
 	}
 	public String getMemberId() {
