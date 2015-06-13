@@ -28,8 +28,15 @@ public class MemberServiceImpl implements MemberService {
       @Override
       public void updateMemberInfo(MemberVO mvo,ProfilePicVO pvo) {
       memberDAO.updateMemberInfo(mvo);
+      ProfilePicVO vo = memberDAO.selectProfilePic(mvo.getMemberId());
+     if(vo!=null){
       memberDAO.updateProfilePic(pvo);
+     }
+     else{
+    	 memberDAO.insertProfilePic(pvo);
+     }
       }
+      
       @Override
       public void memberSecession(String memberId) {
          memberDAO.memberSecession(memberId);
