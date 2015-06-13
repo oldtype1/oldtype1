@@ -1,61 +1,77 @@
 package org.kosta.dashduowork.model.vo;
 
+import java.util.List;
+
+import org.springframework.web.multipart.MultipartFile;
+
 public class InnPicCompVO {
-	private int innPicCompNo;
+
 	private int innNo;
-	private String innPicCompFilePath;
-	private String innPicCompOgName;
-	private String innPicCompCurrName;
+	private int innPicNo;
+	private List<MultipartFile> file;
+	private List<String> filePathes;
+	private String filePath;
+
 	public InnPicCompVO() {
 		super();
 		// TODO Auto-generated constructor stub
 	}
-	public InnPicCompVO(int innPicCompNo, int innNo, String innPicCompFilePath,
-			String innPicCompOgName, String innPicCompCurrName) {
+
+	public InnPicCompVO(int innNo, int innPicNo, List<MultipartFile> file,
+			List<String> filePathes, String filePath) {
 		super();
-		this.innPicCompNo = innPicCompNo;
 		this.innNo = innNo;
-		this.innPicCompFilePath = innPicCompFilePath;
-		this.innPicCompOgName = innPicCompOgName;
-		this.innPicCompCurrName = innPicCompCurrName;
+		this.innPicNo = innPicNo;
+		this.file = file;
+		this.filePathes = filePathes;
+		this.filePath = filePath;
 	}
-	public int getInnPicCompNo() {
-		return innPicCompNo;
-	}
-	public void setInnPicCompNo(int innPicCompNo) {
-		this.innPicCompNo = innPicCompNo;
-	}
+
 	public int getInnNo() {
 		return innNo;
 	}
+
 	public void setInnNo(int innNo) {
 		this.innNo = innNo;
 	}
-	public String getInnPicCompFilePath() {
-		return innPicCompFilePath;
+
+	public int getInnPicNo() {
+		return innPicNo;
 	}
-	public void setInnPicCompFilePath(String innPicCompFilePath) {
-		this.innPicCompFilePath = innPicCompFilePath;
+
+	public void setInnPicNo(int innPicNo) {
+		this.innPicNo = innPicNo;
 	}
-	public String getInnPicCompOgName() {
-		return innPicCompOgName;
+
+	public List<MultipartFile> getFile() {
+		return file;
 	}
-	public void setInnPicCompOgName(String innPicCompOgName) {
-		this.innPicCompOgName = innPicCompOgName;
+
+	public void setFile(List<MultipartFile> file) {
+		this.file = file;
 	}
-	public String getInnPicCompCurrName() {
-		return innPicCompCurrName;
+
+	public List<String> getFilePathes() {
+		return filePathes;
 	}
-	public void setInnPicCompCurrName(String innPicCompCurrName) {
-		this.innPicCompCurrName = innPicCompCurrName;
+
+	public void setFilePathes(List<String> filePathes) {
+		this.filePathes = filePathes;
 	}
+
+	public String getFilePath() {
+		return filePath;
+	}
+
+	public void setFilePath(String filePath) {
+		this.filePath = filePath;
+	}
+
 	@Override
 	public String toString() {
-		return "InnPicCompVO [innPicCompNo=" + innPicCompNo + ", innNo="
-				+ innNo + ", innPicCompFilePath=" + innPicCompFilePath
-				+ ", innPicCompOgName=" + innPicCompOgName
-				+ ", innPicCompCurrName=" + innPicCompCurrName + "]";
+		return "InnPicCompVO [innNo=" + innNo + ", innPicNo=" + innPicNo
+				+ ", file=" + file + ", filePathes=" + filePathes
+				+ ", filePath=" + filePath + "]";
 	}
-	
-	
+
 }

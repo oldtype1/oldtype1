@@ -102,11 +102,11 @@ amenity_bed VARCHAR2(1) CHECK (amenity_bed IN ('Y', 'N')),
 amenity_tv VARCHAR2(1) CHECK (amenity_tv IN ('Y', 'N')),
 amenity_kitchen VARCHAR2(1) CHECK (amenity_kitchen IN ('Y', 'N')),
 amenity_bbq VARCHAR2(1) CHECK (amenity_bbq IN ('Y', 'N')),
-amenity_no number primary key,
-constraint fk_inn6 foreign key(amenity_no) references inn(inn_no) on DELETE CASCADE
+inn_no number primary key,
+constraint fk_inn6 foreign key(inn_no) references inn(inn_no) on DELETE CASCADE
 )
 
-insert into amenity(amenity_wifi,amenity_bed,amenity_tv,amenity_kitchen,amenity_bbq, amenity_no) values
+insert into amenity(amenity_wifi,amenity_bed,amenity_tv,amenity_kitchen,amenity_bbq, inn_no) values
 	('Y','Y','Y','Y','Y',7)
 
 
@@ -153,8 +153,9 @@ constraint fk_member3 foreign key(member_id) references member(member_id) on DEL
 
 -----------------숙소 사진 테이블(inn_no ref)-----------------------
 create table inn_pic(
-inn_no number primary key,
-file_path varchar2(50),
+inn_pic_no number primary key,
+inn_no number not null,
+file_path varchar2(200) not null,
 constraint fk_inn4 foreign key(inn_no) references inn(inn_no) on DELETE CASCADE 
 )
 

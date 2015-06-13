@@ -5,14 +5,19 @@ import java.util.List;
 
 import javax.annotation.Resource;
 
+import org.kosta.dashduowork.model.dao.AmenityDAO;
+import org.kosta.dashduowork.model.dao.AvailableDateDAO;
 import org.kosta.dashduowork.model.dao.BookDAO;
 import org.kosta.dashduowork.model.dao.InnDAO;
+import org.kosta.dashduowork.model.dao.InnPicCompDAO;
 import org.kosta.dashduowork.model.dao.WishListDAO;
 import org.kosta.dashduowork.model.vo.AmenityVO;
+import org.kosta.dashduowork.model.vo.AvailableDateVO;
 import org.kosta.dashduowork.model.vo.BookDeleteVO;
 import org.kosta.dashduowork.model.vo.BookListVO;
 import org.kosta.dashduowork.model.vo.BookVO;
 import org.kosta.dashduowork.model.vo.InnListVO;
+import org.kosta.dashduowork.model.vo.InnPicCompVO;
 import org.kosta.dashduowork.model.vo.InnVO;
 import org.kosta.dashduowork.model.vo.MemberVO;
 import org.kosta.dashduowork.model.vo.PagingBean;
@@ -30,6 +35,32 @@ public class InnServiceImpl implements InnService {
 	@Resource(name="wishListDAOImpl")
 	private WishListDAO wishListDAO;
 	
+	@Resource(name="innPicCompDAOImpl")
+	private InnPicCompDAO innPicCompDAO;
+	@Resource(name="amenityDAOImpl")
+	private AmenityDAO amenityDAO;
+	@Resource(name="availableDateDAOImpl")
+	private AvailableDateDAO availableDateDAO;
+	
+	@Override
+	public void registerInn(InnVO ivo){
+		System.out.println("serivce : "+ivo);
+		innDAO.register(ivo);
+	}
+	public void registerInnPic(InnPicCompVO vo){
+		System.out.println("serivce : "+vo);
+		innPicCompDAO.register(vo);		
+	}
+	@Override
+	public void registerInnEtc(AmenityVO avo, AvailableDateVO avvo){
+		System.out.println("service 들어옴?");
+	
+		amenityDAO.register(avo);
+		System.out.println("serivce : "+avo);
+		availableDateDAO.register(avvo);
+		System.out.println("serivce : "+avvo);
+		
+	}
 	
 	@Override
 	public InnListVO getmyinnlist(MemberVO vo, String pageNo) {

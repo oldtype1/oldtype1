@@ -3,9 +3,11 @@ package org.kosta.dashduowork.model.service;
 import java.util.List;
 
 import org.kosta.dashduowork.model.vo.AmenityVO;
+import org.kosta.dashduowork.model.vo.AvailableDateVO;
 import org.kosta.dashduowork.model.vo.BookDeleteVO;
 import org.kosta.dashduowork.model.vo.BookListVO;
 import org.kosta.dashduowork.model.vo.InnListVO;
+import org.kosta.dashduowork.model.vo.InnPicCompVO;
 import org.kosta.dashduowork.model.vo.InnVO;
 import org.kosta.dashduowork.model.vo.MemberVO;
 import org.kosta.dashduowork.model.vo.SearchVO;
@@ -21,4 +23,8 @@ public interface InnService {
 	public WishListListVO getmywishlist(MemberVO vo, String pageNo);
 	public void wishListDelete(WishListDeleteVO wdvo);
 	public void bookDelete(BookDeleteVO bdvo);
+	
+	public void registerInn(InnVO ivo);
+	public void registerInnPic(InnPicCompVO vo);
+	public void registerInnEtc(AmenityVO avo, AvailableDateVO avvo);
 }

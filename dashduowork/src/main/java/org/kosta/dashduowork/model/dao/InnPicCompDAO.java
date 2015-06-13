@@ -1,5 +1,7 @@
 package org.kosta.dashduowork.model.dao;
 
-public interface InnPicCompDAO {
+import org.kosta.dashduowork.model.vo.InnPicCompVO;
 
+public interface InnPicCompDAO {
+	public abstract void register(InnPicCompVO vo);
 }
