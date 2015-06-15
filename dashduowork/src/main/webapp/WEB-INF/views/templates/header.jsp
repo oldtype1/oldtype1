@@ -39,7 +39,7 @@ $(document).ready(function(){
     <li><a href='get_mybooklist.do'>예약숙소</a></li>
          <li><a href='#'>거래내역</a></li>
                 <li><a href='get_mywishlist.do'>위시리스트</a></li>
-         <li><a href='#'>쪽지</a></li>        
+         <li><a href='get_innReservation_list.do'>내가 등록한 숙소의 예약 목록</a></li>        
       </ul>
    </li>
    <li><a href='logout.do'>로그아웃</a></li>

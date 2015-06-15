@@ -16,6 +16,7 @@ import org.kosta.dashduowork.model.vo.BookListVO;
 import org.kosta.dashduowork.model.vo.FilterVO;
 import org.kosta.dashduowork.model.vo.InnListVO;
 import org.kosta.dashduowork.model.vo.InnPicCompVO;
+import org.kosta.dashduowork.model.vo.InnReservationListVO;
 import org.kosta.dashduowork.model.vo.InnVO;
 import org.kosta.dashduowork.model.vo.MemberVO;
 import org.kosta.dashduowork.model.vo.SearchVO;
@@ -207,6 +208,20 @@ public String bookDelete(int bookNo, HttpServletRequest request){
 	innService.bookDelete(bdvo);
 	return "redirect:get_mybooklist.do";
 }
+
+@RequestMapping(value="get_innReservation_list.do")
+public String getInnReservationList(String pageNo, HttpServletRequest request, Model model){
+	HttpSession session=null;
+	session = request.getSession(false);
+	System.out.println("get_innReservation_list 콘트롤러 들어옴");
+	MemberVO vo= (MemberVO)session.getAttribute("mvo");
+	System.out.println("get_innReservation_list 콘트롤러 들어옴2    "+vo);
+	InnReservationListVO irlvo=innService.getMyInnReservationList(vo, pageNo);
+	System.out.println("get_innReservation_list 콘트롤러 들어옴3    +"+irlvo);
+	model.addAttribute("irlvo", irlvo);
+	return "member_innReservation_list";
+}
+
 
 }
 
