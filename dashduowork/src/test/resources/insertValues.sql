@@ -30,21 +30,21 @@ values(inn_sequence.nextval,'영통메르디앙4','수원','영통','영통메�
 select*from inn;
 
 insert into amenity(amenity_wifi,amenity_bed,amenity_tv,amenity_kitchen,amenity_bbq, amenity_no) values
-('Y','Y','Y','Y','Y',1);
+('Y','Y','Y','Y','Y',9);
 insert into amenity(amenity_wifi,amenity_bed,amenity_tv,amenity_kitchen,amenity_bbq, amenity_no) values
-('Y','N','Y','N','Y',2);
+('Y','N','Y','N','Y',10);
 insert into amenity(amenity_wifi,amenity_bed,amenity_tv,amenity_kitchen,amenity_bbq, amenity_no) values
-('Y','N','N','N','Y',3);
+('Y','N','N','N','Y',11);
 insert into amenity(amenity_wifi,amenity_bed,amenity_tv,amenity_kitchen,amenity_bbq, amenity_no) values
-('Y','N','N','N','Y',4);
+('Y','N','N','N','Y',12);
 
-insert into availabledate(availabledate_no, inn_no, availabledate_st, availabledate_end) values(availabledate_no_sequence.nextval, 1, '2015-05-18', '2015-05-25');
-insert into availabledate(availabledate_no, inn_no, availabledate_st, availabledate_end) values(availabledate_no_sequence.nextval, 1, '2015-05-27', '2015-05-31');
-insert into availabledate(availabledate_no, inn_no, availabledate_st, availabledate_end) values(availabledate_no_sequence.nextval, 2, '2015-05-20', '2015-05-24');
-insert into availabledate(availabledate_no, inn_no, availabledate_st, availabledate_end) values(availabledate_no_sequence.nextval, 3, '2015-05-13', '2015-05-22');
-insert into availabledate(availabledate_no, inn_no, availabledate_st, availabledate_end) values(availabledate_no_sequence.nextval, 3, '2015-06-02', '2015-06-10');
-insert into availabledate(availabledate_no, inn_no, availabledate_st, availabledate_end) values(availabledate_no_sequence.nextval, 5, '2015-05-27', '2015-05-31');
-insert into availabledate(availabledate_no, inn_no, availabledate_st, availabledate_end) values(availabledate_no_sequence.nextval, 5, '2015-05-27', '2015-05-31');
-insert into availabledate(availabledate_no, inn_no, availabledate_st, availabledate_end) values(availabledate_no_sequence.nextval, 6, '2015-05-27', '2015-05-31');
-insert into availabledate(availabledate_no, inn_no, availabledate_st, availabledate_end) values(availabledate_no_sequence.nextval, 6, '2015-05-27', '2015-05-31');
-insert into availabledate(availabledate_no, inn_no, availabledate_st, availabledate_end) values(availabledate_no_sequence.nextval, 7, '2015-05-27', '2015-05-31');
+insert into availabledate(availabledate_no, inn_no, availabledate_st, availabledate_end) values(availabledate_no_sequence.nextval, 9, '2015-05-18', '2015-05-25');
+insert into availabledate(availabledate_no, inn_no, availabledate_st, availabledate_end) values(availabledate_no_sequence.nextval, 9, '2015-05-27', '2015-05-31');
+insert into availabledate(availabledate_no, inn_no, availabledate_st, availabledate_end) values(availabledate_no_sequence.nextval, 10, '2015-05-20', '2015-05-24');
+insert into availabledate(availabledate_no, inn_no, availabledate_st, availabledate_end) values(availabledate_no_sequence.nextval, 11, '2015-05-13', '2015-05-22');
+insert into availabledate(availabledate_no, inn_no, availabledate_st, availabledate_end) values(availabledate_no_sequence.nextval, 11, '2015-06-02', '2015-06-10');
+insert into availabledate(availabledate_no, inn_no, availabledate_st, availabledate_end) values(availabledate_no_sequence.nextval, 13, '2015-05-27', '2015-05-31');
+insert into availabledate(availabledate_no, inn_no, availabledate_st, availabledate_end) values(availabledate_no_sequence.nextval, 13, '2015-05-27', '2015-05-31');
+insert into availabledate(availabledate_no, inn_no, availabledate_st, availabledate_end) values(availabledate_no_sequence.nextval, 14, '2015-05-27', '2015-05-31');
+insert into availabledate(availabledate_no, inn_no, availabledate_st, availabledate_end) values(availabledate_no_sequence.nextval, 14, '2015-05-27', '2015-05-31');
+insert into availabledate(availabledate_no, inn_no, availabledate_st, availabledate_end) values(availabledate_no_sequence.nextval, 15, '2015-05-27', '2015-05-31');

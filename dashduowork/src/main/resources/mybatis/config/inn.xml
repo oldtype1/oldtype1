@@ -80,7 +80,7 @@ where availabledate_st>= #{startDate} and availabledate_end <= #{endDate})
 where inn_city=#{innCity} and inn_acceptable_no=#{acceptableNo}]]>
 	</select>
 	
-		<select  id="getmybooklist" parameterType="hashmap" resultType="bvo" resultMap="bookResult">
+<select  id="getmybooklist" parameterType="hashmap" resultType="bvo" resultMap="bookResult">
 <!-- 체크인 체크아웃 날짜 시간 안나오게 수정함 -->
 <!-- 	 select book_no, book_checkin, book_checkout, book_count, member_id, inn_no, inn_name from(
  select book_no, book_checkin, book_checkout, book_count, member_id, inn_no, inn_name, page from(
@@ -98,7 +98,7 @@ ceil(rownum/5) as page from
  ) 
  where member_id=#{member_id}
  ) where page=#{pageNo}
-	</select>
+</select>
 	
 		<select id="getmywishlist" parameterType="hashmap" resultType="wvo" resultMap="wishListResult">
 	 select inn_no, wishlist_no, member_id, inn_name from(
@@ -115,7 +115,7 @@ ceil(rownum/5) as page from
 	 delete from book where member_id=#{memberId} and book_no=#{bookNo}
 	</delete>
 	
-<insert id="register" parameterType="ivo" >
+<!-- <insert id="register" parameterType="ivo" > 아 ~~ 줭신!!!!!!! 왜 똑같은거 두개 붙였어!!!!!
 	 <selectKey keyProperty="innNo"  resultType="int"  order="BEFORE">
        select inn_sequence.nextval from dual
    </selectKey>
@@ -128,7 +128,7 @@ ceil(rownum/5) as page from
 	<select id="select_inn_by_member_id" resultMap="innResult" parameterType="ivo">
 	select inn_no, inn_name, inn_city, inn_area, inn_address, inn_type, inn_acceptable_no, 
 	inn_price, inn_info,inn_availability,member_id from INN where member_id=#{memberId} 
-	</select>
+	</select> -->
 	
 	
 <insert id="register" parameterType="ivo" >
