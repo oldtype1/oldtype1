@@ -8,35 +8,26 @@
 			dateFormat : 'yy-mm-dd'
 		});
 		$("#filterForm").change(function() {
+			$("#resultViewSearch").html("");
+			//alert();
 			$.ajax({
 				type : "Post",
 				url : "selectInnByCheckedAmenity.do",
 				data : $("#filterForm").serialize(),
 				dataType : "json",
 				success : function(innInfoList) {
+					var tableInfo="<table class='table'><thead><tr><th >숙소 번호</th><th>숙소명</th><th>지역(대)</th><th>지역(중)</th><th>상세 주소</th><th>유형</th><th>수용가능인원</th><th>가격</th></tr></thead>";
+					tableInfo+="<tbody>";
 					if (innInfoList.length != 0) {
-						var tableInfo=
 						$.each(innInfoList, function(index, info) {
-							$("#showInnNo").html(info.innNo);
-							$("#showInnName").html(info.innName);
-							$("#showInnCity").html(info.innCity);
-							$("#showInnArea").html(info.innArea);
-							$("#showInnInfo").html(info.innInfo);
-							$("#showInnType").html(info.innType);
-							$("#showInnAcceptable").html(info.innAvailability);
-							$("#showInnPrice").html(info.innPrice);
+							tableInfo+="<tr><td>"+info.innNo+"</td><td>"+info.innName+"</td><td>"+info.innCity+"</td><td>"+info.innArea+"</td><td>"+info.innAddress+"</td><td>"+info.innType+"</td><td>"+info.acceptableNo+"</td><td>"+info.innPrice+"</td></tr>";
 						}); //each
 					}//if
 					else if(innInfoList.length == 0){
-						$("#showInnNo").html("");
-						$("#showInnName").html("");
-						$("#showInnCity").html("");
-						$("#showInnArea").html("");
-						$("#showInnInfo").html("");
-						$("#showInnType").html("");
-						$("#showInnAcceptable").html("");
-						$("#showInnPrice").html("");
+						tableInfo+="<tr><td colspan='8'>검색결과가 존재하지 않습니다.</td></tr>"
 					}
+					tableInfo+="</tbody></table>";
+					$("#resultViewSearch").html(tableInfo);
 				}
 			});//ajax 			 	 			
 		}); //change
@@ -85,60 +76,38 @@
 	<div class="container">
 		<div class="row">
 			<div class="col-md-12">
-				<table class="table">
-					<thead>
-						<tr>
-							<th >숙소 번호</th>
-							<th>숙소명</th>
-							<th>지역(대)</th>
-							<th>지역(중)</th>
-							<th>상세 주소</th>
-							<th>유형</th>
-							<th>수용가능인원</th>
-							<th>가격</th>
-						</tr>
-					</thead>
-					<tbody>
-					<c:choose>
-					<c:when test="${requestScope.list.size()==0}" >
+			지역 : ${requestScope.searchVO.innCity} / 인원 : ${requestScope.searchVO.acceptableNo } 명 에 대한 검색결과
+			<div id="resultViewFilter"></div>
+				<div id="resultViewSearch">
+					<table class="table">
+						<thead>
 							<tr>
-								<td><div id="showInnNo"></div></td>
-								<td><div id="showInnName"></div></td>
-								<td><div id="showInnCity"></div></td>
-								<td><div id="showInnArea"></div></td>
-								<td><div id="showInnInfo"></div></td>
-								<td><div id="showInnType"></div></td>
-								<td><div id="showInnAcceptable"></div></td>
-								<td><div id="showInnPrice"></div></td>
+								<th >숙소 번호</th>
+								<th>숙소명</th>
+								<th>지역(대)</th>
+								<th>지역(중)</th>
+								<th>상세 주소</th>
+								<th>유형</th>
+								<th>수용가능인원</th>
+								<th>가격</th>
 							</tr>
-					</c:when>
-					<c:otherwise>
+						</thead>
+						<tbody>
 						<c:forEach var="list" items="${requestScope.list}">
-							<tr>
-								<td>${list.innNo }</td>
-								<td>${list.innName }</td>
-								<td>${list.innCity }</td>
-								<td>${list.innArea }</td>
-								<td>${list.innAddress }</td>
-								<td>${list.innType }</td>
-								<td>${list.acceptableNo }</td>
-								<td>${list.innPrice }</td>
-							</tr>
-						</c:forEach>
-							<tr>
-								<td><div id="showInnNo"></div></td>
-								<td><div id="showInnName"></div></td>
-								<td><div id="showInnCity"></div></td>
-								<td><div id="showInnArea"></div></td>
-								<td><div id="showInnInfo"></div></td>
-								<td><div id="showInnType"></div></td>
-								<td><div id="showInnAcceptable"></div></td>
-								<td><div id="showInnPrice"></div></td>
-							</tr>
-					</c:otherwise>
-					</c:choose>
-					</tbody>
-				</table>
+								<tr>
+									<td>${list.innNo }</td>
+									<td>${list.innName }</td>
+									<td>${list.innCity }</td>
+									<td>${list.innArea }</td>
+									<td>${list.innAddress }</td>
+									<td>${list.innType }</td>
+									<td>${list.acceptableNo }</td>
+									<td>${list.innPrice }</td>
+								</tr>
+							</c:forEach>
+						</tbody>
+					</table>
+				</div>
 			</div>
 		</div>
 	</div>

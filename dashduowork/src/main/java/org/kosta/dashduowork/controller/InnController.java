@@ -153,6 +153,7 @@ public class InnController {
 		}else{//날짜 들어간경우
 			list=innService.findInnByCityAndDateAndAcceptableNo(vo);
 		}
+		model.addAttribute("searchVO", vo);
 		model.addAttribute("list", list);
 		return "inn_search_result";
 	}
