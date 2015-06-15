@@ -16,6 +16,7 @@ import org.kosta.dashduowork.model.vo.AvailableDateVO;
 import org.kosta.dashduowork.model.vo.BookDeleteVO;
 import org.kosta.dashduowork.model.vo.BookListVO;
 import org.kosta.dashduowork.model.vo.BookVO;
+import org.kosta.dashduowork.model.vo.FilterVO;
 import org.kosta.dashduowork.model.vo.InnListVO;
 import org.kosta.dashduowork.model.vo.InnPicCompVO;
 import org.kosta.dashduowork.model.vo.InnVO;
@@ -145,7 +146,15 @@ public class InnServiceImpl implements InnService {
 		bookDAO.bookDelete(bdvo);
 	}
 
-
+	//6/15일 추가내용
+	public List<InnVO> findInnByCityAndDateAndAcceptableNoWithFilter(FilterVO vo){ //지역&날짜&인원+필터
+		List<InnVO> list =  innDAO.selectInnByCityAndDateAndAcceptableNoWithFilter(vo);
+		return list;
+	}
+	public List<InnVO> findInnByCityAndAcceptableNoWithFilter(FilterVO vo){ //지역&날짜&인원+필터
+		List<InnVO> list =  innDAO.selectInnByCityAndAcceptableNoWithFilter(vo);
+		return list;
+	}
 
 
 }

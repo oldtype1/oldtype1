@@ -13,6 +13,7 @@ import org.kosta.dashduowork.model.vo.AmenityVO;
 import org.kosta.dashduowork.model.vo.AvailableDateVO;
 import org.kosta.dashduowork.model.vo.BookDeleteVO;
 import org.kosta.dashduowork.model.vo.BookListVO;
+import org.kosta.dashduowork.model.vo.FilterVO;
 import org.kosta.dashduowork.model.vo.InnListVO;
 import org.kosta.dashduowork.model.vo.InnPicCompVO;
 import org.kosta.dashduowork.model.vo.InnVO;
@@ -113,9 +114,32 @@ public class InnController {
 	}*/
 	@RequestMapping(value ="selectInnByCheckedAmenity.do", method=RequestMethod.POST )
 	@ResponseBody
-	public List<InnVO> selectInnByCheckedAmenity(AmenityVO vo, Model model) {
-		System.out.println(vo+" 는 내가 전달한 값");
-		List<InnVO> list =innService.findInnByCheckedAmenity(vo);
+	public List<InnVO> selectInnByCheckedAmenity(FilterVO vo, Model model) {
+		System.out.println("컨트롤러에서 FilterVO내용확인 : "+vo); //확인완료
+		List<InnVO> list=null;
+		if(vo.getAmenityBBQ().equals("N")&vo.getAmenityBed().equals("N")&vo.getAmenityKitchen().equals("N")&vo.getAmenityTV().equals("N")&vo.getAmenityWiFi().equals("N")){
+			System.out.println("체크값 없어서 컨트롤러에서 다른곳으로 빠짐.");
+			SearchVO svo=new SearchVO();
+			svo.setAcceptableNo(vo.getFirstSearchPeopleNo());
+			svo.setEndDate(vo.getFirstSearchEndDate());
+			svo.setInnCity(vo.getFirstSearchCity());
+			svo.setStartDate(vo.getFirstSearchStartDate());
+			if(svo.getStartDate()==""){
+				//날짜 안들어간경우		
+				list=innService.findInnByCityAndAcceptableNo(svo);
+			}else{//날짜 들어간경우
+				list=innService.findInnByCityAndDateAndAcceptableNo(svo);
+			}
+			model.addAttribute("searchVO", svo);
+		}else{
+			if(vo.getFirstSearchStartDate()==""){//날짜 없는경우
+				//서브쿼리 이용해서 도시+인원검색 후 결과를 filter처리 parameterType으로 새로운 VO를 만들거나 기존 VO에 변수 추가해야할듯
+				list=innService.findInnByCityAndAcceptableNoWithFilter(vo);
+			}else{//날짜 들어간경우
+				//서브쿼리 이용해서 도시+날짜+인원검색 후 결과를 filter처리
+				list=innService.findInnByCityAndDateAndAcceptableNoWithFilter(vo);
+			}
+		}
 		//model.addAttribute("list", list);
 		return list;
 	}
