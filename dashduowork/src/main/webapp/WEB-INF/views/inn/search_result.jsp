@@ -24,7 +24,7 @@
 						}); //each
 					}//if
 					else if(innInfoList.length == 0){
-						tableInfo+="<tr><td colspan='8'>검색결과가 존재하지 않습니다.</td></tr>"
+						tableInfo+="<tr><td colspan='8' align='center'>검색 및 필터조건에 해당하는 숙소가 존재하지 않습니다.</td></tr>"
 					}
 					tableInfo+="</tbody></table>";
 					$("#resultViewSearch").html(tableInfo);
@@ -93,18 +93,25 @@
 							</tr>
 						</thead>
 						<tbody>
-						<c:forEach var="list" items="${requestScope.list}">
-								<tr>
-									<td>${list.innNo }</td>
-									<td>${list.innName }</td>
-									<td>${list.innCity }</td>
-									<td>${list.innArea }</td>
-									<td>${list.innAddress }</td>
-									<td>${list.innType }</td>
-									<td>${list.acceptableNo }</td>
-									<td>${list.innPrice }</td>
-								</tr>
-							</c:forEach>
+							<c:choose>
+								<c:when test="${requestScope.list.size()==0}" >
+										<tr><td colspan='8' align="center">검색결과가 존재하지 않습니다.</td></tr>
+								</c:when>
+								<c:otherwise>
+									<c:forEach var="list" items="${requestScope.list}">
+										<tr>
+											<td>${list.innNo }</td>
+											<td>${list.innName }</td>
+											<td>${list.innCity }</td>
+											<td>${list.innArea }</td>
+											<td>${list.innAddress }</td>
+											<td>${list.innType }</td>
+											<td>${list.acceptableNo }</td>
+											<td>${list.innPrice }</td>
+										</tr>
+									</c:forEach>
+								</c:otherwise>
+							</c:choose>
 						</tbody>
 					</table>
 				</div>
