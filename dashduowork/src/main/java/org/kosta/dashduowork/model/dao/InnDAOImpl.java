@@ -6,6 +6,7 @@ import java.util.List;
 import javax.annotation.Resource;
 
 import org.kosta.dashduowork.model.vo.AmenityVO;
+import org.kosta.dashduowork.model.vo.FilterVO;
 import org.kosta.dashduowork.model.vo.InnVO;
 import org.kosta.dashduowork.model.vo.MemberVO;
 import org.kosta.dashduowork.model.vo.SearchVO;
@@ -48,5 +49,12 @@ public class InnDAOImpl implements InnDAO {
 	public void register(InnVO vo){
 		System.out.println("inndao : "+vo);
 		sqlSessionTemplate.insert("inn.register", vo);
+	}
+	// 6/15일 추가내용******************
+	public List<InnVO> selectInnByCityAndDateAndAcceptableNoWithFilter(FilterVO vo){ //지역&날짜&인원+필터
+		return sqlSessionTemplate.selectList("inn.selectInnByCityAndDateAndAcceptableNoWithFilter", vo);
+	}
+	public List<InnVO> selectInnByCityAndAcceptableNoWithFilter(FilterVO vo){ //지역&인원+필터
+		return sqlSessionTemplate.selectList("inn.selectInnByCityAndAcceptableNoWithFilter", vo);
 	}
 }

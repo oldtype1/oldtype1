@@ -6,6 +6,7 @@ import org.kosta.dashduowork.model.vo.AmenityVO;
 import org.kosta.dashduowork.model.vo.AvailableDateVO;
 import org.kosta.dashduowork.model.vo.BookDeleteVO;
 import org.kosta.dashduowork.model.vo.BookListVO;
+import org.kosta.dashduowork.model.vo.FilterVO;
 import org.kosta.dashduowork.model.vo.InnListVO;
 import org.kosta.dashduowork.model.vo.InnPicCompVO;
 import org.kosta.dashduowork.model.vo.InnVO;
@@ -27,4 +28,8 @@ public interface InnService {
 	public void registerInn(InnVO ivo);
 	public void registerInnPic(InnPicCompVO vo);
 	public void registerInnEtc(AmenityVO avo, AvailableDateVO avvo);
+	
+	//6/15일 추가
+	public List<InnVO> findInnByCityAndDateAndAcceptableNoWithFilter(FilterVO vo);
+	public List<InnVO> findInnByCityAndAcceptableNoWithFilter(FilterVO vo);
 }
