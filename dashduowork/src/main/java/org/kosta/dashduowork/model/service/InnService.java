@@ -9,6 +9,7 @@ import org.kosta.dashduowork.model.vo.BookListVO;
 import org.kosta.dashduowork.model.vo.FilterVO;
 import org.kosta.dashduowork.model.vo.InnListVO;
 import org.kosta.dashduowork.model.vo.InnPicCompVO;
+import org.kosta.dashduowork.model.vo.InnReservationListVO;
 import org.kosta.dashduowork.model.vo.InnVO;
 import org.kosta.dashduowork.model.vo.MemberVO;
 import org.kosta.dashduowork.model.vo.SearchVO;
@@ -32,4 +33,6 @@ public interface InnService {
 	//6/15일 추가
 	public List<InnVO> findInnByCityAndDateAndAcceptableNoWithFilter(FilterVO vo);
 	public List<InnVO> findInnByCityAndAcceptableNoWithFilter(FilterVO vo);
+	
+	public InnReservationListVO getMyInnReservationList(MemberVO vo, String pageNo);
 }

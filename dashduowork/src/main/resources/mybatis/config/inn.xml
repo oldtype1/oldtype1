@@ -32,7 +32,16 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 <result property="innNo" column="inn_no"/>
 <result property="innName" column="inn_name"/>
 </resultMap>
-
+<resultMap type="irvo" id="reservationResult">
+<result property="memberId" column="member_id"/>
+<result property="master" column="master"/>
+<result property="bookNo" column="book_no"/>
+<result property="innNo" column="inn_no"/>
+<result property="innName" column="inn_name"/>
+<result property="bookCheckIn" column="book_checkin"/>
+<result property="bookCheckOut" column="book_checkout"/>
+<result property="bookCount" column="book_count"/>
+</resultMap>
 
 	<sql id="innlist">
 		select inn_no,inn_name,inn_city,inn_area,inn_address,inn_type,inn_acceptable_no,
@@ -166,6 +175,16 @@ from availabledate ad, inn i, amenity a where i.inn_no=ad.inn_no and i.inn_no=a.
 where inn_city=#{firstSearchCity} and inn_acceptable_no=#{firstSearchPeopleNo})
 where amenity_wifi=#{amenityWiFi} and amenity_bed=#{amenityBed} and amenity_tv=#{amenityTV} and amenity_kitchen=#{amenityKitchen} and amenity_bbq=#{amenityBBQ}]]>
 	</select>
+	
+	<select id="getMyInnReservationList" parameterType="hashmap" resultType="irvo" resultMap="reservationResult">
+ select  member_id, inn_no, inn_name, master, book_no, book_checkin, book_checkout, book_count from(
+ select member_id, inn_no, inn_name, master, book_no, book_checkin, book_checkout, book_count, page from(
+ select b.member_id, b.inn_no, i.inn_name, i.member_id as master, b.book_no, to_char(b.book_checkin,'YYYY-MM-DD') as book_checkin, to_char(b.book_checkout,'YYYY-MM-DD') 
+ as book_checkout, b.book_count, ceil(rownum/5) as page from book b, inn i 
+ where b.inn_no=i.inn_no
+ ) where master=#{master}
+ ) where page=#{pageNo}
+</select>
 	<!-- <select id="getAddressKind" resultType="string">
 		select distinct(address) from member
 	</select>

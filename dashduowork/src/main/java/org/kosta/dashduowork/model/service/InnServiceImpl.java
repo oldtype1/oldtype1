@@ -10,6 +10,7 @@ import org.kosta.dashduowork.model.dao.AvailableDateDAO;
 import org.kosta.dashduowork.model.dao.BookDAO;
 import org.kosta.dashduowork.model.dao.InnDAO;
 import org.kosta.dashduowork.model.dao.InnPicCompDAO;
+import org.kosta.dashduowork.model.dao.InnReservationDAO;
 import org.kosta.dashduowork.model.dao.WishListDAO;
 import org.kosta.dashduowork.model.vo.AmenityVO;
 import org.kosta.dashduowork.model.vo.AvailableDateVO;
@@ -19,6 +20,8 @@ import org.kosta.dashduowork.model.vo.BookVO;
 import org.kosta.dashduowork.model.vo.FilterVO;
 import org.kosta.dashduowork.model.vo.InnListVO;
 import org.kosta.dashduowork.model.vo.InnPicCompVO;
+import org.kosta.dashduowork.model.vo.InnReservationListVO;
+import org.kosta.dashduowork.model.vo.InnReservationVO;
 import org.kosta.dashduowork.model.vo.InnVO;
 import org.kosta.dashduowork.model.vo.MemberVO;
 import org.kosta.dashduowork.model.vo.PagingBean;
@@ -42,6 +45,9 @@ public class InnServiceImpl implements InnService {
 	private AmenityDAO amenityDAO;
 	@Resource(name="availableDateDAOImpl")
 	private AvailableDateDAO availableDateDAO;
+	
+	@Resource(name="innReservationDAOImpl")
+	private InnReservationDAO innReservationDAO;
 	
 	@Override
 	public void registerInn(InnVO ivo){
@@ -156,5 +162,21 @@ public class InnServiceImpl implements InnService {
 		return list;
 	}
 
+
+	public InnReservationListVO getMyInnReservationList(MemberVO vo, String pageNo){
+		System.out.println("getMyInnReservationList 서비스    "+vo);
+		int pn=1;
+		if(pageNo!=null){
+			pn=Integer.parseInt(pageNo);
+		}
+		System.out.println("pageNo?"+ pn);
+		HashMap<String,String> param = new HashMap<String,String>();
+		param.put("pageNo",Integer.toString(pn));
+		param.put("master",vo.getMemberId());
+		List<InnReservationVO> list = innReservationDAO.getMyInnReservationList(param);
+		int total=innReservationDAO.getTotalPostingCount(vo);
+		PagingBean pagingBean=new PagingBean(total,pn);
+		return new InnReservationListVO(list, pagingBean);
+	}
 
 }
