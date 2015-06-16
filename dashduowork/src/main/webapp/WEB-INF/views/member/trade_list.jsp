@@ -5,7 +5,9 @@
     <script type="text/javascript" src="http://netdna.bootstrapcdn.com/bootstrap/3.3.4/js/bootstrap.min.js"></script>
     <link href="http://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.3.0/css/font-awesome.min.css"
     rel="stylesheet" type="text/css">
-    
+    <link href="http://pingendo.github.io/pingendo-bootstrap/themes/default/bootstrap.css"
+    rel="stylesheet" type="text/css">
+ 
         <div class="container">
           <div class="row text-center">
             <div class="col-md-12 text-center">
@@ -20,7 +22,7 @@
                   <a href='get_mybooklist.do'>예약숙소</a>
                 </li>
                 <li>
-                  <a href="get_mytradelist.do">거래내역</a>
+                  <a href='get_mytradelist.do'>거래내역</a>
                 </li>
                 <li>
                   <a href='get_mywishlist.do'>위시리스트</a>
@@ -36,13 +38,13 @@
         <div class="container">
           <div class="row">
             <div class="col-md-1">
-                 <center>
+              <center>
                 <img src="http://pingendo.github.io/pingendo-bootstrap/assets/user_placeholder.png"
-                class="img-circle img-responsive" style="margin-top: 50px; margin-bottom: 50px; " width="50" height="70" >
+                class="img-circle img-responsive" width="50" height="70">
               </center>
             </div>
-            <div class="col-md-5" style="margin-top: 50px; margin-bottom: 50px; ">
-              <h2>${sessionScope.mvo.memberName}님 등록한 숙소 ${requestScope.lvo.pagingBean.totalContents}개</h2>
+            <div class="col-md-5">
+              <h2>${sessionScope.mvo.memberName}님의 거래내역 ${requestScope.tvo.pagingBean.totalContents}개</h2>
             </div>
           </div>
         </div>
@@ -52,37 +54,56 @@
           <div class="row">
             <div class="col-md-15 text-center">
               <table class="table">
-                <tbody>
-                
-                <c:forEach var="ivo" items="${requestScope.lvo.list}">
+                <tbody>         
+       			  <thead>
+            	<tr>
+            	<td>구분</td>
+            	<td>숙소 이름</td>
+              	<td>유효여부</td>
+              	<td>거래내역 삭제</td>
+                </tr>
+                   </thead>
+                  <c:forEach var="tvo" items="${requestScope.tvo.list}">               
                   <tr>
                     <td class="col-md-1 text-center" draggable="true">
-                      <h4>${ivo.innNo}</h4>
-                    </td>
+					<c:if test="${tvo.innorbook=='등록'}">                    
+                      <h4 style="color:pink;">${tvo.innorbook}</h4>
+                      </c:if>
+                      <c:if test="${tvo.innorbook=='예약'}">
+                      <h4 style="color: orange;">${tvo.innorbook}</h4>
+                      </c:if>
+                    </td>                
                     <td class="col-md-1">
-                    <c:if test="${ivo.innMainPic!=null}">
-                      <a class="pull-left" href="#"><img class="media-object" src="${ivo.innMainPic.filePath}" height="150" width="150">
-                  </a>
-                  </c:if>
-                  <c:if test="${ivo.innMainPic==null}">
-                      <a class="pull-left" href="#"><img class="media-object" src="http://pingendo.github.io/pingendo-bootstrap/assets/placeholder.png" height="150" width="150">
-                  </a>
-                  </c:if> 
+                        <h4 class="text-center">${tvo.innName}</h4>
                     </td>
-                    <td class="col-md-7">
-                      <h3 class="text-center">${ivo.innName}</h3>
-                      <p class="text-center">${ivo.innInfo}</p>
-                    </td>
+                    <c:if test="${tvo.innorbook=='예약'}">
                     <td class="col-md-1">
-                      <h4 class="text-center"><a href="innupdate.do?innno=${ivo.innNo}">수정</a></h4>
+                      <h4 class="text-center">체크인: ${tvo.bookCheckIn}<br>체크아웃: ${tvo.bookCheckOut}</h4>
                     </td>
-                    <td class="col-md-1">
-                      <h4 class="text-center"><a href="inndelete.do?innno=${ivo.innNo}">삭제</a></h4>
+                    </c:if>
+                    <c:if test="${tvo.innorbook=='등록'}">
+                     <c:if test="${tvo.innAvailability=='Y'}">
+                      <td class="col-md-1" style="color: green">
+                      <h4 class="text-center">이용가능</h4>
                     </td>
-                  </tr>
-    				</c:forEach>
-    
-                </tbody>
+                    </c:if>
+                    <c:if test="${tvo.innAvailability=='N'}">
+                      <td class="col-md-1" style="color: gray">
+                      <h4 class="text-center">등록만료</h4>
+                    </td>
+                    </c:if>
+                     <c:if test="${tvo.innAvailability==null}">
+                      <td class="col-md-1">
+                      <h4 class="text-center">등록이면 널넣지 말라고</h4>
+                   		 </td>
+                    </c:if>
+                    </c:if>
+                     <td class="col-md-1">
+                   <h4 class="text-center"><a href="tradedelete.do?tradeNo=${tvo.tradeNo}">삭제</a></h4>
+                    </td>
+                  </tr>                
+    				</c:forEach>     
+               </tbody>
               </table>
             </div>
           </div>
@@ -94,18 +115,18 @@
             <div class="col-md-12 text-center">
               <ul class="pagination pagination-sm">
                   
-                  <c:set var="pb" value="${requestScope.lvo.pagingBean}"></c:set>
+                  <c:set var="pb" value="${requestScope.tvo.pagingBean}"></c:set>
 						
 						<c:if test="${pb.previousPageGroup}">
 						<li><a
-							href="get_myinnlist.do?pageNo=${pb.startPageOfPageGroup-1}">Prev</a>
+							href="get_mytradelist.do?pageNo=${pb.startPageOfPageGroup-1}">Prev</a>
 						</li>
 						</c:if>
 						
 						<c:forEach var="i" begin="${pb.startPageOfPageGroup}"
 							end="${pb.endPageOfPageGroup}">
 							<c:if test="${pb.nowPage!=i}">
-								<li><a href="get_myinnlist.do?pageNo=${i}">${i}</a>
+								<li><a href="get_mytradelist.do?pageNo=${i}">${i}</a>
 								<li>
 							</c:if>
 							<c:if test="${pb.nowPage==i}">
@@ -116,7 +137,7 @@
 			
 					<c:if test="${pb.nextPageGroup}">
 						<li>
-							<a href="get_myinnlist.do?pageNo=${pb.endPageOfPageGroup+1}">Next</a>
+							<a href="get_mytradelist.do?pageNo=${pb.endPageOfPageGroup+1}">Next</a>
 						</li>
 					</c:if>
 

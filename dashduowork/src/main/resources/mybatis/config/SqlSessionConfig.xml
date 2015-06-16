@@ -20,6 +20,7 @@ PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
 		<typeAlias type="org.kosta.dashduowork.model.vo.AvailableDateVO" alias="avvo"/>
 		<typeAlias type="org.kosta.dashduowork.model.vo.FilterVO" alias="fvo"/>
 		<typeAlias type="org.kosta.dashduowork.model.vo.InnReservationVO" alias="irvo"/>
+		<typeAlias type="org.kosta.dashduowork.model.vo.TradeVO" alias="tvo"/>	
 	</typeAliases>	
 <!--     sql mapping config xml 을 연결 -->
 	<mappers>

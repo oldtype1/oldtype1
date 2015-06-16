@@ -22,6 +22,7 @@ import org.kosta.dashduowork.model.vo.InnReservationListVO;
 import org.kosta.dashduowork.model.vo.InnVO;
 import org.kosta.dashduowork.model.vo.MemberVO;
 import org.kosta.dashduowork.model.vo.SearchVO;
+import org.kosta.dashduowork.model.vo.TradeListVO;
 import org.kosta.dashduowork.model.vo.WishListDeleteVO;
 import org.kosta.dashduowork.model.vo.WishListListVO;
 import org.springframework.stereotype.Controller;
@@ -97,16 +98,24 @@ public class InnController {
 	}
 	
 	@RequestMapping(value="get_myinnlist.do")
-	public ModelAndView getMyInnList(String pageNo,HttpServletRequest request){
-		
+	public ModelAndView getMyInnList(String pageNo,HttpServletRequest request){		
 		HttpSession session=null;
 		session = request.getSession(false);
 		MemberVO vo= (MemberVO)session.getAttribute("mvo");		
 		InnListVO lvo = innService.getmyinnlist(vo,pageNo);
-		return new ModelAndView("member_inn_list","lvo",lvo);
+		return new ModelAndView("member_inn_list","lvo",lvo);	
+	}
+	@RequestMapping(value="get_mytradelist.do")
+	public ModelAndView getMyTradeList(String pageNo,HttpServletRequest request){		
+		HttpSession session=null;
+		session = request.getSession(false);
+		MemberVO vo= (MemberVO)session.getAttribute("mvo");		
+		TradeListVO tvo = innService.getmytradelist(vo,pageNo);
+		
+		System.out.println("tvo는? "+ tvo);
+		return new ModelAndView("member_trade_list","tvo",tvo);
 	
 	}
-	
 /*	@RequestMapping(value ="selectInnByCheckedAmenity.do") //은식,동원
 	public String selectInnByCheckedAmenity(AmenityVO vo, Model model) {
 //		System.out.println(vo);
