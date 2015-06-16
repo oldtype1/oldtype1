@@ -57,4 +57,9 @@ public class InnDAOImpl implements InnDAO {
 	public List<InnVO> selectInnByCityAndAcceptableNoWithFilter(FilterVO vo){ //지역&인원+필터
 		return sqlSessionTemplate.selectList("inn.selectInnByCityAndAcceptableNoWithFilter", vo);
 	}
+	
+	// 은수
+	public InnVO selectInn(String innNo){
+		return sqlSessionTemplate.selectOne("inn.select", innNo);
+		}
 }

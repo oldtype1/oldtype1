@@ -35,4 +35,5 @@ public interface InnService {
 	public List<InnVO> findInnByCityAndAcceptableNoWithFilter(FilterVO vo);
 	
 	public InnReservationListVO getMyInnReservationList(MemberVO vo, String pageNo);
+	public InnVO selectInn(String innNo); // 은수
 }

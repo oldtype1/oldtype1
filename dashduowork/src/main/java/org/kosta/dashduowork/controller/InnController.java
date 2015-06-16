@@ -222,6 +222,14 @@ public String getInnReservationList(String pageNo, HttpServletRequest request, M
 	return "member_innReservation_list";
 }
 
+@RequestMapping(value="inn_in_show.do")
+public String inShow(HttpServletRequest request, Model model){
+	String innNo = (String)request.getParameter("innNo");
+	InnVO vo = innService.selectInn(innNo);
+	System.out.println(vo);
+	model.addAttribute("innVO", vo);
+	return "inn_in_show";
+}
 
 }
 
