@@ -1,6 +1,14 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
  
+     <script type="text/javascript">
+    $(function(){
+		$("#availableDateSt, #availableDateEnd").datepicker({
+          dateFormat : 'yy-mm-dd'
+       }); 
+    });
+ </script>
+ 
  <!-- regiet_from -->
  <div class="section">
       <div class="container">
@@ -83,10 +91,10 @@
                   <label class="control-label">날짜</label>
                 </div>
                 <div class="col-sm-3">
-                  <input type="text" class="form-control input-lg" placeholder="체크인"  name="availableDateSt">
+                   <input type="text" class="form-control" name="availableDateSt" id="availableDateSt" size="15" onfocus="this.value=''" placeholder="Checkin">
                 </div>
                 <div class="col-sm-3">
-                  <input type="text" class="form-control input-lg" placeholder="체크아웃" name="availableDateEnd">
+                   <input type="text" class="form-control" name="availableDateEnd" size="15" id="availableDateEnd" onfocus="this.value=''" placeholder="Checkout">
                 </div>
               </div>
               <div class="form-group">
