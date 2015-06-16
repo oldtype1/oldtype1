@@ -13,6 +13,7 @@ import org.kosta.dashduowork.model.dao.InnDAO;
 import org.kosta.dashduowork.model.dao.InnPicCompDAO;
 import org.kosta.dashduowork.model.dao.InnReservationDAO;
 import org.kosta.dashduowork.model.dao.MemberDAO;
+import org.kosta.dashduowork.model.dao.TradeDAO;
 import org.kosta.dashduowork.model.dao.WishListDAO;
 import org.kosta.dashduowork.model.vo.AmenityVO;
 import org.kosta.dashduowork.model.vo.AvailableDateVO;
@@ -28,6 +29,8 @@ import org.kosta.dashduowork.model.vo.InnVO;
 import org.kosta.dashduowork.model.vo.MemberVO;
 import org.kosta.dashduowork.model.vo.PagingBean;
 import org.kosta.dashduowork.model.vo.SearchVO;
+import org.kosta.dashduowork.model.vo.TradeListVO;
+import org.kosta.dashduowork.model.vo.TradeVO;
 import org.kosta.dashduowork.model.vo.WishListDeleteVO;
 import org.kosta.dashduowork.model.vo.WishListListVO;
 import org.kosta.dashduowork.model.vo.WishListVO;
@@ -39,19 +42,19 @@ public class InnServiceImpl implements InnService {
    @Resource(name="bookDAOImpl")
    private BookDAO bookDAO;
    @Resource(name="wishListDAOImpl")
-   private WishListDAO wishListDAO;
-   
+   private WishListDAO wishListDAO; 
    @Resource(name="innPicCompDAOImpl")
    private InnPicCompDAO innPicCompDAO;
    @Resource(name="amenityDAOImpl")
    private AmenityDAO amenityDAO;
    @Resource(name="availableDateDAOImpl")
-   private AvailableDateDAO availableDateDAO;
-   
+   private AvailableDateDAO availableDateDAO;  
    @Resource(name="innReservationDAOImpl")
    private InnReservationDAO innReservationDAO;
    @Resource(name="memberDAOImpl")
    private MemberDAO memberDAO;
+   @Resource(name="tradeDAOImpl")
+	private TradeDAO tradeDAO;
    
    @Override
    public void registerInn(InnVO ivo){
@@ -72,25 +75,46 @@ public class InnServiceImpl implements InnService {
       System.out.println("serivce : "+avvo);
       
    }
-   
+   /**6/16 -- 숙소 메인사진을 리스트에 병합했습니다- 주형**/
    @Override
-   public InnListVO getmyinnlist(MemberVO vo, String pageNo) {
-      int pn=1;
-      if(pageNo!=null){
-         pn=Integer.parseInt(pageNo);
-      }
-      System.out.println("pageNo?"+ pn);
-      
-      HashMap<String,String> param = new HashMap<String,String>();
-      param.put("pageNo",Integer.toString(pn));
-      param.put("member_id",vo.getMemberId());
-      
-      List<InnVO> list = innDAO.getmyinnlist(param);
-      int total=innDAO.getTotalPostingCount(vo);
-      PagingBean pagingBean=new PagingBean(total,pn);
-      
-      return new InnListVO(list,pagingBean);
-   }
+	public InnListVO getmyinnlist(MemberVO vo, String pageNo) {
+		int pn=1;
+		if(pageNo!=null){
+			pn=Integer.parseInt(pageNo);
+		}
+		System.out.println("pageNo?"+ pn);		
+		HashMap<String,String> param = new HashMap<String,String>();
+		param.put("pageNo",Integer.toString(pn));
+		param.put("member_id",vo.getMemberId());		
+		List<InnVO> list = innDAO.getmyinnlist(param);
+		//List<InnPicCompVO> piclist = new ArrayList<InnPicCompVO>();
+		System.out.println(list.size());
+		for(int i=0; i<list.size(); i++){		
+			list.get(i).setInnMainPic((innPicCompDAO.getMyPicList(list.get(i).getInnNo())));
+			//list.get(i).setInnmainpic(innPicCompDAO.getMyPicList(list.get(i).getInnNo()));
+			//piclist.add(innPicCompDAO.getMyPicList(list.get(i).getInnNo()));			
+			System.out.println("사진 piclist: "+list.get(i).getInnMainPic());
+		}		
+		int total=innDAO.getTotalPostingCount(vo);
+		PagingBean pagingBean=new PagingBean(total,pn);
+		return new InnListVO(list,pagingBean);
+	}
+   
+	@Override
+	public TradeListVO getmytradelist(MemberVO vo, String pageNo) {
+		int pn=1;
+		if(pageNo!=null){
+			pn=Integer.parseInt(pageNo);
+		}
+		HashMap<String,String> param = new HashMap<String,String>();
+		param.put("pageNo",Integer.toString(pn));
+		param.put("member_id",vo.getMemberId());
+		List<TradeVO> list = tradeDAO.getmytradelist(param);
+		int total = tradeDAO.getTotalPostingCount(vo);
+		PagingBean pagingBean=new PagingBean(total,pn);	
+		return new TradeListVO(list, pagingBean);
+	}
+   
    
    @Override //은식, 동원
    public List<InnVO> findInnByCheckedAmenity(AmenityVO vo) {

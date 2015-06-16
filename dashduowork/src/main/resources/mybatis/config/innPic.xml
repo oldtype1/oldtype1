@@ -15,8 +15,8 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		values(inn_pic_sequence.nextval,#{innNo},#{filePath})
 	</insert>
 	<!-- 6.16일 추가 : 사진path 가져오기 -->
-	<select id="selectOneInnPicPath" parameterType="int" resultType="String" resultMap="innResult">
-		select * from (select * from INN_PIC where inn_no=#{value}) where rownum='1'
+	<select id="getMyPicList" parameterType="int" resultType="ipvo" resultMap="innResult">
+	select * from (select * from INN_PIC where inn_no=#{value} ) where rownum='1'
 	</select>
 <!-- 
 	<sql id="innlist">

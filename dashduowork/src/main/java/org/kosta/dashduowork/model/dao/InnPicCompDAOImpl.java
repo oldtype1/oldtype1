@@ -16,4 +16,10 @@ public class InnPicCompDAOImpl implements InnPicCompDAO {
 		System.out.println("InnPicCompVO : " + vo);
 			sqlSessionTemplate.insert("innPic.register", vo);
 		}
+	
+	@Override
+	public InnPicCompVO getMyPicList(int innNo) {
+		return sqlSessionTemplate.selectOne("innPic.getMyPicList",innNo);
+	}
+	
 	}

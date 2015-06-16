@@ -14,6 +14,7 @@ import org.kosta.dashduowork.model.vo.InnReservationListVO;
 import org.kosta.dashduowork.model.vo.InnVO;
 import org.kosta.dashduowork.model.vo.MemberVO;
 import org.kosta.dashduowork.model.vo.SearchVO;
+import org.kosta.dashduowork.model.vo.TradeListVO;
 import org.kosta.dashduowork.model.vo.WishListDeleteVO;
 import org.kosta.dashduowork.model.vo.WishListListVO;
 
@@ -30,6 +31,7 @@ public interface InnService {
    public void registerInn(InnVO ivo);
    public void registerInnPic(InnPicCompVO vo);
    public void registerInnEtc(AmenityVO avo, AvailableDateVO avvo);
+	public TradeListVO getmytradelist(MemberVO vo, String pageNo);//거래내역 
    
    //6/15일 추가
    public List<InnVO> findInnByCityAndDateAndAcceptableNoWithFilter(FilterVO vo);
