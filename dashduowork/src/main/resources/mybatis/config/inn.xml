@@ -42,7 +42,16 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 <result property="bookCheckOut" column="book_checkout"/>
 <result property="bookCount" column="book_count"/>
 </resultMap>
-
+<resultMap type="tvo" id="TradeListResult">
+<result property="memberId" column="Trade_no"/>
+<result property="memberId" column="member_id"/>
+<result property="innorbook" column="inn_or_book"/>
+<result property="innNo" column="inn_no"/>
+<result property="innName" column="inn_name"/>
+<result property="bookCheckIn" column="book_checkin"/>
+<result property="bookCheckOut" column="book_checkout"/>
+<result property="innAvailability" column="inn_availability"/>
+</resultMap>
 	<sql id="innlist">
 		select inn_no,inn_name,inn_city,inn_area,inn_address,inn_type,inn_acceptable_no,
 		inn_price,inn_info,inn_availability,member_id from inn
