@@ -42,6 +42,11 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 <result property="bookCheckOut" column="book_checkout"/>
 <result property="bookCount" column="book_count"/>
 </resultMap>
+<resultMap type="piccompvo" id="compResult">
+	<result property="innNo" column="inn_no"/>
+	<result property="innPicNo" column="inn_pic_no"/>
+	<result property="filePath" column="file_path"/>
+</resultMap>
 
 	<sql id="innlist">
 		select inn_no,inn_name,inn_city,inn_area,inn_address,inn_type,inn_acceptable_no,
@@ -155,26 +160,26 @@ ceil(rownum/5) as page from
 	inn_price, inn_info,inn_availability,member_id from INN where member_id=#{memberId} 
 	</select>
 	
-	<!-- 6/15일 은식/동원 추가내용 -->
+	<!-- 6/15일 은식/동원 추가// 6/16일 추가내용 : 선택인원 이하의 값도 출력&검색내용의 일부만 포함돼도 결과 출력 -->
 	<select id="selectInnByCityAndDateAndAcceptableNoWithFilter" parameterType="fvo" resultType="ivo" resultMap="innResult">
-	<![CDATA[select inn_no, inn_name, inn_city, inn_area, inn_address, inn_type, inn_acceptable_no, inn_price, inn_availability, member_id, availabledate_st, availabledate_end
+   <![CDATA[select inn_no, inn_name, inn_city, inn_area, inn_address, inn_type, inn_acceptable_no, inn_price, inn_availability, member_id, availabledate_st, availabledate_end
 from (select inn_no, inn_name, inn_city, inn_area, inn_address, inn_type, inn_acceptable_no, inn_price, inn_availability, member_id, availabledate_st, availabledate_end, amenity_wifi, amenity_bed, amenity_tv, amenity_kitchen, amenity_bbq
 from (select distinct i.inn_no, i.inn_name, i.inn_city, i.inn_area, i.inn_address, i.inn_type, i.inn_acceptable_no, 
 i.inn_price,i.inn_availability,i.member_id, ad.availabledate_st, ad.availabledate_end, a.amenity_wifi,a.amenity_bed,a.amenity_tv,a.amenity_kitchen,a.amenity_bbq
 from availabledate ad, inn i, amenity a where i.inn_no=ad.inn_no and i.inn_no=a.inn_no and ad.inn_no=a.inn_no)
-where availabledate_st>=#{firstSearchStartDate} and availabledate_end <=#{firstSearchEndDate} and inn_city=#{firstSearchCity} and inn_acceptable_no=#{firstSearchPeopleNo})
+where availabledate_st>=#{firstSearchStartDate} and availabledate_end <=#{firstSearchEndDate} and inn_city like '%' ||  #{firstSearchCity} || '%' and inn_acceptable_no <= #{firstSearchPeopleNo})
 where amenity_wifi=#{amenityWiFi} and amenity_bed=#{amenityBed} and amenity_tv=#{amenityTV} and amenity_kitchen=#{amenityKitchen} and amenity_bbq=#{amenityBBQ}]]>
-	</select>
+   </select>
 	
 	<select id="selectInnByCityAndAcceptableNoWithFilter" parameterType="fvo" resultType="ivo" resultMap="innResult">
-	<![CDATA[select inn_no, inn_name, inn_city, inn_area, inn_address, inn_type, inn_acceptable_no, inn_price, inn_availability, member_id, availabledate_st, availabledate_end
+   <![CDATA[select inn_no, inn_name, inn_city, inn_area, inn_address, inn_type, inn_acceptable_no, inn_price, inn_availability, member_id, availabledate_st, availabledate_end
 from (select inn_no, inn_name, inn_city, inn_area, inn_address, inn_type, inn_acceptable_no, inn_price, inn_availability, member_id, availabledate_st, availabledate_end, amenity_wifi, amenity_bed, amenity_tv, amenity_kitchen, amenity_bbq
 from (select distinct i.inn_no, i.inn_name, i.inn_city, i.inn_area, i.inn_address, i.inn_type, i.inn_acceptable_no, 
 i.inn_price,i.inn_availability,i.member_id, ad.availabledate_st, ad.availabledate_end, a.amenity_wifi,a.amenity_bed,a.amenity_tv,a.amenity_kitchen,a.amenity_bbq
 from availabledate ad, inn i, amenity a where i.inn_no=ad.inn_no and i.inn_no=a.inn_no and ad.inn_no=a.inn_no)
-where inn_city=#{firstSearchCity} and inn_acceptable_no=#{firstSearchPeopleNo})
+where inn_city like '%' ||  #{firstSearchCity} || '%'  and inn_acceptable_no <= #{firstSearchPeopleNo})
 where amenity_wifi=#{amenityWiFi} and amenity_bed=#{amenityBed} and amenity_tv=#{amenityTV} and amenity_kitchen=#{amenityKitchen} and amenity_bbq=#{amenityBBQ}]]>
-	</select>
+</select>
 	
 	<select id="getMyInnReservationList" parameterType="hashmap" resultType="irvo" resultMap="reservationResult">
  select  member_id, inn_no, inn_name, master, book_no, book_checkin, book_checkout, book_count from(
@@ -184,6 +189,10 @@ where amenity_wifi=#{amenityWiFi} and amenity_bed=#{amenityBed} and amenity_tv=#
  where b.inn_no=i.inn_no
  ) where master=#{master}
  ) where page=#{pageNo}
+</select>
+<!-- 6.16일 추가 : 사진path 가져오기 -->
+<select id="selectOneInnPicPath" parameterType="int" resultType="String" resultMap="compResult">
+	select * from (select * from INN_PIC where inn_no=#{value}) where rownum='1'
 </select>
 
 	<select id="select" resultType="ivo" resultMap="innResult">

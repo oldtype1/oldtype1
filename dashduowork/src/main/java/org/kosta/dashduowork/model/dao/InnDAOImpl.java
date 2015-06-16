@@ -7,6 +7,7 @@ import javax.annotation.Resource;
 
 import org.kosta.dashduowork.model.vo.AmenityVO;
 import org.kosta.dashduowork.model.vo.FilterVO;
+import org.kosta.dashduowork.model.vo.InnPicCompVO;
 import org.kosta.dashduowork.model.vo.InnVO;
 import org.kosta.dashduowork.model.vo.MemberVO;
 import org.kosta.dashduowork.model.vo.SearchVO;
@@ -62,4 +63,9 @@ public class InnDAOImpl implements InnDAO {
 	public InnVO selectInn(String innNo){
 		return sqlSessionTemplate.selectOne("inn.select", innNo);
 		}
+	
+	// 6/16일 추가내용------------------------ 숙소번호로 사진경로 받아오기
+	public InnPicCompVO selectOneInnPicPath(int innNo){
+		return sqlSessionTemplate.selectOne("inn.selectOneInnPicPath", innNo);
+	}
 }

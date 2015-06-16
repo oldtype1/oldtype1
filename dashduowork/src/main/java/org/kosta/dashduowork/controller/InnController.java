@@ -2,7 +2,9 @@ package org.kosta.dashduowork.controller;
 
 import java.io.File;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
@@ -71,9 +73,9 @@ public class InnController {
 		for (int i = 0; i < file.size(); i++) {
 			// System.out.println(list.get(i).getOriginalFilename().equals(""));
 			// TODO 파일 이름이 겹치는 상황에 대한 대처를 생각해본다.
-			int a = (int) (Math.random() * 10);
-			int b = (int) (Math.random() * 10);
-			int c = (int) (Math.random() * 10);
+			int a = (int) (Math.random() * 10); 
+			int b = (int) (Math.random() * 10);  
+			int c = (int) (Math.random() * 10); 
 			String fileName = path+a + "" + b + "" + c + "_"
 					+ file.get(i).getOriginalFilename();
 			if (!fileName.equals("")) {
@@ -224,11 +226,11 @@ public String getInnReservationList(String pageNo, HttpServletRequest request, M
 
 @RequestMapping(value="inn_in_show.do")
 public String inShow(HttpServletRequest request, Model model){
-	String innNo = (String)request.getParameter("innNo");
-	InnVO vo = innService.selectInn(innNo);
-	System.out.println(vo);
-	model.addAttribute("innVO", vo);
-	return "inn_in_show";
+   String innNo = (String)request.getParameter("innNo");
+   Map<String, Object> map = (HashMap<String, Object>) innService.selectInn(innNo);
+   System.out.println(map);
+   model.addAttribute("VOMap", map);
+   return "inn_in_show";
 }
 
 }
