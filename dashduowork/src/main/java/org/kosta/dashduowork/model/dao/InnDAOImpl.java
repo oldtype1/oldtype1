@@ -66,6 +66,6 @@ public class InnDAOImpl implements InnDAO {
 	
 	// 6/16일 추가내용------------------------ 숙소번호로 사진경로 받아오기
 	public InnPicCompVO selectOneInnPicPath(int innNo){
-		return sqlSessionTemplate.selectOne("inn.selectOneInnPicPath", innNo);
+		return sqlSessionTemplate.selectOne("innPic.selectOneInnPicPath", innNo);
 	}
 }
