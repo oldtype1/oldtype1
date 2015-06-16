@@ -20,9 +20,9 @@ import org.kosta.dashduowork.model.vo.WishListListVO;
 
 public interface InnService {
    public InnListVO getmyinnlist(MemberVO vo, String pageNo);
-   public List<InnVO> findInnByCheckedAmenity(AmenityVO vo); //은식, 동원
-   public List<InnVO> findInnByCityAndAcceptableNo(SearchVO vo); //은식, 동원
-   public List<InnVO> findInnByCityAndDateAndAcceptableNo(SearchVO vo); //은식, 동원
+//   public List<InnVO> findInnByCheckedAmenity(AmenityVO vo); //은식, 동원
+   public InnListVO findInnByCityAndAcceptableNo(SearchVO vo); //은식, 동원
+   public InnListVO findInnByCityAndDateAndAcceptableNo(SearchVO vo); //은식, 동원
    public BookListVO getmybooklist(MemberVO vo, String pageNo);
    public WishListListVO getmywishlist(MemberVO vo, String pageNo);
    public void wishListDelete(WishListDeleteVO wdvo);
@@ -34,8 +34,8 @@ public interface InnService {
 	public TradeListVO getmytradelist(MemberVO vo, String pageNo);//거래내역 
    
    //6/15일 추가
-   public List<InnVO> findInnByCityAndDateAndAcceptableNoWithFilter(FilterVO vo);
-   public List<InnVO> findInnByCityAndAcceptableNoWithFilter(FilterVO vo);
+   public InnListVO findInnByCityAndDateAndAcceptableNoWithFilter(FilterVO vo);
+   public InnListVO findInnByCityAndAcceptableNoWithFilter(FilterVO vo);
    
    public InnReservationListVO getMyInnReservationList(MemberVO vo, String pageNo);
    public Map<String,Object> selectInn(String innNo); // 은수

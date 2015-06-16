@@ -37,7 +37,7 @@
           <div class="row">
             <div class="col-md-1">
                  <center>
-                <img src="http://pingendo.github.io/pingendo-bootstrap/assets/user_placeholder.png"
+                <img src="${requestScope.filepath}"
                 class="img-circle img-responsive" style="margin-top: 50px; margin-bottom: 50px; " width="50" height="70" >
               </center>
             </div>
