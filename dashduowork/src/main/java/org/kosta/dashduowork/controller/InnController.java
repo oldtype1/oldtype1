@@ -11,6 +11,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import org.kosta.dashduowork.model.service.InnService;
+import org.kosta.dashduowork.model.service.MemberService;
 import org.kosta.dashduowork.model.vo.AmenityVO;
 import org.kosta.dashduowork.model.vo.AvailableDateVO;
 import org.kosta.dashduowork.model.vo.BookDeleteVO;
@@ -21,6 +22,7 @@ import org.kosta.dashduowork.model.vo.InnPicCompVO;
 import org.kosta.dashduowork.model.vo.InnReservationListVO;
 import org.kosta.dashduowork.model.vo.InnVO;
 import org.kosta.dashduowork.model.vo.MemberVO;
+import org.kosta.dashduowork.model.vo.ProfilePicVO;
 import org.kosta.dashduowork.model.vo.SearchVO;
 import org.kosta.dashduowork.model.vo.TradeListVO;
 import org.kosta.dashduowork.model.vo.WishListDeleteVO;
@@ -39,6 +41,8 @@ public class InnController {
 	
 	@Resource(name="innServiceImpl")
 	private InnService innService;
+	@Resource(name="memberServiceImpl")
+	private MemberService memberService;
 	
 	@RequestMapping("inn_register_from.do")
 	public String innRegister() {
@@ -98,20 +102,26 @@ public class InnController {
 	}
 	
 	@RequestMapping(value="get_myinnlist.do")
-	public ModelAndView getMyInnList(String pageNo,HttpServletRequest request){		
+	public String getMyInnList(String pageNo,HttpServletRequest request, Model model){		
 		HttpSession session=null;
 		session = request.getSession(false);
 		MemberVO vo= (MemberVO)session.getAttribute("mvo");		
 		InnListVO lvo = innService.getmyinnlist(vo,pageNo);
-		return new ModelAndView("member_inn_list","lvo",lvo);	
+		ProfilePicVO pvo = memberService.selectProfilePic(vo.getMemberId());
+		  String filepath=pvo.getFilePath();
+		  model.addAttribute("filepath", filepath);
+		  model.addAttribute("lvo", lvo);
+		return "member_inn_list";	
 	}
 	@RequestMapping(value="get_mytradelist.do")
-	public ModelAndView getMyTradeList(String pageNo,HttpServletRequest request){		
+	public ModelAndView getMyTradeList(String pageNo,HttpServletRequest request,Model model){		
 		HttpSession session=null;
 		session = request.getSession(false);
 		MemberVO vo= (MemberVO)session.getAttribute("mvo");		
 		TradeListVO tvo = innService.getmytradelist(vo,pageNo);
-		
+		ProfilePicVO pvo = memberService.selectProfilePic(vo.getMemberId());
+		  String filepath=pvo.getFilePath();
+		  model.addAttribute("filepath", filepath);
 		System.out.println("tvo는? "+ tvo);
 		return new ModelAndView("member_trade_list","tvo",tvo);
 	
@@ -172,13 +182,13 @@ public class InnController {
 	
 	@RequestMapping(value="get_mybooklist.do")
 	public String getMyBookList(String pageNo,HttpServletRequest request,Model model){
-		System.out.println("get_mybooklist.do  콘트롤러왔음!!!!!!!!!!!!!!!!!"+pageNo);
 		HttpSession session=null;
 		session = request.getSession(false);
 		MemberVO vo= (MemberVO)session.getAttribute("mvo");
-		System.out.println("get_mybooklist.do 콘트롤러에 들어온 vo!!!!!!!!!!!!!!!!"+vo);
 		BookListVO blvo=innService.getmybooklist(vo, pageNo);
-		System.out.println("get_mybooklist.do 콘트롤러에서 찾은 bvo!!!!!!!!!!!!!!!"+blvo.getPagingBean().getNowPage());
+		ProfilePicVO pvo = memberService.selectProfilePic(vo.getMemberId());
+		  String filepath=pvo.getFilePath();
+		  model.addAttribute("filepath", filepath);
 		model.addAttribute("blvo", blvo);
 		return"member_book_list";
 	}
@@ -186,26 +196,22 @@ public class InnController {
 	
 	@RequestMapping(value="get_mywishlist.do")
 	public String getMyWishList(String pageNo,HttpServletRequest request,Model model){
-		System.out.println("getMyWishList.do  콘트롤러왔음!!!!!!!!!!!!!!!!!"+pageNo);
 		HttpSession session=null;
 		session = request.getSession(false);
 		MemberVO vo= (MemberVO)session.getAttribute("mvo");
-		System.out.println("getMyWishList.do 콘트롤러에 들어온 vo!!!!!!!!!!!!!!!!"+vo);
 		WishListListVO wlvo=innService.getmywishlist(vo, pageNo);
-		System.out.println("getMyWishList.do 콘트롤러에서 찾은 wlvo!!!!!!!!!!!!!!!"+wlvo.getPagingBean().getNowPage());
+		ProfilePicVO pvo = memberService.selectProfilePic(vo.getMemberId());
+		  String filepath=pvo.getFilePath();
+		  model.addAttribute("filepath", filepath);
 		model.addAttribute("wlvo", wlvo);
 		return"member_wish_list";
 	}
 @RequestMapping(value="wishlistdelete.do")
 public String wishListDelete(int wishListNo, HttpServletRequest request){
-	System.out.println("wishListDelete 컨트롤러 들어옴.");
 	HttpSession session=null;
 	session = request.getSession(false);
 	MemberVO vo= (MemberVO)session.getAttribute("mvo");
-	System.out.println(vo+"        찾아들어옴");
 	WishListDeleteVO wdvo=new WishListDeleteVO(vo.getMemberId(), wishListNo);
-	System.out.println(wdvo+"삭제할 것을 VO에 넣어줌");
-	//삭제하고 보내주기
 	innService.wishListDelete(wdvo);
 	return "redirect:get_mywishlist.do";
 }
@@ -224,11 +230,11 @@ public String bookDelete(int bookNo, HttpServletRequest request){
 public String getInnReservationList(String pageNo, HttpServletRequest request, Model model){
 	HttpSession session=null;
 	session = request.getSession(false);
-	System.out.println("get_innReservation_list 콘트롤러 들어옴");
 	MemberVO vo= (MemberVO)session.getAttribute("mvo");
-	System.out.println("get_innReservation_list 콘트롤러 들어옴2    "+vo);
 	InnReservationListVO irlvo=innService.getMyInnReservationList(vo, pageNo);
-	System.out.println("get_innReservation_list 콘트롤러 들어옴3    +"+irlvo);
+	ProfilePicVO pvo = memberService.selectProfilePic(vo.getMemberId());
+	  String filepath=pvo.getFilePath();
+	  model.addAttribute("filepath", filepath);
 	model.addAttribute("irlvo", irlvo);
 	return "member_innReservation_list";
 }
