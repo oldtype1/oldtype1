@@ -3,23 +3,22 @@ package org.kosta.dashduowork.model.vo;
 import java.util.List;
 
 public class InnListVO {
-	private List<InnVO> list;
+	private List<InnVO> innList;
 	private PagingBean pagingBean;
-	
 	public InnListVO() {
 		super();
 		// TODO Auto-generated constructor stub
 	}
-	public InnListVO(List<InnVO> list, PagingBean pagingBean) {
+	public InnListVO(List<InnVO> innList, PagingBean pagingBean) {
 		super();
-		this.list = list;
+		this.innList = innList;
 		this.pagingBean = pagingBean;
 	}
-	public List<InnVO> getList() {
-		return list;
+	public List<InnVO> getInnList() {
+		return innList;
 	}
-	public void setList(List<InnVO> list) {
-		this.list = list;
+	public void setInnList(List<InnVO> innList) {
+		this.innList = innList;
 	}
 	public PagingBean getPagingBean() {
 		return pagingBean;
@@ -29,9 +28,10 @@ public class InnListVO {
 	}
 	@Override
 	public String toString() {
-		return "ListVO [list=" + list + ", pagingBean=" + pagingBean + "]";
+		return "InnListVO [innList=" + innList + ", pagingBean=" + pagingBean
+				+ "]";
 	}
 	
 	
-
+	
 }
