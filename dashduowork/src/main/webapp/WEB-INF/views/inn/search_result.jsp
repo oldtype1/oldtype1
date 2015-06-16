@@ -101,7 +101,7 @@
 									<c:forEach var="list" items="${requestScope.list}">
 										<tr>
 											<td>${list.innNo }</td>
-											<td>${list.innName }</td>
+											<td><a href="inn_in_show.do?innNo=${list.innNo}">${list.innName }</a></div></td>
 											<td>${list.innCity }</td>
 											<td>${list.innArea }</td>
 											<td>${list.innAddress }</td>

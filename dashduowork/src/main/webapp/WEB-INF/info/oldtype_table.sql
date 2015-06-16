@@ -80,7 +80,7 @@ inn_no number primary key,
 inn_name varchar2(50) not null,
 inn_city varchar2(50) not null,
 inn_area varchar2(50) not null,
-inn_address varchar2(50) not null,
+inn_address varchar2(200) not null,
 inn_type varchar2(50) CHECK (inn_type IN ('집 전체', '개인실', '다인실')),
 inn_acceptable_no number not null,
 inn_price number not null,
@@ -168,3 +168,40 @@ availabledate_end date not null,
 constraint fk_inn5 foreign key(inn_no) references inn(inn_no) on DELETE CASCADE 
 )
 
+
+------------------------------------------------------------------------------
+
+-----------------------------------줭신꺼
+--임의 거래 내역 테이블--
+----------------------------------
+drop table Trade;
+----------------------------------
+create table Trade(
+Trade_no number primary key,
+inn_or_book varchar2(50) not null,
+inn_no number not null,
+member_id varchar2(50) not null,
+inn_name varchar2(50) not null,
+book_checkin date,
+book_checkout date,
+inn_availability VARCHAR2(1) CHECK (inn_availability IN ('Y','N')),
+constraint fk_member10 foreign key(member_id) references member(member_id) on DELETE CASCADE,
+constraint fk_inn10 foreign key(inn_no) references inn(inn_no)
+)
+-----------------------------------
+CREATE SEQUENCE trade_sequence;
+drop SEQUENCE trade_sequence;
+-----------------------------------
+insert into Trade
+(Trade_no, inn_or_book, inn_no, member_id, inn_name,book_checkin,book_checkout,inn_availability) 
+values(trade_sequence.nextval,'예약','2','oldtype','영통메르','2015-02-01','2015-03-01',null)
+
+insert into Trade
+(Trade_no, inn_or_book, inn_no, member_id, inn_name,book_checkin,book_checkout,inn_availability) 
+values(trade_sequence.nextval,'등록','1','oldtype','영통메르','2015-01-01','2015-01-01','Y')
+--book 체크인 체크아웃에 null값이 들어가지 않기 때문에 임의로 날짜를 넣음--
+-----------------------------------
+delete from trade
+------
+select * from trade
+------------------------------------

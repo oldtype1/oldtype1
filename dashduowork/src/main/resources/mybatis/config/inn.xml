@@ -185,6 +185,11 @@ where amenity_wifi=#{amenityWiFi} and amenity_bed=#{amenityBed} and amenity_tv=#
  ) where master=#{master}
  ) where page=#{pageNo}
 </select>
+
+	<select id="select" resultType="ivo" resultMap="innResult">
+		<include refid="innlist"/> where inn_no = #{value}
+	</select>
+	
 	<!-- <select id="getAddressKind" resultType="string">
 		select distinct(address) from member
 	</select>

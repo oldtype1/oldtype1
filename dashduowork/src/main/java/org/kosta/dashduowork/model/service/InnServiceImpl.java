@@ -178,5 +178,10 @@ public class InnServiceImpl implements InnService {
 		PagingBean pagingBean=new PagingBean(total,pn);
 		return new InnReservationListVO(list, pagingBean);
 	}
+	
+	// 은수
+	public InnVO selectInn(String innNo){
+		return innDAO.selectInn(innNo);
+	}
 
 }

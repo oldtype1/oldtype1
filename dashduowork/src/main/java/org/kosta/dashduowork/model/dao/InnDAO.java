@@ -25,4 +25,5 @@ public interface InnDAO {
 	// 6/15일 추가
 	public abstract List<InnVO> selectInnByCityAndDateAndAcceptableNoWithFilter(FilterVO vo);
 	public abstract List<InnVO> selectInnByCityAndAcceptableNoWithFilter(FilterVO vo);
+	public InnVO selectInn(String innNo); // 은수
 }
