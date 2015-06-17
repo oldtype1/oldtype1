@@ -80,7 +80,7 @@
                   </c:if> 
                     </td>
                     <td class="col-md-1">
-                        <p class="text-center">${wvo.innName}</p>
+                       <a href="inn_in_show.do?innNo=${wvo.innNo}"><h4 class="text-center">${wvo.innName}</h4></a>
                     </td>
                      <td class="col-md-1">
                         <h4 class="text-center"><a href="wishlistdelete.do?wishListNo=${wvo.wishListNo}">삭제</a></h4>

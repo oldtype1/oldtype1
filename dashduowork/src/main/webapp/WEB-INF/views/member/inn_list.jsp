@@ -70,7 +70,7 @@
                   </c:if>
                     </td>
                     <td class="col-md-7">
-                      <h3 class="text-center">${ivo.innName}</h3>
+                       <a href="inn_in_show.do?innNo=${ivo.innNo}"><h3 class="text-center">${ivo.innName}</h3></a>
                       <p class="text-center">${ivo.innInfo}</p>
                     </td>
                     <td class="col-md-1">

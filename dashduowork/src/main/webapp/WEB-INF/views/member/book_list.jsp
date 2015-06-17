@@ -83,7 +83,7 @@
                   </c:if> 
                     </td>
                     <td class="col-md-1">
-                        <p class="text-center">${bvo.innName}</p>
+                     <a href="inn_in_show.do?innNo=${bvo.innNo}"><h4 class="text-center">${bvo.innName}</h4></a>
                     </td>
                     <td class="col-md-1">
                       <h4 class="text-center">${bvo.bookCheckIn}</h4>
