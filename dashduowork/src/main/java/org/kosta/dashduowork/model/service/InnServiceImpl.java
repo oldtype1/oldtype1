@@ -149,39 +149,47 @@ public class InnServiceImpl implements InnService {
 		return innListVO;
 	}
 	
+/**주형 -- 예약/위시리스트 사진목록 추가 6/13**/
+	@Override
+	public BookListVO getmybooklist(MemberVO vo, String pageNo) {
+		int pn=1;
+		if(pageNo!=null){
+			pn=Integer.parseInt(pageNo);
+		}
+		System.out.println("pageNo?"+ pn);
+		HashMap<String,String> param = new HashMap<String,String>();
+		param.put("pageNo",Integer.toString(pn));
+		param.put("member_id",vo.getMemberId());
+		List<BookVO> list = bookDAO.getmybooklist(param);
+		for(int i=0; i<list.size(); i++){		
+			list.get(i).setBookMainPic((innPicCompDAO.getMyPicList(list.get(i).getInnNo())));
+			System.out.println("book 사진list: "+list.get(i).getBookMainPic());
+		}		
+		int total=bookDAO.getTotalPostingCount(vo);
+		PagingBean pagingBean=new PagingBean(total,pn);
+		return new BookListVO(list, pagingBean);
+	}
+	
+	@Override
+	public WishListListVO getmywishlist(MemberVO vo, String pageNo) {
 
-   @Override
-   public BookListVO getmybooklist(MemberVO vo, String pageNo) {
-      int pn=1;
-      if(pageNo!=null){
-         pn=Integer.parseInt(pageNo);
-      }
-      System.out.println("pageNo?"+ pn);
-      HashMap<String,String> param = new HashMap<String,String>();
-      param.put("pageNo",Integer.toString(pn));
-      param.put("member_id",vo.getMemberId());
-      List<BookVO> list = bookDAO.getmybooklist(param);
-      int total=bookDAO.getTotalPostingCount(vo);
-      PagingBean pagingBean=new PagingBean(total,pn);
-      return new BookListVO(list, pagingBean);
-   }
-   
-   @Override
-   public WishListListVO getmywishlist(MemberVO vo, String pageNo) {
-
-      int pn=1;
-      if(pageNo!=null){
-         pn=Integer.parseInt(pageNo);
-      }
-      System.out.println("pageNo?"+ pn);
-      HashMap<String,String> param = new HashMap<String,String>();
-      param.put("pageNo",Integer.toString(pn));
-      param.put("member_id",vo.getMemberId());
-      List<WishListVO> list=wishListDAO.getmywishlist(param);
-      int total=wishListDAO.getTotalPostingCount(vo);
-      PagingBean pagingBean=new PagingBean(total,pn);
-      return new WishListListVO(list, pagingBean);
-   }
+		int pn=1;
+		if(pageNo!=null){
+			pn=Integer.parseInt(pageNo);
+		}
+		System.out.println("pageNo?"+ pn);
+		HashMap<String,String> param = new HashMap<String,String>();
+		param.put("pageNo",Integer.toString(pn));
+		param.put("member_id",vo.getMemberId());
+		List<WishListVO> list=wishListDAO.getmywishlist(param);
+		for(int i=0; i<list.size(); i++){		
+			list.get(i).setWishlistMainPic((innPicCompDAO.getMyPicList(list.get(i).getInnNo())));
+			System.out.println("wishlist 사진list: "+list.get(i).getWishlistMainPic());
+		}
+		int total=wishListDAO.getTotalPostingCount(vo);
+		PagingBean pagingBean=new PagingBean(total,pn);
+		return new WishListListVO(list, pagingBean);
+	}
 
    @Override
    public void wishListDelete(WishListDeleteVO wdvo) {

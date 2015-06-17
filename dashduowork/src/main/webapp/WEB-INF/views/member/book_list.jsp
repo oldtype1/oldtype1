@@ -73,8 +73,14 @@
                       <h4>${bvo.bookNo}</h4>
                     </td>
                     <td class="col-md-1">
+                        <c:if test="${bvo.bookMainPic!=null}">
+                      <a class="pull-left" href="#"><img class="media-object" src="${bvo.bookMainPic.filePath}" height="150" width="150">
+                  </a>
+                  </c:if>
+                  <c:if test="${bvo.bookMainPic==null}">
                       <a class="pull-left" href="#"><img class="media-object" src="http://pingendo.github.io/pingendo-bootstrap/assets/placeholder.png" height="150" width="150">
                   </a>
+                  </c:if> 
                     </td>
                     <td class="col-md-1">
                         <p class="text-center">${bvo.innName}</p>
