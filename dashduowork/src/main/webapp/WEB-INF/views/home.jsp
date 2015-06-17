@@ -2,6 +2,14 @@
 	pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <script>
+$(document).ready(function(){
+	$("#searchInnCityAjaxForm").submit(function(){
+		if($("#searchCity").val()==""){
+			alert("지역을 입력해주세요.");
+			return false;
+		}
+	});
+});
 	function SearchInnCityListByAjax() {		 
 	var availableTags = []; //자동 완성 해당 단어 저장할 배열(객체) 선언 / 항상 초기화 되어야함
 	$.ajax({ //db에 저장되어있는 값들 ajax로 반환
@@ -28,6 +36,7 @@
 			dateFormat : 'yy-mm-dd'
 		});
 	});
+
 </script>
 <img id="img1" src="${initParam.root}img/house.jpg" style="position: relative; top: 80px; left: 330px;">
 
