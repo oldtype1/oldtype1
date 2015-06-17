@@ -54,7 +54,7 @@
               <table class="table">
                 <tbody>
                 
-                <c:forEach var="ivo" items="${requestScope.lvo.list}">
+                <c:forEach var="ivo" items="${requestScope.lvo.innList}">
                   <tr>
                     <td class="col-md-1 text-center" draggable="true">
                       <h4>${ivo.innNo}</h4>
@@ -67,7 +67,7 @@
                   <c:if test="${ivo.innMainPic==null}">
                       <a class="pull-left" href="#"><img class="media-object" src="http://pingendo.github.io/pingendo-bootstrap/assets/placeholder.png" height="150" width="150">
                   </a>
-                  </c:if> 
+                  </c:if>
                     </td>
                     <td class="col-md-7">
                       <h3 class="text-center">${ivo.innName}</h3>
