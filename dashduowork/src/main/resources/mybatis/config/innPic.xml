@@ -18,6 +18,11 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	<select id="getMyPicList" parameterType="int" resultType="ipvo" resultMap="innResult">
 	select * from (select * from INN_PIC where inn_no=#{value} ) where rownum='1'
 	</select>
+	
+	<select id="selectByInnNo" parameterType="String" resultMap="innResult"
+		resultType="ipvo">
+		select * from INN_PIC where inn_no=#{value}
+	</select>
 <!-- 
 	<sql id="innlist">
 		select inn_no,inn_name,inn_city,inn_area,inn_address,inn_type,inn_acceptable_no,

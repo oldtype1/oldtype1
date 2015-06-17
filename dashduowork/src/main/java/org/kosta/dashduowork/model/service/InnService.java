@@ -13,6 +13,7 @@ import org.kosta.dashduowork.model.vo.InnPicCompVO;
 import org.kosta.dashduowork.model.vo.InnReservationListVO;
 import org.kosta.dashduowork.model.vo.InnVO;
 import org.kosta.dashduowork.model.vo.MemberVO;
+import org.kosta.dashduowork.model.vo.ProfilePicVO;
 import org.kosta.dashduowork.model.vo.SearchVO;
 import org.kosta.dashduowork.model.vo.TradeListVO;
 import org.kosta.dashduowork.model.vo.WishListDeleteVO;
@@ -41,4 +42,7 @@ public interface InnService {
    public Map<String,Object> selectInn(String innNo); // 은수
    //6/16추가
    public List<InnVO> findInnCityListByInnCityCharacter(SearchVO vo);
+   
+   public List<InnPicCompVO> selectByInnNo(String innNo);
+	 public ProfilePicVO selectByProfilePic(String memberId);
 }

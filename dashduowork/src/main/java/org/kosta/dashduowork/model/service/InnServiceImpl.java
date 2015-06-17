@@ -28,6 +28,7 @@ import org.kosta.dashduowork.model.vo.InnReservationVO;
 import org.kosta.dashduowork.model.vo.InnVO;
 import org.kosta.dashduowork.model.vo.MemberVO;
 import org.kosta.dashduowork.model.vo.PagingBean;
+import org.kosta.dashduowork.model.vo.ProfilePicVO;
 import org.kosta.dashduowork.model.vo.SearchVO;
 import org.kosta.dashduowork.model.vo.TradeListVO;
 import org.kosta.dashduowork.model.vo.TradeVO;
@@ -253,4 +254,18 @@ public class InnServiceImpl implements InnService {
 	public List<InnVO> findInnCityListByInnCityCharacter(SearchVO vo) {
 		return innDAO.selectInnCityListByInnCityCharacter(vo);
 	}
+   
+   @Override
+	public List<InnPicCompVO> selectByInnNo(String innNo) {
+		List<InnPicCompVO> ipvo=innPicCompDAO.selectByInnNo(innNo);
+		System.out.println("dao에서"+ipvo);
+		return ipvo;
+	}
+	@Override
+	 public ProfilePicVO selectByProfilePic(String memberId) {
+	  		ProfilePicVO pvo =  memberDAO.selectProfilePic(memberId);
+	  		System.out.println("service에서 pvo2:"+pvo);
+	  		return pvo;
+	  	}
+	
 }

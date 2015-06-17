@@ -1,5 +1,7 @@
 package org.kosta.dashduowork.model.dao;
 
+import java.util.List;
+
 import javax.annotation.Resource;
 
 import org.kosta.dashduowork.model.vo.InnPicCompVO;
@@ -22,4 +24,9 @@ public class InnPicCompDAOImpl implements InnPicCompDAO {
 		return sqlSessionTemplate.selectOne("innPic.getMyPicList",innNo);
 	}
 	
+	@Override
+	public List<InnPicCompVO> selectByInnNo(String innNo) {
+		System.out.println("InnPicCompVO : "+ innNo);
+		return sqlSessionTemplate.selectList("innPic.selectByInnNo",innNo);
+	}
 	}

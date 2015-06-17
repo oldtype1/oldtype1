@@ -4,7 +4,6 @@ import java.io.File;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
@@ -53,6 +52,9 @@ public class InnController {
 	@Resource(name = "uploadPath")
 	private String path;
 	
+	@Resource(name="viewPath")
+	private String viewPath;
+	
 	@Transactional
 	@RequestMapping(value = "inn_register.do", method = RequestMethod.POST)
 	public ModelAndView register(HttpServletRequest request, InnVO ivo,
@@ -78,14 +80,15 @@ public class InnController {
 		for (int i = 0; i < file.size(); i++) {
 			// System.out.println(list.get(i).getOriginalFilename().equals(""));
 			// TODO 파일 이름이 겹치는 상황에 대한 대처를 생각해본다.
-			int a = (int) (Math.random() * 10); 
-			int b = (int) (Math.random() * 10);  
-			int c = (int) (Math.random() * 10); 
+			int a = (int) (Math.random() * 10);
+			int b = (int) (Math.random() * 10);
+			int c = (int) (Math.random() * 10);
 			String fileName = path+a + "" + b + "" + c + "_"
 					+ file.get(i).getOriginalFilename();
 			if (!fileName.equals("")) {
 				try {
-					nameList.add(fileName);
+					nameList.add(viewPath+a + "" + b + "" + c + "_"
+							+file.get(i).getOriginalFilename());
 					file.get(i).transferTo(new File(fileName));
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -264,15 +267,7 @@ public class InnController {
 		model.addAttribute("irlvo", irlvo);
 		return "member_innReservation_list";
 	}
-	
-	@RequestMapping(value="inn_in_show.do")
-	public String inShow(HttpServletRequest request, Model model){
-	   String innNo = (String)request.getParameter("innNo");
-	   Map<String, Object> map = (HashMap<String, Object>) innService.selectInn(innNo);
-	   System.out.println(map);
-	   model.addAttribute("VOMap", map);
-	   return "inn_in_show";
-	}
+
 	
 	//6/17일 추가
 	@RequestMapping(value="searchCityAuto.do")
@@ -288,7 +283,24 @@ public class InnController {
 		return list;
 	}
 
-
+	@RequestMapping(value="inn_in_show.do")
+	public String inShow(HttpServletRequest request, Model model){
+		String innNo = (String)request.getParameter("innNo");
+		HashMap<String, Object> map = (HashMap<String, Object>) innService.selectInn(innNo);
+		System.out.println(map);
+		InnVO ivo = (InnVO)map.get("innVO");
+		List<InnPicCompVO> picList = innService.selectByInnNo(innNo);
+		ProfilePicVO pvo=innService.selectByProfilePic(ivo.getMemberId());
+		System.out.println(picList);
+		System.out.println(pvo);
+		
+		map.put("picList", picList);
+		map.put("pvo", pvo);
+		model.addAttribute("VOMap", map);
+		System.out.println("picList가 실행이 된다?");
+		return "inn_in_show";
+	}
+		
 }
 
 

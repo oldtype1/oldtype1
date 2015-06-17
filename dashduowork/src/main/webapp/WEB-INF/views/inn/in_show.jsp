@@ -4,47 +4,70 @@
 <html>
     
   <head>
-    <!-- <meta charset="utf-8">
+  	  <!-- <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     
     <script type="text/javascript" src="http://cdnjs.cloudflare.com/ajax/libs/jquery/2.0.3/jquery.min.js">
     </script>
     <script type="text/javascript" src="http://netdna.bootstrapcdn.com/bootstrap/3.3.4/js/bootstrap.min.js"></script>
-    
     <link href="http://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.3.0/css/font-awesome.min.css"
-    rel="stylesheet" type="text/css"> -->
-      <script type="text/javascript">
-   $(function() {
-      $("#availableDateSt, #availableDateEnd").datepicker({
-         dateFormat : 'yy-mm-dd'
-      });
-   });
-  </script>
+    rel="stylesheet" type="text/css">  -->
+    
     <link href="http://pingendo.github.io/pingendo-bootstrap/themes/default/bootstrap.css"
     rel="stylesheet" type="text/css">
+      <script type="text/javascript">
+	$(function() {
+		$("#availableDateSt, #availableDateEnd").datepicker({
+			dateFormat : 'yy-mm-dd'
+		});
+	});	
+</script> 
+
   </head>
 
   <body>
   
+      <div class="container">
+        </div>
 <div class="section">
       <div class="container">
         <div class="row">
-          <div class="col-md-5">
-    <div class="section">
-      <div class="container">
-        <div class="row">
-          <div class="col-md-5">
-            <div id="fullcarousel-example" data-interval="false" class="carousel slide"
-            data-ride="carousel">
-              <div class="carousel-inner">
-                <div class="item active">
-                  <img src="http://pingendo.github.io/pingendo-bootstrap/assets/placeholder.png">
-                </div>
-              </div>
-              <a class="left carousel-control" href="#fullcarousel-example" data-slide="prev"><i class="icon-prev fa fa-angle-left"></i></a>
-              <a class="right carousel-control" href="#fullcarousel-example" data-slide="next"><i class="icon-next fa fa-angle-right"></i></a>
-            </div>
-          </div>
+             <div id="myCarousel" class="carousel slide col-md-5" data-ride="carousel">
+    <!-- Indicators -->
+    <ol class="carousel-indicators">
+      <li data-target="#myCarousel" data-slide-to="0" class="active"></li>
+       <c:forEach begin="1" end="2" var="i" >
+       <li data-target="#myCarousel" data-slide-to="${i}" ></li>
+       </c:forEach>
+     <!--  <li data-target="#myCarousel" data-slide-to="1"></li>
+      <li data-target="#myCarousel" data-slide-to="2"></li>
+      <li data-target="#myCarousel" data-slide-to="3"></li> -->
+    </ol>
+
+    <!-- Wrapper for slides -->
+    <div class="carousel-inner" role="listbox">
+      <div class="item active" >
+ 	<%-- <img src="${requestScope.VOMap.picList.filePath}" style="width:500px; height: 350px;"> --%>
+ 	  <c:forEach items="${requestScope.VOMap.picList}" var="list"  begin="0" end="0" >
+ 	    <img src="${list.filePath}" style="width:500px; height: 350px;">
+      </c:forEach>
+      </div>
+    <c:forEach items="${requestScope.VOMap.picList}" var="list"  begin="1" end="2" >
+    <div class="item" >
+        <img src="${list.filePath}" style="width:500px; height: 350px;">
+      </div>
+      </c:forEach>
+      </div>
+      <!-- Left and right controls -->
+    <a class="left carousel-control" href="#myCarousel" role="button" data-slide="prev">
+      <span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span>
+      <span class="sr-only">Previous</span>
+    </a>
+    <a class="right carousel-control" href="#myCarousel" role="button" data-slide="next">
+      <span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>
+      <span class="sr-only">Next</span>
+    </a>
+  </div>
           <div class="col-md-7">
             <form class="form-horizontal" role="form">
               <div class="form-group">
@@ -61,7 +84,7 @@
                 </div>
                 <div class="col-sm-8">
                  <input type="text" class="form-control" name="availableDateEnd" size="15" id="availableDateEnd"
-         onfocus="this.value=''" placeholder="Checkout">
+			onfocus="this.value=''" placeholder="Checkout">
                 </div>
               </div>
               <div class="form-group">
@@ -92,7 +115,6 @@
       </div>
     </div>
     </div>
-    </div>
    </div>
    </div>
     <div class="section">
@@ -105,7 +127,7 @@
                   <label for="inputEmail3" class="control-label input-lg">숙소명</label>
                 </div>
                 <div class="col-sm-10">
-                  <input type="text" class="form-control input-lg" id="inputEmail3" placeholder="숙소명">
+                  <input type="text" class="form-control input-lg" id="inputEmail3" value="${requestScope.VOMap.innVO.innName}" readonly="readonly">
                 </div>
               </div>
               <div class="form-group">
@@ -113,7 +135,7 @@
                   <label for="inputEmail3" class="control-label input-lg">주소</label>
                 </div>
                 <div class="col-sm-10">
-                  <input type="text" class="form-control input-lg" id="inputEmail3" placeholder="주소">
+                  <input type="text" class="form-control input-lg" id="inputEmail3" value="${requestScope.VOMap.innVO.innAddress}" readonly="readonly">
                 </div>
               </div>
               <div class="form-group">
@@ -121,17 +143,17 @@
                   <label class="control-label input-lg">상세보기</label>
                 </div>
                 <div class="col-sm-10">
-                  <textarea class="form-control " placeholder="상세보기" cols="40" rows="10"></textarea>
+                  <textarea class="form-control " wrap="soft" placeholder="상세보기" cols="40" rows="10" readonly="readonly">${requestScope.VOMap.innVO.innInfo}</textarea>
                 </div>
               </div>
               <div class="row">
                 <div class="col-md-2">
-                  <img src="http://pingendo.github.io/pingendo-bootstrap/assets/user_placeholder.png"
+                  <img src="${requestScope.VOMap.pvo.filePath}"
                   class="img-circle img-responsive" width="200" height="200">
                 </div>
                 <div class="col-md-5 text-left">
                   <label class="control-label input-lg">이름</label>
-                  <input class="form-control input-lg " type="text" placeholder="이름">
+                  <input class="form-control input-lg " type="text" value="${requestScope.VOMap.memberVO.memberName}" readonly="readonly">
                 </div>
               </div>
             </form>
@@ -140,5 +162,4 @@
       </div>
     </div>
   </body>
-
 </html>
