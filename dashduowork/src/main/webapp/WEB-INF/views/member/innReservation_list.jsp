@@ -28,7 +28,7 @@
                   <a href='get_mywishlist.do'>위시리스트</a>
                 </li>
                 <li>
-                  <a href="#">쪽지</a>
+                  <a href="get_innReservation_list.do">예약관리</a>
                 </li>
               </ul>
             </div>
@@ -73,8 +73,14 @@
                       <h4>${irlvo.bookNo}</h4>
                     </td>
                     <td class="col-md-1">
+                        <c:if test="${irlvo.innReservationMainPic!=null}">
+                      <a class="pull-left" href="#"><img class="media-object" src="${irlvo.innReservationMainPic.filePath}" height="150" width="150">
+                  </a>
+                  </c:if>
+                  <c:if test="${irlvo.innReservationMainPic==null}">
                       <a class="pull-left" href="#"><img class="media-object" src="http://pingendo.github.io/pingendo-bootstrap/assets/placeholder.png" height="150" width="150">
                   </a>
+                  </c:if>
                     </td>
                     <td class="col-md-1">
                         <p class="text-center">${irlvo.innName}</p>

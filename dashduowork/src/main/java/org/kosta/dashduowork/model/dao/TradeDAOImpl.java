@@ -22,7 +22,7 @@ public class TradeDAOImpl implements TradeDAO{
 
 	@Override
 	public int getTotalPostingCount(MemberVO vo) {
-		return sqlSessionTemplate.selectOne("inn.getTotalTradePostingCount",vo.getMemberId());
+		return sqlSessionTemplate.selectOne("inn.getTotalTradeCount",vo.getMemberId());
 	}
 
 }

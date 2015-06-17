@@ -9,12 +9,13 @@ public class InnReservationVO {
 	private String bookCheckIn;
 	private String bookCheckOut;
 	private String bookCount;
+	private InnPicCompVO innReservationMainPic;
 	public InnReservationVO() {
 		super();
 	}
 	public InnReservationVO(String memberId, String master, int bookNo,
 			int innNo, String innName, String bookCheckIn, String bookCheckOut,
-			String bookCount) {
+			String bookCount, InnPicCompVO innReservationMainPic) {
 		super();
 		this.memberId = memberId;
 		this.master = master;
@@ -24,6 +25,7 @@ public class InnReservationVO {
 		this.bookCheckIn = bookCheckIn;
 		this.bookCheckOut = bookCheckOut;
 		this.bookCount = bookCount;
+		this.innReservationMainPic = innReservationMainPic;
 	}
 	public String getMemberId() {
 		return memberId;
@@ -73,15 +75,19 @@ public class InnReservationVO {
 	public void setBookCount(String bookCount) {
 		this.bookCount = bookCount;
 	}
+	public InnPicCompVO getInnReservationMainPic() {
+		return innReservationMainPic;
+	}
+	public void setInnReservationMainPic(InnPicCompVO innReservationMainPic) {
+		this.innReservationMainPic = innReservationMainPic;
+	}
 	@Override
 	public String toString() {
 		return "InnReservationVO [memberId=" + memberId + ", master=" + master
 				+ ", bookNo=" + bookNo + ", innNo=" + innNo + ", innName="
 				+ innName + ", bookCheckIn=" + bookCheckIn + ", bookCheckOut="
-				+ bookCheckOut + ", bookCount=" + bookCount + "]";
+				+ bookCheckOut + ", bookCount=" + bookCount
+				+ ", innReservationMainPic=" + innReservationMainPic + "]";
 	}
-	
-	
-	
-	
+
 }

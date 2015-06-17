@@ -21,7 +21,7 @@ public class InnDAOImpl implements InnDAO {
 
 	@Override
 	public int getTotalPostingCount(MemberVO vo) {
-		return sqlSessionTemplate.selectOne("inn.getTotalPostingCount",vo.getMemberId());
+		return sqlSessionTemplate.selectOne("inn.getTotalInnCount",vo.getMemberId());
 	}
 
 	@Override

@@ -21,7 +21,7 @@ public class BookDAOImpl implements BookDAO {
 	 */
 	@Override
 	public int getTotalPostingCount(MemberVO vo) {
-		return sqlSessionTemplate.selectOne("inn.getTotalPostingCount",vo.getMemberId());
+		return sqlSessionTemplate.selectOne("inn.getTotalBookCount",vo.getMemberId());
 	}
 	
 

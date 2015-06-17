@@ -21,7 +21,7 @@ public class InnReservationDAOImpl implements InnReservationDAO {
 	 */
 	@Override
 	public int getTotalPostingCount(MemberVO vo) {
-		return sqlSessionTemplate.selectOne("inn.getTotalPostingCount",vo.getMemberId());
+		return sqlSessionTemplate.selectOne("inn.getTotalInnReservationCount",vo.getMemberId());
 	}
 
 	/* (non-Javadoc)

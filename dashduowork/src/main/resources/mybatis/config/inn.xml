@@ -71,9 +71,24 @@ select inn_no,inn_name,inn_city,inn_area,inn_address,inn_type,inn_acceptable_no,
  )
  )   where page=#{pageNo} 
 	</select>
-	
-	 <select id="getTotalPostingCount" resultType="int" parameterType="String">
+
+<!-- 페이징빈 위해 테이블 별 totalcount 주형 6/17-->
+	 <select id="getTotalInnCount" resultType="int" parameterType="String">
  	select count(*) from inn where member_id=#{value}
+ 	</select> 	 		
+	<select id="getTotalTradeCount" resultType="int" parameterType="String">
+ 	select count(*) from trade where member_id=#{value}
+ 	</select>
+ 	<select id="getTotalBookCount" resultType="int" parameterType="String">
+ 	select count(*) from book where member_id=#{value}
+ 	</select>
+ 	<select id="getTotalWishlistCount" resultType="int" parameterType="String">
+ 	select count(*) from wishlist where member_id=#{value}
+ 	</select>
+ 	<select id="getTotalInnReservationCount" resultType="int" parameterType="String">
+  select count(*) from(
+ select i.member_id as master from book b, inn i where b.inn_no=i.inn_no
+ ) where master=#{value}
  	</select>
  	
  	<!-- 지역&인원 검색 -->
@@ -91,14 +106,15 @@ from inn i, amenity a where i.inn_no=a.inn_no)
 where amenity_wifi=#{amenityWiFi} and amenity_bed=#{amenityBed} and amenity_tv=#{amenityTV} and amenity_kitchen=#{amenityKitchen} and amenity_bbq=#{amenityBBQ}
 	</select> -->
 	<!-- 지역&날짜&인원 검색 -->
-	<select id="selectInnByCityAndDateAndAcceptableNo" parameterType="svo" resultType="ivo" resultMap="innResult">
-	<![CDATA[select distinct inn_no, inn_name, inn_city, inn_area, inn_type, inn_acceptable_no, inn_price, member_id
+ <select id="selectInnByCityAndDateAndAcceptableNo" parameterType="svo" resultType="ivo" resultMap="innResult">
+   <![CDATA[select distinct inn_no, inn_name, inn_city, inn_area, inn_type, inn_acceptable_no, inn_price, member_id
 from (select * from (select i.inn_no, i.inn_name, i.inn_city, i.inn_area, i.inn_address, i.inn_type, i.inn_acceptable_no, 
 i.inn_price, i.inn_info,i.inn_availability,i.member_id, a.availabledate_st, a.availabledate_end from availabledate a, inn i 
 where i.inn_no=a.inn_no)
 where availabledate_st>= #{startDate} and availabledate_end <= #{endDate})
 where inn_city=#{innCity} and inn_acceptable_no>=#{acceptableNo}]]>
-	</select>
+   </select>
+	
 	
 <select  id="getmybooklist" parameterType="hashmap" resultType="bvo" resultMap="bookResult">
 <!-- 체크인 체크아웃 날짜 시간 안나오게 수정함 -->
@@ -131,11 +147,7 @@ ceil(rownum/5) as page from
  )
  )   where page=#{pageNo} 
 	</select>
-	
-	<select id="getTotalTradePostingCount" resultType="int" parameterType="String">
- 	select count(*) from trade where member_id=#{value}
- 	</select>
-	
+
 		<select id="getmywishlist" parameterType="hashmap" resultType="wvo" resultMap="wishListResult">
 	 select inn_no, wishlist_no, member_id, inn_name from(
  select  inn_no, wishlist_no, member_id, inn_name, page from(

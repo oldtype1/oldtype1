@@ -28,7 +28,7 @@
                   <a href='get_mywishlist.do'>위시리스트</a>
                 </li>
                 <li>
-                  <a href="#">쪽지</a>
+                  <a href="get_innReservation_list.do">예약관리</a>
                 </li>
               </ul>
             </div>

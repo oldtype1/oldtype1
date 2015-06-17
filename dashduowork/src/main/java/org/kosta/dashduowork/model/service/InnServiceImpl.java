@@ -150,7 +150,7 @@ public class InnServiceImpl implements InnService {
 		return innListVO;
 	}
 	
-/**주형 -- 예약/위시리스트 사진목록 추가 6/13**/
+/**주형 -- 예약/위시리스트 사진목록 추가 6/17**/
 	@Override
 	public BookListVO getmybooklist(MemberVO vo, String pageNo) {
 		int pn=1;
@@ -225,21 +225,25 @@ public class InnServiceImpl implements InnService {
 	}
 
 
-   public InnReservationListVO getMyInnReservationList(MemberVO vo, String pageNo){
-      System.out.println("getMyInnReservationList 서비스    "+vo);
-      int pn=1;
-      if(pageNo!=null){
-         pn=Integer.parseInt(pageNo);
-      }
-      System.out.println("pageNo?"+ pn);
-      HashMap<String,String> param = new HashMap<String,String>();
-      param.put("pageNo",Integer.toString(pn));
-      param.put("master",vo.getMemberId());
-      List<InnReservationVO> list = innReservationDAO.getMyInnReservationList(param);
-      int total=innReservationDAO.getTotalPostingCount(vo);
-      PagingBean pagingBean=new PagingBean(total,pn);
-      return new InnReservationListVO(list, pagingBean);
-   }
+	  public InnReservationListVO getMyInnReservationList(MemberVO vo, String pageNo){
+	      System.out.println("getMyInnReservationList 서비스    "+vo);
+	      int pn=1;
+	      if(pageNo!=null){
+	         pn=Integer.parseInt(pageNo);
+	      }
+	      System.out.println("pageNo?"+ pn);
+	      HashMap<String,String> param = new HashMap<String,String>();
+	      param.put("pageNo",Integer.toString(pn));
+	      param.put("master",vo.getMemberId());
+	      List<InnReservationVO> list = innReservationDAO.getMyInnReservationList(param);
+	      for(int i=0; i<list.size(); i++){		
+				list.get(i).setInnReservationMainPic((innPicCompDAO.getMyPicList(list.get(i).getInnNo())));
+				System.out.println("innReservation 사진list: "+list.get(i).getInnReservationMainPic());
+			}
+	      int total=innReservationDAO.getTotalPostingCount(vo);
+	      PagingBean pagingBean=new PagingBean(total,pn);
+	      return new InnReservationListVO(list, pagingBean);
+	   }
    
    // 은수
    public Map<String,Object> selectInn(String innNo) {

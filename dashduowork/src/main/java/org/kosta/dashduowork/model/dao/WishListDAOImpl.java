@@ -20,7 +20,7 @@ public class WishListDAOImpl implements WishListDAO {
 	 */
 	@Override
 	public int getTotalPostingCount(MemberVO vo) {
-		return sqlSessionTemplate.selectOne("inn.getTotalPostingCount",vo.getMemberId());
+		return sqlSessionTemplate.selectOne("inn.getTotalWishlistCount",vo.getMemberId());
 	}
 	
 
