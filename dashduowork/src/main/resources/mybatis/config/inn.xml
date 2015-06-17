@@ -95,7 +95,7 @@ select inn_no,inn_name,inn_city,inn_area,inn_address,inn_type,inn_acceptable_no,
 	<select id="selectInnByCityAndAcceptableNo" parameterType="svo" resultType="ivo" resultMap="innResult">
   <![CDATA[select inn_no, inn_name, inn_city, inn_area, inn_address, inn_type, inn_acceptable_no, inn_price, inn_info, inn_availability, member_id from
   (select i.inn_no, i.inn_name, i.inn_city, i.inn_area, i.inn_address, i.inn_type, i.inn_acceptable_no, i.inn_price, i.inn_info,i.inn_availability, i.member_id 
-  from inn i where inn_city like '%' ||  #{innCity} || '%') where inn_acceptable_no >= #{acceptableNo}]]>
+  from inn i where inn_address like '%' ||  #{innCity} || '%') where inn_acceptable_no >= #{acceptableNo}]]>
  </select>
 	<!-- 편의시설 체크로만 검색하는 쿼리. 현재 사용 안하지만 혹시몰라 남겨둠. -->
 <!-- 		<select id="selectInnByCheckedAmenity" parameterType="avo" resultType="ivo" resultMap="innResult">
@@ -106,14 +106,14 @@ from inn i, amenity a where i.inn_no=a.inn_no)
 where amenity_wifi=#{amenityWiFi} and amenity_bed=#{amenityBed} and amenity_tv=#{amenityTV} and amenity_kitchen=#{amenityKitchen} and amenity_bbq=#{amenityBBQ}
 	</select> -->
 	<!-- 지역&날짜&인원 검색 -->
- <select id="selectInnByCityAndDateAndAcceptableNo" parameterType="svo" resultType="ivo" resultMap="innResult">
-   <![CDATA[select distinct inn_no, inn_name, inn_city, inn_area, inn_address, inn_type, inn_acceptable_no, inn_price, member_id
+	<select id="selectInnByCityAndDateAndAcceptableNo" parameterType="svo" resultType="ivo" resultMap="innResult">
+	<![CDATA[select distinct inn_no, inn_name, inn_city, inn_area, inn_address, inn_type, inn_acceptable_no, inn_price, member_id
 from (select * from (select i.inn_no, i.inn_name, i.inn_city, i.inn_area, i.inn_address, i.inn_type, i.inn_acceptable_no, 
 i.inn_price, i.inn_info,i.inn_availability,i.member_id, a.availabledate_st, a.availabledate_end from availabledate a, inn i 
 where i.inn_no=a.inn_no)
 where availabledate_st>= #{startDate} and availabledate_end <= #{endDate})
-where inn_city=#{innCity} and inn_acceptable_no>=#{acceptableNo}]]>
-   </select>
+where inn_address like '%' ||  #{innCity} || '%' and inn_acceptable_no>=#{acceptableNo}]]>
+	</select>
 	
 	
 <select  id="getmybooklist" parameterType="hashmap" resultType="bvo" resultMap="bookResult">
@@ -202,7 +202,7 @@ from (select inn_no, inn_name, inn_city, inn_area, inn_address, inn_type, inn_ac
 from (select distinct i.inn_no, i.inn_name, i.inn_city, i.inn_area, i.inn_address, i.inn_type, i.inn_acceptable_no, 
 i.inn_price,i.inn_availability,i.member_id, ad.availabledate_st, ad.availabledate_end, a.amenity_wifi,a.amenity_bed,a.amenity_tv,a.amenity_kitchen,a.amenity_bbq
 from availabledate ad, inn i, amenity a where i.inn_no=ad.inn_no and i.inn_no=a.inn_no and ad.inn_no=a.inn_no)
-where availabledate_st>=#{firstSearchStartDate} and availabledate_end <=#{firstSearchEndDate} and inn_city like '%' ||  #{firstSearchCity} || '%' and inn_acceptable_no >= #{firstSearchPeopleNo})
+where availabledate_st>=#{firstSearchStartDate} and availabledate_end <=#{firstSearchEndDate} and inn_address like '%' ||  #{firstSearchCity} || '%' and inn_acceptable_no >= #{firstSearchPeopleNo})
 where amenity_wifi=#{amenityWiFi} and amenity_bed=#{amenityBed} and amenity_tv=#{amenityTV} and amenity_kitchen=#{amenityKitchen} and amenity_bbq=#{amenityBBQ}]]>
    </select>
 	<!-- 지역&인원 + 필터검색 -->
@@ -212,7 +212,7 @@ from (select inn_no, inn_name, inn_city, inn_area, inn_address, inn_type, inn_ac
 from (select distinct i.inn_no, i.inn_name, i.inn_city, i.inn_area, i.inn_address, i.inn_type, i.inn_acceptable_no, 
 i.inn_price,i.inn_availability,i.member_id, ad.availabledate_st, ad.availabledate_end, a.amenity_wifi,a.amenity_bed,a.amenity_tv,a.amenity_kitchen,a.amenity_bbq
 from availabledate ad, inn i, amenity a where i.inn_no=ad.inn_no and i.inn_no=a.inn_no and ad.inn_no=a.inn_no)
-where inn_city like '%' ||  #{firstSearchCity} || '%'  and inn_acceptable_no >= #{firstSearchPeopleNo})
+where inn_address like '%' ||  #{firstSearchCity} || '%'  and inn_acceptable_no >= #{firstSearchPeopleNo})
 where amenity_wifi=#{amenityWiFi} and amenity_bed=#{amenityBed} and amenity_tv=#{amenityTV} and amenity_kitchen=#{amenityKitchen} and amenity_bbq=#{amenityBBQ}]]>
 </select>
 	
@@ -228,7 +228,7 @@ where amenity_wifi=#{amenityWiFi} and amenity_bed=#{amenityBed} and amenity_tv=#
 <!-- 6/17일 추가 -->
 <!-- 지역검색시 지역 자동완성 -->
 <select id="selectInnCityListByInnCityCharacter" parameterType="svo"  resultType="ivo" resultMap="innResult">
-select distinct inn_city from inn where inn_city like '%' ||  #{innCity} || '%'
+select distinct inn_address from inn where inn_address like '%' ||  #{innCity} || '%' order by inn_address asc
 </select>
 
 	<select id="select" resultType="ivo" resultMap="innResult">
