@@ -39,7 +39,7 @@
           <div class="row">
             <div class="col-md-1">
               <center>
-                <img src="${requestScope.filepath}"
+                <img src="${requestScope.member.profilePicVO.filePath}"
                 class="img-circle img-responsive" width="50" height="70">
               </center>
             </div>
