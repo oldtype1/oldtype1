@@ -77,7 +77,7 @@ select inn_no,inn_name,inn_city,inn_area,inn_address,inn_type,inn_acceptable_no,
  	select count(*) from inn where member_id=#{value}
  	</select> 	 		
 	<select id="getTotalTradeCount" resultType="int" parameterType="String">
- 	select count(*) from trade where member_id=#{value}
+ 	select count(*) from trade where member_id=#{value} and <![CDATA[book_checkout < sysdate]]>
  	</select>
  	<select id="getTotalBookCount" resultType="int" parameterType="String">
  	select count(*) from book where member_id=#{value}
