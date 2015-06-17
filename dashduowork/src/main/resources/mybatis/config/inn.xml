@@ -130,7 +130,7 @@ select book_no, book_checkin, book_checkout, book_count, member_id, inn_no, inn_
 ceil(rownum/5) as page from
 (
  select b.book_no, to_char(b.book_checkin,'YYYY-MM-DD') as book_checkin, to_char(b.book_checkout,'YYYY-MM-DD') 
- as book_checkout,  b.book_count, b.member_id, b.inn_no, i.inn_name from book b, inn i where b.inn_no=i.inn_no
+ as book_checkout,  b.book_count, b.member_id, b.inn_no, i.inn_name from book b, inn i where b.inn_no=i.inn_no and <![CDATA[book_checkout > sysdate]]> 
  ) 
  where member_id=#{member_id}
  ) where page=#{pageNo}
@@ -143,7 +143,7 @@ ceil(rownum/5) as page from
  to_char(book_checkout,'YYYY-MM-DD') as book_checkout, inn_availability,ceil(rownum/5) as page from
  (
   select inn_or_book, inn_no, member_id, inn_name, book_checkin, book_checkout, inn_availability
-   from trade where member_id=#{member_id} order by Trade_no desc	
+   from trade where member_id=#{member_id} and <![CDATA[book_checkout < sysdate]]> order by Trade_no desc	
  )
  )   where page=#{pageNo} 
 	</select>
