@@ -39,7 +39,7 @@
           <div class="row">
             <div class="col-md-1">
               <center>
-                <img src="${requestScope.filepath}"
+                <img src="${requestScope.member.profilePicVO.filePath}"
                 class="img-circle img-responsive" width="50" height="70">
               </center>
             </div>
@@ -70,8 +70,14 @@
                         <p class="text-center">${wvo.wishListNo}</p>
                     </td>
                     <td class="col-md-1">
-                      <a class="pull-center" href="#"><img class="media-object" src="http://pingendo.github.io/pingendo-bootstrap/assets/placeholder.png" height="150" width="150">
+                              <c:if test="${wvo.wishlistMainPic!=null}">
+                      <a class="pull-left" href="#"><img class="media-object" src="${wvo.wishlistMainPic.filePath}" height="150" width="150">
                   </a>
+                  </c:if>
+                  <c:if test="${wvo.wishlistMainPic==null}">
+                      <a class="pull-left" href="#"><img class="media-object" src="http://pingendo.github.io/pingendo-bootstrap/assets/placeholder.png" height="150" width="150">
+                  </a>
+                  </c:if> 
                     </td>
                     <td class="col-md-1">
                         <p class="text-center">${wvo.innName}</p>

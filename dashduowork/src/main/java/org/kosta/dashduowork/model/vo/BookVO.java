@@ -8,17 +8,18 @@ public class BookVO {
 	private String bookCheckOut;
 	private String bookCount;
 	private String innName;
-	
+	private InnPicCompVO bookMainPic;
 	
 	
 	public BookVO() {
 		super();
 	}
 
-
+	
 
 	public BookVO(int bookNo, String memberId, int innNo, String bookCheckIn,
-			String bookCheckOut, String bookCount, String innName) {
+			String bookCheckOut, String bookCount, String innName,
+			InnPicCompVO bookMainPic) {
 		super();
 		this.bookNo = bookNo;
 		this.memberId = memberId;
@@ -27,6 +28,7 @@ public class BookVO {
 		this.bookCheckOut = bookCheckOut;
 		this.bookCount = bookCount;
 		this.innName = innName;
+		this.bookMainPic = bookMainPic;
 	}
 
 
@@ -115,12 +117,26 @@ public class BookVO {
 
 
 
+	public InnPicCompVO getBookMainPic() {
+		return bookMainPic;
+	}
+
+
+
+	public void setBookMainPic(InnPicCompVO bookMainPic) {
+		this.bookMainPic = bookMainPic;
+	}
+
+
+
 	@Override
 	public String toString() {
 		return "BookVO [bookNo=" + bookNo + ", memberId=" + memberId
 				+ ", innNo=" + innNo + ", bookCheckIn=" + bookCheckIn
 				+ ", bookCheckOut=" + bookCheckOut + ", bookCount=" + bookCount
-				+ ", innName=" + innName + "]";
+				+ ", innName=" + innName + ", bookMainPic=" + bookMainPic + "]";
 	}
-	
+
+
+
 }

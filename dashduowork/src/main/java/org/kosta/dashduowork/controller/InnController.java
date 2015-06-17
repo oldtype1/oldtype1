@@ -108,8 +108,13 @@ public class InnController {
 		MemberVO vo= (MemberVO)session.getAttribute("mvo");		
 		InnListVO lvo = innService.getmyinnlist(vo,pageNo);
 		ProfilePicVO pvo = memberService.selectProfilePic(vo.getMemberId());
-		  String filepath=pvo.getFilePath();
-		  model.addAttribute("filepath", filepath);
+		 if(pvo!=null){
+			 vo.setProfilePicVO(pvo);
+		     }
+		     else{
+		    	 vo.setProfilePicVO(new ProfilePicVO(vo.getMemberId(),  "http://pingendo.github.io/pingendo-bootstrap/assets/user_placeholder.png"));
+		     }
+		 model.addAttribute("member", vo);
 		  model.addAttribute("lvo", lvo);
 		return "member_inn_list";	
 	}
@@ -120,8 +125,13 @@ public class InnController {
 		MemberVO vo= (MemberVO)session.getAttribute("mvo");		
 		TradeListVO tvo = innService.getmytradelist(vo,pageNo);
 		ProfilePicVO pvo = memberService.selectProfilePic(vo.getMemberId());
-		  String filepath=pvo.getFilePath();
-		  model.addAttribute("filepath", filepath);
+		 if(pvo!=null){
+			 vo.setProfilePicVO(pvo);
+		     }
+		     else{
+		    	 vo.setProfilePicVO(new ProfilePicVO(vo.getMemberId(),  "http://pingendo.github.io/pingendo-bootstrap/assets/user_placeholder.png"));
+		     }
+		 model.addAttribute("member", vo);
 		System.out.println("tvo는? "+ tvo);
 		return new ModelAndView("member_trade_list","tvo",tvo);
 	
@@ -188,8 +198,13 @@ public class InnController {
 		MemberVO vo= (MemberVO)session.getAttribute("mvo");
 		BookListVO blvo=innService.getmybooklist(vo, pageNo);
 		ProfilePicVO pvo = memberService.selectProfilePic(vo.getMemberId());
-		  String filepath=pvo.getFilePath();
-		  model.addAttribute("filepath", filepath);
+		 if(pvo!=null){
+			 vo.setProfilePicVO(pvo);
+		     }
+		     else{
+		    	 vo.setProfilePicVO(new ProfilePicVO(vo.getMemberId(),  "http://pingendo.github.io/pingendo-bootstrap/assets/user_placeholder.png"));
+		     }
+		 model.addAttribute("member", vo);
 		model.addAttribute("blvo", blvo);
 		return"member_book_list";
 	}
@@ -202,8 +217,13 @@ public class InnController {
 		MemberVO vo= (MemberVO)session.getAttribute("mvo");
 		WishListListVO wlvo=innService.getmywishlist(vo, pageNo);
 		ProfilePicVO pvo = memberService.selectProfilePic(vo.getMemberId());
-		  String filepath=pvo.getFilePath();
-		  model.addAttribute("filepath", filepath);
+		 if(pvo!=null){
+			 vo.setProfilePicVO(pvo);
+		     }
+		     else{
+		    	 vo.setProfilePicVO(new ProfilePicVO(vo.getMemberId(),  "http://pingendo.github.io/pingendo-bootstrap/assets/user_placeholder.png"));
+		     }
+		 model.addAttribute("member", vo);
 		model.addAttribute("wlvo", wlvo);
 		return"member_wish_list";
 	}
@@ -234,8 +254,13 @@ public class InnController {
 		MemberVO vo= (MemberVO)session.getAttribute("mvo");
 		InnReservationListVO irlvo=innService.getMyInnReservationList(vo, pageNo);
 		ProfilePicVO pvo = memberService.selectProfilePic(vo.getMemberId());
-		  String filepath=pvo.getFilePath();
-		  model.addAttribute("filepath", filepath);
+		 if(pvo!=null){
+			 vo.setProfilePicVO(pvo);
+		     }
+		     else{
+		    	 vo.setProfilePicVO(new ProfilePicVO(vo.getMemberId(),  "http://pingendo.github.io/pingendo-bootstrap/assets/user_placeholder.png"));
+		     }
+		 model.addAttribute("member", vo);
 		model.addAttribute("irlvo", irlvo);
 		return "member_innReservation_list";
 	}
