@@ -107,7 +107,7 @@ where amenity_wifi=#{amenityWiFi} and amenity_bed=#{amenityBed} and amenity_tv=#
 	</select> -->
 	<!-- 지역&날짜&인원 검색 -->
  <select id="selectInnByCityAndDateAndAcceptableNo" parameterType="svo" resultType="ivo" resultMap="innResult">
-   <![CDATA[select distinct inn_no, inn_name, inn_city, inn_area, inn_type, inn_acceptable_no, inn_price, member_id
+   <![CDATA[select distinct inn_no, inn_name, inn_city, inn_area, inn_address, inn_type, inn_acceptable_no, inn_price, member_id
 from (select * from (select i.inn_no, i.inn_name, i.inn_city, i.inn_area, i.inn_address, i.inn_type, i.inn_acceptable_no, 
 i.inn_price, i.inn_info,i.inn_availability,i.member_id, a.availabledate_st, a.availabledate_end from availabledate a, inn i 
 where i.inn_no=a.inn_no)
