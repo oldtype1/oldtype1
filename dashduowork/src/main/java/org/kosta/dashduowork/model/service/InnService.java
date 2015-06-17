@@ -39,4 +39,6 @@ public interface InnService {
    
    public InnReservationListVO getMyInnReservationList(MemberVO vo, String pageNo);
    public Map<String,Object> selectInn(String innNo); // 은수
+   //6/16추가
+   public List<InnVO> findInnCityListByInnCityCharacter(SearchVO vo);
 }

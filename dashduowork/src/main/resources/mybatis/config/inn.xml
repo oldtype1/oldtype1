@@ -211,6 +211,11 @@ where amenity_wifi=#{amenityWiFi} and amenity_bed=#{amenityBed} and amenity_tv=#
  ) where master=#{master}
  ) where page=#{pageNo}
 </select>
+<!-- 6/17일 추가 -->
+
+<select id="selectInnCityListByInnCityCharacter" parameterType="svo"  resultType="ivo" resultMap="innResult">
+select distinct inn_city from inn where inn_city like '%' ||  #{innCity} || '%'
+</select>
 
 	<select id="select" resultType="ivo" resultMap="innResult">
 		<include refid="innlist"/> where inn_no = #{value}

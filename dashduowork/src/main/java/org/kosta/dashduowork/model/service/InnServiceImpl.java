@@ -240,4 +240,9 @@ public class InnServiceImpl implements InnService {
       map.put("memberVO", memberDAO.findMemberById(ivo.getMemberId()));
       return map;
    }
+   //6/17일 추가(지역명 자동완성처리)
+   @Override
+	public List<InnVO> findInnCityListByInnCityCharacter(SearchVO vo) {
+		return innDAO.selectInnCityListByInnCityCharacter(vo);
+	}
 }

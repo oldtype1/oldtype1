@@ -207,47 +207,62 @@ public class InnController {
 		model.addAttribute("wlvo", wlvo);
 		return"member_wish_list";
 	}
-@RequestMapping(value="wishlistdelete.do")
-public String wishListDelete(int wishListNo, HttpServletRequest request){
-	HttpSession session=null;
-	session = request.getSession(false);
-	MemberVO vo= (MemberVO)session.getAttribute("mvo");
-	WishListDeleteVO wdvo=new WishListDeleteVO(vo.getMemberId(), wishListNo);
-	innService.wishListDelete(wdvo);
-	return "redirect:get_mywishlist.do";
-}
+	@RequestMapping(value="wishlistdelete.do")
+	public String wishListDelete(int wishListNo, HttpServletRequest request){
+		HttpSession session=null;
+		session = request.getSession(false);
+		MemberVO vo= (MemberVO)session.getAttribute("mvo");
+		WishListDeleteVO wdvo=new WishListDeleteVO(vo.getMemberId(), wishListNo);
+		innService.wishListDelete(wdvo);
+		return "redirect:get_mywishlist.do";
+	}
+	
+	@RequestMapping(value="bookdelete.do")
+	public String bookDelete(int bookNo, HttpServletRequest request){
+		HttpSession session=null;
+		session = request.getSession(false);
+		MemberVO vo= (MemberVO)session.getAttribute("mvo");
+		BookDeleteVO bdvo=new BookDeleteVO(bookNo, vo.getMemberId());
+		innService.bookDelete(bdvo);
+		return "redirect:get_mybooklist.do";
+	}
+	
+	@RequestMapping(value="get_innReservation_list.do")
+	public String getInnReservationList(String pageNo, HttpServletRequest request, Model model){
+		HttpSession session=null;
+		session = request.getSession(false);
+		MemberVO vo= (MemberVO)session.getAttribute("mvo");
+		InnReservationListVO irlvo=innService.getMyInnReservationList(vo, pageNo);
+		ProfilePicVO pvo = memberService.selectProfilePic(vo.getMemberId());
+		  String filepath=pvo.getFilePath();
+		  model.addAttribute("filepath", filepath);
+		model.addAttribute("irlvo", irlvo);
+		return "member_innReservation_list";
+	}
+	
+	@RequestMapping(value="inn_in_show.do")
+	public String inShow(HttpServletRequest request, Model model){
+	   String innNo = (String)request.getParameter("innNo");
+	   Map<String, Object> map = (HashMap<String, Object>) innService.selectInn(innNo);
+	   System.out.println(map);
+	   model.addAttribute("VOMap", map);
+	   return "inn_in_show";
+	}
+	
+	//6/17일 추가
+	@RequestMapping(value="searchCityAuto.do")
+	@ResponseBody
+	public List<InnVO> findCityAuto(SearchVO vo) {
+		System.out.println("컨트롤러에서 FilterVO내용확인인데 에이젝스야 : "+vo); //확인완료
+		System.out.println(vo.getInnCity()+"가 나와야해");
+		List<InnVO> list=null;
+		list = innService.findInnCityListByInnCityCharacter(vo);
+		for(int i=0;i<list.size();i++){
+			System.out.println(list.get(i).getInnCity());
+		}	
+		return list;
+	}
 
-@RequestMapping(value="bookdelete.do")
-public String bookDelete(int bookNo, HttpServletRequest request){
-	HttpSession session=null;
-	session = request.getSession(false);
-	MemberVO vo= (MemberVO)session.getAttribute("mvo");
-	BookDeleteVO bdvo=new BookDeleteVO(bookNo, vo.getMemberId());
-	innService.bookDelete(bdvo);
-	return "redirect:get_mybooklist.do";
-}
-
-@RequestMapping(value="get_innReservation_list.do")
-public String getInnReservationList(String pageNo, HttpServletRequest request, Model model){
-	HttpSession session=null;
-	session = request.getSession(false);
-	MemberVO vo= (MemberVO)session.getAttribute("mvo");
-	InnReservationListVO irlvo=innService.getMyInnReservationList(vo, pageNo);
-	ProfilePicVO pvo = memberService.selectProfilePic(vo.getMemberId());
-	  String filepath=pvo.getFilePath();
-	  model.addAttribute("filepath", filepath);
-	model.addAttribute("irlvo", irlvo);
-	return "member_innReservation_list";
-}
-
-@RequestMapping(value="inn_in_show.do")
-public String inShow(HttpServletRequest request, Model model){
-   String innNo = (String)request.getParameter("innNo");
-   Map<String, Object> map = (HashMap<String, Object>) innService.selectInn(innNo);
-   System.out.println(map);
-   model.addAttribute("VOMap", map);
-   return "inn_in_show";
-}
 
 }
 
