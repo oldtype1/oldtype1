@@ -5,6 +5,7 @@ import java.util.List;
 
 import javax.annotation.Resource;
 
+import org.kosta.dashduowork.model.vo.DeleteVO;
 import org.kosta.dashduowork.model.vo.MemberVO;
 import org.kosta.dashduowork.model.vo.TradeVO;
 import org.mybatis.spring.SqlSessionTemplate;
@@ -25,4 +26,10 @@ public class TradeDAOImpl implements TradeDAO{
 		return sqlSessionTemplate.selectOne("inn.getTotalTradeCount",vo.getMemberId());
 	}
 
+	@Override
+	public void tradeDelete(DeleteVO tdvo) {
+			sqlSessionTemplate.delete("delete.tradeDelete",tdvo);
+			//예약 테이블에서 예약번호로 지난 예약 지운다.
+			sqlSessionTemplate.delete("delete.bookDelete", tdvo.getTrade_bookno());
+	}
 }

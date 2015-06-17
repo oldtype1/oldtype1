@@ -6,6 +6,7 @@ import java.util.List;
 import javax.annotation.Resource;
 
 import org.kosta.dashduowork.model.vo.AmenityVO;
+import org.kosta.dashduowork.model.vo.DeleteVO;
 import org.kosta.dashduowork.model.vo.FilterVO;
 import org.kosta.dashduowork.model.vo.InnPicCompVO;
 import org.kosta.dashduowork.model.vo.InnVO;
@@ -24,6 +25,11 @@ public class InnDAOImpl implements InnDAO {
 		return sqlSessionTemplate.selectOne("inn.getTotalInnCount",vo.getMemberId());
 	}
 
+	@Override
+	public void innDelete(DeleteVO idvo) {
+		sqlSessionTemplate.delete("delete.innDelete", idvo);
+	}
+	
 	@Override
 	public List<InnVO> getmyinnlist(HashMap<String, String> param) {
 		return sqlSessionTemplate.selectList("inn.getmyinnlist",param);

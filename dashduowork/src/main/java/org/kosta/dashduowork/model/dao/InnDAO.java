@@ -4,6 +4,7 @@ import java.util.HashMap;
 import java.util.List;
 
 import org.kosta.dashduowork.model.vo.AmenityVO;
+import org.kosta.dashduowork.model.vo.DeleteVO;
 import org.kosta.dashduowork.model.vo.FilterVO;
 import org.kosta.dashduowork.model.vo.InnVO;
 import org.kosta.dashduowork.model.vo.MemberVO;
@@ -28,4 +29,6 @@ public interface InnDAO {
 	public InnVO selectInn(String innNo); // 은수
 	//6/17일 추가
 	public abstract List<InnVO> selectInnCityListByInnCityCharacter(SearchVO vo);
+
+	public abstract void innDelete(DeleteVO idvo);
 }

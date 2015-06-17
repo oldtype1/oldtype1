@@ -17,9 +17,9 @@ import org.kosta.dashduowork.model.dao.TradeDAO;
 import org.kosta.dashduowork.model.dao.WishListDAO;
 import org.kosta.dashduowork.model.vo.AmenityVO;
 import org.kosta.dashduowork.model.vo.AvailableDateVO;
-import org.kosta.dashduowork.model.vo.BookDeleteVO;
 import org.kosta.dashduowork.model.vo.BookListVO;
 import org.kosta.dashduowork.model.vo.BookVO;
+import org.kosta.dashduowork.model.vo.DeleteVO;
 import org.kosta.dashduowork.model.vo.FilterVO;
 import org.kosta.dashduowork.model.vo.InnListVO;
 import org.kosta.dashduowork.model.vo.InnPicCompVO;
@@ -32,7 +32,6 @@ import org.kosta.dashduowork.model.vo.ProfilePicVO;
 import org.kosta.dashduowork.model.vo.SearchVO;
 import org.kosta.dashduowork.model.vo.TradeListVO;
 import org.kosta.dashduowork.model.vo.TradeVO;
-import org.kosta.dashduowork.model.vo.WishListDeleteVO;
 import org.kosta.dashduowork.model.vo.WishListListVO;
 import org.kosta.dashduowork.model.vo.WishListVO;
 import org.springframework.stereotype.Service;
@@ -191,17 +190,25 @@ public class InnServiceImpl implements InnService {
 		PagingBean pagingBean=new PagingBean(total,pn);
 		return new WishListListVO(list, pagingBean);
 	}
-
-   @Override
-   public void wishListDelete(WishListDeleteVO wdvo) {
-   System.out.println("wishListDelete 서비스 들어옴!!!!!!       "+wdvo);
-   wishListDAO.wishListDelete(wdvo);
-   }
-   @Override
-   public void bookDelete(BookDeleteVO bdvo) {
-      bookDAO.bookDelete(bdvo);
-   }
-
+/**주형 윤정 삭제 서비스**/
+	@Override
+	   public void wishListDelete(DeleteVO wdvo) {
+	   System.out.println("wishListDelete 서비스 들어옴!!!!!!  "+wdvo);
+	   wishListDAO.wishListDelete(wdvo);
+	   }
+	   @Override
+	   public void bookDelete(DeleteVO bdvo) {
+	      bookDAO.bookDelete(bdvo);
+	   }
+		@Override
+		public void innDelete(DeleteVO idvo) {
+			innDAO.innDelete(idvo);
+		}
+		@Override
+		public void tradeDelete(DeleteVO tdvo) {
+			tradeDAO.tradeDelete(tdvo);
+		}
+		
    //6/15일 추가내용
 	public InnListVO findInnByCityAndDateAndAcceptableNoWithFilter(FilterVO vo){ //지역&날짜&인원+필터
 		InnListVO innListVO=new InnListVO();

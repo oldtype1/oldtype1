@@ -13,8 +13,8 @@ import org.kosta.dashduowork.model.service.InnService;
 import org.kosta.dashduowork.model.service.MemberService;
 import org.kosta.dashduowork.model.vo.AmenityVO;
 import org.kosta.dashduowork.model.vo.AvailableDateVO;
-import org.kosta.dashduowork.model.vo.BookDeleteVO;
 import org.kosta.dashduowork.model.vo.BookListVO;
+import org.kosta.dashduowork.model.vo.DeleteVO;
 import org.kosta.dashduowork.model.vo.FilterVO;
 import org.kosta.dashduowork.model.vo.InnListVO;
 import org.kosta.dashduowork.model.vo.InnPicCompVO;
@@ -24,7 +24,6 @@ import org.kosta.dashduowork.model.vo.MemberVO;
 import org.kosta.dashduowork.model.vo.ProfilePicVO;
 import org.kosta.dashduowork.model.vo.SearchVO;
 import org.kosta.dashduowork.model.vo.TradeListVO;
-import org.kosta.dashduowork.model.vo.WishListDeleteVO;
 import org.kosta.dashduowork.model.vo.WishListListVO;
 import org.springframework.stereotype.Controller;
 import org.springframework.transaction.annotation.Transactional;
@@ -230,25 +229,55 @@ public class InnController {
 		model.addAttribute("wlvo", wlvo);
 		return"member_wish_list";
 	}
+	
+	/**목록 삭제 컨트롤러--주형윤정**/
+	/*위시리스트*/
 	@RequestMapping(value="wishlistdelete.do")
 	public String wishListDelete(int wishListNo, HttpServletRequest request){
 		HttpSession session=null;
 		session = request.getSession(false);
 		MemberVO vo= (MemberVO)session.getAttribute("mvo");
-		WishListDeleteVO wdvo=new WishListDeleteVO(vo.getMemberId(), wishListNo);
+		DeleteVO wdvo=new DeleteVO(wishListNo,vo.getMemberId());
 		innService.wishListDelete(wdvo);
 		return "redirect:get_mywishlist.do";
-	}
-	
+	}	
+	/*예약숙소*/
 	@RequestMapping(value="bookdelete.do")
 	public String bookDelete(int bookNo, HttpServletRequest request){
 		HttpSession session=null;
 		session = request.getSession(false);
 		MemberVO vo= (MemberVO)session.getAttribute("mvo");
-		BookDeleteVO bdvo=new BookDeleteVO(bookNo, vo.getMemberId());
+		DeleteVO bdvo=new DeleteVO(bookNo, vo.getMemberId());
 		innService.bookDelete(bdvo);
 		return "redirect:get_mybooklist.do";
 	}
+	/*등록숙소*/
+	@RequestMapping(value="inndelete.do")
+	public String innDelete(int innNo, HttpServletRequest request){
+		HttpSession session=null;
+		session = request.getSession(false);
+		MemberVO vo= (MemberVO)session.getAttribute("mvo");
+		DeleteVO idvo = new DeleteVO(innNo,vo.getMemberId());
+		innService.innDelete(idvo);
+		return "redirect:get_myinnlist.do";
+	}
+	/*거래내역목록*/
+	@RequestMapping(value="tradedelete.do")
+	public String tradeDelete(int tradeNo,int bookNo, HttpServletRequest request){
+		HttpSession session=null;
+		session = request.getSession(false);
+		MemberVO vo= (MemberVO)session.getAttribute("mvo");
+		DeleteVO tdvo = null;
+		if(bookNo!=0){ //예약 번호가 존재하면 예약테이블도 삭제하므로 예약번호를 같이 넘겨준다.
+		tdvo = new DeleteVO(tradeNo,vo.getMemberId(),bookNo);
+		}
+		else{				//예약 번호가 존재하지 않으면 등록이므로 거래번호만 넘겨줌 
+		tdvo = new DeleteVO(tradeNo,vo.getMemberId());
+		}
+		innService.tradeDelete(tdvo);
+		return "redirect:get_mytradelist.do";
+	}
+	/** 끝**/
 	
 	@RequestMapping(value="get_innReservation_list.do")
 	public String getInnReservationList(String pageNo, HttpServletRequest request, Model model){

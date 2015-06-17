@@ -5,8 +5,8 @@ import java.util.Map;
 
 import org.kosta.dashduowork.model.vo.AmenityVO;
 import org.kosta.dashduowork.model.vo.AvailableDateVO;
-import org.kosta.dashduowork.model.vo.BookDeleteVO;
 import org.kosta.dashduowork.model.vo.BookListVO;
+import org.kosta.dashduowork.model.vo.DeleteVO;
 import org.kosta.dashduowork.model.vo.FilterVO;
 import org.kosta.dashduowork.model.vo.InnListVO;
 import org.kosta.dashduowork.model.vo.InnPicCompVO;
@@ -16,7 +16,6 @@ import org.kosta.dashduowork.model.vo.MemberVO;
 import org.kosta.dashduowork.model.vo.ProfilePicVO;
 import org.kosta.dashduowork.model.vo.SearchVO;
 import org.kosta.dashduowork.model.vo.TradeListVO;
-import org.kosta.dashduowork.model.vo.WishListDeleteVO;
 import org.kosta.dashduowork.model.vo.WishListListVO;
 
 public interface InnService {
@@ -26,8 +25,6 @@ public interface InnService {
    public InnListVO findInnByCityAndDateAndAcceptableNo(SearchVO vo); //은식, 동원
    public BookListVO getmybooklist(MemberVO vo, String pageNo);
    public WishListListVO getmywishlist(MemberVO vo, String pageNo);
-   public void wishListDelete(WishListDeleteVO wdvo);
-   public void bookDelete(BookDeleteVO bdvo);
    
    public void registerInn(InnVO ivo);
    public void registerInnPic(InnPicCompVO vo);
@@ -43,6 +40,11 @@ public interface InnService {
    //6/16추가
    public List<InnVO> findInnCityListByInnCityCharacter(SearchVO vo);
    
-   public List<InnPicCompVO> selectByInnNo(String innNo);
+   	public List<InnPicCompVO> selectByInnNo(String innNo);
 	 public ProfilePicVO selectByProfilePic(String memberId);
+	   /**주형 윤정 마이페이지 내역 삭제 메서드**/
+	   public void wishListDelete(DeleteVO wdvo);
+	   public void bookDelete(DeleteVO bdvo);
+	   public void innDelete(DeleteVO idvo);
+		public void tradeDelete(DeleteVO idvo);
 }

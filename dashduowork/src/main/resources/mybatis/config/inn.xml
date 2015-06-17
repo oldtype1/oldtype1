@@ -156,12 +156,7 @@ ceil(rownum/5) as page from
  ) where member_id=#{member_id}
  ) where page=#{pageNo}
 	</select>
-	<delete id="wishListDelete" parameterType="wdvo">
-	 delete from wishlist where member_id=#{memberId} and wishlist_no=#{wishListNo}
-	</delete>
-		<delete id="bookDelete" parameterType="bdvo">
-	 delete from book where member_id=#{memberId} and book_no=#{bookNo}
-	</delete>
+
 	
 <!-- <insert id="register" parameterType="ivo" > 아 ~~ 줭신!!!!!!! 왜 똑같은거 두개 붙였어!!!!!
 	 <selectKey keyProperty="innNo"  resultType="int"  order="BEFORE">

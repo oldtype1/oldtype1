@@ -5,8 +5,8 @@ import java.util.List;
 
 import javax.annotation.Resource;
 
+import org.kosta.dashduowork.model.vo.DeleteVO;
 import org.kosta.dashduowork.model.vo.MemberVO;
-import org.kosta.dashduowork.model.vo.WishListDeleteVO;
 import org.kosta.dashduowork.model.vo.WishListVO;
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.stereotype.Repository;
@@ -37,10 +37,11 @@ public class WishListDAOImpl implements WishListDAO {
 
 
 	@Override
-	public void wishListDelete(WishListDeleteVO wdvo) {
+	public void wishListDelete(DeleteVO wdvo) {
 		System.out.println("wishListDelete DAOImpl   들어옴!!!!!!!!!!!!!!!!"+wdvo);
-		sqlSessionTemplate.delete("inn.wishListDelete", wdvo);
+		sqlSessionTemplate.delete("delete.wishListDelete", wdvo);
 	}
+	
 	
 	
 }
