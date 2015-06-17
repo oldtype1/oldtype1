@@ -68,4 +68,9 @@ public class InnDAOImpl implements InnDAO {
 	public InnPicCompVO selectOneInnPicPath(int innNo){
 		return sqlSessionTemplate.selectOne("innPic.selectOneInnPicPath", innNo);
 	}
+	//6/17일 추가(지역 자동완성)
+	@Override
+	public List<InnVO> selectInnCityListByInnCityCharacter(SearchVO vo) {
+		return sqlSessionTemplate.selectList("inn.selectInnCityListByInnCityCharacter",vo);
+	}
 }
