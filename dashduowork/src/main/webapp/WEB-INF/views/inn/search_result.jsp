@@ -21,7 +21,7 @@ function SearchInnCityListByAjax() {
 		success : function(data) {
 			$.each(data,function(index,result){
 				if(data.length!=0){
-					availableTags.push(result.innCity);
+					availableTags.push(result.innAddress);
 				}					
 			});				
 		}//success
@@ -32,7 +32,28 @@ function SearchInnCityListByAjax() {
 		source : availableTags //자동완성 소스는 availableTags 배열을 사용 한다.		
 	});
 	}//function SearchInnCityListByAjax()
-	$(function() {
+$(function() {
+	$( "#slider-range" ).slider({
+	      range: true,
+	      min: 0,
+	      max: 500,
+	      values: [ 75, 300 ],
+	      slide: function( event, ui ) {
+	        $( "#amount" ).val( "$" + ui.values[ 0 ] + " - $" + ui.values[ 1 ] );
+	        $("#minPrice").val($( "#slider-range" ).slider( "values", 0 ));
+	        $("#maxPrice").val($( "#slider-range" ).slider( "values", 1 ));
+	      }
+	    });
+	    $( "#amount" ).val( "$" + $( "#slider-range" ).slider( "values", 0 ) + " - $" + $( "#slider-range" ).slider( "values", 1 ) );
+	    
+	    $("#slider-range").mouseup(function(){
+	    	alert($("#minPrice").val());
+	    });//mouseup
+	    
+	    
+	    
+	    
+	    
 		$("#checkin, #checkout").datepicker({
 			dateFormat : 'yy-mm-dd'
 		});
@@ -45,15 +66,15 @@ function SearchInnCityListByAjax() {
 				data : $("#filterForm").serialize(),
 				dataType : "json",
 				success : function(innInfoList) {
-					var tableInfo="<table class='table'><thead><tr><th >숙소 번호</th><th>숙소명</th><th>지역(대)</th><th>지역(중)</th><th>상세 주소</th><th>유형</th><th>수용가능인원</th><th>가격</th></tr></thead>";
+					var tableInfo="<table class='table'><thead><tr><th >숙소 번호</th><th>숙소 사진</th><th>숙소명</th><th>지역(대)</th><th>지역(중)</th><th>상세 주소</th><th>유형</th><th>수용가능인원</th><th>가격</th></tr></thead>";
 					tableInfo+="<tbody>";
 					if (innInfoList.innList.length != 0) {
 						$.each(innInfoList.innList, function(index, info) {
-							tableInfo+="<tr><td>"+info.innNo+"</td><td>"+info.innName+"</td><td>"+info.innCity+"</td><td>"+info.innArea+"</td><td>"+info.innAddress+"</td><td>"+info.innType+"</td><td>"+info.acceptableNo+"</td><td>"+info.innPrice+"</td></tr>";
+							tableInfo+="<tr><td>"+info.innNo+"</td><td><a href='inn_in_show.do?innNo="+info.innNo+"'>"+info.innName+"</td><td>"+info.innCity+"</td><td>"+info.innArea+"</td><td>"+info.innAddress+"</td><td>"+info.innType+"</td><td>"+info.acceptableNo+"</td><td>"+info.innPrice+"</td></tr>";
 						}); //each
 					}//if
 					else if(innInfoList.innList.length == 0){
-						tableInfo+="<tr><td colspan='8' align='center'>검색 및 필터조건에 해당하는 숙소가 존재하지 않습니다.</td></tr>"
+						tableInfo+="<tr><td colspan='9' align='center'>검색 및 필터조건에 해당하는 숙소가 존재하지 않습니다.</td></tr>"
 					}
 					tableInfo+="</tbody></table>";
 					$("#resultViewSearch").html(tableInfo);
@@ -77,6 +98,7 @@ function SearchInnCityListByAjax() {
 			<option value="3">게스트 3명</option>
 			<option value="4">게스트 4명</option>
 			<option value="5">게스트 5명</option>
+			<option value="6">게스트 6명</option>
 		</select>
 			<button type="submit" class="btn btn-default">검색</button>
 			</form>
@@ -85,6 +107,12 @@ function SearchInnCityListByAjax() {
 <div class="section">
 	<div class="container">
 			<form id="filterForm" action="selectInnByCheckedAmenity.do">	
+			<p>
+			  <label for="amount">Price range:</label>
+			  <input type="text" id="amount" readonly style="border:0; color:#f6931f; font-weight:bold;">
+			</p>
+			 
+			<div id="slider-range"></div>
 				<input type="checkbox" name="amenityWiFi" value="Y">WiFi <input
 					type="checkbox" name="amenityBed" value="Y">Bed <input
 					type="checkbox" name="amenityTV" value="Y">TV <input
@@ -93,7 +121,9 @@ function SearchInnCityListByAjax() {
 					<input type="hidden" name="firstSearchCity" value="${requestScope.searchVO.innCity }">
 					<input type="hidden" name="firstSearchStartDate" value="${requestScope.searchVO.startDate }">
 					<input type="hidden" name="firstSearchEndDate" value="${requestScope.searchVO.endDate }">
-					<input type="hidden" name="firstSearchPeopleNo" value="${requestScope.searchVO.acceptableNo }">
+					<input type="hidden" name="firstSearchPeopleNo" value="${requestScope.searchVO.acceptableNo }">
+					<input type="hidden" name="minPrice" id="minPrice" value="0">
+					<input type="hidden" name="maxPrice" id="maxPrice" value="1000000">
 			</form>
 	</div>
 </div>
@@ -132,7 +162,7 @@ function SearchInnCityListByAjax() {
 										<tr>
 											<td>${list.innNo }</td>
 											<td><%-- <img src="${innList.innMainPic.filePath}" class="img-circle img-responsive" width="200" height="200"> --%>${innList.innMainPic.filePath}</td>
-											<td><a href="inn_in_show.do?innNo=${list.innNo}">${list.innName }</a></div></td>
+											<td><a href="inn_in_show.do?innNo=${list.innNo}">${list.innName }</a></td>
 											<td>${list.innCity }</td>
 											<td>${list.innArea }</td>
 											<td>${list.innAddress }</td>
