@@ -20,7 +20,7 @@ $(document).ready(function(){
 		success : function(data) {
 			$.each(data,function(index,result){
 				if(data.length!=0){
-					availableTags.push(result.innAddress);
+					availableTags.push(result.innArea);
 				}					
 			});				
 		}//success

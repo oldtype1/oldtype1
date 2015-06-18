@@ -150,25 +150,33 @@ public class InnController {
 	@ResponseBody
 	public InnListVO selectInnByCheckedAmenity(FilterVO vo, Model model) {
 		InnListVO innListVO=new InnListVO();
+		System.out.println("필터VO 확인 : "+vo);
 		if(vo.getAmenityBBQ().equals("N")&vo.getAmenityBed().equals("N")&vo.getAmenityKitchen().equals("N")&vo.getAmenityTV().equals("N")&vo.getAmenityWiFi().equals("N")){
-			System.out.println("체크값 없어서 컨트롤러에서 다른곳으로 빠짐.");
 			SearchVO svo=new SearchVO();
 			svo.setAcceptableNo(vo.getFirstSearchPeopleNo());
 			svo.setEndDate(vo.getFirstSearchEndDate());
 			svo.setInnCity(vo.getFirstSearchCity());
 			svo.setStartDate(vo.getFirstSearchStartDate());
+			
 			if(svo.getStartDate()==""){
 				//날짜 안들어간경우		
-				innListVO=innService.findInnByCityAndAcceptableNo(svo);
+				System.out.println("컨트롤러의 지역,인원,가격으로 검색");
+				innListVO=innService.findInnByCityAndAcceptableNoWithPrice(vo);
 			}else{//날짜 들어간경우
-				innListVO=innService.findInnByCityAndDateAndAcceptableNo(svo);
+				innListVO=innService.findInnByCityAndDateAndAcceptableNoWithPrice(vo);
 			}
 			model.addAttribute("searchVO", svo);
 		}else{
 			if(vo.getFirstSearchStartDate()==""){//날짜 없는경우
+				System.out.println("날짜 없는곳으로 입장.");
 				//서브쿼리 이용해서 도시+인원검색 후 결과를 filter처리 parameterType으로 새로운 VO를 만들거나 기존 VO에 변수 추가해야할듯
 				innListVO=innService.findInnByCityAndAcceptableNoWithFilter(vo);
+				List<InnVO> list=innListVO.getInnList();
+				for (InnVO innVO : list) {
+					System.out.println(innVO);
+				}
 			}else{//날짜 들어간경우
+				System.out.println("컨트롤러의 지역,인원,가격+필터로 검색");
 				//서브쿼리 이용해서 도시+날짜+인원검색 후 결과를 filter처리
 				innListVO=innService.findInnByCityAndDateAndAcceptableNoWithFilter(vo);
 			}
@@ -182,7 +190,7 @@ public class InnController {
 		InnListVO innListVO=new InnListVO();
 		if(vo.getStartDate()==""){
 			//날짜 안들어간경우		
-			System.out.println("날짜 안들어간 컨트롤러의 값 확인");
+//			System.out.println("날짜 안들어간 컨트롤러의 값 확인");
 			innListVO=innService.findInnByCityAndAcceptableNo(vo);
 			System.out.println(innListVO.getInnList());
 		}else{//날짜 들어간경우
@@ -302,13 +310,14 @@ public class InnController {
 	@RequestMapping(value="searchCityAuto.do")
 	@ResponseBody
 	public List<InnVO> findCityAuto(SearchVO vo) {
-		System.out.println("컨트롤러에서 FilterVO내용확인인데 에이젝스야 : "+vo); //확인완료
-		System.out.println(vo.getInnCity()+"가 나와야해");
+//		System.out.println("컨트롤러에서 FilterVO내용확인인데 에이젝스야 : "+vo); //확인완료
+//		System.out.println(vo.getInnCity()+"가 나와야해");
 		List<InnVO> list=null;
 		list = innService.findInnCityListByInnCityCharacter(vo);
-		for(int i=0;i<list.size();i++){
-			System.out.println(list.get(i).getInnCity());
-		}	
+		System.out.println("컨트롤러 내용 : "+list);
+		/*for(int i=0;i<list.size();i++){
+			System.out.println(list.get(i).getInnCity() + " searchCity");
+		}	*/
 		return list;
 	}
 

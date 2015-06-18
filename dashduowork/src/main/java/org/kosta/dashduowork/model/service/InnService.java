@@ -32,19 +32,23 @@ public interface InnService {
 	public TradeListVO getmytradelist(MemberVO vo, String pageNo);//거래내역 
    
    //6/15일 추가
-   public InnListVO findInnByCityAndDateAndAcceptableNoWithFilter(FilterVO vo);
-   public InnListVO findInnByCityAndAcceptableNoWithFilter(FilterVO vo);
+	public InnListVO findInnByCityAndDateAndAcceptableNoWithFilter(FilterVO vo);
+	public InnListVO findInnByCityAndAcceptableNoWithFilter(FilterVO vo);
+
+	public InnReservationListVO getMyInnReservationList(MemberVO vo, String pageNo);
+	public Map<String,Object> selectInn(String innNo); // 은수
+	//6/16추가
+	public List<InnVO> findInnCityListByInnCityCharacter(SearchVO vo);
    
-   public InnReservationListVO getMyInnReservationList(MemberVO vo, String pageNo);
-   public Map<String,Object> selectInn(String innNo); // 은수
-   //6/16추가
-   public List<InnVO> findInnCityListByInnCityCharacter(SearchVO vo);
-   
-   	public List<InnPicCompVO> selectByInnNo(String innNo);
-	 public ProfilePicVO selectByProfilePic(String memberId);
+	public List<InnPicCompVO> selectByInnNo(String innNo);
+	public ProfilePicVO selectByProfilePic(String memberId);
 	   /**주형 윤정 마이페이지 내역 삭제 메서드**/
-	   public void wishListDelete(DeleteVO wdvo);
-	   public void bookDelete(DeleteVO bdvo);
-	   public void innDelete(DeleteVO idvo);
-		public void tradeDelete(DeleteVO idvo);
+	public void wishListDelete(DeleteVO wdvo);
+	public void bookDelete(DeleteVO bdvo);
+	public void innDelete(DeleteVO idvo);
+	public void tradeDelete(DeleteVO idvo);
+	
+	//6/18일 추가
+	public InnListVO findInnByCityAndAcceptableNoWithPrice(FilterVO vo);
+	public InnListVO findInnByCityAndDateAndAcceptableNoWithPrice(FilterVO vo);
 }

@@ -10,6 +10,8 @@ public class FilterVO {
 	private String amenityTV;
 	private String amenityKitchen;
 	private String amenityBBQ;
+	private String minPrice;
+	private String maxPrice;
 	public FilterVO() {
 		super();
 		this.amenityWiFi = "N";
@@ -32,6 +34,25 @@ public class FilterVO {
 		this.amenityTV = amenityTV;
 		this.amenityKitchen = amenityKitchen;
 		this.amenityBBQ = amenityBBQ;
+	}
+	
+	public FilterVO(String firstSearchCity, String firstSearchStartDate,
+			String firstSearchEndDate, String firstSearchPeopleNo,
+			String amenityWiFi, String amenityBed, String amenityTV,
+			String amenityKitchen, String amenityBBQ, String minPrice,
+			String maxPrice) {
+		super();
+		this.firstSearchCity = firstSearchCity;
+		this.firstSearchStartDate = firstSearchStartDate;
+		this.firstSearchEndDate = firstSearchEndDate;
+		this.firstSearchPeopleNo = firstSearchPeopleNo;
+		this.amenityWiFi = amenityWiFi;
+		this.amenityBed = amenityBed;
+		this.amenityTV = amenityTV;
+		this.amenityKitchen = amenityKitchen;
+		this.amenityBBQ = amenityBBQ;
+		this.minPrice = minPrice;
+		this.maxPrice = maxPrice;
 	}
 	public String getFirstSearchCity() {
 		return firstSearchCity;
@@ -87,6 +108,18 @@ public class FilterVO {
 	public void setAmenityBBQ(String amenityBBQ) {
 		this.amenityBBQ = amenityBBQ;
 	}
+	public String getMinPrice() {
+		return minPrice;
+	}
+	public void setMinPrice(String minPrice) {
+		this.minPrice = minPrice;
+	}
+	public String getMaxPrice() {
+		return maxPrice;
+	}
+	public void setMaxPrice(String maxPrice) {
+		this.maxPrice = maxPrice;
+	}
 	@Override
 	public String toString() {
 		return "FilterVO [firstSearchCity=" + firstSearchCity
@@ -95,7 +128,8 @@ public class FilterVO {
 				+ ", firstSearchPeopleNo=" + firstSearchPeopleNo
 				+ ", amenityWiFi=" + amenityWiFi + ", amenityBed=" + amenityBed
 				+ ", amenityTV=" + amenityTV + ", amenityKitchen="
-				+ amenityKitchen + ", amenityBBQ=" + amenityBBQ + "]";
+				+ amenityKitchen + ", amenityBBQ=" + amenityBBQ + ", minPrice="
+				+ minPrice + ", maxPrice=" + maxPrice + "]";
 	}
 	
 }

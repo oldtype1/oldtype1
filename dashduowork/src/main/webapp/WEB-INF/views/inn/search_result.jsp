@@ -21,7 +21,7 @@ function SearchInnCityListByAjax() {
 		success : function(data) {
 			$.each(data,function(index,result){
 				if(data.length!=0){
-					availableTags.push(result.innAddress);
+					availableTags.push(result.innArea);
 				}					
 			});				
 		}//success
@@ -36,8 +36,8 @@ $(function() {
 	$( "#slider-range" ).slider({
 	      range: true,
 	      min: 0,
-	      max: 500,
-	      values: [ 75, 300 ],
+	      max: 10000,
+	      values: [ 1000, 8000 ],
 	      slide: function( event, ui ) {
 	        $( "#amount" ).val( "$" + ui.values[ 0 ] + " - $" + ui.values[ 1 ] );
 	        $("#minPrice").val($( "#slider-range" ).slider( "values", 0 ));
@@ -47,12 +47,30 @@ $(function() {
 	    $( "#amount" ).val( "$" + $( "#slider-range" ).slider( "values", 0 ) + " - $" + $( "#slider-range" ).slider( "values", 1 ) );
 	    
 	    $("#slider-range").mouseup(function(){
-	    	alert($("#minPrice").val());
+	    	/* alert($("#minPrice").val()); */
+	    	$("#resultViewSearch").html("");
+			//alert();list.getInnN
+			$.ajax({
+				type : "Post",
+				url : "selectInnByCheckedAmenity.do",
+				data : $("#filterForm").serialize(),
+				dataType : "json",
+				success : function(innInfoList) {
+					var tableInfo="<table class='table'><thead><tr><th >숙소 번호</th><th>숙소 사진</th><th>숙소명</th><th>지역(대)</th><th>지역(중)</th><th>상세 주소</th><th>유형</th><th>수용가능인원</th><th>가격</th></tr></thead>";
+					tableInfo+="<tbody>";
+					if (innInfoList.innList.length != 0) {
+						$.each(innInfoList.innList, function(index, info) {
+							tableInfo+="<tr><td>"+info.innNo+"</td><td>"+'사진부분'+"</td><td><a href='inn_in_show.do?innNo="+info.innNo+"'>"+info.innName+"</td><td>"+info.innCity+"</td><td>"+info.innArea+"</td><td>"+info.innAddress+"</td><td>"+info.innType+"</td><td>"+info.acceptableNo+"</td><td>"+info.innPrice+"</td></tr>";
+						}); //each
+					}//if
+					else if(innInfoList.innList.length == 0){
+						tableInfo+="<tr><td colspan='9' align='center'>검색 및 필터조건에 해당하는 숙소가 존재하지 않습니다.</td></tr>"
+					}
+					tableInfo+="</tbody></table>";
+					$("#resultViewSearch").html(tableInfo);
+				}
+			});//ajax
 	    });//mouseup
-	    
-	    
-	    
-	    
 	    
 		$("#checkin, #checkout").datepicker({
 			dateFormat : 'yy-mm-dd'
@@ -70,7 +88,7 @@ $(function() {
 					tableInfo+="<tbody>";
 					if (innInfoList.innList.length != 0) {
 						$.each(innInfoList.innList, function(index, info) {
-							tableInfo+="<tr><td>"+info.innNo+"</td><td><a href='inn_in_show.do?innNo="+info.innNo+"'>"+info.innName+"</td><td>"+info.innCity+"</td><td>"+info.innArea+"</td><td>"+info.innAddress+"</td><td>"+info.innType+"</td><td>"+info.acceptableNo+"</td><td>"+info.innPrice+"</td></tr>";
+							tableInfo+="<tr><td>"+info.innNo+"</td><td>"+'사진부분'+"</td><td><a href='inn_in_show.do?innNo="+info.innNo+"'>"+info.innName+"</td><td>"+info.innCity+"</td><td>"+info.innArea+"</td><td>"+info.innAddress+"</td><td>"+info.innType+"</td><td>"+info.acceptableNo+"</td><td>"+info.innPrice+"</td></tr>";
 						}); //each
 					}//if
 					else if(innInfoList.innList.length == 0){
@@ -79,7 +97,7 @@ $(function() {
 					tableInfo+="</tbody></table>";
 					$("#resultViewSearch").html(tableInfo);
 				}
-			});//ajax 			 	 			
+			});//ajax
 		}); //change
 	});
 </script>
@@ -123,7 +141,7 @@ $(function() {
 					<input type="hidden" name="firstSearchEndDate" value="${requestScope.searchVO.endDate }">
 					<input type="hidden" name="firstSearchPeopleNo" value="${requestScope.searchVO.acceptableNo }">
 					<input type="hidden" name="minPrice" id="minPrice" value="0">
-					<input type="hidden" name="maxPrice" id="maxPrice" value="1000000">
+					<input type="hidden" name="maxPrice" id="maxPrice" value="999999">
 			</form>
 	</div>
 </div>

@@ -31,4 +31,8 @@ public interface InnDAO {
 	public abstract List<InnVO> selectInnCityListByInnCityCharacter(SearchVO vo);
 
 	public abstract void innDelete(DeleteVO idvo);
+	
+	//6/18일 추가
+	public abstract List<InnVO> selectInnByCityAndAcceptableNoWithPrice(FilterVO vo);
+	public abstract List<InnVO> selectInnByCityAndDateAndAcceptableNoWithPrice(FilterVO vo);
 }

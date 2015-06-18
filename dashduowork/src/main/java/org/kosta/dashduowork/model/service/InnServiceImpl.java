@@ -127,15 +127,14 @@ public class InnServiceImpl implements InnService {
 	public InnListVO findInnByCityAndAcceptableNo(SearchVO vo) {
 		InnListVO innListVO=new InnListVO();
 		List<InnVO> innList =  innDAO.selectInnByCityAndAcceptableNo(vo);
-		System.out.println("서비스에서 메서드 확인");
+//		System.out.println("서비스에서 메서드 확인");
 		for (int i=0;i<innList.size();i++) {
 			int innNo=innList.get(i).getInnNo();
-			System.out.println("list.getInnNo 확인 : "+innNo);
+//			System.out.println("list.getInnNo 확인 : "+innNo);
 			innList.get(i).setInnMainPic(innPicCompDAO.getMyPicList(innNo));
 		}
 		innListVO.setInnList(innList);
-		System.out.println("숙소리스트 : "+innList);
-
+//		System.out.println("숙소리스트 : "+innList);
 		return innListVO;
 	}
 	public InnListVO findInnByCityAndDateAndAcceptableNo(SearchVO vo){
@@ -279,4 +278,28 @@ public class InnServiceImpl implements InnService {
 	  		return pvo;
 	  	}
 	
+	//6/18일 추가
+	public InnListVO findInnByCityAndAcceptableNoWithPrice(FilterVO vo){ //지역&인원+가격
+		System.out.println("서비스의 지역,인원,가격검색");
+		InnListVO innListVO=new InnListVO();
+		List<InnVO> innList = innDAO.selectInnByCityAndAcceptableNoWithPrice(vo);
+		for (int i=0;i<innList.size();i++) {
+			int innNo=innList.get(i).getInnNo();
+			innList.get(i).setInnMainPic(innPicCompDAO.getMyPicList(innNo));
+		}
+		System.out.println("서비스에서 innList 확인 : "+innList);
+		innListVO.setInnList(innList);
+		return innListVO;
+	}
+	
+	public InnListVO findInnByCityAndDateAndAcceptableNoWithPrice(FilterVO vo){
+		InnListVO innListVO=new InnListVO();
+		List<InnVO> innList =  innDAO.selectInnByCityAndDateAndAcceptableNoWithPrice(vo);
+		for (int i=0;i<innList.size();i++) {
+			int innNo=innList.get(i).getInnNo();
+			innList.get(i).setInnMainPic(innPicCompDAO.getMyPicList(innNo));
+		}
+		innListVO.setInnList(innList);
+		return innListVO;
+	}
 }
