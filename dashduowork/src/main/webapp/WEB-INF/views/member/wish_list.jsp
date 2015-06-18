@@ -5,9 +5,17 @@
     <script type="text/javascript" src="http://netdna.bootstrapcdn.com/bootstrap/3.3.4/js/bootstrap.min.js"></script>
     <link href="http://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.3.0/css/font-awesome.min.css"
     rel="stylesheet" type="text/css">
-    <link href="http://pingendo.github.io/pingendo-bootstrap/themes/default/bootstrap.css"
+<!--     <link href="http://pingendo.github.io/pingendo-bootstrap/themes/default/bootstrap.css"
     rel="stylesheet" type="text/css">
- 
+ --> 
+
+    <script  type="text/javascript">
+	function deletewishItem(wishListNo){
+		if(confirm("해당 숙소를 위시리스트에서 삭제하시겠습니까?")){
+			location.href="wishlistdelete.do?wishListNo="+wishListNo;
+		}
+	}
+</script>
         <div class="container">
           <div class="row text-center">
             <div class="col-md-12 text-center">
@@ -34,17 +42,18 @@
             </div>
           </div>
         </div>
-      <div class="section">
+
+            <div class="section">
         <div class="container">
           <div class="row">
             <div class="col-md-1">
-              <center>
+                 <center>
                 <img src="${requestScope.member.profilePicVO.filePath}"
-                class="img-circle img-responsive" width="50" height="70">
+                class="img-circle img-responsive" style="margin-top: 50px; margin-bottom: 50px; " width="50" height="70" >
               </center>
             </div>
-            <div class="col-md-5">
-              <h2>${sessionScope.mvo.memberName}님의 WISH LIST</h2>
+            <div class="col-md-5" style="margin-top: 50px; margin-bottom: 50px; ">
+              <h2>${sessionScope.mvo.memberName}님  WISH LIST</h2>
             </div>
           </div>
         </div>
@@ -83,7 +92,8 @@
                        <a href="inn_in_show.do?innNo=${wvo.innNo}"><h4 class="text-center">${wvo.innName}</h4></a>
                     </td>
                      <td class="col-md-1">
-                        <h4 class="text-center"><a href="wishlistdelete.do?wishListNo=${wvo.wishListNo}">삭제</a></h4>
+                        	<input type="button" value="삭제" id="deleteBtn"
+				    	onclick="deletewishItem('${wvo.wishListNo}')">
                     </td>
                   </tr>
     				</c:forEach>

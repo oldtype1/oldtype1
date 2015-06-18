@@ -5,9 +5,16 @@
     <script type="text/javascript" src="http://netdna.bootstrapcdn.com/bootstrap/3.3.4/js/bootstrap.min.js"></script>
     <link href="http://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.3.0/css/font-awesome.min.css"
     rel="stylesheet" type="text/css">
-    <link href="http://pingendo.github.io/pingendo-bootstrap/themes/default/bootstrap.css"
+<!--     <link href="http://pingendo.github.io/pingendo-bootstrap/themes/default/bootstrap.css"
     rel="stylesheet" type="text/css">
- 
+  -->
+    <script  type="text/javascript">
+	function deleteItem(bookNo){
+		if(confirm("해당 숙소를 예약 취소하시겠습니까?")){
+			location.href="bookdelete.do?bookNo="+bookNo;
+		}
+	}
+</script>
         <div class="container">
           <div class="row text-center">
             <div class="col-md-12 text-center">
@@ -34,21 +41,25 @@
             </div>
           </div>
         </div>
-      <div class="section">
+
+                        <div class="section">
         <div class="container">
           <div class="row">
             <div class="col-md-1">
-              <center>
+                 <center>
                 <img src="${requestScope.member.profilePicVO.filePath}"
-                class="img-circle img-responsive" width="50" height="70">
+                class="img-circle img-responsive" style="margin-top: 50px; margin-bottom: 50px; " width="50" height="70" >
               </center>
             </div>
-            <div class="col-md-5">
-              <h2>${sessionScope.mvo.memberName}님 예약한 숙소</h2>
+            <div class="col-md-5" style="margin-top: 50px; margin-bottom: 50px; ">
+              <h2>${sessionScope.mvo.memberName}님  예약한 숙소</h2>
             </div>
           </div>
         </div>
       </div>
+      
+      
+      
       <div class="section text-center">
         <div class="container">
           <div class="row">
@@ -95,7 +106,8 @@
                       <h4 class="text-center">${bvo.bookCount}</h4>
                     </td>
                      <td class="col-md-1">
-                   <h4 class="text-center"><a href="bookdelete.do?bookNo=${bvo.bookNo}">예약 취소</a></h4>
+                   	<input type="button" value="예약 취소" id="deleteBtn"
+				    	onclick="deleteItem('${bvo.bookNo}')">
                     </td>
                   </tr>
     				</c:forEach>
