@@ -39,6 +39,9 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	<select id="memberPasswordcheck" parameterType="String" resultType="String">
 	select member_pass from member where member_id=#{value}
 	</select>
+	<select id="memberIdCheck" parameterType="String" resultType="String">
+	select member_id from member where member_id=#{value}
+	</select>
 	
 	<!-- <select id="getAddressKind" resultType="string">
 		select distinct(address) from member

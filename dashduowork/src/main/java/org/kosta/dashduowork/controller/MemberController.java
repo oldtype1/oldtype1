@@ -15,6 +15,7 @@ import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
@@ -194,6 +195,21 @@ public class MemberController {
          memberService.memberRegister(mvo, pvo);
          return "home";// 문제 없으면 결과 페이지로 이동한다.
       }
+   
+   @RequestMapping("member_idcheck.do")
+		@ResponseBody
+		public String memberIdCheck(String memberId){
+		System.out.println("들어옴???"+memberId);
+	String id=memberService.memberIdcheck(memberId);
+	System.out.println("아이디 중복1"+id);
+	System.out.println("아이디 중복2"+memberId);
+	String info="fail";
+	if(!(memberId.equals(id))){
+			info="ok";			
+	}
+	System.out.println(info);
+	return info;	
+		}
 
       /*
        * @RequestMapping(value="member_register_form.do",method=RequestMethod.GET
