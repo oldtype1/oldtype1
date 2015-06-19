@@ -58,5 +58,10 @@ public class MemberServiceImpl implements MemberService {
   		System.out.println("service에서 pvo:"+pvo);
   		return pvo;
   	}
+      @Override
+  	public String memberIdcheck(String memberId) {
+  		System.out.println("service에서 idcheck"+memberId);
+  		return memberDAO.memberIdcheck(memberId);
+  	}
 
 }

@@ -64,6 +64,7 @@
               <td>숙소 번호</td>
               <td>숙소 사진</td>
               <td>숙소 이름</td>
+              <td>이용 상태</td>
               <td>수정</td>
               <td>삭제</td>
               </tr>
@@ -88,6 +89,18 @@
                        <a href="inn_in_show.do?innNo=${ivo.innNo}"><h3 class="text-center">${ivo.innName}</h3></a>
                       <p class="text-center">${ivo.innInfo}</p>
                     </td>
+                    <c:choose>
+                    <c:when test="${ivo.innAvailability=='Y'}">
+                    <td class="col-md-1">
+                      <h4 class="text-center"><a href="updateinnAvailability.do?innNo=${ivo.innNo}&innAvailability=${ivo.innAvailability}">이용가능</a></h4>
+                    </td>
+                    </c:when>
+                    <c:otherwise>
+                    <td class="col-md-1">
+                      <h4 class="text-center"><a href="updateinnAvailability.do?innNo=${ivo.innNo}&innAvailability=${ivo.innAvailability}">이용불가</a></h4>
+                    </td>
+                    </c:otherwise> 
+                    </c:choose>
                     <td class="col-md-1">
                       <h4 class="text-center"><a href="innupdateform.do?innNo=${ivo.innNo}">수정</a></h4>
                     </td>

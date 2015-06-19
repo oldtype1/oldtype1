@@ -10,6 +10,7 @@ import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
+import org.kosta.dashduowork.model.dao.InnDAO;
 import org.kosta.dashduowork.model.service.InnService;
 import org.kosta.dashduowork.model.service.MemberService;
 import org.kosta.dashduowork.model.vo.AmenityVO;
@@ -466,6 +467,14 @@ public class InnController {
 		}
 		return "inn_book_ok";
 	}
+	//숙소가능여부 변경 6/19
+	@RequestMapping("updateinnAvailability.do")
+	public String updateinnAvailability(int innNo,String innAvailability){
+		System.out.println("innNo"+innNo+" innAvailability"+innAvailability);
+		innService.updateinnAvailability(innNo,innAvailability);
+		return "redirect:get_myinnlist.do";
+	}
+	
 }
 
 

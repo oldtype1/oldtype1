@@ -21,4 +21,6 @@ public interface MemberDAO {
       public abstract void insertProfilePic(ProfilePicVO vo);
       //회원 사진 찾기
       public abstract ProfilePicVO selectProfilePic(String memberId);
+      //아이디 중복 확인
+      public abstract String memberIdcheck(String memberId);
 }

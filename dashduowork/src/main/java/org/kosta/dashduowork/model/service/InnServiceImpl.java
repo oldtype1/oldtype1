@@ -410,8 +410,7 @@ public class InnServiceImpl implements InnService {
 			 result.put("flag", flag);
 			 return result;
 		 }
-
-			 
+	 
 		 System.out.println("book Check Over...");
 			if(flag==false){
 			System.out.println("ok : "+innNo);
@@ -422,4 +421,17 @@ public class InnServiceImpl implements InnService {
 		}
 		return result;
 	 }
+	 //6/19
+	@Override
+	public void updateinnAvailability(int innNo, String innAvailability) {
+		System.out.println("서비스에서 가능여부 "+innAvailability);
+		if(innAvailability.equals("Y")){
+			innDAO.updateinnAvailabilitytoNo(innNo);
+		}
+		else{
+			innDAO.updateinnAvailabilitytoYes(innNo);
+
+		}		
+	}
+	
 }

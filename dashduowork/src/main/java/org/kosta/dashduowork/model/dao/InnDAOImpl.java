@@ -105,4 +105,19 @@ public class InnDAOImpl implements InnDAO {
 	public void updateInnInfo(InnVO ivo) {
 		sqlSessionTemplate.update("inn.updateInnInfo", ivo);
 	}
+
+	//6/19 사용 가능여부 변경
+	@Override
+	public void updateinnAvailabilitytoNo(int innNo) {
+		System.out.println("노로 바꾼다");
+		sqlSessionTemplate.update("inn.updateinnAvailabilitytoNo",innNo);
+	}
+	@Override
+	public void updateinnAvailabilitytoYes(int innNo) {
+		System.out.println("예스로 바꾼다");
+		sqlSessionTemplate.update("inn.updateinnAvailabilitytoYes",innNo);
+	}
+	
 }
+
+

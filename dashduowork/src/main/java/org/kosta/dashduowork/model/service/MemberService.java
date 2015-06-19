@@ -13,6 +13,6 @@ public interface MemberService {
       public abstract String memberPasswordcheck(String memberId);
       public void memberRegister(MemberVO mvo, ProfilePicVO pvo);
       public abstract ProfilePicVO selectProfilePic(String memberId);
-
+      public abstract String memberIdcheck(String memberId);
 
 }
