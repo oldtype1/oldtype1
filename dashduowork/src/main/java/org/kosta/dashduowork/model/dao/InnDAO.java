@@ -38,4 +38,7 @@ public interface InnDAO {
 	//6/19일 추가 -윤정-
 	public AmenityVO selectAmenity(String innNo);
 	public void updateInnInfo(InnVO ivo);
+	// 6/19 은수
+	public void updateInnAvailabilityOff(String innNo);
+	public void updateInnAvailabilityOn(String innNo);
 }

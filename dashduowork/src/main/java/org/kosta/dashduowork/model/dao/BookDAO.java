@@ -16,5 +16,6 @@ public interface BookDAO {
 	public abstract int checkChildBookTable(int innNo);
 	public abstract void bookDeleteOutDate();
 	public abstract List<TradeVO> selectBookOutDate();
-
+	public void bookInsert(BookVO bvo);
+	public List<BookVO> selectBookList(String innNo);
 }

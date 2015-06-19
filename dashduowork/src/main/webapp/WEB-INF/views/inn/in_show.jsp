@@ -16,9 +16,12 @@
     <link href="http://pingendo.github.io/pingendo-bootstrap/themes/default/bootstrap.css"
     rel="stylesheet" type="text/css"> -->
 <script type="text/javascript">
-	$(function() {
-		$("#availableDateSt, #availableDateEnd").datepicker({
-			dateFormat : 'yy-mm-dd'
+	$(document).ready(function() {
+		var price = $("#totalPrice").val();
+		$("#bookCount").change(function() {
+			var bookCount = $("#bookCount").val();
+			$("#totalPrice").val(price * bookCount);
+
 		});
 	});
 </script>
@@ -26,17 +29,19 @@
 </head>
 
 <body>
-	<br><br>
+	<br>
+	<br>
 	<div class="section">
 		<div class="container">
 			<div class="row">
-			<center>
-				<h1 class="text-primary">${requestScope.VOMap.memberVO.memberName}님의 "${requestScope.VOMap.innVO.innName}"</h1>
-			<center>
+				<center>
+					<h1 class="text-primary">${requestScope.VOMap.memberVO.memberName}님의
+						"${requestScope.VOMap.innVO.innName}"</h1>
+					<center>
 			</div>
 		</div>
 	</div>
-	 <br>
+	<br>
 	<div class="section">
 		<div class="container">
 			<div class="row">
@@ -81,15 +86,19 @@
 					</a>
 				</div>
 				<div class="col-md-7">
-					<form class="form-horizontal" role="form">
+					<form class="form-horizontal" role="form"
+						action="inn_book.do?innNo=${requestScope.VOMap.avo.innNo}&memberId=${sessionScope.mvo.memberId}"
+						method="post">
 						<div class="form-group">
 							<div class="col-sm-4">
 								<label for="inputEmail3" class="control-label input-lg">체크인</label>
 							</div>
 							<div class="col-sm-8">
-								<input type="text" class="form-control" name="availableDateSt"
-									id="availableDateSt" size="15" onfocus="this.value=''"
-									placeholder="Checkin">
+								<input type="date" class="form-control" name="bookCheckIn"
+									id="bookCheckIn" size="15" onfocus="this.value=''"
+									min="${requestScope.VOMap.avo.availableDateSt}"
+									max="${requestScope.VOMap.avo.availableDateEnd}"
+									required="required">
 							</div>
 						</div>
 						<div class="form-group">
@@ -97,9 +106,11 @@
 								<label for="inputEmail3" class="control-label input-lg">체크아웃</label>
 							</div>
 							<div class="col-sm-8">
-								<input type="text" class="form-control" name="availableDateEnd"
-									size="15" id="availableDateEnd" onfocus="this.value=''"
-									placeholder="Checkout">
+								<input type="date" class="form-control" name="bookCheckOut"
+									size="15" id="bookCheckOut" onfocus="this.value=''"
+									min="${requestScope.VOMap.avo.availableDateSt}"
+									max="${requestScope.VOMap.avo.availableDateEnd}"
+									required="required">
 							</div>
 						</div>
 						<div class="form-group">
@@ -107,34 +118,33 @@
 								<label class="control-label input-lg">인원수</label>
 							</div>
 							<div class="col-sm-8">
-								<select class="form-control input-lg">
-									<option>1</option>
-									<option>2</option>
-								</select>
+								<input type="number" name="bookCount" id="bookCount" min="1"
+									max="5" required="required">&ensp; 명
 							</div>
 						</div>
 						<div class="form-group has-feedback">
 							<div class="col-sm-4">
-								<label for="inputEmail3" class="control-label input-lg">총가격</label>
+								<label for="inputEmail3" class="control-label input-lg">총
+									가격</label>
 							</div>
 							<div class="col-sm-8">
-								<input type="text" class="form-control input-lg"
-									id="inputEmail3" placeholder="가격">
+								<input type="text" class="form-control input-lg" id="totalPrice"
+									readonly="readonly"
+									value="${requestScope.VOMap.innVO.innPrice}">
 							</div>
 						</div>
-						<center>
-							<a class="btn btn-danger btn-lg col-sm-12 input-lg">예약하기</a>
-						</center>
+						<input type="submit"
+							class="btn btn-danger btn-lg col-sm-12 input-lg" value="예약하기">
 					</form>
 				</div>
 			</div>
 		</div>
 	</div>
-	<br><br>
-		<div class="section">
+	<br>
+	<br>
+	<div class="section">
 		<div class="container">
-			<div class="row">
-			</div>
+			<div class="row"></div>
 		</div>
 	</div>
 	<div class="section">

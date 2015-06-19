@@ -1,11 +1,13 @@
 package org.kosta.dashduowork.model.service;
 
+import java.text.ParseException;
 import java.util.List;
 import java.util.Map;
 
 import org.kosta.dashduowork.model.vo.AmenityVO;
 import org.kosta.dashduowork.model.vo.AvailableDateVO;
 import org.kosta.dashduowork.model.vo.BookListVO;
+import org.kosta.dashduowork.model.vo.BookVO;
 import org.kosta.dashduowork.model.vo.DeleteVO;
 import org.kosta.dashduowork.model.vo.FilterVO;
 import org.kosta.dashduowork.model.vo.InnListVO;
@@ -59,4 +61,6 @@ public interface InnService {
 	public AvailableDateVO selectAvailableDate(int innNo);
 	public abstract List<InnPicCompVO> selectFilePathByInnNo(int innNo);
 	public abstract void deleteInnPic(int innPicNo);
+	public AvailableDateVO selectByAvailableDateInnNo(String innNo);
+	public Boolean bookInsert(BookVO bvo, String innNo, String memberId) throws ParseException;
 }

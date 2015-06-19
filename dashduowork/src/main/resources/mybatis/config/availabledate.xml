@@ -22,6 +22,14 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 select availabledate_no, inn_no, to_char(availabledate_st,'YYYY-MM-DD') as availabledate_st, 
  to_char(availabledate_end,'YYYY-MM-DD') as availabledate_end from availabledate where inn_no=#{value}
 </select>
+
+<select id ="selectByInnNo" resultMap="innResult" resultType="avvo">
+	select availabledate_no,to_char(availabledate_st, 'yyyy-mm-dd')as availabledate_st,
+	to_char(availabledate_end,'yyyy-mm-dd')as availabledate_end,
+	inn_no from availabledate 
+	where inn_no = #{value}
+</select>
+
 	<!-- <sql id="innlist">
 		select inn_no,inn_name,inn_city,inn_area,inn_address,inn_type,inn_acceptable_no,
 		inn_price,inn_info,inn_availability,member_id from inn

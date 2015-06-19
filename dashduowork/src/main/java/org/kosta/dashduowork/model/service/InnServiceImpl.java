@@ -1,5 +1,9 @@
 package org.kosta.dashduowork.model.service;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -35,6 +39,7 @@ import org.kosta.dashduowork.model.vo.TradeVO;
 import org.kosta.dashduowork.model.vo.WishListListVO;
 import org.kosta.dashduowork.model.vo.WishListVO;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 @Service
 public class InnServiceImpl implements InnService {
    @Resource(name="innDAOImpl")
@@ -344,4 +349,65 @@ public class InnServiceImpl implements InnService {
 		System.out.println("innServiceImol-------"+innPicNo);
 		innPicCompDAO.deleteInnPic(innPicNo);
 	}
+	
+	 public AvailableDateVO selectByAvailableDateInnNo(String innNo){
+		 return availableDateDAO.selectByAvailableDateInnNo(innNo);
+	 }
+	 // 예약
+	 @Transactional
+	 public Boolean bookInsert(BookVO bvo, String innNo, String memberId) throws ParseException{
+		 
+		 System.out.println("service : "+innNo);
+		 List<BookVO> bookList = new ArrayList<BookVO>();
+		 bookList = bookDAO.selectBookList(innNo);
+		 InnVO ivo = innDAO.selectInn(innNo);
+		 System.out.println("bookList : "+bookList);
+		 SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
+		 Boolean flag = false;
+		 System.out.println("book Checking....");
+		 Date checkIn = formatter.parse(bvo.getBookCheckIn());
+		 Date checkOut = formatter.parse(bvo.getBookCheckOut());
+		 if(!bookList.isEmpty()){
+			 	System.out.println(checkIn);
+			 	System.out.println(checkOut);
+			 for (int i = 0; i < bookList.size(); i++) {
+				 System.out.println("date...");
+				Date bookListCheckIn = formatter.parse(bookList.get(i).getBookCheckIn());
+				Date bookListCheckOut = formatter.parse(bookList.get(i).getBookCheckOut());
+				System.out.println("bookListCheckIn"+i+" : "+bookListCheckIn);
+				System.out.println("bookListCheckOut"+i+" : "+bookListCheckOut);
+				System.out.println("date checking....");
+				if ((checkIn.before(bookListCheckIn) && checkOut.after(bookListCheckIn))	||
+						(checkIn.before(bookListCheckOut) && checkOut.after(bookListCheckOut))||
+						checkIn.equals(bookListCheckIn)||checkIn.equals(bookListCheckOut)||
+						checkOut.equals(bookListCheckIn)||checkOut.equals(bookListCheckOut))
+						{
+					System.out.println("예약일자가 중복되었습니다!");
+					return flag=true;
+			     	} // if in for
+			 } // for
+		}// if
+		 if(ivo.getInnAvailability()=="N"){
+			 System.out.println("예약완료된 숙소입니다!");
+			 return flag=true;
+		 }
+		 if(checkIn.after(checkOut)||checkOut.before(checkIn)){
+			 System.out.println("예약일자가 엉터리야! 장난하냐??");
+			 return flag=true; 
+		 }
+		 if(memberId.equals(ivo.getMemberId())){
+			 System.out.println("자기자신의 숙소는 예약할 수 없습니다.");
+			 return flag=true;
+		 }
+
+			 
+		 System.out.println("book Check Over...");
+			if(flag==false){
+			System.out.println("ok : "+innNo);
+			System.out.println("정상적으로 예약되었습니다.");
+			innDAO.updateInnAvailabilityOff(innNo);
+			bookDAO.bookInsert(bvo);
+		}
+		return flag;
+	 }
 }

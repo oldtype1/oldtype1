@@ -134,7 +134,8 @@ book_count number not null,
 constraint fk_member1 foreign key(member_id) references member(member_id),
 constraint fk_inn1 foreign key(inn_no) references inn(inn_no)
 )
-
+insert into book (member_id, inn_no, book_no, book_checkin, book_checkout, book_count)
+values('oldtype', '4', book_sequence.nextval, '2015-06-16','2015-06-18',4)
 -----------------위시리스트 테이블(member_id / inn_no ref)----------------------
 create table wishlist(
 member_id varchar2(50) not null,

@@ -24,4 +24,7 @@ public class AvailableDateDAOImpl implements AvailableDateDAO {
 	public AvailableDateVO selectAvailableDate(int innNo) {
 		return sqlSessionTemplate.selectOne("availabledate.selectAvailableDate", innNo);
 	}
+	public AvailableDateVO selectByAvailableDateInnNo(String innNo){
+		return sqlSessionTemplate.selectOne("availabledate.selectByInnNo", innNo);
+	}
 }

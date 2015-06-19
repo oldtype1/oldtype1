@@ -254,7 +254,22 @@ where inn_area like '%' ||  #{firstSearchCity} || '%' and inn_acceptable_no>=#{f
 	update inn set inn_name=#{innName}, inn_city=#{innCity}, inn_area=#{innArea}, inn_address=#{innAddress}, inn_type=#{innType}, inn_acceptable_no=#{acceptableNo}, 
 inn_price=#{innPrice}, inn_info=#{innInfo},inn_availability=#{innAvailability} where inn_no=#{innNo}
 	</update>
-
+	<!-- 해당 숙소의 예약리스트 가져오기 -->
+	<select id="selectBookList" resultType="bvo" resultMap="bookResult">
+		select book_no, book_checkin, book_checkout, book_count, member_id, inn_no from BOOK 
+		where inn_no=#{value}
+	</select>	
+		<update id="updateInnAvailabilityOff">
+		update inn set inn_availability='N' where inn_no = #{value}
+	</update>
+		<update id="updateInnAvailabilityOn">
+		update inn set inn_availability='Y' where inn_no = #{value}
+	</update>
+		<!-- 6/17 예약 DB에 insert -->
+	<insert id="bookInsert" parameterType="bvo">
+	insert into BOOK(book_no, book_checkin, book_checkout, book_count, member_id, inn_no)
+	values(book_sequence.nextval, #{bookCheckIn}, #{bookCheckOut}, #{bookCount}, #{memberId}, #{innNo})
+	</insert>
 	<!-- <select id="getAddressKind" resultType="string">
 		select distinct(address) from member
 	</select>

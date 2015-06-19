@@ -7,4 +7,5 @@ public interface AvailableDateDAO {
 	public abstract void register(AvailableDateVO vo);
 	public abstract void update(AvailableDateVO vo);
 	public abstract AvailableDateVO selectAvailableDate(int innNo);
+	public AvailableDateVO selectByAvailableDateInnNo(String innNo);
 }

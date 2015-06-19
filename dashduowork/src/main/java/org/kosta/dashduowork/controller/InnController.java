@@ -1,6 +1,7 @@
 package org.kosta.dashduowork.controller;
 
 import java.io.File;
+import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -14,6 +15,7 @@ import org.kosta.dashduowork.model.service.MemberService;
 import org.kosta.dashduowork.model.vo.AmenityVO;
 import org.kosta.dashduowork.model.vo.AvailableDateVO;
 import org.kosta.dashduowork.model.vo.BookListVO;
+import org.kosta.dashduowork.model.vo.BookVO;
 import org.kosta.dashduowork.model.vo.DeleteVO;
 import org.kosta.dashduowork.model.vo.FilterVO;
 import org.kosta.dashduowork.model.vo.InnListVO;
@@ -335,20 +337,25 @@ public class InnController {
 	@RequestMapping(value="inn_in_show.do")
 	public String inShow(HttpServletRequest request, Model model){
 		String innNo = (String)request.getParameter("innNo");
+	
 		HashMap<String, Object> map = (HashMap<String, Object>) innService.selectInn(innNo);
 		System.out.println(map);
 		InnVO ivo = (InnVO)map.get("innVO");
 		List<InnPicCompVO> picList = innService.selectByInnNo(innNo);
 		ProfilePicVO pvo=innService.selectByProfilePic(ivo.getMemberId());
+		AvailableDateVO avo = innService.selectByAvailableDateInnNo(innNo);
 		System.out.println(picList);
 		System.out.println(pvo);
-		
+		System.out.println(avo);
+	
 		map.put("picList", picList);
 		map.put("pvo", pvo);
+		map.put("avo", avo);
 		model.addAttribute("VOMap", map);
 		System.out.println("picList가 실행이 된다?");
 		return "inn_in_show";
 	}
+	
 	@RequestMapping("innupdateform.do")
 	public String innupdateform(int innNo, HttpServletRequest request, Model model){
 		String innNo2=Integer.toString(innNo);
@@ -422,6 +429,34 @@ public class InnController {
 		innService.deleteInnPic(innPicNo);
 		List<InnPicCompVO> innPicList=innService.selectFilePathByInnNo(innNo);
 		return innPicList;
+	}
+	
+	// 예약
+	@RequestMapping(value="inn_book.do", method=RequestMethod.POST )
+	public String booking(HttpServletRequest request, Model model, BookVO bvo){
+		System.out.println("book starting...");
+		String innNo = request.getParameter("innNo");
+		String memberId = request.getParameter("memberId");
+		HttpSession session = request.getSession(false);
+		
+		MemberVO mvo = (MemberVO)session.getAttribute("mvo");
+		bvo.setMemberId(mvo.getMemberId());
+		System.out.println(innNo);
+		System.out.println(bvo);
+		Boolean flag = false;
+		try {
+			 flag = innService.bookInsert(bvo, innNo, memberId);
+		} catch (ParseException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		System.out.println("경로 결정");
+		System.out.println();
+		model.addAttribute("innNo", innNo);
+		if(flag==true)
+			return "inn_book_fail";
+		
+		return "inn_book_ok";
 	}
 }
 

@@ -70,6 +70,15 @@ public class InnDAOImpl implements InnDAO {
 		return sqlSessionTemplate.selectOne("inn.select", innNo);
 		}
 	
+	//FIXME
+	public void updateInnAvailabilityOff(String innNo){
+		 sqlSessionTemplate.update("inn.updateInnAvailabilityOff", innNo);
+	}
+	//FIXME
+	public void updateInnAvailabilityOn(String innNo){
+		 sqlSessionTemplate.update("inn.updateInnAvailabilityOn", innNo);
+	}
+	
 	// 6/16일 추가내용------------------------ 숙소번호로 사진경로 받아오기
 	public InnPicCompVO selectOneInnPicPath(int innNo){
 		return sqlSessionTemplate.selectOne("innPic.selectOneInnPicPath", innNo);

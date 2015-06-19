@@ -57,6 +57,13 @@ public class BookDAOImpl implements BookDAO {
 		sqlSessionTemplate.delete("scheduler.bookDeleteOutDate");
 	}
 	
+	public void bookInsert(BookVO bvo){
+		sqlSessionTemplate.insert("inn.bookInsert", bvo);
+	}
+
+	public List<BookVO> selectBookList(String innNo){
+		return sqlSessionTemplate.selectList("inn.selectBookList", innNo);
+	}
 	
 	
 }
