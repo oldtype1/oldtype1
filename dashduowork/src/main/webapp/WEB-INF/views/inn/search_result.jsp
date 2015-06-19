@@ -109,48 +109,55 @@ $(function() {
 		}); //change
 	});
 </script>
-<div class="section">
+
+<div class="section" style="position: relative; top: 30px;">
 	<div class="container">
-	<form action="searchByCityDateNo.do" class="navbar-form navbar-left" role="search" id="searchInnCityAjaxForm">
-		<input type="text" class="form-control" name="innCity" id="searchCity" placeholder="State" size="30"	onkeyup="SearchInnCityListByAjax()"><br>
-			<input
-			type="text" class="form-control" name="startDate" id="checkin" size="15"
-			onfocus="this.value=''" placeholder="Checkin" style="width: 150px;"> <input type="text"
-			class="form-control" name="endDate" size="15" id="checkout"
-			onfocus="this.value=''" placeholder="Checkout" style="width: 150px;"><select
-			class="form-control" name="acceptableNo" id="select">
-			<option value="1">게스트 1명</option>
-			<option value="2">게스트 2명</option>
-			<option value="3">게스트 3명</option>
-			<option value="4">게스트 4명</option>
-			<option value="5">게스트 5명</option>
-			<option value="6">게스트 6명</option>
-		</select>
-			<button type="submit" class="btn btn-default">검색</button>
-			</form>
-	</div>
-</div>
-<div class="section">
-	<div class="container">
-			<form id="filterForm" action="selectInnByCheckedAmenity.do">	
-			<p>
-			  <label for="amount">가격 범위:</label>
-			  <input type="text" id="amount" readonly style="border:0; color:black; font-weight:bold;">
-			</p>
-			 
-			<div id="slider-range" style="width: 500px;"></div>
-				<input type="checkbox" name="amenityWiFi" value="Y">WiFi <input
-					type="checkbox" name="amenityBed" value="Y">Bed <input
-					type="checkbox" name="amenityTV" value="Y">TV <input
-					type="checkbox" name="amenityKitchen" value="Y">주방 <input
-					type="checkbox" name="amenityBBQ" value="Y">바베큐
-					<input type="hidden" name="firstSearchCity" value="${requestScope.searchVO.innCity }">
-					<input type="hidden" name="firstSearchStartDate" value="${requestScope.searchVO.startDate }">
-					<input type="hidden" name="firstSearchEndDate" value="${requestScope.searchVO.endDate }">
-					<input type="hidden" name="firstSearchPeopleNo" value="${requestScope.searchVO.acceptableNo }">
-					<input type="hidden" name="minPrice" id="minPrice" value="0">
-					<input type="hidden" name="maxPrice" id="maxPrice" value="999999">
-			</form>
+		<div class="row">
+		
+		
+			<div class="col-md-6" style="top: 45px;">
+				<form action="searchByCityDateNo.do" class="navbar-form navbar-left" role="search" id="searchInnCityAjaxForm">
+					<input type="text" class="form-control" name="innCity" id="searchCity" placeholder="State" size="54"	onkeyup="SearchInnCityListByAjax()"><br>
+						<input
+						type="text" class="form-control" name="startDate" id="checkin" size="15"
+						onfocus="this.value=''" placeholder="Checkin" style="width: 150px;"> <input type="text"
+						class="form-control" name="endDate" size="15" id="checkout"
+						onfocus="this.value=''" placeholder="Checkout" style="width: 150px;">
+						<select class="form-control" name="acceptableNo" id="select">
+						<option value="1">게스트 1명</option>
+						<option value="2">게스트 2명</option>
+						<option value="3">게스트 3명</option>
+						<option value="4">게스트 4명</option>
+						<option value="5">게스트 5명</option>
+						<option value="6">게스트 6명</option>
+					</select>
+					<button type="submit" class="btn btn-default">검색</button>
+				</form>
+			</div>
+			
+			<div class="col-md-6">
+				<form id="filterForm" action="selectInnByCheckedAmenity.do">	
+					<p>
+					  <label for="amount">가격 범위:</label>
+					  <input type="text" id="amount" readonly style="border:0; color:black; font-weight:bold;">
+					</p>
+					<div id="slider-range" style="width: 500px;"></div>
+					<input type="checkbox" name="amenityWiFi" value="Y">WiFi <input
+						type="checkbox" name="amenityBed" value="Y">Bed <input
+						type="checkbox" name="amenityTV" value="Y">TV <input
+						type="checkbox" name="amenityKitchen" value="Y">주방 <input
+						type="checkbox" name="amenityBBQ" value="Y">바베큐
+						<input type="hidden" name="firstSearchCity" value="${requestScope.searchVO.innCity }">
+						<input type="hidden" name="firstSearchStartDate" value="${requestScope.searchVO.startDate }">
+						<input type="hidden" name="firstSearchEndDate" value="${requestScope.searchVO.endDate }">
+						<input type="hidden" name="firstSearchPeopleNo" value="${requestScope.searchVO.acceptableNo }">
+						<input type="hidden" name="minPrice" id="minPrice" value="0">
+						<input type="hidden" name="maxPrice" id="maxPrice" value="999999">
+				</form>			
+			</div>
+			
+			
+		</div>
 	</div>
 </div>
 <br>

@@ -38,7 +38,7 @@ $(document).ready(function(){
 	});
 
 </script>
-<img id="img1" src="${initParam.root}img/house.jpg" style="position: relative; top: 80px; left: 330px;">
+<%-- <img id="img1" src="${initParam.root}img/house.jpg" style="position: relative; top: 80px; left: 330px;">
 
 <div style="position: relative; top: 150px; left: 230px; opacity: 0.7">
 	<form action="searchByCityDateNo.do" class="navbar-form navbar-left" role="search" id="searchInnCityAjaxForm">
@@ -57,4 +57,29 @@ $(document).ready(function(){
 		<button type="submit" class="btn btn-default">검색</button><br>
 		<!-- <a href="inn_search_form.do">임시숙소검색페이지</a> -->
 	</form>
-</div>
+</div> --%>
+           <div class="container">
+               <div class="row">
+                   <div class="col-md-12 text-center">
+                       <h1 class="text-inverse" style="color:black; font-weight:bold; position: relative; top: 150px; left: -3%;">환영합니다!</h1>
+                       <div style="position: relative; top: 300px; left: 13%;">
+						<form action="searchByCityDateNo.do" class="navbar-form navbar-left" role="search" id="searchInnCityAjaxForm">
+							<input type="text" class="form-control" name="innCity" id="searchCity" placeholder="State" size="30"	onkeyup="SearchInnCityListByAjax()">  <input
+								type="text" class="form-control" name="startDate" id="checkin" size="15"
+								onfocus="this.value=''" placeholder="Checkin"> <input type="text"
+								class="form-control" name="endDate" size="15" id="checkout"
+								onfocus="this.value=''" placeholder="Checkout"> <select
+								class="form-control" name="acceptableNo" id="select">
+								<option value="1">게스트 1명</option>
+								<option value="2">게스트 2명</option>
+								<option value="3">게스트 3명</option>
+								<option value="4">게스트 4명</option>
+								<option value="5">게스트 5명</option>
+								<option value="6">게스트 6명</option>
+							</select>
+							<button type="submit" class="btn btn-default">검색</button><br>
+						</form>
+					</div>
+                   </div>
+               </div>
+           </div>
