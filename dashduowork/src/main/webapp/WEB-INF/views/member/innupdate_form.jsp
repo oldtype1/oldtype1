@@ -8,9 +8,6 @@
        }); 
     });
 	function deleteItem(innPicNo,innNo,resultViewNo){
-		alert("click"+innPicNo+innNo);
-		
-
 		 $.ajax({
  			type:"get",
  			url:"deleteInnPic.do?innPicNo="+innPicNo+"&innNo="+innNo,
@@ -26,23 +23,7 @@
 		
 	}
     
-    
-/*     $(document).ready(function(){
-    	$("#deleteInnPicBtn").click(function(){
-    		alert("click");
-    		 $.ajax({
-    			type:"get",
-    			url:"deleteInnPic.do?innPicNo='+${item.innPicNo}+'&innNo='+${item.innNo}",
-    			//data:"",
-    			dataType:"json",
-    			success:function(data){
-    				 $.each(data,function(index,d){
- 						alert(index+"   "+d+"     ");
- 			});
-    			}
-    		});
-    	})
-    }) */
+
  </script>
  
  <!-- regiet_from -->
@@ -215,10 +196,9 @@
                   <c:forEach items="${requestScope.picList}" var="item" varStatus="i">
                   <!-- 기존 db사진 -->
                    <div class="col-sm-3" id="${i.index }">
-                 <%-- <img src="${item.filePath}" height="140" width="120">사진 1 --%>
-                 ${item.filePath}
+                 <img src="${item.filePath}" height="140" width="120">
+                <%--  ${item.filePath} --%>
                 	<input type="button" value="사진삭제" id="deleteInnPicBtn" onclick="deleteItem('${item.innPicNo}','${item.innNo}',${i.index })">
-				  <%--    onclick="location.href='deleteInnPic.do?innPicNo='+${item.innPicNo}+'&innNo='+${item.innNo}" --%>
 				    	  </div>      
                 </c:forEach>
               </div>
