@@ -39,12 +39,12 @@ $(function() {
 	      max: 10000,
 	      values: [ 1000, 8000 ],
 	      slide: function( event, ui ) {
-	        $( "#amount" ).val( "$" + ui.values[ 0 ] + " - $" + ui.values[ 1 ] );
+	        $( "#amount" ).val( "₩" + ui.values[ 0 ] + " - ₩" + ui.values[ 1 ] );
 	        $("#minPrice").val($( "#slider-range" ).slider( "values", 0 ));
 	        $("#maxPrice").val($( "#slider-range" ).slider( "values", 1 ));
 	      }
 	    });
-	    $( "#amount" ).val( "$" + $( "#slider-range" ).slider( "values", 0 ) + " - $" + $( "#slider-range" ).slider( "values", 1 ) );
+	    $( "#amount" ).val( "₩" + $( "#slider-range" ).slider( "values", 0 ) + " - ₩" + $( "#slider-range" ).slider( "values", 1 ) );
 	    
 	    $("#slider-range").mouseup(function(){
 	    	/* alert($("#minPrice").val()); */
@@ -126,11 +126,11 @@ $(function() {
 	<div class="container">
 			<form id="filterForm" action="selectInnByCheckedAmenity.do">	
 			<p>
-			  <label for="amount">Price range:</label>
-			  <input type="text" id="amount" readonly style="border:0; color:#f6931f; font-weight:bold;">
+			  <label for="amount">가격 범위:</label>
+			  <input type="text" id="amount" readonly style="border:0; color:black; font-weight:bold;">
 			</p>
 			 
-			<div id="slider-range"></div>
+			<div id="slider-range" style="width: 500px;"></div>
 				<input type="checkbox" name="amenityWiFi" value="Y">WiFi <input
 					type="checkbox" name="amenityBed" value="Y">Bed <input
 					type="checkbox" name="amenityTV" value="Y">TV <input
