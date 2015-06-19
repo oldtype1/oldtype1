@@ -189,7 +189,7 @@ public class InnController {
 		return innListVO;
 	}
 	@RequestMapping(value="searchByCityDateNo.do")
-	public String searchByCityDateNo(SearchVO vo, Model model){
+	public String searchByCityDateNo(SearchVO vo, Model model, HttpServletRequest request){
 		InnListVO innListVO=new InnListVO();
 		if(vo.getStartDate()==""){
 			//날짜 안들어간경우		
@@ -201,6 +201,9 @@ public class InnController {
 		}
 		model.addAttribute("innListVO", innListVO);
 		model.addAttribute("searchVO", vo);
+		HttpSession session = request.getSession(false);
+        MemberVO memberVO = (MemberVO)session.getAttribute("mvo");
+        System.out.println("searchMemberVO : "+memberVO);
 		return "inn_search_result";
 	}
 	
@@ -439,23 +442,28 @@ public class InnController {
 		String memberId = request.getParameter("memberId");
 		HttpSession session = request.getSession(false);
 		
+		boolean flag = false;
 		MemberVO mvo = (MemberVO)session.getAttribute("mvo");
 		bvo.setMemberId(mvo.getMemberId());
 		System.out.println(innNo);
 		System.out.println(bvo);
-		Boolean flag = false;
+		HashMap<String, Object> result = new HashMap();
+		result.put("flag",flag);
 		try {
-			 flag = innService.bookInsert(bvo, innNo, memberId);
+			 result = innService.bookInsert(bvo, innNo, memberId);
 		} catch (ParseException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		System.out.println("경로 결정");
-		System.out.println();
-		model.addAttribute("innNo", innNo);
-		if(flag==true)
-			return "inn_book_fail";
+		flag = (Boolean) result.get("flag");
 		
+		System.out.println("경로 결정");
+		model.addAttribute("innNo", innNo);
+
+		if(flag==true){
+			model.addAttribute("result", result);
+			return "inn_book_fail";
+		}
 		return "inn_book_ok";
 	}
 }

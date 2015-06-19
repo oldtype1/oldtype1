@@ -1,6 +1,6 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ page contentType="text/html;charset=UTF-8"%>
-<%@ page session="false"%>
+<%@ page session="true"%>
 <html>
 
 <head>
@@ -133,8 +133,24 @@
 									value="${requestScope.VOMap.innVO.innPrice}">
 							</div>
 						</div>
+						<c:choose>
+						<c:when test="${requestScope.VOMap.innVO.innAvailability =='Y' && sessionScope.mvo.memberId != null}">
 						<input type="submit"
 							class="btn btn-danger btn-lg col-sm-12 input-lg" value="예약하기">
+							</c:when>
+							<c:when test="${requestScope.VOMap.innVO.innAvailability =='N' && sessionScope.mvo.memberId != null}">
+							    <input type="button"
+						     	class="btn btn-danger btn-lg col-sm-12 input-lg" value="휴면중인 숙소입니다." disabled="disabled">
+							</c:when>
+							<c:when test="${(requestScope.VOMap.innVO.innAvailability =='Y' || requestScope.VOMap.innVO.innAvailability =='N')&&sessionScope.mvo.memberId == null}">
+							<input type="button"
+						     	class="btn btn-danger btn-lg col-sm-12 input-lg" value="로그인 후 이용하세요!." disabled="disabled">
+							</c:when>
+							<c:when test="${requestScope.VOMap.innVO.memberId == sessionScope.mvo.memberId}">
+								<input type="button"
+						     	class="btn btn-danger btn-lg col-sm-12 input-lg" value="${requestScope.VOMap.innVO.memberId}님의 숙소입니다!" disabled="disabled">
+							</c:when>
+							</c:choose>
 					</form>
 				</div>
 			</div>

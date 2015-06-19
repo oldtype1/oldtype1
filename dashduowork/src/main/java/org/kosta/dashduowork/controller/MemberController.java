@@ -37,6 +37,8 @@ public class MemberController {
       else {
          HttpSession session = request.getSession();
          session.setAttribute("mvo", mvo);
+         MemberVO memberVO = (MemberVO)session.getAttribute("mvo");
+         System.out.println("memberVO : "+memberVO);
          return "home";
       }
    }

@@ -1,6 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <script>
-alert("예약 완료!");
+alert();
 location.href="inn_in_show.do?innNo="+${requestScope.innNo};
 </script>
