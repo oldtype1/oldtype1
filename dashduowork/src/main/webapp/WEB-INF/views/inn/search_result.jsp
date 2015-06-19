@@ -58,9 +58,13 @@ $(function() {
 				success : function(innInfoList) {
 					var tableInfo="<table class='table'><thead><tr><th >숙소 번호</th><th>숙소 사진</th><th>숙소명</th><th>지역(대)</th><th>지역(중)</th><th>상세 주소</th><th>유형</th><th>수용가능인원</th><th>가격</th></tr></thead>";
 					tableInfo+="<tbody>";
-					if (innInfoList.innList.length != 0) {
+					if (innInfoList.innList.length != 0) {			
 						$.each(innInfoList.innList, function(index, info) {
-							tableInfo+="<tr><td>"+info.innNo+"</td><td>"+'사진부분'+"</td><td><a href='inn_in_show.do?innNo="+info.innNo+"'>"+info.innName+"</td><td>"+info.innCity+"</td><td>"+info.innArea+"</td><td>"+info.innAddress+"</td><td>"+info.innType+"</td><td>"+info.acceptableNo+"</td><td>"+info.innPrice+"</td></tr>";
+							if(info.innMainPic==null){
+								tableInfo+="<tr><td>"+info.innNo+"</td><td><img class='media-object' src='${initParam.root}img/no_img.gif' height='150' width='150'></td><td><a href='inn_in_show.do?innNo="+info.innNo+"'>"+info.innName+"</td><td>"+info.innCity+"</td><td>"+info.innArea+"</td><td>"+info.innAddress+"</td><td>"+info.innType+"</td><td>"+info.acceptableNo+"</td><td>"+info.innPrice+"</td></tr>";
+							}else{
+								tableInfo+="<tr><td>"+info.innNo+"</td><td><img class='media-object' src='"+info.innMainPic.filePath+"' height='150' width='150'></td><td><a href='inn_in_show.do?innNo="+info.innNo+"'>"+info.innName+"</td><td>"+info.innCity+"</td><td>"+info.innArea+"</td><td>"+info.innAddress+"</td><td>"+info.innType+"</td><td>"+info.acceptableNo+"</td><td>"+info.innPrice+"</td></tr>";
+							}
 						}); //each
 					}//if
 					else if(innInfoList.innList.length == 0){
@@ -84,11 +88,15 @@ $(function() {
 				data : $("#filterForm").serialize(),
 				dataType : "json",
 				success : function(innInfoList) {
-					var tableInfo="<table class='table'><thead><tr><th >숙소 번호</th><th>숙소 사진</th><th>숙소명</th><th>지역(대)</th><th>지역(중)</th><th>상세 주소</th><th>유형</th><th>수용가능인원</th><th>가격</th></tr></thead>";
+					var tableInfo="<table class='table'><thead align='center'><tr><th >숙소 번호</th><th>숙소 사진</th><th>숙소명</th><th>지역(대)</th><th>지역(중)</th><th>상세 주소</th><th>유형</th><th>수용가능인원</th><th>가격</th></tr></thead>";
 					tableInfo+="<tbody>";
 					if (innInfoList.innList.length != 0) {
 						$.each(innInfoList.innList, function(index, info) {
-							tableInfo+="<tr><td>"+info.innNo+"</td><td>"+'사진부분'+"</td><td><a href='inn_in_show.do?innNo="+info.innNo+"'>"+info.innName+"</td><td>"+info.innCity+"</td><td>"+info.innArea+"</td><td>"+info.innAddress+"</td><td>"+info.innType+"</td><td>"+info.acceptableNo+"</td><td>"+info.innPrice+"</td></tr>";
+							if(info.innMainPic==null){
+								tableInfo+="<tr><td>"+info.innNo+"</td><td><img class='media-object' src='${initParam.root}img/no_img.gif' height='150' width='150'></td><td><a href='inn_in_show.do?innNo="+info.innNo+"'>"+info.innName+"</td><td>"+info.innCity+"</td><td>"+info.innArea+"</td><td>"+info.innAddress+"</td><td>"+info.innType+"</td><td>"+info.acceptableNo+"</td><td>"+info.innPrice+"</td></tr>";
+							}else{
+								tableInfo+="<tr><td>"+info.innNo+"</td><td><img class='media-object' src='"+info.innMainPic.filePath+"' height='150' width='150'></td><td><a href='inn_in_show.do?innNo="+info.innNo+"'>"+info.innName+"</td><td>"+info.innCity+"</td><td>"+info.innArea+"</td><td>"+info.innAddress+"</td><td>"+info.innType+"</td><td>"+info.acceptableNo+"</td><td>"+info.innPrice+"</td></tr>";
+							}
 						}); //each
 					}//if
 					else if(innInfoList.innList.length == 0){
@@ -177,9 +185,14 @@ $(function() {
 								</c:when>
 								<c:otherwise>
 									<c:forEach var="list" items="${requestScope.innListVO.innList}">
-										<tr>
+										<tr valign="middle">
 											<td>${list.innNo }</td>
-											<td><%-- <img src="${innList.innMainPic.filePath}" class="img-circle img-responsive" width="200" height="200"> --%>${innList.innMainPic.filePath}</td>
+											<td>
+											<c:choose>
+												<c:when test="${list.innMainPic.filePath!=null}"><img class="media-object" src="${list.innMainPic.filePath}" height="150" width="150"></c:when>
+												<c:otherwise><img class="media-object" src="${initParam.root}img/no_img.gif" height="150" width="150"></c:otherwise>
+											</c:choose>
+											</td>
 											<td><a href="inn_in_show.do?innNo=${list.innNo}">${list.innName }</a></td>
 											<td>${list.innCity }</td>
 											<td>${list.innArea }</td>
