@@ -42,13 +42,13 @@
           </div>
         </div>
 
-                        <div class="section">
+               <div class="section">
         <div class="container">
           <div class="row">
             <div class="col-md-1">
                  <center>
                 <img src="${requestScope.member.profilePicVO.filePath}"
-                class="img-circle img-responsive" style="margin-top: 50px; margin-bottom: 50px; " width="50" height="70" >
+                class="img-circle img-responsive" style="margin-top: 60px; margin-bottom: 50px; " width="50" height="70" >
               </center>
             </div>
             <div class="col-md-5" style="margin-top: 50px; margin-bottom: 50px; ">
@@ -89,7 +89,7 @@
                   </a>
                   </c:if>
                   <c:if test="${bvo.bookMainPic==null}">
-                      <a class="pull-left" href="#"><img class="media-object" src="http://pingendo.github.io/pingendo-bootstrap/assets/placeholder.png" height="150" width="150">
+                      <a class="pull-left" href="#"><img class="media-object" src="${initParam.root}img/no_img.gif"  height="150" width="150">
                   </a>
                   </c:if> 
                     </td>
@@ -106,7 +106,7 @@
                       <h4 class="text-center">${bvo.bookCount}</h4>
                     </td>
                      <td class="col-md-1">
-                   	<input type="button" value="예약 취소" id="deleteBtn"
+                   	<input type="button"  class="btn btn-default" value="예약 취소" id="deleteBtn"
 				    	onclick="deleteItem('${bvo.bookNo}')">
                     </td>
                   </tr>

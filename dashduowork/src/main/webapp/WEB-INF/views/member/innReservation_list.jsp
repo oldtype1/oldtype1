@@ -5,8 +5,6 @@
     <script type="text/javascript" src="http://netdna.bootstrapcdn.com/bootstrap/3.3.4/js/bootstrap.min.js"></script>
     <link href="http://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.3.0/css/font-awesome.min.css"
     rel="stylesheet" type="text/css">
-    <link href="http://pingendo.github.io/pingendo-bootstrap/themes/default/bootstrap.css"
-    rel="stylesheet" type="text/css">
  
         <div class="container">
           <div class="row text-center">
@@ -40,10 +38,10 @@
             <div class="col-md-1">
               <center>
                 <img src="${requestScope.member.profilePicVO.filePath}"
-                class="img-circle img-responsive" width="50" height="70">
+                class="img-circle img-responsive" style="margin-top: 60px; margin-bottom: 50px;" width="50" height="70" >
               </center>
             </div>
-            <div class="col-md-5">
+            <div class="col-md-5" style="margin-top: 50px; margin-bottom: 50px; ">
               <h2>${sessionScope.mvo.memberName}님이 등록한 숙소의 예약 목록</h2>
             </div>
           </div>
@@ -78,7 +76,7 @@
                   </a>
                   </c:if>
                   <c:if test="${irlvo.innReservationMainPic==null}">
-                      <a class="pull-left" href="#"><img class="media-object" src="http://pingendo.github.io/pingendo-bootstrap/assets/placeholder.png" height="150" width="150">
+                      <a class="pull-left" href="#"><img class="media-object" src="${initParam.root}img/no_img.gif" height="150" width="150">
                   </a>
                   </c:if>
                     </td>

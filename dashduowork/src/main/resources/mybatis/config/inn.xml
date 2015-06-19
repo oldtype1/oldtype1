@@ -42,15 +42,15 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 <result property="bookCheckOut" column="book_checkout"/>
 <result property="bookCount" column="book_count"/>
 </resultMap>
-<resultMap type="tvo" id="TradeListResult">
-<result property="memberId" column="Trade_no"/>
-<result property="memberId" column="member_id"/>
-<result property="innorbook" column="inn_or_book"/>
-<result property="innNo" column="inn_no"/>
+<resultMap type="tvo" id="TradeResult">
+<result property="tradeNo" column="Trade_no"/>
 <result property="innName" column="inn_name"/>
 <result property="bookCheckIn" column="book_checkin"/>
 <result property="bookCheckOut" column="book_checkout"/>
-<result property="innAvailability" column="inn_availability"/>
+<result property="price" column="inn_price"/>
+<result property="bookNo" column="book_no"/>
+<result property="memberId" column="member_id"/>
+<result property="master" column="master"/>
 </resultMap>
 	<sql id="innlist">
 		select inn_no,inn_name,inn_city,inn_area,inn_address,inn_type,inn_acceptable_no,
@@ -77,7 +77,7 @@ select inn_no,inn_name,inn_city,inn_area,inn_address,inn_type,inn_acceptable_no,
  	select count(*) from inn where member_id=#{value}
  	</select> 	 		
 	<select id="getTotalTradeCount" resultType="int" parameterType="String">
- 	select count(*) from trade where member_id=#{value} and <![CDATA[book_checkout < sysdate]]>
+ 	select count(*) from trade where member_id=#{value} or master=#{value}
  	</select>
  	<select id="getTotalBookCount" resultType="int" parameterType="String">
  	select count(*) from book where member_id=#{value}
@@ -130,20 +130,20 @@ select book_no, book_checkin, book_checkout, book_count, member_id, inn_no, inn_
 ceil(rownum/5) as page from
 (
  select b.book_no, to_char(b.book_checkin,'YYYY-MM-DD') as book_checkin, to_char(b.book_checkout,'YYYY-MM-DD') 
- as book_checkout,  b.book_count, b.member_id, b.inn_no, i.inn_name from book b, inn i where b.inn_no=i.inn_no and <![CDATA[book_checkout > sysdate]]> 
+ as book_checkout,  b.book_count, b.member_id, b.inn_no, i.inn_name from book b, inn i where b.inn_no=i.inn_no
  ) 
  where member_id=#{member_id}
  ) where page=#{pageNo}
 </select>
 
-	<select id="getmytradelist" parameterType="hashmap" resultType="tvo" resultMap="TradeListResult">
-  select inn_or_book, inn_no, member_id, inn_name, book_checkin, book_checkout, inn_availability from	
+	<select id="getmytradelist" parameterType="hashmap" resultType="tvo" resultMap="TradeResult">
+  select Trade_no, inn_name, book_checkin, book_checkout, inn_price, member_id,master from	
 		(
- select  inn_or_book, inn_no, member_id, inn_name,to_char(book_checkin,'YYYY-MM-DD') as book_checkin, 
- to_char(book_checkout,'YYYY-MM-DD') as book_checkout, inn_availability,ceil(rownum/5) as page from
+ select Trade_no, inn_name,to_char(book_checkin,'YYYY-MM-DD') as book_checkin,to_char(book_checkout,'YYYY-MM-DD')
+  as book_checkout, inn_price, member_id,master,ceil(rownum/5) as page from
  (
-  select inn_or_book, inn_no, member_id, inn_name, book_checkin, book_checkout, inn_availability
-   from trade where member_id=#{member_id} and <![CDATA[book_checkout < sysdate]]> order by Trade_no desc	
+   select Trade_no,inn_name, book_checkin, book_checkout, inn_price, member_id,master from trade
+    where member_id=#{member_id} or master=#{member_id} order by Trade_no desc	
  )
  )   where page=#{pageNo} 
 	</select>
@@ -244,6 +244,10 @@ where inn_area like '%' ||  #{firstSearchCity} || '%' and inn_acceptable_no>=#{f
 	
 	<select id="select" resultType="ivo" resultMap="innResult">
 		<include refid="innlist"/> where inn_no = #{value}
+	</select>
+		<!--6/18 숙소 삭제시 예약한 테이블이 있나 확인하는 메서드임  --> 
+	<select id="checkChildBookTable" parameterType="int" resultType="int">
+	select count(*) from book where inn_no= #{value}
 	</select>
 	
 	<!-- <select id="getAddressKind" resultType="string">

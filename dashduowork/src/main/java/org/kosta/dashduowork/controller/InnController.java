@@ -131,7 +131,7 @@ public class InnController {
 			 vo.setProfilePicVO(pvo);
 		     }
 		     else{
-		    	 vo.setProfilePicVO(new ProfilePicVO(vo.getMemberId(),  "http://pingendo.github.io/pingendo-bootstrap/assets/user_placeholder.png"));
+		    	 vo.setProfilePicVO(new ProfilePicVO(vo.getMemberId(),"http://pingendo.github.io/pingendo-bootstrap/assets/user_placeholder.png"));
 		     }
 		 model.addAttribute("member", vo);
 		System.out.println("tvo는? "+ tvo);
@@ -242,21 +242,22 @@ public class InnController {
 	/*위시리스트*/
 	@RequestMapping(value="wishlistdelete.do")
 	public String wishListDelete(int wishListNo, HttpServletRequest request){
-		HttpSession session=null;
-		session = request.getSession(false);
+		HttpSession session=request.getSession(false);
 		MemberVO vo= (MemberVO)session.getAttribute("mvo");
 		DeleteVO wdvo=new DeleteVO(wishListNo,vo.getMemberId());
 		innService.wishListDelete(wdvo);
 		return "redirect:get_mywishlist.do";
 	}	
-	/*예약숙소*/
+	/*예약숙소취소*/
 	@RequestMapping(value="bookdelete.do")
 	public String bookDelete(int bookNo, HttpServletRequest request){
-		HttpSession session=null;
-		session = request.getSession(false);
+		HttpSession session=request.getSession(false);
 		MemberVO vo= (MemberVO)session.getAttribute("mvo");
 		DeleteVO bdvo=new DeleteVO(bookNo, vo.getMemberId());
 		innService.bookDelete(bdvo);
+		//예약 취소시 거래내역에서도 삭제되게 해야한다. 
+		//-->6/19 수정: 예약취소 -> 예약만 삭제 // 거래내역은 예약완료시 insert 예정
+		/*innService.tradeDeleteByBookNo(bdvo);*/
 		return "redirect:get_mybooklist.do";
 	}
 	/*등록숙소*/
@@ -264,25 +265,34 @@ public class InnController {
 	public String innDelete(int innNo, HttpServletRequest request){
 		HttpSession session=null;
 		session = request.getSession(false);
-		MemberVO vo= (MemberVO)session.getAttribute("mvo");
-		DeleteVO idvo = new DeleteVO(innNo,vo.getMemberId());
-		innService.innDelete(idvo);
-		return "redirect:get_myinnlist.do";
+		MemberVO vo= (MemberVO)session.getAttribute("mvo");	
+		boolean flag= innService.checkChildBookTable(innNo);
+		 // true는 자식예약테이블이 없으므로 지워준다.
+		if(flag==true){
+			innService.innDelete(new DeleteVO(innNo,vo.getMemberId()));			
+			return "redirect:get_myinnlist.do";
+		}
+		//false 는 자식예약테이블 존재하므로 에러메세지? 띄우줌
+		else{
+		return "member_delete_fail";
+		}
 	}
 	/*거래내역목록*/
 	@RequestMapping(value="tradedelete.do")
-	public String tradeDelete(int tradeNo,int bookNo, HttpServletRequest request){
-		HttpSession session=null;
-		session = request.getSession(false);
+	public String tradeDelete(int tradeNo,HttpServletRequest request){
+		System.out.println("tradeNo: "+tradeNo);
+		HttpSession session = request.getSession(false);
 		MemberVO vo= (MemberVO)session.getAttribute("mvo");
-		DeleteVO tdvo = null;
-		if(bookNo!=0){ //예약 번호가 존재하면 예약테이블도 삭제하므로 예약번호를 같이 넘겨준다.
-		tdvo = new DeleteVO(tradeNo,vo.getMemberId(),bookNo);
-		}
-		else{				//예약 번호가 존재하지 않으면 등록이므로 거래번호만 넘겨줌 
-		tdvo = new DeleteVO(tradeNo,vo.getMemberId());
-		}
-		innService.tradeDelete(tdvo);
+		//예약이든 등록이든 trade에서는 전부 삭제
+		innService.tradeDelete(new DeleteVO(tradeNo,vo.getMemberId()));		
+		System.out.println("거래삭제: "+vo.getMemberId());
+//////스프링 스케줄러 적용하여 예약 테이블에서 삭제 하지 않아도 된다.////
+/*		if(memberId.equals(vo.getMemberId())){
+			//현재 사용자와 거래내역의 예약자와 같으면
+			// --> 즉 사용자의 예약 거래내역을 삭제시에는 예약 테이블에서도 삭제
+					innService.bookDelete(new DeleteVO(bookNo,vo.getMemberId()));		
+					System.out.println("예약 테이블 에서도 삭제");
+				}*/
 		return "redirect:get_mytradelist.do";
 	}
 	/** 끝**/

@@ -2,58 +2,33 @@ package org.kosta.dashduowork.model.vo;
 
 public class TradeVO {
 	private int tradeNo;
-	private String memberId; //등록또는 예약한 사람
-	private String innorbook; //예약인지 등록인지?
-	private int innNo;		  //숙소넘버
 	private String innName; //숙소명
-	private String bookCheckIn; //예약시- 체크인
-	private String bookCheckOut; //예약시- 체크아웃
-	private String innAvailability; //등록시- 사용가능여부
+	private String bookCheckIn; 
+	private String bookCheckOut; 
+	private int price;
+	private String memberId; //예약한 사람
+	private String master;	//숙소 주인
 	public TradeVO() {
 		super();
 		// TODO Auto-generated constructor stub
 	}
-	
-	public TradeVO(int tradeNo, String memberId, String innorbook, int innNo,
-			String innName, String bookCheckIn, String bookCheckOut,
-			String innAvailability) {
+	public TradeVO(int tradeNo, String innName, String bookCheckIn,
+			String bookCheckOut, int price, String memberId,
+			String master) {
 		super();
 		this.tradeNo = tradeNo;
-		this.memberId = memberId;
-		this.innorbook = innorbook;
-		this.innNo = innNo;
 		this.innName = innName;
 		this.bookCheckIn = bookCheckIn;
 		this.bookCheckOut = bookCheckOut;
-		this.innAvailability = innAvailability;
+		this.price = price;
+		this.memberId = memberId;
+		this.master = master;
 	}
-
-
 	public int getTradeNo() {
 		return tradeNo;
 	}
-
 	public void setTradeNo(int tradeNo) {
 		this.tradeNo = tradeNo;
-	}
-
-	public String getMemberId() {
-		return memberId;
-	}
-	public void setMemberId(String memberId) {
-		this.memberId = memberId;
-	}
-	public String getInnorbook() {
-		return innorbook;
-	}
-	public void setInnorbook(String innorbook) {
-		this.innorbook = innorbook;
-	}
-	public int getInnNo() {
-		return innNo;
-	}
-	public void setInnNo(int innNo) {
-		this.innNo = innNo;
 	}
 	public String getInnName() {
 		return innName;
@@ -73,23 +48,30 @@ public class TradeVO {
 	public void setBookCheckOut(String bookCheckOut) {
 		this.bookCheckOut = bookCheckOut;
 	}
-	
-	public String getInnAvailability() {
-		return innAvailability;
+	public int getPrice() {
+		return price;
 	}
-
-	public void setInnAvailability(String innAvailability) {
-		this.innAvailability = innAvailability;
+	public void setPrice(int price) {
+		this.price = price;
 	}
-
+	public String getMemberId() {
+		return memberId;
+	}
+	public void setMemberId(String memberId) {
+		this.memberId = memberId;
+	}
+	public String getMaster() {
+		return master;
+	}
+	public void setMaster(String master) {
+		this.master = master;
+	}
 	@Override
 	public String toString() {
-		return "TradeVO [tradeNo=" + tradeNo + ", memberId=" + memberId
-				+ ", innorbook=" + innorbook + ", innNo=" + innNo
-				+ ", innName=" + innName + ", bookCheckIn=" + bookCheckIn
-				+ ", bookCheckOut=" + bookCheckOut + ", innAvailability="
-				+ innAvailability + "]";
+		return "TradeVO [tradeNo=" + tradeNo + ", innName=" + innName
+				+ ", bookCheckIn=" + bookCheckIn + ", bookCheckOut="
+				+ bookCheckOut + ", price=" + price + 
+				 ", memberId=" + memberId + ", master=" + master + "]";
 	}
 	
-
 }

@@ -5,9 +5,6 @@
     <script type="text/javascript" src="http://netdna.bootstrapcdn.com/bootstrap/3.3.4/js/bootstrap.min.js"></script>
     <link href="http://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.3.0/css/font-awesome.min.css"
     rel="stylesheet" type="text/css">
-<!--     <link href="http://pingendo.github.io/pingendo-bootstrap/themes/default/bootstrap.css"
-    rel="stylesheet" type="text/css">
- --> 
 
     <script  type="text/javascript">
 	function deletewishItem(wishListNo){
@@ -49,7 +46,7 @@
             <div class="col-md-1">
                  <center>
                 <img src="${requestScope.member.profilePicVO.filePath}"
-                class="img-circle img-responsive" style="margin-top: 50px; margin-bottom: 50px; " width="50" height="70" >
+                class="img-circle img-responsive" style="margin-top: 60px; margin-bottom: 50px; " width="50" height="70" >
               </center>
             </div>
             <div class="col-md-5" style="margin-top: 50px; margin-bottom: 50px; ">
@@ -84,7 +81,7 @@
                   </a>
                   </c:if>
                   <c:if test="${wvo.wishlistMainPic==null}">
-                      <a class="pull-left" href="#"><img class="media-object" src="http://pingendo.github.io/pingendo-bootstrap/assets/placeholder.png" height="150" width="150">
+                      <a class="pull-left" href="#"><img class="media-object" src="${initParam.root}img/no_img.gif" height="150" width="150">
                   </a>
                   </c:if> 
                     </td>
@@ -92,7 +89,7 @@
                        <a href="inn_in_show.do?innNo=${wvo.innNo}"><h4 class="text-center">${wvo.innName}</h4></a>
                     </td>
                      <td class="col-md-1">
-                        	<input type="button" value="삭제" id="deleteBtn"
+                        	<input type="button"  class="btn btn-default"  value="삭제" id="deleteBtn"
 				    	onclick="deletewishItem('${wvo.wishListNo}')">
                     </td>
                   </tr>

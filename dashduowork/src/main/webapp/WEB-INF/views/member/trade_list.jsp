@@ -5,9 +5,14 @@
     <script type="text/javascript" src="http://netdna.bootstrapcdn.com/bootstrap/3.3.4/js/bootstrap.min.js"></script>
     <link href="http://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.3.0/css/font-awesome.min.css"
     rel="stylesheet" type="text/css">
-    <link href="http://pingendo.github.io/pingendo-bootstrap/themes/default/bootstrap.css"
-    rel="stylesheet" type="text/css">
- 
+    
+ <script  type="text/javascript">
+	function deleteItem(tradeNo){
+		if(confirm("해당 내역을 삭제하시겠습니까?")){
+			location.href="tradedelete.do?tradeNo="+tradeNo;
+		}
+	}
+</script> 
         <div class="container">
           <div class="row text-center">
             <div class="col-md-12 text-center">
@@ -40,16 +45,16 @@
             <div class="col-md-1">
               <center>
                 <img src="${requestScope.member.profilePicVO.filePath}"
-                class="img-circle img-responsive" width="50" height="70">
+                class="img-circle img-responsive" style="margin-top: 60px; margin-bottom: 50px;" width="50" height="70" >
               </center>
             </div>
-            <div class="col-md-5">
+            <div class="col-md-5" style="margin-top: 50px; margin-bottom: 50px; ">
               <h2>${sessionScope.mvo.memberName}님의 거래내역 ${requestScope.tvo.pagingBean.totalContents}개</h2>
             </div>
           </div>
         </div>
       </div>
-      <div class="section text-center">
+     <div class="section text-center">
         <div class="container">
           <div class="row">
             <div class="col-md-15 text-center">
@@ -59,49 +64,41 @@
             	<tr>
             	<td>구분</td>
             	<td>숙소 이름</td>
-              	<td>유효여부</td>
+              	<td>체크인</td>
+              	<td>체크아웃</td>
+              	<td>가격</td>
               	<td>거래내역 삭제</td>
                 </tr>
                    </thead>
-                  <c:forEach var="tvo" items="${requestScope.tvo.list}">               
-                  <tr>
-                    <td class="col-md-1 text-center" draggable="true">
-					<c:if test="${tvo.innorbook=='등록'}">                    
-                      <h4 style="color:pink;">${tvo.innorbook}</h4>
+                  <c:forEach var="tvo" items="${requestScope.tvo.list}">           
+                  <tr>        
+					<c:if test="${tvo.memberId==sessionScope.mvo.memberId}">           
+					<td class="col-md-1 text-center" draggable="true">     
+                      <h4 style="color:red;">예약-  ${tvo.master}님의   숙소 예약</h4>
+                      </td>    
                       </c:if>
-                      <c:if test="${tvo.innorbook=='예약'}">
-                      <h4 style="color: orange;">${tvo.innorbook}</h4>
-                      </c:if>
-                    </td>                
+                      <c:if test="${tvo.master==sessionScope.mvo.memberId}">
+                      <td class="col-md-1 text-center" draggable="true"> 
+                      <h4 style="color: blue;">등록-  ${tvo.memberId} 님이 예약</h4>
+                      </td> 
+                      </c:if>                          
                     <td class="col-md-1">
                         <h4 class="text-center">${tvo.innName}</h4>
-                    </td>
-                    <c:if test="${tvo.innorbook=='예약'}">
+                    </td>        
                     <td class="col-md-1">
-                      <h4 class="text-center">체크인: ${tvo.bookCheckIn}<br>체크아웃: ${tvo.bookCheckOut}</h4>
+                      <h4 class="text-center">${tvo.bookCheckIn}</h4>
                     </td>
-                    </c:if>
-                    <c:if test="${tvo.innorbook=='등록'}">
-                     <c:if test="${tvo.innAvailability=='Y'}">
-                      <td class="col-md-1" style="color: green">
-                      <h4 class="text-center">이용가능</h4>
-                    </td>
-                    </c:if>
-                    <c:if test="${tvo.innAvailability=='N'}">
-                      <td class="col-md-1" style="color: gray">
-                      <h4 class="text-center">등록만료</h4>
-                    </td>
-                    </c:if>
-                     <c:if test="${tvo.innAvailability==null}">
-                      <td class="col-md-1">
-                      <h4 class="text-center">등록이면 널넣지 말라고</h4>
-                   		 </td>
-                    </c:if>
-                    </c:if>
                      <td class="col-md-1">
-                   <h4 class="text-center"><a href="tradedelete.do?tradeNo=${tvo.tradeNo}">삭제</a></h4>
+                      <h4 class="text-center"> ${tvo.bookCheckOut}</h4>
                     </td>
-                  </tr>                
+                      <td class="col-md-1">
+                      <h4 class="text-center"> ${tvo.price}</h4>
+                    </td>
+                     <td class="col-md-1">
+                   <input type="button"  class="btn btn-default"  value="삭제" id="deleteBtn"
+				    	onclick="deleteItem('${tvo.tradeNo}')">
+                    </td>
+                  </tr>          
     				</c:forEach>     
                </tbody>
               </table>

@@ -4,8 +4,15 @@
     <script type="text/javascript" src="http://cdnjs.cloudflare.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
     <script type="text/javascript" src="http://netdna.bootstrapcdn.com/bootstrap/3.3.4/js/bootstrap.min.js"></script>
     <link href="http://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.3.0/css/font-awesome.min.css"
-    rel="stylesheet" type="text/css">
-    
+    rel="stylesheet" type="text/css">   
+     
+     <script  type="text/javascript">
+	function deleteItem(innNo){
+		if(confirm("해당 숙소를 삭제하시겠습니까?")){
+			location.href="inndelete.do?innNo="+innNo;
+		}
+	}
+</script>
         <div class="container">
           <div class="row text-center">
             <div class="col-md-12 text-center">
@@ -38,7 +45,7 @@
             <div class="col-md-1">
                  <center>
                 <img src="${requestScope.member.profilePicVO.filePath}"
-                class="img-circle img-responsive" style="margin-top: 50px; margin-bottom: 50px; " width="50" height="70" >
+                class="img-circle img-responsive" style="margin-top: 60px; margin-bottom: 50px; " width="50" height="70" >
               </center>
             </div>
             <div class="col-md-5" style="margin-top: 50px; margin-bottom: 50px; ">
@@ -51,9 +58,17 @@
         <div class="container">
           <div class="row">
             <div class="col-md-15 text-center">
-              <table class="table">
+              <table class="table">   
+              <thead>
+              <tr>
+              <td>숙소 번호</td>
+              <td>숙소 사진</td>
+              <td>숙소 이름</td>
+              <td>수정</td>
+              <td>삭제</td>
+              </tr>
+              </thead>
                 <tbody>
-                
                 <c:forEach var="ivo" items="${requestScope.lvo.innList}">
                   <tr>
                     <td class="col-md-1 text-center" draggable="true">
@@ -65,7 +80,7 @@
                   </a>
                   </c:if>
                   <c:if test="${ivo.innMainPic==null}">
-                      <a class="pull-left" href="#"><img class="media-object" src="http://pingendo.github.io/pingendo-bootstrap/assets/placeholder.png" height="150" width="150">
+                      <a class="pull-left" href="#"><img class="media-object" src="${initParam.root}img/no_img.gif" height="150" width="150">
                   </a>
                   </c:if>
                     </td>
@@ -77,7 +92,8 @@
                       <h4 class="text-center"><a href="innupdate.do?innno=${ivo.innNo}">수정</a></h4>
                     </td>
                     <td class="col-md-1">
-                      <h4 class="text-center"><a href="inndelete.do?innno=${ivo.innNo}">삭제</a></h4>
+                        	<input type="button"  class="btn btn-default"  value="숙소 삭제" id="deleteBtn"
+				    	onclick="deleteItem('${ivo.innNo}')">
                     </td>
                   </tr>
     				</c:forEach>

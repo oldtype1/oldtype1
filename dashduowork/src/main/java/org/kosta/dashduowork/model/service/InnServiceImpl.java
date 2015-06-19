@@ -189,24 +189,38 @@ public class InnServiceImpl implements InnService {
 		PagingBean pagingBean=new PagingBean(total,pn);
 		return new WishListListVO(list, pagingBean);
 	}
-/**주형 윤정 삭제 서비스**/
+	/**주형 윤정 삭제 서비스**/
 	@Override
 	   public void wishListDelete(DeleteVO wdvo) {
-	   System.out.println("wishListDelete 서비스 들어옴!!!!!!  "+wdvo);
 	   wishListDAO.wishListDelete(wdvo);
-	   }
+	}//1.위시리스트삭제
 	   @Override
 	   public void bookDelete(DeleteVO bdvo) {
 	      bookDAO.bookDelete(bdvo);
-	   }
+	   }//2.예약취소-->예약삭제
 		@Override
+		public boolean checkChildBookTable(int innNo){
+			//1. 참조하는 BOOK 자식이 있는지 확인해야 한다.
+			int count = bookDAO.checkChildBookTable(innNo);
+			System.out.println("book 자식테이블"+count);
+			if(count>0){//참조하는 자식테이블이 있으므로 에러난다.
+				return false;
+			}
+			else{//참조하는 자식테이블이 없다.
+				return true;
+			}			
+		}//등록숙소 삭제시 자식 예약테이블 있나 확인
 		public void innDelete(DeleteVO idvo) {
+			//삭제되는것 ---> on DELETE CASCADE 때문에 다 지워진다.
+			//1. 위시리스트 2. 숙소 사진 3.가능 날짜 4.편의시설 3. 숙소 자체
 			innDAO.innDelete(idvo);
-		}
+		}//3. 등록숙소 삭제
 		@Override
 		public void tradeDelete(DeleteVO tdvo) {
 			tradeDAO.tradeDelete(tdvo);
-		}
+		}//4. 거래내역 삭제
+		/**삭제 끝 6/18**/ 
+/**6/19 스케쥴러 이용한 거래내역 인서트,예약완료 삭제 -->스케쥴러 service 에서 수행한다.**/
 		
    //6/15일 추가내용
 	public InnListVO findInnByCityAndDateAndAcceptableNoWithFilter(FilterVO vo){ //지역&날짜&인원+필터
@@ -229,7 +243,6 @@ public class InnServiceImpl implements InnService {
 		innListVO.setInnList(innList);
 		return innListVO;
 	}
-
 
 	  public InnReservationListVO getMyInnReservationList(MemberVO vo, String pageNo){
 	      System.out.println("getMyInnReservationList 서비스    "+vo);

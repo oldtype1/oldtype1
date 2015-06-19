@@ -47,6 +47,7 @@ public interface InnService {
 	public void bookDelete(DeleteVO bdvo);
 	public void innDelete(DeleteVO idvo);
 	public void tradeDelete(DeleteVO idvo);
+	public boolean checkChildBookTable(int innNo);
 	
 	//6/18일 추가
 	public InnListVO findInnByCityAndAcceptableNoWithPrice(FilterVO vo);
