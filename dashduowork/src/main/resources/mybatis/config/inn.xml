@@ -270,6 +270,14 @@ inn_price=#{innPrice}, inn_info=#{innInfo},inn_availability=#{innAvailability} w
 	insert into BOOK(book_no, book_checkin, book_checkout, book_count, member_id, inn_no)
 	values(book_sequence.nextval, #{bookCheckIn}, #{bookCheckOut}, #{bookCount}, #{memberId}, #{innNo})
 	</insert>
+	<!-- 6/19 주형 숙소가능여부 변경 -->
+	<update id="updateinnAvailabilitytoNo">
+	update inn set inn_availability='N' where inn_no=#{value}
+	</update>
+	<update id="updateinnAvailabilitytoYes">
+	update inn set inn_availability='Y' where inn_no=#{value}
+	</update>
+	
 	<!-- <select id="getAddressKind" resultType="string">
 		select distinct(address) from member
 	</select>
@@ -293,29 +301,7 @@ inn_price=#{innPrice}, inn_info=#{innInfo},inn_availability=#{innAvailability} w
 		where id=#{id}
 	</update> -->
 	
+	
 </mapper>
  
  
- 
- 
- 
- 
- 
- 
- 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

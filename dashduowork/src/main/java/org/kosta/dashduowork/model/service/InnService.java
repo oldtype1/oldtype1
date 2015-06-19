@@ -63,4 +63,5 @@ public interface InnService {
 	public abstract void deleteInnPic(int innPicNo);
 	public AvailableDateVO selectByAvailableDateInnNo(String innNo);
 	public Boolean bookInsert(BookVO bvo, String innNo, String memberId) throws ParseException;
+	public void updateinnAvailability(int innNo, String innAvailability);
 }

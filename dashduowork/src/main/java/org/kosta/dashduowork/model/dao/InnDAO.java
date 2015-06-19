@@ -41,4 +41,10 @@ public interface InnDAO {
 	// 6/19 은수
 	public void updateInnAvailabilityOff(String innNo);
 	public void updateInnAvailabilityOn(String innNo);
+	//6/19 주형 --> 숙소가능여부 변경
+	public abstract void updateinnAvailabilitytoNo(int innNo);
+	public abstract void updateinnAvailabilitytoYes(int innNo);
+	
 }
+
+

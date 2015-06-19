@@ -74,6 +74,9 @@ select member_id, member_name, member_tel, member_info, member_pass
 from member where member_id='oldtype' and member_pass='oldtype'
 
 
+select * from inn
+update inn set inn_availability='N' where inn_no=1
+
 -----------------숙소테이블-----------------------
 create table inn(
 inn_no number primary key,
