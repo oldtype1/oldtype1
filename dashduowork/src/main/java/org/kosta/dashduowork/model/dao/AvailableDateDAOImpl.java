@@ -15,4 +15,13 @@ public class AvailableDateDAOImpl implements AvailableDateDAO {
 		System.out.println("AvailableDateVO : "+vo);
 		sqlSessionTemplate.insert("availabledate.register",vo);
 	}
+	
+	@Override
+	public void update(AvailableDateVO vo) {
+		sqlSessionTemplate.update("availabledate.updatedate", vo);
+	}
+	@Override
+	public AvailableDateVO selectAvailableDate(int innNo) {
+		return sqlSessionTemplate.selectOne("availabledate.selectAvailableDate", innNo);
+	}
 }

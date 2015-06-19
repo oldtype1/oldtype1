@@ -8,4 +8,6 @@ public interface InnPicCompDAO {
 	public abstract void register(InnPicCompVO vo);
 	public abstract InnPicCompVO getMyPicList(int innNo);
 	public abstract List<InnPicCompVO> selectByInnNo(String innNo);
+	public abstract List<InnPicCompVO> selectFilePathByInnNo(int innNo);
+	public abstract void deleteInnPic(int innPicNo);
 }

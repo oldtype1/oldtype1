@@ -16,13 +16,20 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	</insert>
 	<!-- 6.16일 추가 : 사진path 가져오기 -->
 	<select id="getMyPicList" parameterType="int" resultType="ipvo" resultMap="innResult">
-	select * from (select * from INN_PIC where inn_no=#{value} ) where rownum='1'
+	select * from (select * from inn_pic where inn_no=#{value} ) where rownum='1'
 	</select>
 	
 	<select id="selectByInnNo" parameterType="String" resultMap="innResult"
 		resultType="ipvo">
-		select * from INN_PIC where inn_no=#{value}
+		select * from inn_pic where inn_no=#{value}
 	</select>
+	
+		<select id="selectFilePathByInnNo" parameterType="int"  resultType="ipvo" resultMap="innResult">
+	select * from inn_pic where inn_no=#{value}
+	</select>
+	<delete id="deleteInnPic" parameterType="int">
+	delete from inn_pic where inn_pic_no=#{value}
+	</delete>
 <!-- 
 	<sql id="innlist">
 		select inn_no,inn_name,inn_city,inn_area,inn_address,inn_type,inn_acceptable_no,

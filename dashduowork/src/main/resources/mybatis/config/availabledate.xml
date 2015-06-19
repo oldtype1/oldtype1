@@ -15,7 +15,13 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	insert into availabledate(availabledate_no,availabledate_st,availabledate_end,inn_no) values
 	(availabledate_no_sequence.nextval,#{availableDateSt},#{availableDateEnd},#{innNo})
 	</insert>
-
+	<update id="updatedate" parameterType="avvo">
+	update availabledate set availabledate_st=#{availableDateSt}, availabledate_end=#{availableDateEnd} where inn_no=#{innNo}
+	</update>
+<select id="selectAvailableDate" parameterType="int" resultType="avvo" resultMap="innResult">
+select availabledate_no, inn_no, to_char(availabledate_st,'YYYY-MM-DD') as availabledate_st, 
+ to_char(availabledate_end,'YYYY-MM-DD') as availabledate_end from availabledate where inn_no=#{value}
+</select>
 	<!-- <sql id="innlist">
 		select inn_no,inn_name,inn_city,inn_area,inn_address,inn_type,inn_acceptable_no,
 		inn_price,inn_info,inn_availability,member_id from inn

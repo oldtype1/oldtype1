@@ -16,5 +16,13 @@ public class AmenityDAOImpl implements AmenityDAO {
 		System.out.println("AmenityVO : " + vo);
 		sqlSessionTemplate.insert("amenity.register", vo);
 	}
+	@Override
+	public void update(AmenityVO avo) {
+		sqlSessionTemplate.update("amenity.updateAmenity", avo);
+	}
 
+	@Override
+	public AmenityVO selectAmenity(String innNo) {
+		return sqlSessionTemplate.selectOne("amenity.selectAmenity", innNo);
+	}
 }

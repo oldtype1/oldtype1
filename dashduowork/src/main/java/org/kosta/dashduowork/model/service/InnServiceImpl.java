@@ -315,4 +315,33 @@ public class InnServiceImpl implements InnService {
 		innListVO.setInnList(innList);
 		return innListVO;
 	}
+	//6/19윤정 추가
+	@Override
+	public AmenityVO selectAmenity(String innNo) {
+		return amenityDAO.selectAmenity(innNo);
+	}
+	@Override
+	public void updateInnInfo(InnVO ivo) {
+		System.out.println("InnServiceImple ---InnVO"+ivo);
+		innDAO.updateInnInfo(ivo);
+	}
+	@Override
+	public void updateInnEtc(AmenityVO avo, AvailableDateVO avvo) {
+		System.out.println("InnServiceImple ---Amenity와 AvailableDate"+avo+avvo);
+		availableDateDAO.update(avvo);
+		amenityDAO.update(avo);
+	}
+	@Override
+	public AvailableDateVO selectAvailableDate(int innNo) {
+		return availableDateDAO.selectAvailableDate(innNo);
+	}
+	@Override
+	public List<InnPicCompVO> selectFilePathByInnNo(int innNo) {
+		return innPicCompDAO.selectFilePathByInnNo(innNo);
+	}
+	@Override
+	public void deleteInnPic(int innPicNo) {
+		System.out.println("innServiceImol-------"+innPicNo);
+		innPicCompDAO.deleteInnPic(innPicNo);
+	}
 }

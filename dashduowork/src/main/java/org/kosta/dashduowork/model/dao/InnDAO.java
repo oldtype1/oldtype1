@@ -35,4 +35,7 @@ public interface InnDAO {
 	//6/18일 추가
 	public abstract List<InnVO> selectInnByCityAndAcceptableNoWithPrice(FilterVO vo);
 	public abstract List<InnVO> selectInnByCityAndDateAndAcceptableNoWithPrice(FilterVO vo);
+	//6/19일 추가 -윤정-
+	public AmenityVO selectAmenity(String innNo);
+	public void updateInnInfo(InnVO ivo);
 }

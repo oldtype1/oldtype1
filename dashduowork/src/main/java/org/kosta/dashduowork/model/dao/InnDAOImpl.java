@@ -86,4 +86,14 @@ public class InnDAOImpl implements InnDAO {
 	public List<InnVO> selectInnByCityAndDateAndAcceptableNoWithPrice(FilterVO vo) {
 		return sqlSessionTemplate.selectList("inn.selectInnByCityAndDateAndAcceptableNoWithPrice",vo);
 	}
+	//6/19일 추가 -윤정-
+	@Override
+	public AmenityVO selectAmenity(String innNo) {
+		return sqlSessionTemplate.selectOne("inn.selectAmenity", innNo);
+	}
+
+	@Override
+	public void updateInnInfo(InnVO ivo) {
+		sqlSessionTemplate.update("inn.updateInnInfo", ivo);
+	}
 }

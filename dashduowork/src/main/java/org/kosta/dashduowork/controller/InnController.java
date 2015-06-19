@@ -28,6 +28,7 @@ import org.kosta.dashduowork.model.vo.WishListListVO;
 import org.springframework.stereotype.Controller;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -348,7 +349,80 @@ public class InnController {
 		System.out.println("picList가 실행이 된다?");
 		return "inn_in_show";
 	}
+	@RequestMapping("innupdateform.do")
+	public String innupdateform(int innNo, HttpServletRequest request, Model model){
+		String innNo2=Integer.toString(innNo);
+		HashMap<String, Object> map = (HashMap<String, Object>) innService.selectInn(innNo2);
+		InnVO ivo = (InnVO)map.get("innVO");
+		List<InnPicCompVO> picList = innService.selectByInnNo(innNo2);
+		List<InnPicCompVO> list=innService.selectFilePathByInnNo(innNo);
+		ProfilePicVO pvo=innService.selectByProfilePic(ivo.getMemberId());
+		AmenityVO avo=innService.selectAmenity(innNo2);
+		AvailableDateVO avvo=innService.selectAvailableDate(innNo);
+		map.put("picList", picList);
+		map.put("pvo", pvo);
+		model.addAttribute("VOMap", map);
+		model.addAttribute("avo", avo);
+		model.addAttribute("avvo", avvo);
+		model.addAttribute("picList", list);
+		return "member_innupdate_form";
+	}
+	
+	@RequestMapping("inn_update.do")
+	public String innUpdate(InnVO ivo, AmenityVO avo, InnPicCompVO ipvo, 
+			AvailableDateVO avvo, Model model, BindingResult result, HttpServletRequest request){
+		HttpSession session=request.getSession(false);
+		session = request.getSession(false);
+		MemberVO vo= (MemberVO)session.getAttribute("mvo");
+		String memberId=vo.getMemberId();
+		System.out.println("innController 들어옴");
+		String innNo2=request.getParameter("innNo");
+		String availableDateNo2=request.getParameter("availableDateNo");
+		int innNo=Integer.parseInt(innNo2);
+		int availableDateNo=Integer.parseInt(availableDateNo2);
+		List<MultipartFile> file = ipvo.getFile();
+		ivo.setInnNo(innNo);
+		ivo.setMemberId(memberId);
+		innService.updateInnInfo(ivo);
+		avo.setInnNo(innNo);
+		avvo.setInnNo(innNo);
+		avvo.setAvailableDateNo(availableDateNo);
+		ipvo.setInnNo(innNo);
+		innService.updateInnEtc(avo, avvo);
+		//사진 이름 겹칠까봐
+		List<String> nameList = new ArrayList<String>();
+		for (int i = 0; i < file.size(); i++) {
+
+			int a = (int) (Math.random() * 10);
+			int b = (int) (Math.random() * 10);
+			int c = (int) (Math.random() * 10);
+			String fileName = path+a + "" + b + "" + c + "_"
+					+ file.get(i).getOriginalFilename();
+			if (!fileName.equals("")) {
+				try {
+					nameList.add(viewPath+a + "" + b + "" + c + "_"
+							+file.get(i).getOriginalFilename());
+					file.get(i).transferTo(new File(fileName));
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+			}
+		}
+		ipvo.setFilePathes(nameList);
+		for(int i=0;i<nameList.size();i++){
+			ipvo.setFilePath(ipvo.getFilePathes().get(i));
+			innService.registerInnPic(ipvo);
+		}
+		return "redirect:innupdateform.do?innNo="+innNo;
+	}
 		
+	@RequestMapping("deleteInnPic.do")
+	@ResponseBody
+	public List<InnPicCompVO> deleteInnPic(int innPicNo, int innNo, HttpServletRequest request){
+		innService.deleteInnPic(innPicNo);
+		List<InnPicCompVO> innPicList=innService.selectFilePathByInnNo(innNo);
+		return innPicList;
+	}
 }
 
 

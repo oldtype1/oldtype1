@@ -89,7 +89,7 @@
                       <p class="text-center">${ivo.innInfo}</p>
                     </td>
                     <td class="col-md-1">
-                      <h4 class="text-center"><a href="innupdate.do?innno=${ivo.innNo}">수정</a></h4>
+                      <h4 class="text-center"><a href="innupdateform.do?innNo=${ivo.innNo}">수정</a></h4>
                     </td>
                     <td class="col-md-1">
                         	<input type="button"  class="btn btn-default"  value="숙소 삭제" id="deleteBtn"

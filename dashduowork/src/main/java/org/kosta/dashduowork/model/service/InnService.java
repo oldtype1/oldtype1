@@ -52,4 +52,11 @@ public interface InnService {
 	//6/18일 추가
 	public InnListVO findInnByCityAndAcceptableNoWithPrice(FilterVO vo);
 	public InnListVO findInnByCityAndDateAndAcceptableNoWithPrice(FilterVO vo);
+	//6/19일 추가-윤정- 등록숙소 수정 관련
+	public AmenityVO selectAmenity(String innNo);
+	public void updateInnInfo(InnVO ivo);
+	public void updateInnEtc(AmenityVO avo, AvailableDateVO avvo);
+	public AvailableDateVO selectAvailableDate(int innNo);
+	public abstract List<InnPicCompVO> selectFilePathByInnNo(int innNo);
+	public abstract void deleteInnPic(int innPicNo);
 }

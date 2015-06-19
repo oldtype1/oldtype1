@@ -26,7 +26,17 @@ public class InnPicCompDAOImpl implements InnPicCompDAO {
 	
 	@Override
 	public List<InnPicCompVO> selectByInnNo(String innNo) {
-		System.out.println("InnPicCompVO : "+ innNo);
 		return sqlSessionTemplate.selectList("innPic.selectByInnNo",innNo);
 	}
+
+	@Override
+	public List<InnPicCompVO> selectFilePathByInnNo(int innNo){
+		return sqlSessionTemplate.selectList("innPic.selectFilePathByInnNo", innNo);
+	}
+
+	@Override
+	public void deleteInnPic(int innPicNo) {
+	sqlSessionTemplate.delete("innPic.deleteInnPic", innPicNo);
+	}
+	
 	}

@@ -74,12 +74,12 @@
                   <tr>        
 					<c:if test="${tvo.memberId==sessionScope.mvo.memberId}">           
 					<td class="col-md-1 text-center" draggable="true">     
-                      <h4 style="color:red;">예약-  ${tvo.master}님의   숙소 예약</h4>
+                      <h4 style="color:red;">예약-  ${tvo.master}</h4>
                       </td>    
                       </c:if>
                       <c:if test="${tvo.master==sessionScope.mvo.memberId}">
                       <td class="col-md-1 text-center" draggable="true"> 
-                      <h4 style="color: blue;">등록-  ${tvo.memberId} 님이 예약</h4>
+                      <h4 style="color: blue;">등록-  ${tvo.memberId}</h4>
                       </td> 
                       </c:if>                          
                     <td class="col-md-1">
