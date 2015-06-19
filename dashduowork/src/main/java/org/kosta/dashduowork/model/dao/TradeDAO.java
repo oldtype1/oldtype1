@@ -12,5 +12,5 @@ public interface TradeDAO {
 	public abstract List<TradeVO> getmytradelist(HashMap<String, String> param);
 	public abstract int getTotalPostingCount(MemberVO vo);
 	public abstract void tradeDelete(DeleteVO tdvo);
-	public abstract void insertTradeBookOutDate(List<TradeVO> tvo);
+	public abstract void insertTradeBookOutDate(TradeVO tvo);
 }

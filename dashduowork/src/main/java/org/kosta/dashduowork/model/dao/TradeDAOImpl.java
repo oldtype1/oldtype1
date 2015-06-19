@@ -29,7 +29,7 @@ public class TradeDAOImpl implements TradeDAO{
 
 	//book에서 아웃데이트 된것을 거래내역에 추가시켜준다!!!
 	@Override
-	public void insertTradeBookOutDate(List<TradeVO> tlist) {
+	public void insertTradeBookOutDate(TradeVO tlist) {
 		sqlSessionTemplate.insert("scheduler.insertTradeBookOutDate",tlist);
 	}
 

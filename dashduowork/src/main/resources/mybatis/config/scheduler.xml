@@ -15,15 +15,17 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 </resultMap>
 
 	<select id="selectBookOutDate" resultMap="TradeResult">
-	select inn_name,book_checkin, book_checkout, inn_price, book_count, member_id, master from
-(select b.book_no,b.book_checkin, b.book_checkout, b.book_count, b.member_id,b.inn_no,i.inn_price,i.member_id as master,
+		select inn_name,book_checkin, book_checkout, inn_price, member_id, master from
+(select to_char(b.book_checkin,'YYYY-MM-DD') as book_checkin, to_char(b.book_checkout,'YYYY-MM-DD') 
+ as book_checkout, b.member_id, i.inn_price, i.member_id as master,
  i.inn_name from book b, inn i where b.inn_no=i.inn_no
  )  where  <![CDATA[book_checkout < sysdate]]>
 	</select>
+	
 	<insert id="insertTradeBookOutDate" parameterType="tvo" >
 	insert into Trade
 (Trade_no, inn_name, book_checkin, book_checkout, inn_price,member_id,master) 
-values(trade_sequence.nextval,#{innName},#{bookCheckIn},#{bookCheckOut},#{price},#{memberId},#{master});
+values(trade_sequence.nextval,#{innName},#{bookCheckIn},#{bookCheckOut},#{price},#{memberId},#{master})
 	</insert>
 	
 	<delete id="bookDeleteOutDate">

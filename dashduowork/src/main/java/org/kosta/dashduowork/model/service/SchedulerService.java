@@ -22,11 +22,14 @@ public class SchedulerService {
 	//매일 오후 2시 마다 예약테이블에서 체크아웃 시간 지난목록 불러와서(select)
 	//거래내역에 인서트 시켜준후!!(insert) 예약 테이블에서 삭제(delete)-- 6/19 주형
 	@Transactional 
-	@Scheduled(cron = "0 0 15 * * *")
+	@Scheduled(cron = "0 0 16 * * *")
 	 public void insertTradeSchedule() {
-	 List<TradeVO> tvo = bookDAO.selectBookOutDate();
-	 tradeDAO.insertTradeBookOutDate(tvo);	 
-	 System.out.println("현재시간: "+ new Date()+"거래내역에 "+tvo+" 추가");	  
+	 List<TradeVO> tlist = bookDAO.selectBookOutDate();
+	 System.out.println("지난예약갯수: "+tlist.size());
+	 for(int i=0; i<tlist.size(); i++){
+	 tradeDAO.insertTradeBookOutDate(tlist.get(i));	 
+	 }
+	 System.out.println("현재시간: "+ new Date()+"거래내역에 "+tlist+" 추가");	  
 	 //그리고 예약 테이블에서 삭제
 	 bookDAO.bookDeleteOutDate();
      System.out.println("현재시간: "+ new Date()+"예약테이블에서 날짜지난 목록 삭제");
