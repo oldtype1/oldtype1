@@ -63,10 +63,8 @@ public interface InnService {
 	public abstract List<InnPicCompVO> selectFilePathByInnNo(int innNo);
 	public abstract void deleteInnPic(int innPicNo);
 	public AvailableDateVO selectByAvailableDateInnNo(String innNo);
-<<<<<<< HEAD
+
 	public HashMap<String, Object> bookInsert(BookVO bvo, String innNo, String memberId) throws ParseException;
-=======
-	public Boolean bookInsert(BookVO bvo, String innNo, String memberId) throws ParseException;
 	public void updateinnAvailability(int innNo, String innAvailability);
->>>>>>> branch 'master' of https://github.com/oldtype1/oldtype1.git
+
 }
