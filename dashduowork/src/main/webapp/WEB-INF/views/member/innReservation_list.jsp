@@ -42,7 +42,7 @@
               </center>
             </div>
             <div class="col-md-10" style="margin-top: 50px; margin-bottom: 50px; ">
-              <h2>${sessionScope.mvo.memberName}님이 등록한 숙소의 예약 목록</h2>
+              <h2>${sessionScope.mvo.memberName}님이 등록한 숙소의 예약 목록 ${requestScope.irlvo.pagingBean.totalContents}개</h2>
             </div>
           </div>
         </div>

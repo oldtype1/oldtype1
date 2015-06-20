@@ -50,7 +50,7 @@
               </center>
             </div>
             <div class="col-md-5" style="margin-top: 50px; margin-bottom: 50px; ">
-              <h2>${sessionScope.mvo.memberName}님  WISH LIST</h2>
+              <h2>${sessionScope.mvo.memberName}님  WISH LIST ${requestScope.wlvo.pagingBean.totalContents}개</h2>
             </div>
           </div>
         </div>

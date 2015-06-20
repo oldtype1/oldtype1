@@ -85,19 +85,23 @@
                   </a>
                   </c:if>
                     </td>
-                    <td class="col-md-7">
+                    <c:choose>
+                    <c:when test="${ivo.innAvailability=='Y'}">
+                      <td class="col-md-7">
                        <a href="inn_in_show.do?innNo=${ivo.innNo}"><h3 class="text-center">${ivo.innName}</h3></a>
                       <p class="text-center">${ivo.innInfo}</p>
                     </td>
-                    <c:choose>
-                    <c:when test="${ivo.innAvailability=='Y'}">
                     <td class="col-md-1">
-                      <h4 class="text-center"><a href="updateinnAvailability.do?innNo=${ivo.innNo}&innAvailability=${ivo.innAvailability}">이용가능</a></h4>
+                      <h4 class="text-center" ><a href="updateinnAvailability.do?innNo=${ivo.innNo}&innAvailability=${ivo.innAvailability}">이용가능</a></h4>
                     </td>
                     </c:when>
                     <c:otherwise>
-                    <td class="col-md-1">
-                      <h4 class="text-center"><a href="updateinnAvailability.do?innNo=${ivo.innNo}&innAvailability=${ivo.innAvailability}">이용불가</a></h4>
+                      <td class="col-md-7">
+                      <h3 class="text-center"><a href="inn_in_show.do?innNo=${ivo.innNo}"><font color="gray">${ivo.innName}</font></a></h3>
+                      <p class="text-center">${ivo.innInfo}</p>
+                    </td>
+                    <td class="col-md-1" style="color: gray">
+                      <h4 class="text-center"><a href="updateinnAvailability.do?innNo=${ivo.innNo}&innAvailability=${ivo.innAvailability}"><font color="gray">이용불가</font></a></h4>
                     </td>
                     </c:otherwise> 
                     </c:choose>
