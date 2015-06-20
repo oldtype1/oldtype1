@@ -230,6 +230,7 @@ public class InnController {
 	
 	@RequestMapping(value="get_mywishlist.do")
 	public String getMyWishList(String pageNo,HttpServletRequest request,Model model){
+		
 		HttpSession session=null;
 		session = request.getSession(false);
 		MemberVO vo= (MemberVO)session.getAttribute("mvo");
@@ -342,22 +343,33 @@ public class InnController {
 	@RequestMapping(value="inn_in_show.do")
 	public String inShow(HttpServletRequest request, Model model){
 		String innNo = (String)request.getParameter("innNo");
-	
+		int innNo2=Integer.parseInt(innNo);
 		HashMap<String, Object> map = (HashMap<String, Object>) innService.selectInn(innNo);
-		System.out.println(map);
+		System.out.println("상세글보기 컨트롤러 메서드");
+		HttpSession session=request.getSession(false);
+		MemberVO mvo=null;
+		mvo=(MemberVO)session.getAttribute("mvo");
+		if(mvo!=null){
+			WishListVO wishVO = new WishListVO(innNo2, mvo.getMemberId());
+			int count = innService.wishCheck(wishVO);
+			if (count > 0) {//위시리스트 이미 등록
+				model.addAttribute("wishFlag", "ok");
+			} else {//위시리스트 없음
+				model.addAttribute("wishFlag", "no");
+			}
+		}else{
+			model.addAttribute("wishFlag", "no");
+		}
+		
 		InnVO ivo = (InnVO)map.get("innVO");
 		List<InnPicCompVO> picList = innService.selectByInnNo(innNo);
 		ProfilePicVO pvo=innService.selectByProfilePic(ivo.getMemberId());
 		AvailableDateVO avo = innService.selectByAvailableDateInnNo(innNo);
-		System.out.println(picList);
-		System.out.println(pvo);
-		System.out.println(avo);
 	
 		map.put("picList", picList);
 		map.put("pvo", pvo);
 		map.put("avo", avo);
 		model.addAttribute("VOMap", map);
-		System.out.println("picList가 실행이 된다?");
 		return "inn_in_show";
 	}
 	
@@ -487,7 +499,6 @@ public class InnController {
 				int count = innService.wishCheck(wvo);
 				if (count > 0) {
 					model.addAttribute("innNo", innNO);
-					System.out.println("페이지넘버 확인:"+innNO);
 					return "member_wishlist_fail";
 				} else {
 					innService.wishlistreg(wvo);

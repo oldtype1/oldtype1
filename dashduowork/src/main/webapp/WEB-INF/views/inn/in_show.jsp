@@ -135,7 +135,14 @@
 						</div>
 						<c:choose>
 						<c:when test="${requestScope.VOMap.innVO.innAvailability =='Y' && sessionScope.mvo.memberId != null}">
-						<a href="wishListReg.do?innNo=${requestScope.VOMap.avo.innNo}"><img src="img/ins.jpg"></a>
+							<c:choose>
+								<c:when test="${requestScope.wishFlag=='no' }">
+									<a href="wishListReg.do?innNo=${requestScope.VOMap.avo.innNo}"><img src="${initParam.root }img/ins.jpg"></a>
+								</c:when>
+								<c:otherwise>
+									<a href="wishListReg.do?innNo=${requestScope.VOMap.avo.innNo}"><img src="${initParam.root }img/wish.jpg"></a>
+								</c:otherwise>
+							</c:choose>
 						<input type="submit"
 							class="btn btn-danger btn-lg col-sm-10 input-lg" value="예약하기">
 							</c:when>

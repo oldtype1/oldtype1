@@ -21,6 +21,13 @@ public class WishListVO {
 		this.wishlistMainPic = wishlistMainPic;
 	}
 
+	
+	public WishListVO(int innNo, String memberId) {
+		super();
+		this.innNo = innNo;
+		this.memberId = memberId;
+	}
+
 	public int getWishListNo() {
 		return wishListNo;
 	}
