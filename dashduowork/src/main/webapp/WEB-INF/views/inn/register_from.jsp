@@ -146,7 +146,7 @@
                 <div class="col-sm-10">
                   <select class="form-control" name="innAvailability">
                     <option>Y</option>
-                    <option>N</option>
+                    <!-- <option>N</option> -->
                   </select>
                 </div>
               </div>
