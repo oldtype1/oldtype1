@@ -107,11 +107,11 @@ where amenity_wifi=#{amenityWiFi} and amenity_bed=#{amenityBed} and amenity_tv=#
 	</select> -->
 	<!-- 지역&날짜&인원 검색 -->
 	<select id="selectInnByCityAndDateAndAcceptableNo" parameterType="svo" resultType="ivo" resultMap="innResult">
-	<![CDATA[select distinct inn_no, inn_name, inn_city, inn_area, inn_address, inn_type, inn_acceptable_no, inn_price, member_id
+	<![CDATA[select distinct inn_no, inn_name, inn_city, inn_area, inn_address, inn_type, inn_acceptable_no, inn_price inn_availability, member_id
 from (select * from (select i.inn_no, i.inn_name, i.inn_city, i.inn_area, i.inn_address, i.inn_type, i.inn_acceptable_no, 
 i.inn_price, i.inn_info,i.inn_availability,i.member_id, a.availabledate_st, a.availabledate_end from availabledate a, inn i 
 where i.inn_no=a.inn_no)
-where availabledate_st>= #{startDate} and availabledate_end <= #{endDate})
+where availabledate_st>= #{startDate} and availabledate_end >= #{endDate})
 where inn_area like '%' ||  #{innCity} || '%' and inn_acceptable_no>=#{acceptableNo} order by inn_area asc]]>
 	</select>
 	
@@ -199,7 +199,7 @@ from (select inn_no, inn_name, inn_city, inn_area, inn_address, inn_type, inn_ac
 from (select distinct i.inn_no, i.inn_name, i.inn_city, i.inn_area, i.inn_address, i.inn_type, i.inn_acceptable_no, 
 i.inn_price,i.inn_availability,i.member_id, ad.availabledate_st, ad.availabledate_end, a.amenity_wifi,a.amenity_bed,a.amenity_tv,a.amenity_kitchen,a.amenity_bbq
 from availabledate ad, inn i, amenity a where i.inn_no=ad.inn_no and i.inn_no=a.inn_no and ad.inn_no=a.inn_no)
-where availabledate_st>=#{firstSearchStartDate} and availabledate_end <=#{firstSearchEndDate} and inn_area like '%' ||  #{firstSearchCity} || '%' and inn_acceptable_no >= #{firstSearchPeopleNo} and inn_price between #{minPrice} and #{maxPrice})
+where availabledate_st>=#{firstSearchStartDate} and availabledate_end >=#{firstSearchEndDate} and inn_area like '%' ||  #{firstSearchCity} || '%' and inn_acceptable_no >= #{firstSearchPeopleNo} and inn_price between #{minPrice} and #{maxPrice})
 where amenity_wifi=#{amenityWiFi} and amenity_bed=#{amenityBed} and amenity_tv=#{amenityTV} and amenity_kitchen=#{amenityKitchen} and amenity_bbq=#{amenityBBQ} order by inn_area asc]]>
    </select>
 	<!-- 지역&인원 + 필터검색 -->
@@ -236,11 +236,11 @@ select distinct inn_area from inn where inn_area like '%' ||  #{innCity} || '%' 
  </select>
  <!-- 지역&날짜&인원+가격 검색 -->
 	<select id="selectInnByCityAndDateAndAcceptableNoWithPrice" parameterType="fvo" resultType="ivo" resultMap="innResult">
-	<![CDATA[select distinct inn_no, inn_name, inn_city, inn_area, inn_address, inn_type, inn_acceptable_no, inn_price, member_id
+	<![CDATA[select distinct inn_no, inn_name, inn_city, inn_area, inn_address, inn_type, inn_acceptable_no, inn_price, inn_availability,member_id
 from (select * from (select i.inn_no, i.inn_name, i.inn_city, i.inn_area, i.inn_address, i.inn_type, i.inn_acceptable_no, 
 i.inn_price, i.inn_info,i.inn_availability,i.member_id, a.availabledate_st, a.availabledate_end from availabledate a, inn i 
 where i.inn_no=a.inn_no)
-where availabledate_st>= #{firstSearchStartDate} and availabledate_end <= #{firstSearchEndDate})
+where availabledate_st>= #{firstSearchStartDate} and availabledate_end >= #{firstSearchEndDate})
 where inn_area like '%' ||  #{firstSearchCity} || '%' and inn_acceptable_no>=#{firstSearchPeopleNo} order by inn_area asc]]>
 	</select>
 	

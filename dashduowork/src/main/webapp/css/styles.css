@@ -12,6 +12,9 @@ select, input,button{
 	font-size: 15px;
 	color: #55595c;
 }
+.table{
+	font-size:20px;
+}
 #cssmenu,
 #cssmenu ul,
 #cssmenu ul li,

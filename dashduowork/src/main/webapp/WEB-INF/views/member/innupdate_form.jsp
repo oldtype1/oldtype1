@@ -229,7 +229,7 @@
             <center>
              <input type="hidden" id="availableDateNo" name="availableDateNo"value="${requestScope.avvo.availableDateNo}"> 
             <input type="hidden" id="innNo" name="innNo"value="${requestScope.VOMap.innVO.innNo}"> 
-              <button type="submit"  class="btn btn-lg btn-primary  col-sm-5 col-sm-offset-3" >수정</a></button>
+              <button type="submit"  class="btn btn-lg btn-primary  col-sm-5 col-sm-offset-3" >수정</button>
             </center>
             </form>
           </div>

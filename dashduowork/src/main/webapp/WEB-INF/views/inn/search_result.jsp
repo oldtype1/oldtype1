@@ -193,7 +193,27 @@ $(function() {
 								<c:otherwise>
 									<c:forEach var="list" items="${requestScope.innListVO.innList}">
 										<tr valign="middle">
-											<td>${list.innNo }</td>
+										<c:choose>
+										
+										
+											<c:when test="${list.innAvailability=='N' }">
+												<td><font color="#DEDEDE">${list.innNo }</font></td>
+												<td>
+												<c:choose>
+													<c:when test="${list.innMainPic.filePath!=null}"><img class="media-object" src="${list.innMainPic.filePath}" height="150" width="150"></c:when>
+													<c:otherwise><img class="media-object" src="${initParam.root}img/no_img.gif" height="150" width="150"></c:otherwise>
+												</c:choose>
+												</td>
+												<td><a href="inn_in_show.do?innNo=${list.innNo}">${list.innName }</a></td>
+												<td><font color="#DEDEDE">${list.innArea }</font></td>
+												<td><font color="#DEDEDE">${list.innType }</font></td>
+												<td><font color="#DEDEDE">${list.acceptableNo }</font></td>
+												<td><font color="#DEDEDE">${list.innPrice }</font></td>
+											</c:when>
+											
+											
+											<c:otherwise>
+												<td>${list.innNo }</td>
 											<td>
 											<c:choose>
 												<c:when test="${list.innMainPic.filePath!=null}"><img class="media-object" src="${list.innMainPic.filePath}" height="150" width="150"></c:when>
@@ -205,6 +225,12 @@ $(function() {
 											<td>${list.innType }</td>
 											<td>${list.acceptableNo }</td>
 											<td>${list.innPrice }</td>
+											</c:otherwise>
+										
+												
+											
+											
+										</c:choose>
 										</tr>
 									</c:forEach>
 								</c:otherwise>
