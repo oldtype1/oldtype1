@@ -505,6 +505,20 @@ public class InnController {
 					return "redirect:get_mywishlist.do";
 				}
 			}
+			@RequestMapping("changeWishListPic.do")
+			@ResponseBody
+			public MemberVO changeWishListPic(int innNo, HttpServletRequest request){
+				System.out.println("changeWishListPic 컨트롤러 들어옴"+innNo);
+				String flag="success";
+				HttpSession session=request.getSession(false);
+				MemberVO vo= (MemberVO)session.getAttribute("mvo");
+				InnVO ivo=new InnVO(innNo, vo.getMemberId());
+				System.out.println(ivo+" 새로운 InnVO생성");
+				int wishListNo=innService.getWishListNoByInnNo(ivo);
+				DeleteVO wdvo=new DeleteVO(wishListNo,vo.getMemberId());
+				innService.wishListDelete(wdvo);
+				return vo;
+			}
 }
 
 

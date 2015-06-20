@@ -24,6 +24,18 @@
 
 		});
 	});
+	function changeWishListPic(innNo){
+		 $.ajax({
+			type:"get",
+			url:"changeWishListPic.do?innNo="+innNo,
+			//data:"",
+			dataType:"json",
+			success:function(data){
+				 $("#wishListImage").html("");
+				$("#wishListImage").html( "<a href=wishListReg.do?innNo="+innNo+"><img src='${initParam.root }img/ins.jpg'></a>");
+			}
+		}); 	
+	}
 </script>
 
 </head>
@@ -183,17 +195,20 @@
 
 						
 						<c:choose>
-						<c:when test="${requestScope.VOMap.innVO.innAvailability =='Y' && sessionScope.mvo.memberId != null}">
+						<c:when test="${requestScope.VOMap.innVO.innAvailability =='Y' && sessionScope.mvo.memberId != null &&requestScope.VOMap.innVO.memberId != sessionScope.mvo.memberId}">
+						<input type="submit"
+							class="btn btn-danger btn-lg col-sm-10 input-lg" value="예약하기">
+							<div id="wishListImage">
 							<c:choose>
 								<c:when test="${requestScope.wishFlag=='no' }">
 									<a href="wishListReg.do?innNo=${requestScope.VOMap.avo.innNo}"><img src="${initParam.root }img/ins.jpg"></a>
 								</c:when>
 								<c:otherwise>
-									<a href="wishListReg.do?innNo=${requestScope.VOMap.avo.innNo}"><img src="${initParam.root }img/wish.jpg"></a>
+								<input type="image" src="${initParam.root }img/wish.jpg" onclick="changeWishListPic('${requestScope.VOMap.avo.innNo}')">
+								<!-- </div> -->
 								</c:otherwise>
 							</c:choose>
-						<input type="submit"
-							class="btn btn-danger btn-lg col-sm-10 input-lg" value="예약하기">
+							</div>
 							</c:when>
 							<c:when test="${requestScope.VOMap.innVO.innAvailability =='N' && sessionScope.mvo.memberId != null}">
 							    <input type="button"

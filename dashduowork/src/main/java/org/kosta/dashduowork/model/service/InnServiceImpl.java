@@ -451,5 +451,9 @@ public class InnServiceImpl implements InnService {
 		System.out.println("장바구니 중복개수:"+count);
 		return count;
 	}
-	
+ @Override
+ public int getWishListNoByInnNo(InnVO ivo) {
+ 	System.out.println("getWishListNoByInnNo  Service"+ivo);
+ 	return wishListDAO.getWishListNoByInnNo(ivo);
+ }
 }

@@ -1,6 +1,6 @@
 <%@ page language="java" import="java.util.*" pageEncoding="UTF-8" isELIgnored="false"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<a href="home.do"><img src="smalllogo.gif" style="float: left;" height="45" width="45"></a>
+<a href="home.do"><img src="${initParam.root}img/homeimage.jpg" style="float: left;" height="45" width="45"></a>
 
 
 <div id='cssmenu' style="margin-right:50px; float: right ; height: 50px; opacity=0.7; z-index:2 ">

@@ -6,6 +6,7 @@ import java.util.List;
 import javax.annotation.Resource;
 
 import org.kosta.dashduowork.model.vo.DeleteVO;
+import org.kosta.dashduowork.model.vo.InnVO;
 import org.kosta.dashduowork.model.vo.MemberVO;
 import org.kosta.dashduowork.model.vo.WishListVO;
 import org.mybatis.spring.SqlSessionTemplate;
@@ -52,6 +53,12 @@ public class WishListDAOImpl implements WishListDAO {
 	public int wishCheck(WishListVO wvo) {
 		System.out.println("daocheck" + wvo);
 		return sqlSessionTemplate.selectOne("inn.wishCheck", wvo);
+	}
+	
+	@Override
+	public int getWishListNoByInnNo(InnVO ivo) {
+		System.out.println("getWishListNoByInnNo    DAOImpl" + ivo);
+		return sqlSessionTemplate.selectOne("inn.getWishListNoByInnNo", ivo);
 	}
 	
 	
