@@ -473,7 +473,7 @@ public class InnController {
 		
 		System.out.println("경로 결정");
 		model.addAttribute("innNo", innNo);
-
+		System.out.println(flag);
 		if(flag==true){
 			model.addAttribute("result", result);
 			return "inn_book_fail";

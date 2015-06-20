@@ -378,11 +378,23 @@ public class InnServiceImpl implements InnService {
 				System.out.println("bookListCheckIn"+i+" : "+bookListCheckIn);
 				System.out.println("bookListCheckOut"+i+" : "+bookListCheckOut);
 				System.out.println("date checking....");
+				
+				System.out.println("test...");
+				System.out.println(checkIn.before(bookListCheckIn));
+				System.out.println(checkOut.after(bookListCheckIn));
+				System.out.println(checkIn.before(bookListCheckOut));
+				System.out.println(checkOut.after(bookListCheckOut));
+				System.out.println(checkIn.equals(bookListCheckIn));
+				System.out.println(checkIn.equals(bookListCheckOut));
+				System.out.println(checkOut.equals(bookListCheckIn));
+				System.out.println(checkOut.equals(bookListCheckOut));
+				
 				if ((checkIn.before(bookListCheckIn) && checkOut.after(bookListCheckIn))	||
 						(checkIn.before(bookListCheckOut) && checkOut.after(bookListCheckOut))||
 						checkIn.equals(bookListCheckIn)||checkIn.equals(bookListCheckOut)||
-						checkOut.equals(bookListCheckIn)||checkOut.equals(bookListCheckOut))
-						{
+						checkOut.equals(bookListCheckIn)||checkOut.equals(bookListCheckOut)
+						||(checkOut.after(bookListCheckIn)&&checkIn.before(bookListCheckOut))){
+					
 					result.put("checkIn", bookListCheckIn); result.put("checkOut",bookListCheckOut);
 					System.out.println("예약일자가 중복되었습니다!");
 					flag = true;
