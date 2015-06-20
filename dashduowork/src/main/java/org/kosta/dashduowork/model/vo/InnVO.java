@@ -23,6 +23,17 @@ public class InnVO {
 		super();
 		// TODO Auto-generated constructor stub
 	}
+	
+	
+	
+public InnVO(int innNo, String memberId) {
+		super();
+		this.innNo = innNo;
+		this.memberId = memberId;
+	}
+
+
+
 public InnVO(int innNo, String innName, String innCity, String innArea,
 		String innAddress, String innType, String acceptableNo, int innPrice,
 		String innInfo, String innAvailability, String memberId,

@@ -71,4 +71,6 @@ public interface InnService {
 	//위시리스트
 	public abstract void wishlistreg(WishListVO wvo);
 	public int wishCheck(WishListVO wvo);
+	//위시리스트취소
+		public abstract int getWishListNoByInnNo(InnVO ivo);
 }
