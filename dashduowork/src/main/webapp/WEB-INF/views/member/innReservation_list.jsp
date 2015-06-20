@@ -41,7 +41,7 @@
                 class="img-circle img-responsive" style="margin-top: 60px; margin-bottom: 50px;" width="50" height="70" >
               </center>
             </div>
-            <div class="col-md-5" style="margin-top: 50px; margin-bottom: 50px; ">
+            <div class="col-md-10" style="margin-top: 50px; margin-bottom: 50px; ">
               <h2>${sessionScope.mvo.memberName}님이 등록한 숙소의 예약 목록</h2>
             </div>
           </div>

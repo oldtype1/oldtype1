@@ -43,10 +43,11 @@
             </div>
           </div>
         </div>
+        <br> <br>
         </c:if>
         
 
-        <div class="container" style="margin-top: 50px">
+        <div class="container" >
           <div class="row text-center">
             <div class="col-md-12 text-center">
         <h2>"${requestScope.memberInfo.memberName}"님의 프로필입니다.</h2>
