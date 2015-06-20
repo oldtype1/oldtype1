@@ -20,6 +20,7 @@ import org.kosta.dashduowork.model.vo.ProfilePicVO;
 import org.kosta.dashduowork.model.vo.SearchVO;
 import org.kosta.dashduowork.model.vo.TradeListVO;
 import org.kosta.dashduowork.model.vo.WishListListVO;
+import org.kosta.dashduowork.model.vo.WishListVO;
 
 public interface InnService {
    public InnListVO getmyinnlist(MemberVO vo, String pageNo);
@@ -66,5 +67,8 @@ public interface InnService {
 
 	public HashMap<String, Object> bookInsert(BookVO bvo, String innNo, String memberId) throws ParseException;
 	public void updateinnAvailability(int innNo, String innAvailability);
-
+	
+	//위시리스트
+	public abstract void wishlistreg(WishListVO wvo);
+	public int wishCheck(WishListVO wvo);
 }

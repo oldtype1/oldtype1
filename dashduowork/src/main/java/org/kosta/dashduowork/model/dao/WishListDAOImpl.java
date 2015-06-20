@@ -41,7 +41,18 @@ public class WishListDAOImpl implements WishListDAO {
 		System.out.println("wishListDelete DAOImpl   들어옴!!!!!!!!!!!!!!!!"+wdvo);
 		sqlSessionTemplate.delete("delete.wishListDelete", wdvo);
 	}
-	
+	@Override
+	public void wishlistreg(WishListVO wvo) {
+		System.out.println("dao에서 실행됨??" + wvo);
+		sqlSessionTemplate.insert("inn.wishlistreg", wvo);
+
+	}
+
+	@Override
+	public int wishCheck(WishListVO wvo) {
+		System.out.println("daocheck" + wvo);
+		return sqlSessionTemplate.selectOne("inn.wishCheck", wvo);
+	}
 	
 	
 }

@@ -135,8 +135,9 @@
 						</div>
 						<c:choose>
 						<c:when test="${requestScope.VOMap.innVO.innAvailability =='Y' && sessionScope.mvo.memberId != null}">
+						<a href="wishListReg.do?innNo=${requestScope.VOMap.avo.innNo}"><img src="img/ins.jpg"></a>
 						<input type="submit"
-							class="btn btn-danger btn-lg col-sm-12 input-lg" value="예약하기">
+							class="btn btn-danger btn-lg col-sm-10 input-lg" value="예약하기">
 							</c:when>
 							<c:when test="${requestScope.VOMap.innVO.innAvailability =='N' && sessionScope.mvo.memberId != null}">
 							    <input type="button"

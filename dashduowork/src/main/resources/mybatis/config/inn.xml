@@ -277,7 +277,16 @@ inn_price=#{innPrice}, inn_info=#{innInfo},inn_availability=#{innAvailability} w
 	<update id="updateinnAvailabilitytoYes">
 	update inn set inn_availability='Y' where inn_no=#{value}
 	</update>
-	
+	<!-- 6/19 위시리스트 -->
+	<insert id="wishlistreg" parameterType="wvo">
+	<selectKey keyProperty="wishListNo"  resultType="int"  order="BEFORE">
+	select wishlist_sequence.nextval from dual
+	</selectKey>
+	insert into wishlist(member_id,inn_no,wishlist_no) values(#{memberId},#{innNo},#{wishListNo})
+	</insert>
+	<select id="wishCheck" parameterType="wvo" resultType="int" >
+	select count(*) from WISHLIST where member_id=#{memberId} and inn_no=#{innNo}
+	</select>
 	<!-- <select id="getAddressKind" resultType="string">
 		select distinct(address) from member
 	</select>

@@ -433,5 +433,16 @@ public class InnServiceImpl implements InnService {
 
 		}		
 	}
+	@Override
+	public void wishlistreg(WishListVO wvo) {
+		System.out.println("service에서 실행될??"+wvo);
+		wishListDAO.wishlistreg(wvo);
+	}
+ @Override
+	public int wishCheck(WishListVO wvo) {
+		int count=wishListDAO.wishCheck(wvo);
+		System.out.println("장바구니 중복개수:"+count);
+		return count;
+	}
 	
 }

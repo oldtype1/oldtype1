@@ -28,6 +28,7 @@ import org.kosta.dashduowork.model.vo.ProfilePicVO;
 import org.kosta.dashduowork.model.vo.SearchVO;
 import org.kosta.dashduowork.model.vo.TradeListVO;
 import org.kosta.dashduowork.model.vo.WishListListVO;
+import org.kosta.dashduowork.model.vo.WishListVO;
 import org.springframework.stereotype.Controller;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.Model;
@@ -474,7 +475,25 @@ public class InnController {
 		innService.updateinnAvailability(innNo,innAvailability);
 		return "redirect:get_myinnlist.do";
 	}
-	
+	// 6/19일 추가 위시리스트reg
+			@RequestMapping("wishListReg.do")
+			public String wishlistreg(HttpServletRequest request, Model model) {
+				System.out.println("위시 " + request.getParameter("innNo"));
+				int innNO = Integer.parseInt(request.getParameter("innNo"));
+				System.out.println(innNO);
+				HttpSession session = request.getSession(false);
+				MemberVO vo = (MemberVO) session.getAttribute("mvo");
+				WishListVO wvo = new WishListVO(0, innNO, vo.getMemberId(), null, null);
+				int count = innService.wishCheck(wvo);
+				if (count > 0) {
+					model.addAttribute("innNo", innNO);
+					System.out.println("페이지넘버 확인:"+innNO);
+					return "member_wishlist_fail";
+				} else {
+					innService.wishlistreg(wvo);
+					return "redirect:get_mywishlist.do";
+				}
+			}
 }
 
 
