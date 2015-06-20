@@ -210,7 +210,7 @@
 							</c:choose>
 							</div>
 							</c:when>
-							<c:when test="${requestScope.VOMap.innVO.innAvailability =='N' && sessionScope.mvo.memberId != null}">
+							<c:when test="${requestScope.VOMap.innVO.innAvailability =='N' && sessionScope.mvo.memberId != null &&requestScope.VOMap.innVO.memberId != sessionScope.mvo.memberId}">
 							    <input type="button"
 						     	class="btn btn-danger btn-lg col-sm-10 input-lg" value="휴면중인 숙소입니다." disabled="disabled">
 						    <div id="wishListImage">
