@@ -386,8 +386,15 @@ public class InnServiceImpl implements InnService {
 					result.put("checkIn", bookListCheckIn); result.put("checkOut",bookListCheckOut);
 					System.out.println("예약일자가 중복되었습니다!");
 					flag = true;
-					result.put("message", "예약일자가 중복되었습니다! 중복된 일자는 다음과 같습니다.");
+					result.put("message", "예약일자가 중복되었습니다!\n");
+					String DuplicateCheckIn = formatter.format(bookListCheckIn);
+					String DuplicateCheckOut = formatter.format(bookListCheckOut);
+ 					formatter.format(bookListCheckOut);
+					System.out.println(bookListCheckIn);
+					System.out.println(bookListCheckOut);
 					result.put("flag", flag);
+					result.put("checkIn", "중복된 체크인 날짜 : "+DuplicateCheckIn+"\n");
+					result.put("checkOut", "중복된 체크아웃 날짜 : "+DuplicateCheckOut+"\n");
 					return result;
 			     	} // if in for
 			 } // for
@@ -399,14 +406,14 @@ public class InnServiceImpl implements InnService {
 		 if(checkIn.after(checkOut)||checkOut.before(checkIn)){
 			 System.out.println("예약일자가 엉터리야! 장난하냐??");
 			 flag=true;
-			 result.put("message", "체크인 날짜보다 반드시 체크아웃 날짜보다 뒤에 있어야 합니다! 체크아웃 날짜가 체크인 날짜보다 전에 있어도 안됩니다!");
+			 result.put("message", "체크인 날짜보다 반드시 체크아웃 날짜보다 뒤에 있어야 합니다!\n");
 			 result.put("flag", flag);
 			 return result;
 		 }
 		 if(memberId.equals(ivo.getMemberId())){
-			 System.out.println("자기자신의 숙소는 예약할 수 없습니다.");
+			 System.out.println("자기자신의 숙소는 예약할 수 없습니다.\n");
 			 flag=true;
-			 result.put("message", "자기 자신의 숙소를 자신이 예약할 수는 없습니다!");
+			 result.put("message", "자기 자신의 숙소를 자신이 예약할 수는 없습니다!\n");
 			 result.put("flag", flag);
 			 return result;
 		 }
@@ -415,7 +422,7 @@ public class InnServiceImpl implements InnService {
 			if(flag==false){
 			System.out.println("ok : "+innNo);
 			System.out.println("정상적으로 예약되었습니다.");
-			innDAO.updateInnAvailabilityOff(innNo);
+/*			innDAO.updateInnAvailabilityOff(innNo);*/
 			bookDAO.bookInsert(bvo);
 			result.put("flag", flag);
 		}

@@ -89,16 +89,31 @@
 					<form class="form-horizontal" role="form"
 						action="inn_book.do?innNo=${requestScope.VOMap.avo.innNo}&memberId=${sessionScope.mvo.memberId}"
 						method="post">
+						<!-- 예약 가능 상황 시 기능 활성화 -->
+		
 						<div class="form-group">
 							<div class="col-sm-4">
 								<label for="inputEmail3" class="control-label input-lg">체크인</label>
 							</div>
 							<div class="col-sm-8">
+<%-- 					<c:choose>
+					<c:when test="${( (requestScope.VOMap.innVO.innAvailability =='Y') && (sessionScope.mvo.memberId != null) )
+						&& (requestScope.VOMap.innVO.memberId != sessionScope.mvo.memberId)}"> --%>
 								<input type="date" class="form-control" name="bookCheckIn"
 									id="bookCheckIn" size="15" onfocus="this.value=''"
 									min="${requestScope.VOMap.avo.availableDateSt}"
 									max="${requestScope.VOMap.avo.availableDateEnd}"
 									required="required">
+<%-- 					</c:when>
+					<c:when test="${( (requestScope.VOMap.innVO.innAvailability =='Y' || requestScope.VOMap.innVO.innAvailability =='N')
+					&&sessionScope.mvo.memberId == null)||(requestScope.VOMap.innVO.memberId == sessionScope.mvo.memberId)}">
+						<input type="date" class="form-control" name="bookCheckIn"
+									id="bookCheckIn" size="15" onfocus="this.value=''"
+									min="${requestScope.VOMap.avo.availableDateSt}"
+									max="${requestScope.VOMap.avo.availableDateEnd}"
+									required="required" disabled="disabled">
+					</c:when>
+					</c:choose> --%>
 							</div>
 						</div>
 						<div class="form-group">
@@ -106,11 +121,23 @@
 								<label for="inputEmail3" class="control-label input-lg">체크아웃</label>
 							</div>
 							<div class="col-sm-8">
+<%-- 							<c:choose>
+					<c:when test="${(requestScope.VOMap.innVO.innAvailability =='Y' && sessionScope.mvo.memberId != null)
+						&&(requestScope.VOMap.innVO.memberId != sessionScope.mvo.memberId)}"> --%>
 								<input type="date" class="form-control" name="bookCheckOut"
 									size="15" id="bookCheckOut" onfocus="this.value=''"
 									min="${requestScope.VOMap.avo.availableDateSt}"
 									max="${requestScope.VOMap.avo.availableDateEnd}"
 									required="required">
+<%-- 							</c:when>
+					<c:otherwise>
+								<input type="date" class="form-control" name="bookCheckOut"
+									size="15" id="bookCheckOut" onfocus="this.value=''"
+									min="${requestScope.VOMap.avo.availableDateSt}"
+									max="${requestScope.VOMap.avo.availableDateEnd}"
+									required="required" disabled="disabled">
+				</c:otherwise>
+						</c:choose>			 --%>
 							</div>
 						</div>
 						<div class="form-group">
@@ -118,8 +145,18 @@
 								<label class="control-label input-lg">인원수</label>
 							</div>
 							<div class="col-sm-8">
+<%-- 							<c:choose>
+						<c:when test="${(requestScope.VOMap.innVO.innAvailability =='Y' && sessionScope.mvo.memberId != null)
+						&&(requestScope.VOMap.innVO.memberId != sessionScope.mvo.memberId)}"> --%>
 								<input type="number" name="bookCount" id="bookCount" min="1"
 									max="${requestScope.VOMap.innVO.acceptableNo}" required="required">&ensp; 명
+<%-- 						</c:when>
+						<c:when test="${(requestScope.VOMap.innVO.innAvailability =='N' && sessionScope.mvo.memberId != null)
+					||(requestScope.VOMap.innVO.memberId == sessionScope.mvo.memberId)||sessionScope.mvo.memberId==null}">
+						<input type="number" name="bookCount" id="bookCount" min="1"
+									max="${requestScope.VOMap.innVO.acceptableNo}" required="required" disabled="disabled">&ensp; 명
+									</c:when>
+						</c:choose>	 --%>
 							</div>
 						</div>
 						<div class="form-group has-feedback">
@@ -128,11 +165,23 @@
 									가격</label>
 							</div>
 							<div class="col-sm-8">
+<%-- 						<c:choose>
+						<c:when test="${(requestScope.VOMap.innVO.innAvailability =='Y' && sessionScope.mvo.memberId != null)
+						&&(requestScope.VOMap.innVO.memberId != sessionScope.mvo.memberId)}"> --%>
 								<input type="text" class="form-control input-lg" id="totalPrice"
 									readonly="readonly"
 									value="${requestScope.VOMap.innVO.innPrice}">
+<%-- 						</c:when>
+						<c:when test="${(requestScope.VOMap.innVO.innAvailability =='N' && sessionScope.mvo.memberId != null)
+					||(requestScope.VOMap.innVO.memberId == sessionScope.mvo.memberId)||sessionScope.mvo.memberId==null}">
+									<input type="text" class="form-control input-lg" id="totalPrice"
+									readonly="readonly" value="${requestScope.VOMap.innVO.innPrice}" disabled="disabled">
+						</c:when>
+						</c:choose> --%>
 							</div>
 						</div>
+
+						
 						<c:choose>
 						<c:when test="${requestScope.VOMap.innVO.innAvailability =='Y' && sessionScope.mvo.memberId != null}">
 							<c:choose>
