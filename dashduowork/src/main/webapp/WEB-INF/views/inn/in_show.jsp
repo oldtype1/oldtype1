@@ -198,8 +198,10 @@
 						</div>
 						<div class="row">
 							<div class="col-md-2">
+							<a href="member_myprofile.do?memberId=${requestScope.VOMap.memberVO.memberId}">
 								<img src="${requestScope.VOMap.pvo.filePath}"
 									class="img-circle img-responsive" width="200" height="200">
+									</a>
 							</div>
 							<div class="col-md-5 text-left">
 								<label class="control-label input-lg">이름</label> <input

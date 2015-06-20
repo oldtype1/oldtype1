@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
  pageEncoding="UTF-8"%>
+ <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 
 <script  type="text/javascript">
 	$(document).ready(function(){ 
@@ -15,6 +16,7 @@
 		});	
 });// ready 
 </script>
+	 <c:if test="${sessionScope.mvo!=null}">
         <div class="container">
           <div class="row text-center">
             <div class="col-md-12 text-center">
@@ -41,7 +43,17 @@
             </div>
           </div>
         </div>
+        </c:if>
         
+
+        <div class="container" style="margin-top: 50px">
+          <div class="row text-center">
+            <div class="col-md-12 text-center">
+        <h2>"${requestScope.memberInfo.memberName}"님의 프로필입니다.</h2>
+        </div>
+        </div>
+        </div>
+
 <div style="position: relative; top: 100px; left: 150px; opacity: 0.7">
      <div class="section">
          <div class="container">
