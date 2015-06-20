@@ -135,11 +135,11 @@ $(function() {
 				</form>
 			</div>
 			
-			<div class="col-md-6" style="top: 45px;">
+			<div class="col-md-6">
 				<form id="filterForm" action="selectInnByCheckedAmenity.do">	
 					<p>
 					  <label for="amount">가격 범위:</label>
-					  <input type="text" id="amount" readonly style="border:0; color:black; font-weight:bold;">
+					  <input type="text" id="amount" readonly style="border:0; color:black;">
 					</p>
 					<div id="slider-range" style="width: 500px;"></div>
 					<input type="checkbox" name="amenityWiFi" value="Y">WiFi <input
