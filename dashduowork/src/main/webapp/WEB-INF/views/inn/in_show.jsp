@@ -134,7 +134,7 @@
 							</div>
 						</div>
 						<c:choose>
-						<c:when test="${requestScope.VOMap.innVO.innAvailability =='Y' && sessionScope.mvo.memberId != null}">
+						<c:when test="${requestScope.VOMap.innVO.innAvailability =='Y' && sessionScope.mvo.memberId != null &&requestScope.VOMap.innVO.memberId != sessionScope.mvo.memberId}">
 							<c:choose>
 								<c:when test="${requestScope.wishFlag=='no' }">
 									<a href="wishListReg.do?innNo=${requestScope.VOMap.avo.innNo}"><img src="${initParam.root }img/ins.jpg"></a>
