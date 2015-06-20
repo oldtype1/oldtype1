@@ -241,7 +241,7 @@ from (select * from (select i.inn_no, i.inn_name, i.inn_city, i.inn_area, i.inn_
 i.inn_price, i.inn_info,i.inn_availability,i.member_id, a.availabledate_st, a.availabledate_end from availabledate a, inn i 
 where i.inn_no=a.inn_no)
 where availabledate_st<= #{firstSearchStartDate} and availabledate_end >= #{firstSearchEndDate})
-where inn_area like '%' ||  #{firstSearchCity} || '%' and inn_acceptable_no>=#{firstSearchPeopleNo} order by inn_area asc]]>
+where inn_area like '%' ||  #{firstSearchCity} || '%' and inn_acceptable_no>=#{firstSearchPeopleNo} and inn_price between #{minPrice} and #{maxPrice} order order by inn_area asc]]>
 	</select>
 	
 	<select id="select" resultType="ivo" resultMap="innResult">
