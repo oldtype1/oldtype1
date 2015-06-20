@@ -72,7 +72,7 @@
                 <tbody>
                 <c:forEach var="ivo" items="${requestScope.lvo.innList}">
                   <tr>
-                    <td class="col-md-1 text-center" draggable="true">
+                    <td class="col-md-2 text-center" draggable="true">
                       <h4>${ivo.innNo}</h4>
                     </td>
                     <td class="col-md-1">
@@ -87,20 +87,20 @@
                     </td>
                     <c:choose>
                     <c:when test="${ivo.innAvailability=='Y'}">
-                      <td class="col-md-7">
+                      <td class="col-md-6">
                        <a href="inn_in_show.do?innNo=${ivo.innNo}"><h3 class="text-center">${ivo.innName}</h3></a>
                       <p class="text-center">${ivo.innInfo}</p>
                     </td>
-                    <td class="col-md-1">
+                    <td class="col-md-2">
                       <h4 class="text-center" ><a href="updateinnAvailability.do?innNo=${ivo.innNo}&innAvailability=${ivo.innAvailability}">이용가능</a></h4>
                     </td>
                     </c:when>
                     <c:otherwise>
-                      <td class="col-md-7">
+                      <td class="col-md-6">
                       <h3 class="text-center"><a href="inn_in_show.do?innNo=${ivo.innNo}"><font color="gray">${ivo.innName}</font></a></h3>
                       <p class="text-center">${ivo.innInfo}</p>
                     </td>
-                    <td class="col-md-1" style="color: gray">
+                    <td class="col-md-2" style="color: gray">
                       <h4 class="text-center"><a href="updateinnAvailability.do?innNo=${ivo.innNo}&innAvailability=${ivo.innAvailability}"><font color="gray">이용불가</font></a></h4>
                     </td>
                     </c:otherwise> 
