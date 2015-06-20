@@ -14,10 +14,14 @@
  			//data:"",
  			dataType:"json",
  			success:function(data){
- 				 $.each(data,function(index,d){
- 					$("#"+resultViewNo+"").html("");
-					
-			});
+ 				 if((data + '').length==0){   
+  				 	$("#"+resultViewNo+"").html("");
+  				    }else{
+  				 $.each(data,function(index,d){
+  					$("#"+resultViewNo+"").html("");
+ 			});
+  				    }
+
  			}
  		}); 
 		
