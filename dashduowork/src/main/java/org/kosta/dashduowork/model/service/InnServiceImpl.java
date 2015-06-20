@@ -388,11 +388,13 @@ public class InnServiceImpl implements InnService {
 				System.out.println(checkIn.equals(bookListCheckOut));
 				System.out.println(checkOut.equals(bookListCheckIn));
 				System.out.println(checkOut.equals(bookListCheckOut));
-				
+					//일정이 겹치는 부분이 존재하는가
 				if ((checkIn.before(bookListCheckIn) && checkOut.after(bookListCheckIn))	||
 						(checkIn.before(bookListCheckOut) && checkOut.after(bookListCheckOut))||
+						// 일정이 예약된 일정과 완전히 일치하는가
 						checkIn.equals(bookListCheckIn)||checkIn.equals(bookListCheckOut)||
 						checkOut.equals(bookListCheckIn)||checkOut.equals(bookListCheckOut)
+						// 일정이 예약된 일정 내에 존재하는가
 						||(checkOut.after(bookListCheckIn)&&checkIn.before(bookListCheckOut))){
 					
 					result.put("checkIn", bookListCheckIn); result.put("checkOut",bookListCheckOut);
