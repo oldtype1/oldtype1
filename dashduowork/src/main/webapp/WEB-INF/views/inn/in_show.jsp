@@ -212,7 +212,18 @@
 							</c:when>
 							<c:when test="${requestScope.VOMap.innVO.innAvailability =='N' && sessionScope.mvo.memberId != null}">
 							    <input type="button"
-						     	class="btn btn-danger btn-lg col-sm-12 input-lg" value="휴면중인 숙소입니다." disabled="disabled">
+						     	class="btn btn-danger btn-lg col-sm-10 input-lg" value="휴면중인 숙소입니다." disabled="disabled">
+						    <div id="wishListImage">
+							<c:choose>
+								<c:when test="${requestScope.wishFlag=='no' }">
+									<a href="wishListReg.do?innNo=${requestScope.VOMap.avo.innNo}"><img src="${initParam.root }img/ins.jpg"></a>
+								</c:when>
+								<c:otherwise>
+								<input type="image" src="${initParam.root }img/wish.jpg" onclick="changeWishListPic('${requestScope.VOMap.avo.innNo}')">
+								<!-- </div> -->
+								</c:otherwise>
+							</c:choose>
+							</div>
 							</c:when>
 							<c:when test="${(requestScope.VOMap.innVO.innAvailability =='Y' || requestScope.VOMap.innVO.innAvailability =='N')&&sessionScope.mvo.memberId == null}">
 							<input type="button"
