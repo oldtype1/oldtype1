@@ -135,7 +135,7 @@ $(function() {
 				</form>
 			</div>
 			
-			<div class="col-md-6">
+			<div class="col-md-6" style="top: 45px;">
 				<form id="filterForm" action="selectInnByCheckedAmenity.do">	
 					<p>
 					  <label for="amount">가격 범위:</label>
@@ -160,6 +160,8 @@ $(function() {
 		</div>
 	</div>
 </div>
+<br>
+<br>
 <br>
 <br>
 <br>

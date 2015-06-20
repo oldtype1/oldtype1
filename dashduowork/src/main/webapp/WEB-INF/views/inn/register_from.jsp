@@ -48,26 +48,26 @@
               </div>
               <div class="form-group">
                 <div class="col-sm-2">
-                  <label for="inputPassword3" class="control-label" >주소</label>
+                  <label for="inputPassword3" class="control-label" >지역</label>
                 </div>
                 <div class="col-sm-10">
-                  <input type="text" class="form-control input-lg"id="inputPassword3" placeholder="주소입력" name="innAddress" required="required">
+                  <input type="text" class="form-control input-lg"id="inputPassword3" placeholder="지역" name="innCity" required="required">
                 </div>
               </div>
               <div class="form-group">
                 <div class="col-sm-2">
-                  <label for="inputPassword3" class="control-label">대지역</label>
+                  <label for="inputPassword3" class="control-label">주소</label>
                 </div>
                 <div class="col-sm-10">
-                  <input type="text" class="form-control input-lg" id="inputPassword3" placeholder="대지역입력" name="innCity" required="required">
+                  <input type="text" class="form-control input-lg" id="inputPassword3" placeholder="주소" name="innArea" required="required">
                 </div>
               </div>
               <div class="form-group">
                 <div class="col-sm-2">
-                  <label for="inputPassword3" class="control-label">소지역</label>
+                  <label for="inputPassword3" class="control-label">상세주소</label>
                 </div>
                 <div class="col-sm-10">
-                  <input type="text" class="form-control input-lg"  id="inputPassword3" placeholder="소지역입력" name="innArea" required="required">
+                  <input type="text" class="form-control input-lg"  id="inputPassword3" placeholder="상세주소" name="innAddress" required="required">
                 </div>
               </div>
               <div class="form-group">
