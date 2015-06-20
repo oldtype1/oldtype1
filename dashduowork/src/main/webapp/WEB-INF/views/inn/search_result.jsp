@@ -36,8 +36,8 @@ $(function() {
 	$( "#slider-range" ).slider({
 	      range: true,
 	      min: 0,
-	      max: 10000,
-	      values: [ 1000, 8000 ],
+	      max: 300000,
+	      values: [ 1000, 50000 ],
 	      slide: function( event, ui ) {
 	        $( "#amount" ).val( "₩" + ui.values[ 0 ] + " - ₩" + ui.values[ 1 ] );
 	        $("#minPrice").val($( "#slider-range" ).slider( "values", 0 ));
@@ -141,7 +141,7 @@ $(function() {
 					  <label for="amount">가격 범위:</label>
 					  <input type="text" id="amount" readonly style="border:0; color:black;">
 					</p>
-					<div id="slider-range" style="width: 500px;"></div>
+					<div id="slider-range" style="width: 500px;" ></div>
 					<input type="checkbox" name="amenityWiFi" value="Y">WiFi <input
 						type="checkbox" name="amenityBed" value="Y">Bed <input
 						type="checkbox" name="amenityTV" value="Y">TV <input

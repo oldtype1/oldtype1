@@ -186,13 +186,13 @@
                   <label class="control-label">변경할 사진</label>
                 </div>
                 <div class="col-sm-3">
-                  <input type="file" class="form-control"  name="file[0]">
+                  <input type="file" class="form-control"  name="file[0]" required="required">
                 </div>   
                 <div class="col-sm-3">
-                  <input type="file" class="form-control" name="file[1]">
+                  <input type="file" class="form-control" name="file[1]" required="required">
                 </div>
                 <div class="col-sm-3">
-                  <input type="file" class="form-control" name="file[2]">
+                  <input type="file" class="form-control" name="file[2]"required="required">
                 </div>
                 <div class="col-sm-2">
                   <label class="control-label">현재 사진</label>

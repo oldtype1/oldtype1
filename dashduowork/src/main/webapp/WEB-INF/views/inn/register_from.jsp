@@ -75,7 +75,7 @@
                   <label for="inputPassword3" class="control-label">인원수</label>
                 </div>
                 <div class="col-sm-10">
-                  <input type="text" class="form-control input-lg"  id="inputPassword3" placeholder="인원수입력" name="acceptableNo"  required="required">
+                  <input type="number" class="form-control input-lg"  id="inputPassword3" placeholder="인원수입력" name="acceptableNo"  required="required" min="1" max="5">
                 </div>
               </div>
               <div class="form-group">
