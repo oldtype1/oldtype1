@@ -150,11 +150,13 @@ ceil(rownum/5) as page from
 
 		<select id="getmywishlist" parameterType="hashmap" resultType="wvo" resultMap="wishListResult">
 	 select inn_no, wishlist_no, member_id, inn_name from(
- select  inn_no, wishlist_no, member_id, inn_name, page from(
- select i.inn_no, w.wishlist_no, w.member_id, i.inn_name, ceil(rownum/5) as page from wishlist w, inn i 
- where i.inn_no=w.inn_no
- ) where member_id=#{member_id}
- ) where page=#{pageNo}
+select inn_no, wishlist_no, member_id, inn_name,ceil(rownum/5) as page  from(
+ select  inn_no, wishlist_no, member_id, inn_name from(
+ select i.inn_no, w.wishlist_no, w.member_id, i.inn_name from wishlist w, inn i 
+ where i.inn_no=w.inn_no  
+ )
+ )where member_id=#{member_id}
+ )where page=#{pageNo} 
 	</select>
 
 	

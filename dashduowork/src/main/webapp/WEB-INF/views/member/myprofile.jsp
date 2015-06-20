@@ -87,8 +87,7 @@
                           <div class="form-group">
                              <label for="inputInfo3" class="control-label">자기 소개</label>
                              <textarea readonly="readonly" rows="4" cols="70" class="form-control"placeholder=
-                             "${requestScope.memberInfo.memberInfo}
-                            파일경로: ${requestScope.memberInfo.profilePicVO.filePath}"></textarea>
+                             "${requestScope.memberInfo.memberInfo}"></textarea>
                          </div>
                          <input type="hidden" name="memberId" id="memberId" value="${requestScope.memberInfo.memberId}">
                     <button type="submit" class="btn btn-default">수정하러 가기</button>
