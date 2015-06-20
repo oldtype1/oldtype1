@@ -119,7 +119,7 @@
 							</div>
 							<div class="col-sm-8">
 								<input type="number" name="bookCount" id="bookCount" min="1"
-									max="5" required="required">&ensp; 명
+									max="${requestScope.VOMap.innVO.acceptableNo}" required="required">&ensp; 명
 							</div>
 						</div>
 						<div class="form-group has-feedback">
