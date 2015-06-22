@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="availabledate">
+
+<resultMap type="avvo" id="innResult">
+	<result property="innNo" column="inn_no"/>
+	<result property="availableDateNo" column="availabledate_no"/>
+	<result property="availableDateSt" column="availabledate_st"/>
+	<result property="availableDateEnd" column="availabledate_end"/>
+</resultMap>
+
+<insert id="register" parameterType="avvo">
+	insert into availabledate(availabledate_no,availabledate_st,availabledate_end,inn_no) values
+	(availabledate_no_sequence.nextval,#{availableDateSt},#{availableDateEnd},#{innNo})
+	</insert>
+	<update id="updatedate" parameterType="avvo">
+	update availabledate set availabledate_st=#{availableDateSt}, availabledate_end=#{availableDateEnd} where inn_no=#{innNo}
+	</update>
+<select id="selectAvailableDate" parameterType="int" resultType="avvo" resultMap="innResult">
+select availabledate_no, inn_no, to_char(availabledate_st,'YYYY-MM-DD') as availabledate_st, 
+ to_char(availabledate_end,'YYYY-MM-DD') as availabledate_end from availabledate where inn_no=#{value}
+</select>
+
+<select id ="selectByInnNo" resultMap="innResult" resultType="avvo">
+	select availabledate_no,to_char(availabledate_st, 'yyyy-mm-dd')as availabledate_st,
+	to_char(availabledate_end,'yyyy-mm-dd')as availabledate_end,
+	inn_no from availabledate 
+	where inn_no = #{value}
+</select>
+
+	<!-- <sql id="innlist">
+		select inn_no,inn_name,inn_city,inn_area,inn_address,inn_type,inn_acceptable_no,
+		inn_price,inn_info,inn_availability,member_id from inn
+	</sql> 
+	
+	<select id="getmyinnlist" parameterType="String" resultType="ivo" resultMap="innResult">
+		<include refid="innlist" />
+		where member_id=#{value}
+	</select>-->
+		
+	<!-- <select id="getAddressKind" resultType="string">
+		select distinct(address) from member
+	</select>
+	<select id="findByAddress" resultType="mvo">
+		<include refid="selectMember" />
+		where address=#{value}
+	</select>
+	<select id="findMemberById" resultType="mvo">
+		<include refid="selectMember" />
+		where id=#{value}
+	</select>
+	<insert id="registerMember" parameterType="mvo">
+		insert into member(id,password,name,address)
+		values(#{id},#{password},#{name},#{address})
+	</insert>
+	<select id="idcheck" resultType="int">
+		select count(*) from member where id=#{value}
+	</select>
+	<update id="updateMember" parameterType="mvo">
+		update member set password=#{password},name=#{name},address=#{address}
+		where id=#{id}
+	</update> -->
+</mapper>
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

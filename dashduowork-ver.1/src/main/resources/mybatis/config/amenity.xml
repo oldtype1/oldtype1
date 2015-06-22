@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="amenity">
+
+<resultMap type="avo" id="amenityResult">
+	<result property="innNo" column="inn_no"/>
+	<result property="amenityWiFi" column="amenity_wifi"/>
+	<result property="amenityBed" column="amenity_bed"/>
+	<result property="amenityTV" column="amenity_tv"/>
+	<result property="amenityKitchen" column="amenity_kitchen"/>
+	<result property="amenityBBQ" column="amenity_bbq"/>
+
+</resultMap>
+
+<insert id="register" parameterType="avo">
+insert into amenity(amenity_wifi,amenity_bed,amenity_tv,amenity_kitchen,amenity_bbq, inn_no) values
+	(#{amenityWiFi},#{amenityBed},#{amenityTV},#{amenityKitchen},#{amenityBBQ},#{innNo})
+	</insert>
+	
+	
+	<update id="updateAmenity" parameterType="avo">
+update amenity set amenity_wifi=#{amenityWiFi}, amenity_bed=#{amenityBed}, amenity_tv=#{amenityTV}, amenity_kitchen=#{amenityKitchen}, amenity_bbq=#{amenityBBQ} where inn_no=#{innNo}
+</update>
+
+<select id="selectAmenity" parameterType="String" resultType="avo" resultMap="amenityResult">
+	select*from amenity where inn_no=#{value}
+	</select>
+	<!-- <sql id="innlist">
+		select inn_no,inn_name,inn_city,inn_area,inn_address,inn_type,inn_acceptable_no,
+		inn_price,inn_info,inn_availability,member_id from inn
+	</sql> 
+	
+	<select id="getmyinnlist" parameterType="String" resultType="ivo" resultMap="innResult">
+		<include refid="innlist" />
+		where member_id=#{value}
+	</select>-->
+		
+	<!-- <select id="getAddressKind" resultType="string">
+		select distinct(address) from member
+	</select>
+	<select id="findByAddress" resultType="mvo">
+		<include refid="selectMember" />
+		where address=#{value}
+	</select>
+	<select id="findMemberById" resultType="mvo">
+		<include refid="selectMember" />
+		where id=#{value}
+	</select>
+	<insert id="registerMember" parameterType="mvo">
+		insert into member(id,password,name,address)
+		values(#{id},#{password},#{name},#{address})
+	</insert>
+	<select id="idcheck" resultType="int">
+		select count(*) from member where id=#{value}
+	</select>
+	<update id="updateMember" parameterType="mvo">
+		update member set password=#{password},name=#{name},address=#{address}
+		where id=#{id}
+	</update> -->
+</mapper>
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
