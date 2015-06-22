@@ -56,14 +56,14 @@ $(function() {
 				data : $("#filterForm").serialize(),
 				dataType : "json",
 				success : function(innInfoList) {
-					var tableInfo="<table class='table'><thead><tr><th >숙소 번호</th><th>숙소 사진</th><th>숙소명</th><th>위치</th><th>유형</th><th>수용가능인원</th><th>가격</th></tr></thead>";
+					var tableInfo="<table class='table table-hover'><thead><tr><th >숙소 번호</th><th>숙소 사진</th><th>숙소명</th><th>위치</th><th>유형</th><th>수용가능인원</th><th>가격</th></tr></thead>";
 					tableInfo+="<tbody>";
 					if (innInfoList.innList.length != 0) {			
 						$.each(innInfoList.innList, function(index, info) {
 							if(info.innMainPic==null){
-								tableInfo+="<tr><td>"+info.innNo+"</td><td><img class='media-object' src='${initParam.root}img/no_img.gif' height='150' width='150'></td><td><a href='inn_in_show.do?innNo="+info.innNo+"'>"+info.innName+"</td><td>"+info.innArea+"</td><td>"+info.innType+"</td><td>"+info.acceptableNo+"</td><td>"+info.innPrice+"</td></tr>";
+								tableInfo+="<tr><td>"+info.innNo+"</td><td><img class='img-rounded' src='${initParam.root}img/no_img.gif' height='150' width='150'></td><td><a href='inn_in_show.do?innNo="+info.innNo+"'>"+info.innName+"</td><td>"+info.innArea+"</td><td>"+info.innType+"</td><td>"+info.acceptableNo+"</td><td>"+info.innPrice+"</td></tr>";
 							}else{
-								tableInfo+="<tr><td>"+info.innNo+"</td><td><img class='media-object' src='"+info.innMainPic.filePath+"' height='150' width='150'></td><td><a href='inn_in_show.do?innNo="+info.innNo+"'>"+info.innName+"</td><td>"+info.innArea+"</td><td>"+info.innType+"</td><td>"+info.acceptableNo+"</td><td>"+info.innPrice+"</td></tr>";
+								tableInfo+="<tr><td>"+info.innNo+"</td><td><img class='img-rounded' src='"+info.innMainPic.filePath+"' height='150' width='150'></td><td><a href='inn_in_show.do?innNo="+info.innNo+"'>"+info.innName+"</td><td>"+info.innArea+"</td><td>"+info.innType+"</td><td>"+info.acceptableNo+"</td><td>"+info.innPrice+"</td></tr>";
 							}
 						}); //each
 					}//if
@@ -88,14 +88,14 @@ $(function() {
 				data : $("#filterForm").serialize(),
 				dataType : "json",
 				success : function(innInfoList) {
-					var tableInfo="<table class='table'><thead><tr><th >숙소 번호</th><th>숙소 사진</th><th>숙소명</th><th>위치</th><th>유형</th><th>수용가능인원</th><th>가격</th></tr></thead>";
+					var tableInfo="<table class='table table-hover'><thead><tr><th >숙소 번호</th><th>숙소 사진</th><th>숙소명</th><th>위치</th><th>유형</th><th>수용가능인원</th><th>가격</th></tr></thead>";
 					tableInfo+="<tbody>";
 					if (innInfoList.innList.length != 0) {
 						$.each(innInfoList.innList, function(index, info) {
 							if(info.innMainPic==null){
-								tableInfo+="<tr><td>"+info.innNo+"</td><td><img class='media-object' src='${initParam.root}img/no_img.gif' height='150' width='150'></td><td><a href='inn_in_show.do?innNo="+info.innNo+"'>"+info.innName+"</td><td>"+info.innArea+"</td><td>"+info.innType+"</td><td>"+info.acceptableNo+"</td><td>"+info.innPrice+"</td></tr>";
+								tableInfo+="<tr><td>"+info.innNo+"</td><td><img class='img-rounded' src='${initParam.root}img/no_img.gif' height='150' width='150'></td><td><a href='inn_in_show.do?innNo="+info.innNo+"'>"+info.innName+"</td><td>"+info.innArea+"</td><td>"+info.innType+"</td><td>"+info.acceptableNo+"</td><td>"+info.innPrice+"</td></tr>";
 							}else{
-								tableInfo+="<tr><td>"+info.innNo+"</td><td><img class='media-object' src='"+info.innMainPic.filePath+"' height='150' width='150'></td><td><a href='inn_in_show.do?innNo="+info.innNo+"'>"+info.innName+"</td><td>"+info.innArea+"</td><td>"+info.innType+"</td><td>"+info.acceptableNo+"</td><td>"+info.innPrice+"</td></tr>";
+								tableInfo+="<tr><td>"+info.innNo+"</td><td><img class='img-rounded' src='"+info.innMainPic.filePath+"' height='150' width='150'></td><td><a href='inn_in_show.do?innNo="+info.innNo+"'>"+info.innName+"</td><td>"+info.innArea+"</td><td>"+info.innType+"</td><td>"+info.acceptableNo+"</td><td>"+info.innPrice+"</td></tr>";
 							}
 						}); //each
 					}//if
@@ -171,9 +171,8 @@ $(function() {
 		<div class="row">
 			<div class="col-md-12">
 			지역 : ${requestScope.searchVO.innCity} / 인원 : ${requestScope.searchVO.acceptableNo } 명 에 대한 검색결과
-			<div id="resultViewFilter"></div>
 				<div id="resultViewSearch">
-					<table class="table">
+					<table class="table table-hover">
 						<thead>
 							<tr>
 								<th >숙소 번호</th>
@@ -200,7 +199,7 @@ $(function() {
 												<td><font color="#DEDEDE">${list.innNo }</font></td>
 												<td>
 												<c:choose>
-													<c:when test="${list.innMainPic.filePath!=null}"><img class="media-object" src="${list.innMainPic.filePath}" height="150" width="150"></c:when>
+													<c:when test="${list.innMainPic.filePath!=null}"><img class="img-rounded" src="${list.innMainPic.filePath}" height="150" width="150"></c:when>
 													<c:otherwise><img class="media-object" src="${initParam.root}img/no_img.gif" height="150" width="150"></c:otherwise>
 												</c:choose>
 												</td>
@@ -216,8 +215,8 @@ $(function() {
 												<td>${list.innNo }</td>
 											<td>
 											<c:choose>
-												<c:when test="${list.innMainPic.filePath!=null}"><img class="media-object" src="${list.innMainPic.filePath}" height="150" width="150"></c:when>
-												<c:otherwise><img class="media-object" src="${initParam.root}img/no_img.gif" height="150" width="150"></c:otherwise>
+												<c:when test="${list.innMainPic.filePath!=null}"><img class="img-rounded" src="${list.innMainPic.filePath}" height="150" width="150"></c:when>
+												<c:otherwise><img class="img-rounded" src="${initParam.root}img/no_img.gif" height="150" width="150"></c:otherwise>
 											</c:choose>
 											</td>
 											<td><a href="inn_in_show.do?innNo=${list.innNo}">${list.innName }</a></td>
