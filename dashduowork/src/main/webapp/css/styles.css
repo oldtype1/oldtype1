@@ -1,5 +1,16 @@
 @import url(http://fonts.googleapis.com/css?family=Open+Sans);
 
+#videobcg { 
+     position: absolute;
+     top: 50px;
+     left: 0px;
+     min-width: 100%;
+     min-height: 100%;
+     width: auto;
+     height: auto;
+     z-index: -1000;
+     overflow: hidden;
+}
 #img1:hover{
 	opacity: 0.5;
 }
