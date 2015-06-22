@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="delete">
+<delete id="wishListDelete" parameterType="dvo">
+	 delete from wishlist where member_id=#{memberId} and wishlist_no=#{innNo}
+	</delete>
+		<delete id="bookDelete" parameterType="dvo">
+	 delete from book where member_id=#{memberId} and book_no=#{innNo}
+	</delete>
+		<delete id="tradeDelete" parameterType="dvo">
+	 delete from trade where Trade_no=#{innNo}
+	</delete>
+		<delete id="innDelete" parameterType="dvo">
+	 delete from inn where member_id=#{memberId} and inn_no=#{innNo}
+	</delete>
+</mapper>
+ 
+ 
+ 
+ 
+ 
+ 
+
