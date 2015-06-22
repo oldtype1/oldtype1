@@ -48,3 +48,7 @@ insert into availabledate(availabledate_no, inn_no, availabledate_st, availabled
 insert into availabledate(availabledate_no, inn_no, availabledate_st, availabledate_end) values(availabledate_no_sequence.nextval, 14, '2015-05-27', '2015-05-31');
 insert into availabledate(availabledate_no, inn_no, availabledate_st, availabledate_end) values(availabledate_no_sequence.nextval, 14, '2015-05-27', '2015-05-31');
 insert into availabledate(availabledate_no, inn_no, availabledate_st, availabledate_end) values(availabledate_no_sequence.nextval, 15, '2015-05-27', '2015-05-31');
+
+select * from MEMBER;
+select member_id, member_name, member_tel, member_info, member_pass, member_answer_type,  member_pass_answer from member
+ where member_answer_type='나의 부모님 성함은?' and member_pass_answer='이정옥' and member_id='oldtype_1@hanmali.net'

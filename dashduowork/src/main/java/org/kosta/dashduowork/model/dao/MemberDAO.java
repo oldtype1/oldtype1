@@ -23,4 +23,6 @@ public interface MemberDAO {
       public abstract ProfilePicVO selectProfilePic(String memberId);
       //아이디 중복 확인
       public abstract String memberIdcheck(String memberId);
+      // 패스워드 분실시 찾는 메서드
+      public MemberVO selectPasswordByAnswer(MemberVO vo);
 }

@@ -63,5 +63,11 @@ public class MemberServiceImpl implements MemberService {
   		System.out.println("service에서 idcheck"+memberId);
   		return memberDAO.memberIdcheck(memberId);
   	}
+      
+    public MemberVO searchPass(MemberVO vo){
+    	System.out.println("service에서 searchPass"+ vo);
+    	return memberDAO.selectPasswordByAnswer(vo);
+    }
+    
 
 }

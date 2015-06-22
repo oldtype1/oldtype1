@@ -10,10 +10,12 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	<result property="memberTel" column="member_tel"/>
 	<result property="memberInfo" column="member_info"/>
 	<result property="memberPass" column="member_pass"/>
+	<result property="memberAnswerType" column="member_answer_type"/>
+	<result property="memberPassAnswer" column="member_pass_answer"/>
 </resultMap>
 
 	<sql id="selectMember">
-		select member_id, member_name, member_tel, member_info, member_pass from member
+		select member_id, member_name, member_tel, member_info, member_pass, member_answer_type,  member_pass_answer from member
 	</sql>
 	
 	<select id="login" parameterType="mvo" resultType="mvo" resultMap="memberResult">
@@ -25,13 +27,16 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
       <include refid="selectMember" /> where member_id=#{value}
    </select> 
    <update id="updateMemberInfo" parameterType="mvo">
-   update member set member_name=#{memberName}, member_tel=#{memberTel}, member_info=#{memberInfo}, member_pass=#{memberPass} where member_id=#{memberId}
+   update member set member_name=#{memberName}, member_tel=#{memberTel}, 
+   member_info=#{memberInfo}, member_pass=#{memberPass}, 
+   member_answer_type=#{memberAnswerType}, member_pass_answer=#{memberPassAnswer}
+   where member_id=#{memberId}
    </update>
    
 	<insert id="register" parameterType="mvo">
 		insert into MEMBER
-		(member_id, member_name, member_tel, member_info, member_pass) 
-		values(#{memberId}, #{memberName}, #{memberTel}, #{memberInfo}, #{memberPass})
+		(member_id, member_name, member_tel, member_info, member_pass, member_answer_type, member_pass_answer) 
+		values(#{memberId}, #{memberName}, #{memberTel}, #{memberInfo}, #{memberPass},#{memberAnswerType},#{memberPassAnswer})
 	</insert>
 	<delete id="memberSecession" parameterType="String">
 	delete from member where member_id=#{value}
@@ -41,6 +46,11 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	</select>
 	<select id="memberIdCheck" parameterType="String" resultType="String">
 	select member_id from member where member_id=#{value}
+	</select>
+	
+	<select id="selectPasswordByAnswer" resultMap="memberResult" resultType="mvo" parameterType="mvo">
+		<include refid="selectMember" /> where member_answer_type=#{memberAnswerType} and 
+		member_pass_answer=#{memberPassAnswer} and member_id=#{memberId}
 	</select>
 	
 	<!-- <select id="getAddressKind" resultType="string">

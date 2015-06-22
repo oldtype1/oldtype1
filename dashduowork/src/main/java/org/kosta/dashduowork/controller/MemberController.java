@@ -1,6 +1,7 @@
 package org.kosta.dashduowork.controller;
 
 import java.io.File;
+import java.util.List;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
@@ -8,8 +9,12 @@ import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 
 import org.kosta.dashduowork.model.service.MemberService;
+import org.kosta.dashduowork.model.vo.FilterVO;
+import org.kosta.dashduowork.model.vo.InnListVO;
+import org.kosta.dashduowork.model.vo.InnVO;
 import org.kosta.dashduowork.model.vo.MemberVO;
 import org.kosta.dashduowork.model.vo.ProfilePicVO;
+import org.kosta.dashduowork.model.vo.SearchVO;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -212,7 +217,7 @@ public class MemberController {
 	System.out.println(info);
 	return info;	
 		}
-
+     
       /*
        * @RequestMapping(value="member_register_form.do",method=RequestMethod.GET
        * ) public ModelAndView registerForm(){ // Validation 을 위해
@@ -226,5 +231,14 @@ public class MemberController {
        * if(result.hasErrors()){ return "member_register_form"; // 유효성 검사에 에러가
        * 있으면 가입폼으로 다시 보낸다. } return "home";// 문제 없으면 결과 페이지로 이동한다. }
        */
+
+    @RequestMapping(value ="searchPass.do", method=RequestMethod.POST )
+	public String searchPass(MemberVO vo, Model model) {
+	   System.out.println("controller에서 seachPass 실행 : "+vo);
+	   MemberVO mvo = memberService.searchPass(vo);
+	   System.out.println("mvo 결과 : "+mvo);
+	   model.addAttribute("mvo", mvo);
+	   return "member_searchPassResult";
+	}
    
 }

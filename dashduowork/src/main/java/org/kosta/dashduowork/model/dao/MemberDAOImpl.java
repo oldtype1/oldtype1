@@ -72,5 +72,10 @@ public class MemberDAOImpl implements MemberDAO {
 		System.out.println("dao에서 idcheck" + memberId);
 		return sqlSessionTemplate.selectOne("member.memberIdCheck", memberId);
 	}
+	
+	public MemberVO selectPasswordByAnswer(MemberVO vo){
+		System.out.println("dao에서 memberVO check" + vo);
+		return sqlSessionTemplate.selectOne("member.selectPasswordByAnswer", vo);
+	}
 
 }
