@@ -14,5 +14,6 @@ public interface MemberService {
       public void memberRegister(MemberVO mvo, ProfilePicVO pvo);
       public abstract ProfilePicVO selectProfilePic(String memberId);
       public abstract String memberIdcheck(String memberId);
+      public MemberVO searchPass(MemberVO vo);
 
 }

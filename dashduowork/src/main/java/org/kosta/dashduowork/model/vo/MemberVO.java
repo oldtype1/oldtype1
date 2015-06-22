@@ -15,11 +15,14 @@ public class MemberVO {
 	private String memberPass;
 	@NotEmpty
 	private String memberName;
-	@NumberFormat(style=Style.NUMBER)
+	@NumberFormat(style = Style.NUMBER)
 	@NotEmpty
 	private String memberTel;
 	@NotEmpty
 	private String memberInfo;
+	private String memberAnswerType;
+	@NotEmpty
+	private String memberPassAnswer;
 	private ProfilePicVO profilePicVO;
 	private List<WishListVO> wishList;
 	private List<BookVO> book;
@@ -31,7 +34,8 @@ public class MemberVO {
 	}
 
 	public MemberVO(String memberId, String memberPass, String memberName,
-			String memberTel, String memberInfo, ProfilePicVO profilePicVO,
+			String memberTel, String memberInfo, String memberAnswerType,
+			String memberPassAnswer, ProfilePicVO profilePicVO,
 			List<WishListVO> wishList, List<BookVO> book, List<InnVO> inn) {
 		super();
 		this.memberId = memberId;
@@ -39,6 +43,8 @@ public class MemberVO {
 		this.memberName = memberName;
 		this.memberTel = memberTel;
 		this.memberInfo = memberInfo;
+		this.memberAnswerType = memberAnswerType;
+		this.memberPassAnswer = memberPassAnswer;
 		this.profilePicVO = profilePicVO;
 		this.wishList = wishList;
 		this.book = book;
@@ -85,6 +91,22 @@ public class MemberVO {
 		this.memberInfo = memberInfo;
 	}
 
+	public String getMemberAnswerType() {
+		return memberAnswerType;
+	}
+
+	public void setMemberAnswerType(String memberAnswerType) {
+		this.memberAnswerType = memberAnswerType;
+	}
+
+	public String getMemberPassAnswer() {
+		return memberPassAnswer;
+	}
+
+	public void setMemberPassAnswer(String memberPassAnswer) {
+		this.memberPassAnswer = memberPassAnswer;
+	}
+
 	public ProfilePicVO getProfilePicVO() {
 		return profilePicVO;
 	}
@@ -121,9 +143,10 @@ public class MemberVO {
 	public String toString() {
 		return "MemberVO [memberId=" + memberId + ", memberPass=" + memberPass
 				+ ", memberName=" + memberName + ", memberTel=" + memberTel
-				+ ", memberInfo=" + memberInfo + ", profilePicVO="
-				+ profilePicVO + ", wishList=" + wishList + ", book=" + book
-				+ ", inn=" + inn + "]";
+				+ ", memberInfo=" + memberInfo + ", memberAnswerType="
+				+ memberAnswerType + ", memberPassAnswer=" + memberPassAnswer
+				+ ", profilePicVO=" + profilePicVO + ", wishList=" + wishList
+				+ ", book=" + book + ", inn=" + inn + "]";
 	}
 
 }
