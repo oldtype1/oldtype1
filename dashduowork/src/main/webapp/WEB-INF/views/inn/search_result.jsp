@@ -172,7 +172,7 @@ $(function() {
 			<div class="col-md-12">
 			지역 : ${requestScope.searchVO.innCity} / 인원 : ${requestScope.searchVO.acceptableNo } 명 에 대한 검색결과
 				<div id="resultViewSearch">
-					<table class="table table-hover">
+					<table class="table-hover CSSTableGenerator">
 						<thead>
 							<tr>
 								<th >숙소 번호</th>
