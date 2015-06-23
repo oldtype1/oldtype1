@@ -105,15 +105,15 @@
                 <div class="col-sm-10">
                   <div class="checkbox">
                     <label class="checkbox-inline">
-                      <input type="checkbox" name="amenityWiFi" value="Y">wi-fi</label>
+                      <input type="checkbox" name="amenity" value="Y">wi-fi</label>
                     <label class="checkbox-inline">
-                      <input type="checkbox"  name="amenityBed" value="Y">bed</label>
+                      <input type="checkbox"  name="amenity" value="Y">bed</label>
                     <label class="checkbox-inline">
-                      <input type="checkbox" name="amenityTV" value="Y">tv</label>
+                      <input type="checkbox" name="amenity" value="Y">tv</label>
                     <label class="checkbox-inline">
-                      <input type="checkbox" name="amenityKitchen" value="Y">kitchen</label>
+                      <input type="checkbox" name="amenity" value="Y">kitchen</label>
                     <label class="checkbox-inline">
-                      <input type="checkbox"  name="amenityBBQ" value="Y">bbq</label>
+                      <input type="checkbox"  name="amenity" value="Y">bbq</label>
                   </div>
                 </div>
               </div>

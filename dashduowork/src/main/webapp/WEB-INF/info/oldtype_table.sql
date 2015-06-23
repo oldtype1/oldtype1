@@ -74,6 +74,7 @@ member_pass varchar2(50) not null,
 member_answer_type varchar2(200) CHECK 
 (member_answer_type IN('나의 신발사이즈는?','나의 보물 1호는?','나의 부모님 성함은?','나의 초등학교는?')) not null,
 member_pass_answer varchar2(200) not null, 
+member_bank varchar2(200) not null,
 member_bank_acount varchar2(200) not null
 )
 

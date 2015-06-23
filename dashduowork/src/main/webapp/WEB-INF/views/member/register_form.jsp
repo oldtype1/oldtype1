@@ -124,21 +124,34 @@
 					</div>
 					
 					<div class="form-group">
-						<div class="col-sm2">
-							<label for="inputInfo3" clas></label>
-						</div>
-					</div>
-					
-				<div class="form-group">
 						<div class="col-sm-2">
-							<label for="inputInfo3" class="control-label">bank Acount</label>
+							<label for="inputInfo3" class="control-label">계좌 번호</label>
 						</div>
 						<div class="col-sm-8">
-				 			 <input type="text" class="form-control" name="bankAcount" id="bankAcount" required="required">
-               		</div>
-						<font color="red"><form:errors path="bankAcount"></form:errors></font>
+						<select class="form-control" name="memberBank" id="memberBank" required="required">
+               			 <option value="">은행을 선택하세요.</option>
+ 						 <option value="국민">국민은행</option>
+ 						 <option value="신한">신한은행</option>
+ 						 <option value="외환">외환은행</option>
+ 					     <option value="농협">농협</option>
+ 					     <option value="우체국">우체국</option>
+  		       		   </select>
+  						<form:input type="text" name="memberBankAcount" id="memberBankAcount" placeholder="ex) 계좌번호는 '-'없이 숫자만 나열해주세요!" 
+						path="memberBankAcount" class="form-control"/>
+						</div>
+						<font color="red"><form:errors path="memberBankAcount"></form:errors></font>
 					</div>
-					
+			
+					<div class="form-group">
+						<div class="col-sm-2">
+							<label for="inputInfo3" class="control-label">자기 소개</label>
+						</div>
+						<div class="col-sm-8">
+							<form:textarea rows="4" cols="50" class="form-control"
+								name="memberInfo" placeholder="자기소개" path="memberInfo"></form:textarea>
+						</div>
+						<font color="red"><form:errors path="memberInfo"></form:errors></font>
+					</div>
 					
 					<div class="form-group">
 						<div class="col-sm-2">
