@@ -63,6 +63,7 @@
 							<input type="file" class="form-control" name="file">
 						</div>
 					</div>
+					
 					<div class="form-group">
 						<div class="col-sm-2">
 							<label for="inputEmail3" class="control-label">id</label>
@@ -74,6 +75,7 @@
 						<span id="checkResult"></span> <font color="red"><form:errors
 								path="memberId"></form:errors></font>
 					</div>
+					
 					<div class="form-group">
 						<div class="col-sm-2">
 							<label for="inputPassword3" class="control-label">password</label>
@@ -85,6 +87,7 @@
 						</div>
 						<font color="red"><form:errors path="memberPass"></form:errors></font>
 					</div>
+					
 					<div class="form-group">
 						<div class="col-sm-2">
 							<label for="inputcheckPassword3" class="control-label">check
@@ -97,6 +100,7 @@
 						</div>
 						<span id="passCheckView"></span>
 					</div>
+					
 					<div class="form-group">
 						<div class="col-sm-2">
 							<label for="inputName3" class="control-label">name</label>
@@ -107,6 +111,7 @@
 						</div>
 						<font color="red"><form:errors path="memberName"></form:errors></font>
 					</div>
+					
 					<div class="form-group">
 						<div class="col-sm-2">
 							<label for="inputPhone3" class="control-label">phone</label>
@@ -117,16 +122,24 @@
 						</div>
 						<font color="red"><form:errors path="memberTel"></form:errors></font>
 					</div>
+					
 					<div class="form-group">
+						<div class="col-sm2">
+							<label for="inputInfo3" clas></label>
+						</div>
+					</div>
+					
+				<div class="form-group">
 						<div class="col-sm-2">
-							<label for="inputInfo3" class="control-label">자기 소개</label>
+							<label for="inputInfo3" class="control-label">bank Acount</label>
 						</div>
 						<div class="col-sm-8">
-							<form:textarea rows="4" cols="50" class="form-control"
-								name="memberInfo" placeholder="자기소개" path="memberInfo"></form:textarea>
-						</div>
-						<font color="red"><form:errors path="memberInfo"></form:errors></font>
+				 			 <input type="text" class="form-control" name="bankAcount" id="bankAcount" required="required">
+               		</div>
+						<font color="red"><form:errors path="bankAcount"></form:errors></font>
 					</div>
+					
+					
 					<div class="form-group">
 						<div class="col-sm-2">
 							<label for="inputInfo3" class="control-label">비밀번호 체크 문제</label>
@@ -142,6 +155,7 @@
 						</div>
 						<font color="red"><form:errors path="memberAnswerType"></form:errors></font>
 					</div>
+					
 					<div class="form-group">
 						<div class="col-sm-2">
 							<label for="inputInfo3" class="control-label">비밀번호 체크 정답</label>

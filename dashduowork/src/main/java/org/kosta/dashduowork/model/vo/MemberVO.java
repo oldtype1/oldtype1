@@ -23,6 +23,9 @@ public class MemberVO {
 	private String memberAnswerType;
 	@NotEmpty
 	private String memberPassAnswer;
+	@NotEmpty
+	@NumberFormat(style = Style.NUMBER)
+	private String bankAcount;
 	private ProfilePicVO profilePicVO;
 	private List<WishListVO> wishList;
 	private List<BookVO> book;
@@ -35,8 +38,9 @@ public class MemberVO {
 
 	public MemberVO(String memberId, String memberPass, String memberName,
 			String memberTel, String memberInfo, String memberAnswerType,
-			String memberPassAnswer, ProfilePicVO profilePicVO,
-			List<WishListVO> wishList, List<BookVO> book, List<InnVO> inn) {
+			String memberPassAnswer, String bankAcount,
+			ProfilePicVO profilePicVO, List<WishListVO> wishList,
+			List<BookVO> book, List<InnVO> inn) {
 		super();
 		this.memberId = memberId;
 		this.memberPass = memberPass;
@@ -45,6 +49,7 @@ public class MemberVO {
 		this.memberInfo = memberInfo;
 		this.memberAnswerType = memberAnswerType;
 		this.memberPassAnswer = memberPassAnswer;
+		this.bankAcount = bankAcount;
 		this.profilePicVO = profilePicVO;
 		this.wishList = wishList;
 		this.book = book;
@@ -107,6 +112,14 @@ public class MemberVO {
 		this.memberPassAnswer = memberPassAnswer;
 	}
 
+	public String getBankAcount() {
+		return bankAcount;
+	}
+
+	public void setBankAcount(String bankAcount) {
+		this.bankAcount = bankAcount;
+	}
+
 	public ProfilePicVO getProfilePicVO() {
 		return profilePicVO;
 	}
@@ -145,8 +158,9 @@ public class MemberVO {
 				+ ", memberName=" + memberName + ", memberTel=" + memberTel
 				+ ", memberInfo=" + memberInfo + ", memberAnswerType="
 				+ memberAnswerType + ", memberPassAnswer=" + memberPassAnswer
-				+ ", profilePicVO=" + profilePicVO + ", wishList=" + wishList
-				+ ", book=" + book + ", inn=" + inn + "]";
+				+ ", bankAcount=" + bankAcount + ", profilePicVO="
+				+ profilePicVO + ", wishList=" + wishList + ", book=" + book
+				+ ", inn=" + inn + "]";
 	}
 
 }
