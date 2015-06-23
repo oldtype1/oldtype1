@@ -63,6 +63,7 @@
 							<input type="file" class="form-control" name="file">
 						</div>
 					</div>
+					
 					<div class="form-group">
 						<div class="col-sm-2">
 							<label for="inputEmail3" class="control-label">id</label>
@@ -74,6 +75,7 @@
 						<span id="checkResult"></span> <font color="red"><form:errors
 								path="memberId"></form:errors></font>
 					</div>
+					
 					<div class="form-group">
 						<div class="col-sm-2">
 							<label for="inputPassword3" class="control-label">password</label>
@@ -85,6 +87,7 @@
 						</div>
 						<font color="red"><form:errors path="memberPass"></form:errors></font>
 					</div>
+					
 					<div class="form-group">
 						<div class="col-sm-2">
 							<label for="inputcheckPassword3" class="control-label">check
@@ -97,6 +100,7 @@
 						</div>
 						<span id="passCheckView"></span>
 					</div>
+					
 					<div class="form-group">
 						<div class="col-sm-2">
 							<label for="inputName3" class="control-label">name</label>
@@ -107,6 +111,7 @@
 						</div>
 						<font color="red"><form:errors path="memberName"></form:errors></font>
 					</div>
+					
 					<div class="form-group">
 						<div class="col-sm-2">
 							<label for="inputPhone3" class="control-label">phone</label>
@@ -117,6 +122,26 @@
 						</div>
 						<font color="red"><form:errors path="memberTel"></form:errors></font>
 					</div>
+					
+					<div class="form-group">
+						<div class="col-sm-2">
+							<label for="inputInfo3" class="control-label">계좌 번호</label>
+						</div>
+						<div class="col-sm-8">
+						<select class="form-control" name="memberBank" id="memberBank" required="required">
+               			 <option value="">은행을 선택하세요.</option>
+ 						 <option value="국민">국민은행</option>
+ 						 <option value="신한">신한은행</option>
+ 						 <option value="외환">외환은행</option>
+ 					     <option value="농협">농협</option>
+ 					     <option value="우체국">우체국</option>
+  		       		   </select>
+  						<form:input type="text" name="memberBankAcount" id="memberBankAcount" placeholder="ex) 계좌번호는 '-'없이 숫자만 나열해주세요!" 
+						path="memberBankAcount" class="form-control"/>
+						</div>
+						<font color="red"><form:errors path="memberBankAcount"></form:errors></font>
+					</div>
+			
 					<div class="form-group">
 						<div class="col-sm-2">
 							<label for="inputInfo3" class="control-label">자기 소개</label>
@@ -127,6 +152,7 @@
 						</div>
 						<font color="red"><form:errors path="memberInfo"></form:errors></font>
 					</div>
+					
 					<div class="form-group">
 						<div class="col-sm-2">
 							<label for="inputInfo3" class="control-label">비밀번호 체크 문제</label>
@@ -142,6 +168,7 @@
 						</div>
 						<font color="red"><form:errors path="memberAnswerType"></form:errors></font>
 					</div>
+					
 					<div class="form-group">
 						<div class="col-sm-2">
 							<label for="inputInfo3" class="control-label">비밀번호 체크 정답</label>

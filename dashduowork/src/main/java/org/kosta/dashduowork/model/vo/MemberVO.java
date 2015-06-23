@@ -23,6 +23,10 @@ public class MemberVO {
 	private String memberAnswerType;
 	@NotEmpty
 	private String memberPassAnswer;
+	private String memberBank;
+	@NotEmpty
+	@NumberFormat(style = Style.NUMBER)
+	private String memberBankAcount;
 	private ProfilePicVO profilePicVO;
 	private List<WishListVO> wishList;
 	private List<BookVO> book;
@@ -35,7 +39,8 @@ public class MemberVO {
 
 	public MemberVO(String memberId, String memberPass, String memberName,
 			String memberTel, String memberInfo, String memberAnswerType,
-			String memberPassAnswer, ProfilePicVO profilePicVO,
+			String memberPassAnswer, String memberBank,
+			String memberBankAcount, ProfilePicVO profilePicVO,
 			List<WishListVO> wishList, List<BookVO> book, List<InnVO> inn) {
 		super();
 		this.memberId = memberId;
@@ -45,6 +50,8 @@ public class MemberVO {
 		this.memberInfo = memberInfo;
 		this.memberAnswerType = memberAnswerType;
 		this.memberPassAnswer = memberPassAnswer;
+		this.memberBank = memberBank;
+		this.memberBankAcount = memberBankAcount;
 		this.profilePicVO = profilePicVO;
 		this.wishList = wishList;
 		this.book = book;
@@ -107,6 +114,22 @@ public class MemberVO {
 		this.memberPassAnswer = memberPassAnswer;
 	}
 
+	public String getMemberBank() {
+		return memberBank;
+	}
+
+	public void setMemberBank(String memberBank) {
+		this.memberBank = memberBank;
+	}
+
+	public String getMemberBankAcount() {
+		return memberBankAcount;
+	}
+
+	public void setMemberBankAcount(String memberBankAcount) {
+		this.memberBankAcount = memberBankAcount;
+	}
+
 	public ProfilePicVO getProfilePicVO() {
 		return profilePicVO;
 	}
@@ -145,8 +168,10 @@ public class MemberVO {
 				+ ", memberName=" + memberName + ", memberTel=" + memberTel
 				+ ", memberInfo=" + memberInfo + ", memberAnswerType="
 				+ memberAnswerType + ", memberPassAnswer=" + memberPassAnswer
-				+ ", profilePicVO=" + profilePicVO + ", wishList=" + wishList
-				+ ", book=" + book + ", inn=" + inn + "]";
+				+ ", memberBank=" + memberBank + ", memberBankAcount="
+				+ memberBankAcount + ", profilePicVO=" + profilePicVO
+				+ ", wishList=" + wishList + ", book=" + book + ", inn=" + inn
+				+ "]";
 	}
 
 }

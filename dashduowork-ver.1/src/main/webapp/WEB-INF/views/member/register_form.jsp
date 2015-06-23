@@ -110,6 +110,16 @@
 					</div>
 					<div class="form-group">
 						<div class="col-sm-2">
+							<label for="inputPhone3" class="control-label">bank account</label>
+						</div>
+						<div class="col-sm-8">
+							<form:input type="text" class="form-control" id="bankAccount"
+								placeholder="bankAccount" name="bankAccount" path="bankAccount"/>
+						</div>
+						<font color="red"><form:errors path="bankAccount"></form:errors></font>
+					</div>
+					<div class="form-group">
+						<div class="col-sm-2">
 							<label for="inputInfo3" class="control-label">자기 소개</label>
 						</div>
 						<div class="col-sm-8">

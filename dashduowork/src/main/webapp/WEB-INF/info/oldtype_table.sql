@@ -76,6 +76,7 @@ member_pass varchar2(50) not null,
 member_answer_type varchar2(200) CHECK 
 (member_answer_type IN('나의 신발사이즈는?','나의 보물 1호는?','나의 부모님 성함은?','나의 초등학교는?')) not null,
 member_pass_answer varchar2(200) not null, 
+member_bank varchar2(200) not null,
 member_bank_acount varchar2(200) not null
 )
 
@@ -199,14 +200,19 @@ inn_name varchar2(50) not null,
 book_checkin date not null,
 book_checkout date not null,
 inn_price number not null,
-member_id varchar2(50) not null,
+member_id varchar2(200) not null,
 master varchar2(50) not null,
 inn_no number,
 rating_check VARCHAR2(1) CHECK (rating_check IN ('Y','N')),
 constraint fk_member10 foreign key(member_id) references member(member_id) on DELETE CASCADE
 )
+
 --inn_no: inn_name 클릭시 숙소 상세보기로 넘어가기 위한 inn_no 추가
 --rating_check: 별점 매겼는지 안매겻는지 위한 체크 칼럼을 추가
+
+-----------------------------------
+
+
 -----------------------------------
 insert into Trade
 (Trade_no, inn_name, book_checkin, book_checkout, inn_price,member_id,master,inn_no,rating_check) 
@@ -215,6 +221,12 @@ insert into Trade
 (Trade_no, inn_name, book_checkin, book_checkout, inn_price,member_id,master,inn_no,rating_check) 
 values(trade_sequence.nextval,'주형이네집','2015-06-15','2015-06-17',30000,'oldtype','jh4395@ahaha','2','Y');
 -----------------------------------
+
+
+delete from trade where book_checkout < sysdate
+------------------------------------
+
+drop table rating;
 
 create table rating(
 inn_no number primary key,
