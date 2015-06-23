@@ -13,6 +13,7 @@ import org.kosta.dashduowork.model.vo.DeleteVO;
 import org.kosta.dashduowork.model.vo.FilterVO;
 import org.kosta.dashduowork.model.vo.InnListVO;
 import org.kosta.dashduowork.model.vo.InnPicCompVO;
+import org.kosta.dashduowork.model.vo.InnRatingVO;
 import org.kosta.dashduowork.model.vo.InnReservationListVO;
 import org.kosta.dashduowork.model.vo.InnVO;
 import org.kosta.dashduowork.model.vo.MemberVO;
@@ -73,4 +74,6 @@ public interface InnService {
 	public int wishCheck(WishListVO wvo);
 	//위시리스트취소
 		public abstract int getWishListNoByInnNo(InnVO ivo);
+		//별점주기
+		public void ratingInn(InnRatingVO irv,int tradeNo);
 }

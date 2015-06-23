@@ -13,7 +13,6 @@
 	-- 4. inn 테이블에 member_id 컬럼을 추가하였습니다.(ON DELETE CASCADE 적용을 위해)
 	
 	-- 5. 복합 pk를 제거하고 단일 pk로 만들었습니다.
-	
 -------------------------------------------------------------------------------------------------------------------
 	
 -- 6/10 수정
@@ -21,6 +20,9 @@
 		-- 시퀀스 삭제, pk는 멤버의 아이디를 참조, 파일 이름만 컬럼 외에는 모두 삭제
 
 -------------------------------------------------------------------------------------------------------------------
+--6/23 거래테이블 수정
+-- 	      별점테이블 추가		  
+----------------------------
 drop table member;
 drop table inn;
 drop table comments;
@@ -78,6 +80,8 @@ member_bank varchar2(200) not null,
 member_bank_acount varchar2(200) not null
 )
 
+alter table member add(member_bank varchar2(200))
+
 insert into MEMBER
 (member_id, member_name, member_tel, member_info, member_pass) 
 values('oldtype','방은수','011-1234-5678','데헷','oldtype')
@@ -86,7 +90,6 @@ delete from member where member_id = 'oldtype';
 
 select member_id, member_name, member_tel, member_info, member_pass 
 from member where member_id='oldtype' and member_pass='oldtype'
-
 
 select * from inn
 update inn set inn_availability='N' where inn_no=1
@@ -116,7 +119,7 @@ values(inn_sequence.nextval,'판교역','성남','판교','판교동','집 전�
 create table amenity(
 amenity_no number primary key,
 inn_no number not null,
-amenity_item varchar2(200) not null
+amenity_item varchar2(200) not null,
 constraint fk_inn6 foreign key(inn_no) references inn(inn_no) on DELETE CASCADE
 )
 
@@ -201,35 +204,32 @@ book_checkout date not null,
 inn_price number not null,
 member_id varchar2(200) not null,
 master varchar2(50) not null,
+inn_no number,
+rating_check VARCHAR2(1) CHECK (rating_check IN ('Y','N')),
 constraint fk_member10 foreign key(member_id) references member(member_id) on DELETE CASCADE
 )
+
+--inn_no: inn_name 클릭시 숙소 상세보기로 넘어가기 위한 inn_no 추가
+--rating_check: 별점 매겼는지 안매겻는지 위한 체크 칼럼을 추가
+
 -----------------------------------
 
 
 -----------------------------------
 insert into Trade
-(Trade_no, inn_name, book_checkin, book_checkout, inn_price,member_id,master) 
-values(trade_sequence.nextval,'강남오피스텔','2015-06-14','2015-06-16',30000,'oldtype','jh4395@ahaha');
+(Trade_no, inn_name, book_checkin, book_checkout, inn_price,member_id,master,inn_no,rating_check) 
+values(trade_sequence.nextval,'강남오피스텔','2015-06-14','2015-06-16',30000,'oldtype','jh4395@ahaha','1','N');
 insert into Trade
-(Trade_no, inn_name, book_checkin, book_checkout, inn_price,member_id,master) 
-values(trade_sequence.nextval,'영통메르','2015-06-15','2015-06-17',30000,'oldtype','jh4395@ahaha');
-insert into Trade
-(Trade_no, inn_name, book_checkin, book_checkout, inn_price,member_id,master) 
-values(trade_sequence.nextval,'영통메르','2015-06-16','2015-06-18',30000,'oldtype','jh4395@ahaha');
-insert into Trade
-(Trade_no, inn_name, book_checkin, book_checkout, inn_price,member_id,master) 
-values(trade_sequence.nextval,'영통메르','2015-06-15','2015-06-17',30000,'jh4395@ahaha','oldtype');
-insert into Trade
-(Trade_no, inn_name, book_checkin, book_checkout, inn_price,member_id,master) 
-values(trade_sequence.nextval,'영통메르','2015-06-15','2015-06-16',30000,'oldtype','1qwqw');
+(Trade_no, inn_name, book_checkin, book_checkout, inn_price,member_id,master,inn_no,rating_check) 
+values(trade_sequence.nextval,'주형이네집','2015-06-15','2015-06-17',30000,'oldtype','jh4395@ahaha','2','Y');
 -----------------------------------
-select * from trade
-delete from trade where Trade_no=5
+
 
 delete from trade where book_checkout < sysdate
 ------------------------------------
 
 drop table rating;
+
 create table rating(
 inn_no number primary key,
 point number not null,

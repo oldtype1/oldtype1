@@ -20,6 +20,7 @@ PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
 		<typeAlias type="org.kosta.dashduowork.model.vo.FilterVO" alias="fvo"/>
 		<typeAlias type="org.kosta.dashduowork.model.vo.InnReservationVO" alias="irvo"/>
 		<typeAlias type="org.kosta.dashduowork.model.vo.TradeVO" alias="tvo"/>	
+		<typeAlias type="org.kosta.dashduowork.model.vo.InnRatingVO" alias="innratevo"/>
 	</typeAliases>	
 <!--     sql mapping config xml 을 연결 -->
 	<mappers>
@@ -31,6 +32,7 @@ PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
 		<mapper resource="mybatis/config/amenity.xml"/>
 		<mapper resource="mybatis/config/delete.xml"/>	
 			<mapper resource="mybatis/config/scheduler.xml"/>		
+			<mapper resource="mybatis/config/rating.xml"/>	
 	</mappers>
 </configuration>
 

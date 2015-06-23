@@ -39,6 +39,7 @@
             </div>
           </div>
         </div>
+        
       <div class="section">
         <div class="container">
           <div class="row">
@@ -54,6 +55,8 @@
           </div>
         </div>
       </div>
+      
+       <form action="ratingInn.do" id="ratingForm" method="post">
      <div class="section text-center">
         <div class="container">
           <div class="row">
@@ -72,19 +75,32 @@
                    </thead>
                   <c:forEach var="tvo" items="${requestScope.tvo.list}">           
                   <tr>        
-					<c:if test="${tvo.memberId==sessionScope.mvo.memberId}">           
-					<td class="col-md-1 text-center" draggable="true">     
+		<c:if test="${tvo.memberId==sessionScope.mvo.memberId}">           
+		 <td class="col-md-1 text-center" draggable="true">     
                       <h4 style="color:red;">예약-  ${tvo.master}</h4>
-                      </td>    
-                      </c:if>
-                      <c:if test="${tvo.master==sessionScope.mvo.memberId}">
+          </td>                      
+         <td class="col-md-1">      
+           			  <c:choose>
+           			  <c:when test="${tvo.ratingCheck=='Y'}"> <!-- 별점 체크가 되있을경우 그냥 상세보기 -->
+            		   <h4 class="text-center"><a href="inn_in_show.do?innNo=${tvo.innNo}">${tvo.innName}</a> </h4>
+       	    		  </c:when>
+        			     <c:otherwise>	<!-- 별점 체크가 없을경우 -->	
+            		  <h4 class="text-center"   data-toggle="modal" data-target="#rating" data-whatever="@mdo"><a href="#">${tvo.innName}</a></h4> 
+            	 	<input type="hidden" name="innNo" value="${tvo.innNo}">
+            	 	<input type="hidden" name="tradeNo" value="${tvo.tradeNo}">
+         	 	   </c:otherwise>
+         	  	  </c:choose>
+            </td>    
+         </c:if>           
+         <c:if test="${tvo.master==sessionScope.mvo.memberId}">
                       <td class="col-md-1 text-center" draggable="true"> 
                       <h4 style="color: blue;">등록-  ${tvo.memberId}</h4>
                       </td> 
-                      </c:if>                          
-                    <td class="col-md-1">
-                        <h4 class="text-center">${tvo.innName}</h4>
-                    </td>        
+                      <td class="col-md-1">      
+               	<h4 class="text-center"><a href="inn_in_show.do?innNo=${tvo.innNo}">${tvo.innName}</a> </h4>
+                   	  </td>   
+          </c:if>        	
+					       
                     <td class="col-md-1">
                       <h4 class="text-center">${tvo.bookCheckIn}</h4>
                     </td>
@@ -106,6 +122,37 @@
           </div>
         </div>
       </div>
+      
+           <div class="modal fade" id="rating"  tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title" id="exampleModalLabel">별점을 주세요!</h4>
+      </div>
+      <div class="modal-body">
+          <div class="form-group">
+            <label for="recipient-name" class="control	-label" >별점:</label>
+            <script type="text/javascript">
+        	</script>
+            <input type='radio' name='Point' value='1' />
+		    <input type='radio' name='Point' value='2' />   
+        	<input type='radio' name='Point' value='3' />
+        	<input type='radio' name='Point' value='4' />
+        	<input type='radio' name='Point' value='5' />
+          </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal"  id="close">Close</button>
+        <button type="submit" class="btn btn-primary" id="rating">별점주기</button>
+      </div>
+
+    </div>        
+  </div>
+</div> 
+         </form>  
+      
       <div class="section text-center">
         <div class="container">
           <div class="row">
