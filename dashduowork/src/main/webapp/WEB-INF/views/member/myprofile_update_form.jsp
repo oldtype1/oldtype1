@@ -62,7 +62,7 @@
                          </div>
                          
                           <div class="form-group">
-							<label for="exampleinputInfo3" class="control-label">계좌 번호</label>
+							<label for="exampleinputInfo3" class="control-label">은행 / 계좌 번호</label>
 							<select class="form-control" name="memberBank" id="memberBank">
                				 <option value="">은행을 선택하세요.</option>
  							 <option value="국민">국민은행</option>

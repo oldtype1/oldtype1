@@ -125,7 +125,7 @@
 					
 					<div class="form-group">
 						<div class="col-sm-2">
-							<label for="inputInfo3" class="control-label">계좌 번호</label>
+							<label for="inputInfo3" class="control-label">은행 / 계좌 번호</label>
 						</div>
 						<div class="col-sm-8">
 						<select class="form-control" name="memberBank" id="memberBank" required="required">
