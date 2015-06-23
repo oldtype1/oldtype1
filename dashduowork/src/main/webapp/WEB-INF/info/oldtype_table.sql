@@ -46,6 +46,7 @@ CREATE SEQUENCE book_sequence;
 CREATE SEQUENCE wishlist_sequence;
 CREATE SEQUENCE profile_pic_sequence;
 CREATE SEQUENCE inn_pic_sequence;
+CREATE SEQUENCE amenity_sequence;
 CREATE SEQUENCE availabledate_no_sequence;
 
 DROP SEQUENCE inn_sequence;
@@ -53,6 +54,7 @@ DROP SEQUENCE book_sequence;
 DROP SEQUENCE wishlist_sequence;
 DROP SEQUENCE profile_pic_sequence;
 DROP SEQUENCE inn_pic_sequence;
+DROP SEQUENCE amenity_sequence;
 DROP SEQUENCE availabledate_no_sequence;
 
 -----------------멤버테이블-----------------------
@@ -64,7 +66,8 @@ member_info clob not null,
 member_pass varchar2(50) not null,
 member_answer_type varchar2(200) CHECK 
 (member_answer_type IN('나의 신발사이즈는?','나의 보물 1호는?','나의 부모님 성함은?','나의 초등학교는?')) not null,
-member_pass_answer varchar2(200) not null 
+member_pass_answer varchar2(200) not null, 
+member_bank_acount varchar2(200) not null
 )
 
 insert into MEMBER
@@ -103,17 +106,13 @@ values(inn_sequence.nextval,'판교역','성남','판교','판교동','집 전�
 
 -----------------제공시설 테이블(inn_no ref) 오류-----------------------
 create table amenity(
-amenity_wifi VARCHAR2(1) CHECK (amenity_wifi IN ('Y', 'N')),
-amenity_bed VARCHAR2(1) CHECK (amenity_bed IN ('Y', 'N')),
-amenity_tv VARCHAR2(1) CHECK (amenity_tv IN ('Y', 'N')),
-amenity_kitchen VARCHAR2(1) CHECK (amenity_kitchen IN ('Y', 'N')),
-amenity_bbq VARCHAR2(1) CHECK (amenity_bbq IN ('Y', 'N')),
-inn_no number primary key,
+amenity_no number primary key,
+inn_no number not null,
+amenity_item varchar2(200) not null
 constraint fk_inn6 foreign key(inn_no) references inn(inn_no) on DELETE CASCADE
 )
 
-insert into amenity(amenity_wifi,amenity_bed,amenity_tv,amenity_kitchen,amenity_bbq, inn_no) values
-	('Y','Y','Y','Y','Y',7)
+
 
 
 -----------------댓글테이블(member_id / inn_no ref) ----------------------
@@ -222,4 +221,3 @@ delete from trade where Trade_no=5
 delete from trade where book_checkout < sysdate
 ------------------------------------
 	
-
