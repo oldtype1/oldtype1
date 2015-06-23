@@ -80,6 +80,8 @@ member_bank varchar2(200) not null,
 member_bank_acount varchar2(200) not null
 )
 
+alter table member add(member_bank varchar2(200))
+
 insert into MEMBER
 (member_id, member_name, member_tel, member_info, member_pass) 
 values('oldtype','방은수','011-1234-5678','데헷','oldtype')

@@ -38,4 +38,9 @@ public class TradeDAOImpl implements TradeDAO{
 	public void tradeDelete(DeleteVO tdvo) {
 			sqlSessionTemplate.delete("delete.tradeDelete",tdvo);
 	}
+	//별점 했을시 별점유무체크칼람을 N-->Y로 바꿔준다.
+	@Override
+	public void updateRatingCheck(int tradeNo) {
+		 sqlSessionTemplate.update("rating.updateRatingCheck",tradeNo);
+	}
 }

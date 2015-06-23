@@ -15,6 +15,7 @@ import org.kosta.dashduowork.model.dao.AvailableDateDAO;
 import org.kosta.dashduowork.model.dao.BookDAO;
 import org.kosta.dashduowork.model.dao.InnDAO;
 import org.kosta.dashduowork.model.dao.InnPicCompDAO;
+import org.kosta.dashduowork.model.dao.InnRatingDAO;
 import org.kosta.dashduowork.model.dao.InnReservationDAO;
 import org.kosta.dashduowork.model.dao.MemberDAO;
 import org.kosta.dashduowork.model.dao.TradeDAO;
@@ -27,6 +28,7 @@ import org.kosta.dashduowork.model.vo.DeleteVO;
 import org.kosta.dashduowork.model.vo.FilterVO;
 import org.kosta.dashduowork.model.vo.InnListVO;
 import org.kosta.dashduowork.model.vo.InnPicCompVO;
+import org.kosta.dashduowork.model.vo.InnRatingVO;
 import org.kosta.dashduowork.model.vo.InnReservationListVO;
 import org.kosta.dashduowork.model.vo.InnReservationVO;
 import org.kosta.dashduowork.model.vo.InnVO;
@@ -60,6 +62,8 @@ public class InnServiceImpl implements InnService {
    private MemberDAO memberDAO;
    @Resource(name="tradeDAOImpl")
 	private TradeDAO tradeDAO;
+   @Resource(name="innRatingDAOImpl")
+   private InnRatingDAO innRatingDAO;
    
    @Override
    public void registerInn(InnVO ivo){
@@ -470,4 +474,23 @@ public class InnServiceImpl implements InnService {
  	System.out.println("getWishListNoByInnNo  Service"+ivo);
  	return wishListDAO.getWishListNoByInnNo(ivo);
  }
+ 
+ //6/23 별점 비즈니스 
+ @Override
+ public void ratingInn(InnRatingVO irv,int tradeNo) {
+ 	//숙소가 별점 테이블에 처음 추가되는거면 insert
+ 	//이미 숙소가 별점에 추가되어있으면 update
+ 	int count = innRatingDAO.checkRatingTable(irv.getInnNo());
+ 	if(count>0){ //이미 있으니 업데이트
+ 		innRatingDAO.updateInnRating(irv);
+ 	}
+ 	else{ // 없으니 인서트 
+ 		innRatingDAO.insertNewInnRating(irv);
+ 		tradeDAO.updateRatingCheck(tradeNo);
+ 	}
+ }
+
 }
+
+
+

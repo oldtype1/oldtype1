@@ -51,6 +51,8 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 <result property="bookNo" column="book_no"/>
 <result property="memberId" column="member_id"/>
 <result property="master" column="master"/>
+<result property="innNo" column="inn_no"/>
+<result property="ratingCheck" column="rating_check"/>
 </resultMap>
 	<sql id="innlist">
 		select inn_no,inn_name,inn_city,inn_area,inn_address,inn_type,inn_acceptable_no,
@@ -136,13 +138,13 @@ ceil(rownum/5) as page from
  ) where page=#{pageNo}
 </select>
 
-	<select id="getmytradelist" parameterType="hashmap" resultType="tvo" resultMap="TradeResult">
-  select Trade_no, inn_name, book_checkin, book_checkout, inn_price, member_id,master from	
+<select id="getmytradelist" parameterType="hashmap" resultType="tvo" resultMap="TradeResult">
+  select Trade_no, inn_name, book_checkin, book_checkout, inn_price, member_id,master,inn_no,rating_check from	
 		(
  select Trade_no, inn_name,to_char(book_checkin,'YYYY-MM-DD') as book_checkin,to_char(book_checkout,'YYYY-MM-DD')
-  as book_checkout, inn_price, member_id,master,ceil(rownum/5) as page from
+  as book_checkout, inn_price, member_id,master,inn_no,rating_check,ceil(rownum/5) as page from
  (
-   select Trade_no,inn_name, book_checkin, book_checkout, inn_price, member_id,master from trade
+   select Trade_no,inn_name, book_checkin, book_checkout, inn_price, member_id,master,inn_no,rating_check from trade
     where member_id=#{member_id} or master=#{member_id} order by Trade_no desc	
  )
  )   where page=#{pageNo} 
