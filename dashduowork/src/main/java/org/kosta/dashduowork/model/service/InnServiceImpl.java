@@ -483,6 +483,7 @@ public class InnServiceImpl implements InnService {
  	int count = innRatingDAO.checkRatingTable(irv.getInnNo());
  	if(count>0){ //이미 있으니 업데이트
  		innRatingDAO.updateInnRating(irv);
+ 		tradeDAO.updateRatingCheck(tradeNo);
  	}
  	else{ // 없으니 인서트 
  		innRatingDAO.insertNewInnRating(irv);
