@@ -84,6 +84,7 @@
                              <input class="form-control" id="memberTel" value="${requestScope.memberInfo.memberTel}"
                              type="text"  readonly="readonly">
                          </div>
+                         
                           <div class="form-group">
                              <label for="inputInfo3" class="control-label">자기 소개</label>
                              <textarea readonly="readonly" rows="4" cols="70" class="form-control"placeholder=

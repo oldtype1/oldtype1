@@ -13,7 +13,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	<result property="memberAnswerType" column="member_answer_type"/>
 	<result property="memberPassAnswer" column="member_pass_answer"/>
 	<result property="memberBank" column="member_bank"/>
-	<result property="memberBankAcount" column="member_pass_answer"/>
+	<result property="memberBankAcount" column="member_bank_acount"/>
 </resultMap>
 
 	<sql id="selectMember">
@@ -32,7 +32,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
    <update id="updateMemberInfo" parameterType="mvo">
    update member set member_name=#{memberName}, member_tel=#{memberTel}, 
    member_info=#{memberInfo}, member_pass=#{memberPass}, 
-   member_answer_type=#{memberAnswerType}, member_pass_answer=#{memberPassAnswer}
+   member_answer_type=#{memberAnswerType}, member_pass_answer=#{memberPassAnswer},
    member_bank=#{memberBank}, member_bank_acount=#{memberBankAcount}
    where member_id=#{memberId}
    </update>
