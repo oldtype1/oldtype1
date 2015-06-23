@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="rating">
+<resultMap type="innratevo" id="innRatingResult">
+<result property="innNo" column="inn_no"/>
+<result property="point" column="point"/>
+<result property="peopleNumber" column="people_num"/>
+</resultMap>
+
+<select id="checkRatingTable" parameterType="int" resultType="int">
+select count(*) from rating where inn_no=#{value} 
+</select>
+<update id="updateInnRating" parameterType="innratevo">
+update rating set point=point+#{point},people_num=people_num+1 where inn_no=#{innNo}
+</update>
+<insert id="insertNewInnRating" parameterType="innratevo">
+insert into rating (inn_no,point,people_num) values (#{innNo},#{point},1)
+</insert>	
+<update id="updateRatingCheck" parameterType="int">
+update trade set rating_check='Y' where Trade_no=#{value} 
+</update>
+
+<!-- 상세보기에서 별점 가져올때 쓰세요 반올림해서 1,2,3,4,5 나오게했는데 필요시 바꾸세요-->
+<select id="selectInnRating" parameterType="int" resultType="int">
+select round(point/people_num,0) from rating where inn_no=#{value}
+</select>
+
+</mapper>
+ 
+ 
+ 
+ 
+ 
+ 
+

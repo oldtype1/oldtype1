@@ -21,6 +21,7 @@ import org.kosta.dashduowork.model.vo.DeleteVO;
 import org.kosta.dashduowork.model.vo.FilterVO;
 import org.kosta.dashduowork.model.vo.InnListVO;
 import org.kosta.dashduowork.model.vo.InnPicCompVO;
+import org.kosta.dashduowork.model.vo.InnRatingVO;
 import org.kosta.dashduowork.model.vo.InnReservationListVO;
 import org.kosta.dashduowork.model.vo.InnVO;
 import org.kosta.dashduowork.model.vo.MemberVO;
@@ -519,6 +520,15 @@ public class InnController {
 				innService.wishListDelete(wdvo);
 				return vo;
 			}
+			//별점 매기기 
+			@RequestMapping("ratingInn.do")
+			public String ratingInn(InnRatingVO irv,int tradeNo,HttpServletRequest request){				
+				System.out.println("별점 테이블"+irv);
+				System.out.println("별점 거래번호: "+tradeNo);
+				innService.ratingInn(irv,tradeNo);
+				return "redirect:inn_in_show.do?innNo="+irv.getInnNo();
+			}
+			
 }
 
 
