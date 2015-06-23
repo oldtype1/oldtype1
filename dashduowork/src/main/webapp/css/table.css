@@ -1,0 +1,210 @@
+/* 
+	Grey Suits you Sir. Please host the images on your own server.
+	written by Stuart Colville http://www.muffinresearch.co.uk
+*/
+.CSSTableGenerator {
+	margin:0px;padding:0px;
+	width:100%;
+	border:1px solid #ffffff;
+	
+	-moz-border-radius-bottomleft:0px;
+	-webkit-border-bottom-left-radius:0px;
+	border-bottom-left-radius:0px;
+	
+	-moz-border-radius-bottomright:0px;
+	-webkit-border-bottom-right-radius:0px;
+	border-bottom-right-radius:0px;
+	
+	-moz-border-radius-topright:0px;
+	-webkit-border-top-right-radius:0px;
+	border-top-right-radius:0px;
+	
+	-moz-border-radius-topleft:0px;
+	-webkit-border-top-left-radius:0px;
+	border-top-left-radius:0px;
+}.CSSTableGenerator table{
+    border-collapse: collapse;
+        border-spacing: 0;
+	width:100%;
+	height:100%;
+	margin:0px;padding:0px;
+}.CSSTableGenerator tr:last-child td:last-child {
+	-moz-border-radius-bottomright:0px;
+	-webkit-border-bottom-right-radius:0px;
+	border-bottom-right-radius:0px;
+}
+.CSSTableGenerator table tr:first-child td:first-child {
+	-moz-border-radius-topleft:0px;
+	-webkit-border-top-left-radius:0px;
+	border-top-left-radius:0px;
+}
+.CSSTableGenerator table tr:first-child td:last-child {
+	-moz-border-radius-topright:0px;
+	-webkit-border-top-right-radius:0px;
+	border-top-right-radius:0px;
+}.CSSTableGenerator tr:last-child td:first-child{
+	-moz-border-radius-bottomleft:0px;
+	-webkit-border-bottom-left-radius:0px;
+	border-bottom-left-radius:0px;
+}.CSSTableGenerator tr:hover td{
+	
+}
+.CSSTableGenerator thead th{
+	/* padding: 5px 10px; */
+	font-weight: bold;
+	text-align:center;
+}
+.CSSTableGenerator th,tbody th{
+	font                 : 15px "Tahoma", "Bitstream Vera Sans", Verdana, Helvetica, sans-serif;
+}
+/* .CSSTableGenerator tr:nth-child(odd){ background-color:#e5e5e5; } */
+.CSSTableGenerator tr:nth-child(even)    { background-color:#ffffff; }.CSSTableGenerator td{
+	vertical-align:middle;
+	
+	border:1px solid #ffffff;
+	border-width:0px 1px 1px 0px;
+	text-align:center;
+	padding:7px;
+	font                 : 15px "Tahoma", "Bitstream Vera Sans", Verdana, Helvetica, sans-serif;
+	color:#000000;
+	
+}.CSSTableGenerator tr:last-child td{
+	border-width:0px 1px 0px 0px;
+}.CSSTableGenerator tr td:last-child{
+	border-width:0px 0px 1px 0px;
+}.CSSTableGenerator tr:last-child td:last-child{
+	border-width:0px 0px 0px 0px;
+}
+/* .CSSTableGenerator tr:first-child td{
+		background:-o-linear-gradient(bottom, #e0e0e0 5%, #e0e0e0 100%);	background:-webkit-gradient( linear, left top, left bottom, color-stop(0.05, #e0e0e0), color-stop(1, #e0e0e0) );
+	background:-moz-linear-gradient( center top, #e0e0e0 5%, #e0e0e0 100% );
+	filter:progid:DXImageTransform.Microsoft.gradient(startColorstr="#e0e0e0", endColorstr="#e0e0e0");	background: -o-linear-gradient(top,#e0e0e0,e0e0e0);
+
+	background-color:#e0e0e0;
+	border:0px solid #ffffff;
+	text-align:center;
+	border-width:0px 0px 1px 1px;
+	font-size:20px;
+	font-family:Arial;
+	font-weight:bold;
+	color:#000000;
+} */
+/* .CSSTableGenerator tr:first-child:hover td{
+	background:-o-linear-gradient(bottom, #e0e0e0 5%, #e0e0e0 100%);	background:-webkit-gradient( linear, left top, left bottom, color-stop(0.05, #e0e0e0), color-stop(1, #e0e0e0) );
+	background:-moz-linear-gradient( center top, #e0e0e0 5%, #e0e0e0 100% );
+	filter:progid:DXImageTransform.Microsoft.gradient(startColorstr="#e0e0e0", endColorstr="#e0e0e0");	background: -o-linear-gradient(top,#e0e0e0,e0e0e0);
+
+	background-color:#e0e0e0;
+} */
+.CSSTableGenerator tr:first-child td:first-child{
+	border-width:0px 0px 1px 0px;
+}
+.CSSTableGenerator tr:first-child td:last-child{
+	border-width:0px 0px 1px 1px;
+}
+#videobcg { 
+     position: absolute;
+     top: 50px;
+     left: 0px;
+     min-width: 100%;
+     min-height: 100%;
+     width: auto;
+     height: auto;
+     z-index: -1000;
+     overflow: hidden;
+}
+#img1:hover{
+	opacity: 0.5;
+}
+select, input,button{
+	border: 2;
+	margin: 100;
+	padding: 100;
+	font-family: Arial, Helvetica, sans-serif;
+	line-height: 1.3;
+	font-size: 15px;
+	color: #55595c;
+}
+
+table,td.list_table
+{
+	border               : 1px solid #CCC;
+	border-collapse      : collapse;
+  font                 : 15px "Tahoma", "Bitstream Vera Sans", Verdana, Helvetica, sans-serif;
+}
+table.list_table{
+	border                :none;
+	border                :1px solid #CCC;
+}
+table
+{
+	border                :none;
+}
+thead th,tbody th {
+	background: #FFF url(th_bck.gif) repeat-x;
+	color: #666;
+	padding: 5px 10px;
+	border-left: 1px solid #CCC;
+	font-weight: bold;
+}
+
+tbody th
+{
+  background            : #fafafb;
+  border-top            : 1px solid #CCC;
+  text-align            : center;
+  font-weight           : normal;
+}
+tbody tr td
+{
+	padding               : 5px 10px;
+  color                 : #666;
+}
+tbody tr:hover
+{
+  background            : #FFF url(tr_bck.gif) repeat;
+}
+
+tbody tr:hover td
+{
+  color                 : black;
+}
+tfoot td,
+tfoot th
+{
+  border-left           : none;
+  border-top            : 1px solid #CCC;
+	padding               : 4px;
+  background            : #FFF url(foot_bck.gif) repeat;
+  color                 : #666;
+}
+caption
+{
+	text-align            : left;
+	font-size             : 120%;
+	padding               : 10px 0;
+	color                 : #666;
+}
+table a:link
+{
+	color                 : #666;
+}
+table a:visited
+{
+	color                 : #666;
+}
+table a:hover
+{
+	color                 : #FF9090;
+	text-decoration       : none;
+}
+table a:active
+{
+	color                 : #FF9090;
+}
+
+.index_th{
+	font-size             : 110%;
+	font-weight: bold;
+	color                 : #5D5D5D;
+}
