@@ -30,6 +30,8 @@ drop table profile_pic;
 drop table inn_pic;
 drop table availabledate;
 drop table amenity;
+drop table trade;
+drop table rating
 
 select* from member
 select* from inn
@@ -40,31 +42,39 @@ select* from profile_pic
 select* from inn_pic
 select* from availabledate
 select* from amenity
+select* from trade
+select* from rating
+
 
 CREATE SEQUENCE inn_sequence;
 CREATE SEQUENCE book_sequence;
 CREATE SEQUENCE wishlist_sequence;
 CREATE SEQUENCE profile_pic_sequence;
 CREATE SEQUENCE inn_pic_sequence;
+CREATE SEQUENCE amenity_sequence;
 CREATE SEQUENCE availabledate_no_sequence;
+CREATE SEQUENCE trade_sequence;
 
 DROP SEQUENCE inn_sequence;
 DROP SEQUENCE book_sequence;
 DROP SEQUENCE wishlist_sequence;
 DROP SEQUENCE profile_pic_sequence;
 DROP SEQUENCE inn_pic_sequence;
+DROP SEQUENCE amenity_sequence;
 DROP SEQUENCE availabledate_no_sequence;
+DROP SEQUENCE trade_sequence;
 
 -----------------멤버테이블-----------------------
 create table member(
-member_id varchar2(50) primary key,
+member_id varchar2(200) primary key,
 member_name varchar2(50) not null,
 member_tel varchar2(50) not null,
 member_info clob not null,
 member_pass varchar2(50) not null,
 member_answer_type varchar2(200) CHECK 
 (member_answer_type IN('나의 신발사이즈는?','나의 보물 1호는?','나의 부모님 성함은?','나의 초등학교는?')) not null,
-member_pass_answer varchar2(200) not null 
+member_pass_answer varchar2(200) not null, 
+member_bank_acount varchar2(200) not null
 )
 
 insert into MEMBER
@@ -92,7 +102,7 @@ inn_acceptable_no number not null,
 inn_price number not null,
 inn_info clob not null,
 inn_availability VARCHAR2(1) CHECK (inn_availability IN ('Y','N')),
-member_id varchar2(50) not null,
+member_id varchar2(200) not null,
 constraint fk_member_id foreign key(member_id) references member(member_id) on DELETE CASCADE
 )
 
@@ -103,22 +113,18 @@ values(inn_sequence.nextval,'판교역','성남','판교','판교동','집 전�
 
 -----------------제공시설 테이블(inn_no ref) 오류-----------------------
 create table amenity(
-amenity_wifi VARCHAR2(1) CHECK (amenity_wifi IN ('Y', 'N')),
-amenity_bed VARCHAR2(1) CHECK (amenity_bed IN ('Y', 'N')),
-amenity_tv VARCHAR2(1) CHECK (amenity_tv IN ('Y', 'N')),
-amenity_kitchen VARCHAR2(1) CHECK (amenity_kitchen IN ('Y', 'N')),
-amenity_bbq VARCHAR2(1) CHECK (amenity_bbq IN ('Y', 'N')),
-inn_no number primary key,
+amenity_no number primary key,
+inn_no number not null,
+amenity_item varchar2(200) not null
 constraint fk_inn6 foreign key(inn_no) references inn(inn_no) on DELETE CASCADE
 )
 
-insert into amenity(amenity_wifi,amenity_bed,amenity_tv,amenity_kitchen,amenity_bbq, inn_no) values
-	('Y','Y','Y','Y','Y',7)
+
 
 
 -----------------댓글테이블(member_id / inn_no ref) ----------------------
 create table comments(
-member_id varchar2(50) not null,
+member_id varchar2(200) not null,
 inn_no number not null,
 comments_no number primary key,
 comments_writer varchar2(50) not null,
@@ -131,7 +137,7 @@ constraint fk_inn foreign key(inn_no) references inn(inn_no) on DELETE CASCADE
 
 -----------------예약테이블(member_id / inn_no ref)-----------------------
 create table book(
-member_id varchar2(50) not null,
+member_id varchar2(200) not null,
 inn_no number not null,
 book_no number primary key,
 book_checkin date not null,
@@ -153,7 +159,7 @@ constraint fk_inn2 foreign key(inn_no) references inn(inn_no) on DELETE CASCADE
 
 -----------------프로필테이블(member_id ref)-----------------------
 create table profile_pic(
-member_id varchar2(50) primary key,
+member_id varchar2(200) primary key,
 file_path varchar2(200) not null,
 constraint fk_member3 foreign key(member_id) references member(member_id) on DELETE CASCADE 
 )
@@ -181,7 +187,7 @@ constraint fk_inn5 foreign key(inn_no) references inn(inn_no) on DELETE CASCADE
 -----------------------------------줭신꺼
 --임의 거래 내역 테이블--
 ----------------------------------
-drop table Trade;
+
 ----------------------------------
 --컬럼: 거래내역번호(pk),숙소명, 체크인, 체크아웃, 가격, 예약자(member_id),숙소주인(master)--
 -- 예약자랑 세션 id랑 확인하여 같으면 예약이고
@@ -192,13 +198,13 @@ inn_name varchar2(50) not null,
 book_checkin date not null,
 book_checkout date not null,
 inn_price number not null,
-member_id varchar2(50) not null,
+member_id varchar2(200) not null,
 master varchar2(50) not null,
 constraint fk_member10 foreign key(member_id) references member(member_id) on DELETE CASCADE
 )
 -----------------------------------
-CREATE SEQUENCE trade_sequence;
-drop SEQUENCE trade_sequence;
+
+
 -----------------------------------
 insert into Trade
 (Trade_no, inn_name, book_checkin, book_checkout, inn_price,member_id,master) 
@@ -221,5 +227,12 @@ delete from trade where Trade_no=5
 
 delete from trade where book_checkout < sysdate
 ------------------------------------
-	
+
+drop table rating;
+create table rating(
+inn_no number primary key,
+point number not null,
+people_num number,
+constraint fk_rating foreign key(inn_no) references inn(inn_no) on DELETE CASCADE
+)	
 
