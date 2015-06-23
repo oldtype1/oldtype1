@@ -84,6 +84,15 @@
                              <input class="form-control" id="memberTel" value="${requestScope.memberInfo.memberTel}"
                              type="text"  readonly="readonly">
                          </div>
+                         
+                        <div class="form-group">
+							<label for="exampleinputInfo3" class="control-label">은행 / 계좌 번호</label>
+							<input type="text" class="form-control" name="memberBank" 
+							id="memberBank" value="${requestScope.memberInfo.memberBank}" readonly="readonly">
+  					    	<input type="text" name="memberBankAcount" id="memberBankAcount" 
+  							 value="${requestScope.memberInfo.memberBankAcount}" class="form-control" readonly="readonly">
+						</div>
+                         
                           <div class="form-group">
                              <label for="inputInfo3" class="control-label">자기 소개</label>
                              <textarea readonly="readonly" rows="4" cols="70" class="form-control"placeholder=
