@@ -42,6 +42,9 @@ import org.kosta.dashduowork.model.vo.WishListListVO;
 import org.kosta.dashduowork.model.vo.WishListVO;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+
+import Exception.ChildBookTableException;
+import Exception.NoInnException;
 @Service
 public class InnServiceImpl implements InnService {
    @Resource(name="innDAOImpl")
@@ -215,23 +218,21 @@ public class InnServiceImpl implements InnService {
 	   public void bookDelete(DeleteVO bdvo) {
 	      bookDAO.bookDelete(bdvo);
 	   }//2.예약취소-->예약삭제
-		@Override
-		public boolean checkChildBookTable(int innNo){
+	   
+	   public void innDelete(DeleteVO idvo) throws ChildBookTableException {
 			//1. 참조하는 BOOK 자식이 있는지 확인해야 한다.
-			int count = bookDAO.checkChildBookTable(innNo);
+			int count = bookDAO.checkChildBookTable(idvo.getInnNo());
 			System.out.println("book 자식테이블"+count);
 			if(count>0){//참조하는 자식테이블이 있으므로 에러난다.
-				return false;
+				throw new ChildBookTableException("고객님께 예약된 숙소가 있어 삭제할 수 없습니다!");
 			}
 			else{//참조하는 자식테이블이 없다.
-				return true;
-			}			
-		}//등록숙소 삭제시 자식 예약테이블 있나 확인
-		public void innDelete(DeleteVO idvo) {
-			//삭제되는것 ---> on DELETE CASCADE 때문에 다 지워진다.
-			//1. 위시리스트 2. 숙소 사진 3.가능 날짜 4.편의시설 3. 숙소 자체
-			innDAO.innDelete(idvo);
-		}//3. 등록숙소 삭제
+				//삭제되는것 ---> on DELETE CASCADE 때문에 다 지워진다.
+				//1. 위시리스트 2. 숙소 사진 3.가능 날짜 4.편의시설 3. 숙소 자체
+				System.out.println("자식테이블이 없으므로 숙소를 삭제합니다.");
+				innDAO.innDelete(idvo);
+			}		
+		}//3. 등록숙소 삭제   
 		@Override
 		public void tradeDelete(DeleteVO tdvo) {
 			tradeDAO.tradeDelete(tdvo);
@@ -280,15 +281,21 @@ public class InnServiceImpl implements InnService {
 	      PagingBean pagingBean=new PagingBean(total,pn);
 	      return new InnReservationListVO(list, pagingBean);
 	   }
-   
-   // 은수
-   public Map<String,Object> selectInn(String innNo) {
-      Map<String,Object> map= new HashMap<String,Object>();
-      map.put("innVO", innDAO.selectInn(innNo));
-      InnVO ivo = (InnVO)map.get("innVO");
-      map.put("memberVO", memberDAO.findMemberById(ivo.getMemberId()));
-      return map;
-   }
+	   // 은수
+	   public Map<String,Object> selectInn(String innNo) throws NoInnException{
+		   
+	      Map<String,Object> map= new HashMap<String,Object>();
+	      InnVO vo =  innDAO.selectInn(innNo);
+	      if(vo==null){
+	    	  throw new NoInnException("삭제된 숙소 입니다!"); 
+	      }
+	      else{
+	      map.put("innVO",vo);
+	      InnVO ivo = (InnVO)map.get("innVO");
+	      map.put("memberVO", memberDAO.findMemberById(ivo.getMemberId()));
+	      return map;
+	      }   
+	   }
    //6/17일 추가(지역명 자동완성처리)
    @Override
 	public List<InnVO> findInnCityListByInnCityCharacter(SearchVO vo) {

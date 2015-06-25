@@ -45,7 +45,6 @@ public interface InnService {
 	public InnListVO findInnByCityAndDateAndAcceptableNoWithFilter(FilterVO vo);
 	public InnListVO findInnByCityAndAcceptableNoWithFilter(FilterVO vo);
 
-
 	public Map<String,Object> selectInn(String innNo) throws NoInnException; // 은수
 	//6/16추가
 	public List<InnVO> findInnCityListByInnCityCharacter(SearchVO vo);
@@ -57,7 +56,6 @@ public interface InnService {
 	public void bookDelete(DeleteVO bdvo);
 	public void innDelete(DeleteVO idvo) throws ChildBookTableException;
 	public void tradeDelete(DeleteVO idvo);
-	public boolean checkChildBookTable(int innNo);
 	
 	//6/18일 추가
 	public InnListVO findInnByCityAndAcceptableNoWithPrice(FilterVO vo);

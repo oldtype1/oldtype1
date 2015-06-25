@@ -47,7 +47,7 @@ public class MemberServiceImpl implements MemberService {
          int count = bookDAO.checkChildBookTablebymemberId(memberId);
 		 System.out.println("book 자식테이블"+count);
 			if(count>0){//참조하는 자식테이블이 있으므로 에러난다.
-				throw new ChildBookTableException("고객님께 예약된 숙소가 있어 회원탈퇴할 수 없습니다!");
+				throw new ChildBookTableException("고객님께 예약된 숙소가 있어 탈퇴할 수 없습니다!");
 			}
 			else{//참조하는 자식테이블이 없다.
 				System.out.println("자식테이블이 없으므로 회원탈퇴합니다.");

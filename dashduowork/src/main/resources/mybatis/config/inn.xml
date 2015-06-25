@@ -253,6 +253,14 @@ where inn_area like '%' ||  #{firstSearchCity} || '%' and inn_acceptable_no>=#{f
 	<select id="checkChildBookTable" parameterType="int" resultType="int">
 	select count(*) from book where inn_no= #{value}
 	</select>
+	<!--6/25 회원탈퇴시 예약한 테이블이 있나 확인하는 메서드임  --> 
+	<select id="checkChildBookTablebymemberId" parameterType="String" resultType="int">
+	select count(*) from(
+	 select i.member_id as master from book b, inn i 
+ 	 where b.inn_no=i.inn_no
+	)
+	 where master= #{value}
+	</select>
 	<!-- 6/19 등록한 숙소 수정 윤정-->
 		<update id="updateInnInfo"  parameterType="ivo">
 	update inn set inn_name=#{innName}, inn_city=#{innCity}, inn_area=#{innArea}, inn_address=#{innAddress}, inn_type=#{innType}, inn_acceptable_no=#{acceptableNo}, 

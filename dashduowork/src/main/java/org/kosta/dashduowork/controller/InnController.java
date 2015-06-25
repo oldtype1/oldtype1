@@ -52,8 +52,12 @@ public class InnController {
 	private MemberService memberService;
 	
 	@RequestMapping("inn_register_from.do")
-	public String innRegister() {
+	public String innRegister(HttpServletRequest request) {
 		System.out.println("registerfrom으로");
+		HttpSession session = request.getSession(false);
+		if(session==null||(MemberVO)session.getAttribute("mvo")==null){
+			return "member_session_fail";
+		}
 		return "inn_register_from";
 	}
 	
@@ -65,12 +69,16 @@ public class InnController {
 	
 	@Transactional
 	@RequestMapping(value = "inn_register.do", method = RequestMethod.POST)
-	public ModelAndView register(HttpServletRequest request, InnVO ivo,
+	public String register(HttpServletRequest request, InnVO ivo,
 			InnPicCompVO ipvo, AmenityVO avo, AvailableDateVO avvo) {
 		System.out.println("Inn register start....");
 		List<MultipartFile> file = ipvo.getFile();
 		System.out.println("notice");
-		HttpSession session = request.getSession(false);
+		//세션이 없을때 처리
+				HttpSession session = request.getSession(false);
+				if(session==null||(MemberVO)session.getAttribute("mvo")==null){
+					return "member_session_fail";
+				}
 		MemberVO mvo = (MemberVO) session.getAttribute("mvo");
 		ivo.setMemberId(mvo.getMemberId());
 		System.out.println("ivo : "+ivo);
@@ -110,13 +118,15 @@ public class InnController {
 			innService.registerInnPic(ipvo);
 		}
 		innService.registerInnEtc(avo, avvo);
-		return new ModelAndView("redirect:get_myinnlist.do");
+		return "redirect:get_myinnlist.do";
 	}
-	
+	/**마이페이지 목록 불러오기**/
 	@RequestMapping(value="get_myinnlist.do")
 	public String getMyInnList(String pageNo,HttpServletRequest request, Model model){		
-		HttpSession session=null;
-		session = request.getSession(false);
+		HttpSession session = request.getSession(false);
+		if(session==null||(MemberVO)session.getAttribute("mvo")==null){
+			return "member_session_fail";
+		}
 		MemberVO vo= (MemberVO)session.getAttribute("mvo");		
 		InnListVO lvo = innService.getmyinnlist(vo,pageNo);
 		ProfilePicVO pvo = memberService.selectProfilePic(vo.getMemberId());
@@ -131,9 +141,11 @@ public class InnController {
 		return "member_inn_list";	
 	}
 	@RequestMapping(value="get_mytradelist.do")
-	public ModelAndView getMyTradeList(String pageNo,HttpServletRequest request,Model model){		
-		HttpSession session=null;
-		session = request.getSession(false);
+	public String getMyTradeList(String pageNo,HttpServletRequest request,Model model){		
+		HttpSession session=request.getSession(false);
+		if(session==null||(MemberVO)session.getAttribute("mvo")==null){
+			return "member_session_fail";
+		}
 		MemberVO vo= (MemberVO)session.getAttribute("mvo");		
 		TradeListVO tvo = innService.getmytradelist(vo,pageNo);
 		ProfilePicVO pvo = memberService.selectProfilePic(vo.getMemberId());
@@ -144,10 +156,72 @@ public class InnController {
 		    	 vo.setProfilePicVO(new ProfilePicVO(vo.getMemberId(),"http://pingendo.github.io/pingendo-bootstrap/assets/user_placeholder.png"));
 		     }
 		 model.addAttribute("member", vo);
+		 model.addAttribute("tvo", tvo);
 		System.out.println("tvo는? "+ tvo);
-		return new ModelAndView("member_trade_list","tvo",tvo);
+		return "member_trade_list";
 	
 	}
+	@RequestMapping(value="get_mybooklist.do")
+	public String getMyBookList(String pageNo,HttpServletRequest request,Model model){
+		HttpSession session=request.getSession(false);
+		if(session==null||(MemberVO)session.getAttribute("mvo")==null){
+			return "member_session_fail";
+		}
+		MemberVO vo= (MemberVO)session.getAttribute("mvo");
+		BookListVO blvo=innService.getmybooklist(vo, pageNo);
+		ProfilePicVO pvo = memberService.selectProfilePic(vo.getMemberId());
+		 if(pvo!=null){
+			 vo.setProfilePicVO(pvo);
+		     }
+		     else{
+		    	 vo.setProfilePicVO(new ProfilePicVO(vo.getMemberId(),  "http://pingendo.github.io/pingendo-bootstrap/assets/user_placeholder.png"));
+		     }
+		 model.addAttribute("member", vo);
+		model.addAttribute("blvo", blvo);
+		return"member_book_list";
+	}
+
+	
+	@RequestMapping(value="get_mywishlist.do")
+	public String getMyWishList(String pageNo,HttpServletRequest request,Model model){
+		HttpSession session=request.getSession(false);
+		if(session==null||(MemberVO)session.getAttribute("mvo")==null){
+			return "member_session_fail";
+		}
+		MemberVO vo= (MemberVO)session.getAttribute("mvo");
+		WishListListVO wlvo=innService.getmywishlist(vo, pageNo);
+		ProfilePicVO pvo = memberService.selectProfilePic(vo.getMemberId());
+		 if(pvo!=null){
+			 vo.setProfilePicVO(pvo);
+		     }
+		     else{
+		    	 vo.setProfilePicVO(new ProfilePicVO(vo.getMemberId(),  "http://pingendo.github.io/pingendo-bootstrap/assets/user_placeholder.png"));
+		     }
+		 model.addAttribute("member", vo);
+		model.addAttribute("wlvo", wlvo);
+		return"member_wish_list";
+	}
+	
+	@RequestMapping(value="get_innReservation_list.do")
+	public String getInnReservationList(String pageNo, HttpServletRequest request, Model model){
+		HttpSession session=request.getSession(false);
+		if(session==null||(MemberVO)session.getAttribute("mvo")==null){
+			return "member_session_fail";
+		}
+		MemberVO vo= (MemberVO)session.getAttribute("mvo");
+		InnReservationListVO irlvo=innService.getMyInnReservationList(vo, pageNo);
+		ProfilePicVO pvo = memberService.selectProfilePic(vo.getMemberId());
+		 if(pvo!=null){
+			 vo.setProfilePicVO(pvo);
+		     }
+		     else{
+		    	 vo.setProfilePicVO(new ProfilePicVO(vo.getMemberId(),  "http://pingendo.github.io/pingendo-bootstrap/assets/user_placeholder.png"));
+		     }
+		 model.addAttribute("member", vo);
+		model.addAttribute("irlvo", irlvo);
+		return "member_innReservation_list";
+	}
+
 /*	@RequestMapping(value ="selectInnByCheckedAmenity.do") //은식,동원
 	public String selectInnByCheckedAmenity(AmenityVO vo, Model model) {
 //		System.out.println(vo);
@@ -213,50 +287,14 @@ public class InnController {
 //        System.out.println("searchMemberVO : "+memberVO);
 //		return "inn_search_result";
 //	}
-	
-	@RequestMapping(value="get_mybooklist.do")
-	public String getMyBookList(String pageNo,HttpServletRequest request,Model model){
-		HttpSession session=null;
-		session = request.getSession(false);
-		MemberVO vo= (MemberVO)session.getAttribute("mvo");
-		BookListVO blvo=innService.getmybooklist(vo, pageNo);
-		ProfilePicVO pvo = memberService.selectProfilePic(vo.getMemberId());
-		 if(pvo!=null){
-			 vo.setProfilePicVO(pvo);
-		     }
-		     else{
-		    	 vo.setProfilePicVO(new ProfilePicVO(vo.getMemberId(),  "http://pingendo.github.io/pingendo-bootstrap/assets/user_placeholder.png"));
-		     }
-		 model.addAttribute("member", vo);
-		model.addAttribute("blvo", blvo);
-		return"member_book_list";
-	}
-
-	
-	@RequestMapping(value="get_mywishlist.do")
-	public String getMyWishList(String pageNo,HttpServletRequest request,Model model){
-		
-		HttpSession session=null;
-		session = request.getSession(false);
-		MemberVO vo= (MemberVO)session.getAttribute("mvo");
-		WishListListVO wlvo=innService.getmywishlist(vo, pageNo);
-		ProfilePicVO pvo = memberService.selectProfilePic(vo.getMemberId());
-		 if(pvo!=null){
-			 vo.setProfilePicVO(pvo);
-		     }
-		     else{
-		    	 vo.setProfilePicVO(new ProfilePicVO(vo.getMemberId(),  "http://pingendo.github.io/pingendo-bootstrap/assets/user_placeholder.png"));
-		     }
-		 model.addAttribute("member", vo);
-		model.addAttribute("wlvo", wlvo);
-		return"member_wish_list";
-	}
-	
 	/**목록 삭제 컨트롤러--주형윤정**/
 	/*위시리스트*/
 	@RequestMapping(value="wishlistdelete.do")
 	public String wishListDelete(int wishListNo, HttpServletRequest request){
-		HttpSession session=request.getSession(false);
+		 HttpSession session = request.getSession(false);
+			if(session==null||(MemberVO)session.getAttribute("mvo")==null){
+				return "member_session_fail";
+			}
 		MemberVO vo= (MemberVO)session.getAttribute("mvo");
 		DeleteVO wdvo=new DeleteVO(wishListNo,vo.getMemberId());
 		innService.wishListDelete(wdvo);
@@ -265,13 +303,13 @@ public class InnController {
 	/*예약숙소취소*/
 	@RequestMapping(value="bookdelete.do")
 	public String bookDelete(int bookNo, HttpServletRequest request){
-		HttpSession session=request.getSession(false);
+		HttpSession session = request.getSession(false);
+		if(session==null||(MemberVO)session.getAttribute("mvo")==null){
+			return "member_session_fail";
+		}
 		MemberVO vo= (MemberVO)session.getAttribute("mvo");
 		DeleteVO bdvo=new DeleteVO(bookNo, vo.getMemberId());
 		innService.bookDelete(bdvo);
-		//예약 취소시 거래내역에서도 삭제되게 해야한다. 
-		//-->6/19 수정: 예약취소 -> 예약만 삭제 // 거래내역은 예약완료시 insert 예정
-		/*innService.tradeDeleteByBookNo(bdvo);*/
 		return "redirect:get_mybooklist.do";
 	}
 	/*등록숙소  6/25 exception으로 수정함 */ 
@@ -293,41 +331,18 @@ public class InnController {
 	/*거래내역목록*/
 	@RequestMapping(value="tradedelete.do")
 	public String tradeDelete(int tradeNo,HttpServletRequest request){
+		 HttpSession session = request.getSession(false);
+			if(session==null||(MemberVO)session.getAttribute("mvo")==null){
+				return "member_session_fail";
+			}
 		System.out.println("tradeNo: "+tradeNo);
-		HttpSession session = request.getSession(false);
 		MemberVO vo= (MemberVO)session.getAttribute("mvo");
 		//예약이든 등록이든 trade에서는 전부 삭제
 		innService.tradeDelete(new DeleteVO(tradeNo,vo.getMemberId()));		
 		System.out.println("거래삭제: "+vo.getMemberId());
-//////스프링 스케줄러 적용하여 예약 테이블에서 삭제 하지 않아도 된다.////
-/*		if(memberId.equals(vo.getMemberId())){
-			//현재 사용자와 거래내역의 예약자와 같으면
-			// --> 즉 사용자의 예약 거래내역을 삭제시에는 예약 테이블에서도 삭제
-					innService.bookDelete(new DeleteVO(bookNo,vo.getMemberId()));		
-					System.out.println("예약 테이블 에서도 삭제");
-				}*/
 		return "redirect:get_mytradelist.do";
 	}
 	/** 끝**/
-	
-	@RequestMapping(value="get_innReservation_list.do")
-	public String getInnReservationList(String pageNo, HttpServletRequest request, Model model){
-		HttpSession session=null;
-		session = request.getSession(false);
-		MemberVO vo= (MemberVO)session.getAttribute("mvo");
-		InnReservationListVO irlvo=innService.getMyInnReservationList(vo, pageNo);
-		ProfilePicVO pvo = memberService.selectProfilePic(vo.getMemberId());
-		 if(pvo!=null){
-			 vo.setProfilePicVO(pvo);
-		     }
-		     else{
-		    	 vo.setProfilePicVO(new ProfilePicVO(vo.getMemberId(),  "http://pingendo.github.io/pingendo-bootstrap/assets/user_placeholder.png"));
-		     }
-		 model.addAttribute("member", vo);
-		model.addAttribute("irlvo", irlvo);
-		return "member_innReservation_list";
-	}
-
 	
 	//6/17일 추가
 	@RequestMapping(value="searchCityAuto.do")
@@ -346,6 +361,11 @@ public class InnController {
 
 	@RequestMapping(value="inn_in_show.do")
 	public String inShow(HttpServletRequest request, Model model){
+		System.out.println("상세글보기 컨트롤러 메서드");
+		 HttpSession session = request.getSession(false);
+			if(session==null){
+				return "member_session_fail";
+			}
 		String innNo = (String)request.getParameter("innNo");
 		int innNo2=Integer.parseInt(innNo);
 		HashMap<String, Object> map=new HashMap<String, Object>();		
@@ -355,8 +375,6 @@ public class InnController {
 			model.addAttribute("message", e.getMessage());
 			return "inn_in_show_fail";	
 		}		
-		System.out.println("상세글보기 컨트롤러 메서드");
-		HttpSession session=request.getSession(false);
 		MemberVO mvo=null;
 		mvo=(MemberVO)session.getAttribute("mvo");
 		if(mvo!=null){
@@ -416,8 +434,10 @@ public class InnController {
 	@RequestMapping("inn_update.do")
 	public String innUpdate(InnVO ivo, AmenityVO avo, InnPicCompVO ipvo, 
 			AvailableDateVO avvo, Model model, BindingResult result, HttpServletRequest request){
-		HttpSession session=request.getSession(false);
-		session = request.getSession(false);
+		 HttpSession session = request.getSession(false);
+			if(session==null||(MemberVO)session.getAttribute("mvo")==null){
+				return "member_session_fail";
+			}
 		MemberVO vo= (MemberVO)session.getAttribute("mvo");
 		String memberId=vo.getMemberId();
 		System.out.println("innController 들어옴");
@@ -472,11 +492,13 @@ public class InnController {
 	// 예약
 	@RequestMapping(value="inn_book.do", method=RequestMethod.POST )
 	public String booking(HttpServletRequest request, Model model, BookVO bvo){
+		 HttpSession session = request.getSession(false);
+			if(session==null||(MemberVO)session.getAttribute("mvo")==null){
+				return "member_session_fail";
+			}
 		System.out.println("book starting...");
 		String innNo = request.getParameter("innNo");
 		String memberId = request.getParameter("memberId");
-		HttpSession session = request.getSession(false);
-		
 		boolean flag = false;
 		MemberVO mvo = (MemberVO)session.getAttribute("mvo");
 		bvo.setMemberId(mvo.getMemberId());
@@ -502,19 +524,26 @@ public class InnController {
 		return "inn_book_ok";
 	}
 	//숙소가능여부 변경 6/19
-	@RequestMapping("updateinnAvailability.do")
-	public String updateinnAvailability(int innNo,String innAvailability){
-		System.out.println("innNo"+innNo+" innAvailability"+innAvailability);
-		innService.updateinnAvailability(innNo,innAvailability);
-		return "redirect:get_myinnlist.do";
-	}
+		@RequestMapping("updateinnAvailability.do")
+		public String updateinnAvailability(HttpServletRequest request,int innNo,String innAvailability){
+			   HttpSession session = request.getSession(false);
+				if(session==null||(MemberVO)session.getAttribute("mvo")==null){
+					return "member_session_fail";
+				}	  
+			System.out.println("innNo"+innNo+" innAvailability"+innAvailability);
+			innService.updateinnAvailability(innNo,innAvailability);
+			return "redirect:get_myinnlist.do";
+		}
 	// 6/19일 추가 위시리스트reg
 	@RequestMapping("wishListReg.do")
 	public String wishlistreg(HttpServletRequest request, Model model) {
+		 HttpSession session = request.getSession(false);
+			if(session==null||(MemberVO)session.getAttribute("mvo")==null){
+				return "member_session_fail";
+			}	 
 		System.out.println("위시 " + request.getParameter("innNo"));
 		int innNO = Integer.parseInt(request.getParameter("innNo"));
 		System.out.println(innNO);
-		HttpSession session = request.getSession(false);
 		MemberVO vo = (MemberVO) session.getAttribute("mvo");
 		WishListVO wvo = new WishListVO(0, innNO, vo.getMemberId(), null, null);
 		int count = innService.wishCheck(wvo);
@@ -542,7 +571,11 @@ public class InnController {
 	}
 	//별점 매기기 
 	@RequestMapping("ratingInn.do")
-	public String ratingInn(InnRatingVO irv,int tradeNo,HttpServletRequest request){				
+	public String ratingInn(InnRatingVO irv,int tradeNo,HttpServletRequest request){	
+		   HttpSession session = request.getSession(false);
+			if(session==null||(MemberVO)session.getAttribute("mvo")==null){
+				return "member_session_fail";
+			}	  
 		System.out.println("별점 테이블"+irv);
 		System.out.println("별점 거래번호: "+tradeNo);
 		innService.ratingInn(irv,tradeNo);
