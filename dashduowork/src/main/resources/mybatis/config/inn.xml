@@ -7,7 +7,6 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 <resultMap type="ivo" id="innResult">
 	<result property="innNo" column="inn_no"/>
 	<result property="innName" column="inn_name"/>
-	<result property="innCity" column="inn_city"/>
 	<result property="innArea" column="inn_area"/>
 	<result property="innAddress" column="inn_address"/>
 	<result property="innType" column="inn_type"/>
@@ -16,6 +15,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	<result property="innInfo" column="inn_info"/>
 	<result property="innAvailability" column="inn_availability"/>
 	<result property="memberId" column="member_id"/>
+	
 </resultMap>
 <resultMap type="bvo" id="bookResult">
 <result property="bookNo" column="book_no"/>
@@ -55,19 +55,19 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 <result property="ratingCheck" column="rating_check"/>
 </resultMap>
 	<sql id="innlist">
-		select inn_no,inn_name,inn_city,inn_area,inn_address,inn_type,inn_acceptable_no,
+		select inn_no, inn_name, inn_area,inn_address,inn_type,inn_acceptable_no,
 		inn_price,inn_info,inn_availability,member_id from inn
 	</sql>
 	
 	<select id="getmyinnlist" parameterType="hashmap" resultType="ivo" resultMap="innResult">
-select inn_no,inn_name,inn_city,inn_area,inn_address,inn_type,inn_acceptable_no,
+select inn_no,inn_name, inn_area,inn_address,inn_type,inn_acceptable_no,
 		inn_price,inn_info,inn_availability,member_id from	
 		(
- select  inn_no,inn_name,inn_city,inn_area,inn_address,inn_type,inn_acceptable_no,
+ select  inn_no,inn_name, inn_area,inn_address,inn_type,inn_acceptable_no,
 		inn_price,inn_info,inn_availability,member_id,ceil(rownum/5) as page
  from
  (
-  select  inn_no,inn_name,inn_city,inn_area,inn_address,inn_type,inn_acceptable_no,
+  select  inn_no,inn_name, inn_area,inn_address,inn_type,inn_acceptable_no,
 		inn_price,inn_info,inn_availability,member_id from inn where member_id=#{member_id}
 		order by inn_no desc	
  )
@@ -183,10 +183,10 @@ select inn_no, wishlist_no, member_id, inn_name,ceil(rownum/5) as page  from(
        select inn_sequence.nextval from dual
    </selectKey>
 	insert into INN
-	(inn_no, inn_name, inn_city, inn_area, inn_address, inn_type, inn_acceptable_no, 
+	(inn_no, inn_name, inn_area, inn_address, inn_type, inn_acceptable_no, 
 	inn_price, inn_info,inn_availability,member_id) 
-	values(#{innNo},#{innName},#{innCity},#{innArea},#{innAddress},#{innType},
-	#{acceptableNo},#{innPrice},#{innInfo},#{innAvailability},#{memberId})
+	values(#{innNo},#{innName},#{innArea},#{innAddress},#{innType},
+	#{acceptableNo},#{innPrice},#{innInfo},'Y',#{memberId})
 	</insert>
 	<select id="select_inn_by_member_id" resultMap="innResult" parameterType="ivo">
 	select inn_no, inn_name, inn_city, inn_area, inn_address, inn_type, inn_acceptable_no, 
@@ -317,7 +317,47 @@ inn_price=#{innPrice}, inn_info=#{innInfo},inn_availability=#{innAvailability} w
 		update member set password=#{password},name=#{name},address=#{address}
 		where id=#{id}
 	</update> -->
-	
+	<!-- 6/25 검색 추가, 동적쿼리 사용 검색 -->
+	<select id="selectInnByWordAndAcceptNo" parameterType="fvo" resultType="ivo" resultMap="innResult">
+		select distinct inn_no, inn_name, inn_city, inn_acceptable_no, inn_price
+			from (select i.inn_no, i.inn_name, i.inn_city, i.inn_area,i.inn_address,i.inn_type,i.inn_acceptable_no,i.inn_price,i.inn_availability,i.member_id,ad.availabledate_st,ad.availabledate_end, a.amenity_item from INN i, AVAILABLEDATE ad, AMENITY a where i.inn_no=ad.inn_no and i.inn_no=a.inn_no and i.inn_city like '%' ||  #{searchWord} || '%' and i.inn_acceptable_no = #{searchPeopleNo})
+	<if test="amenityList != null">
+		where amenity_item in
+		<foreach item="item" collection="amenityList" open="(" separator="," close=")">
+			#{item}
+		</foreach>
+	</if>
+	</select>
+	<select id="selectInnByWordAndAcceptNoAndDate" parameterType="fvo" resultType="ivo" resultMap="innResult">
+		<![CDATA[select distinct inn_no, inn_name, inn_city, inn_acceptable_no, inn_price
+			from (select i.inn_no, i.inn_name, i.inn_city, i.inn_area,i.inn_address,i.inn_type,i.inn_acceptable_no,i.inn_price,i.inn_availability,i.member_id,ad.availabledate_st,ad.availabledate_end, a.amenity_item from INN i, AVAILABLEDATE ad, AMENITY a where i.inn_no=ad.inn_no and i.inn_no=a.inn_no and i.inn_city like '%' ||  #{searchWord} || '%' and i.inn_acceptable_no = #{searchPeopleNo} and ad.availabledate_st<=#{searchStartDate} and ad.availabledate_end >=#{searchEndDate})]]>
+	<if test="amenityList != null">
+		where amenity_item in
+		<foreach item="item" collection="amenityList" open="(" separator="," close=")">
+			#{item}
+		</foreach>
+	</if>
+	</select>
+	<select id="selectInnByWordAndAcceptNoWithPrice" parameterType="fvo" resultType="ivo" resultMap="innResult">
+		select distinct inn_no, inn_name, inn_city, inn_acceptable_no, inn_price
+			from (select i.inn_no, i.inn_name, i.inn_city, i.inn_area,i.inn_address,i.inn_type,i.inn_acceptable_no,i.inn_price,i.inn_availability,i.member_id,ad.availabledate_st,ad.availabledate_end, a.amenity_item from INN i, AVAILABLEDATE ad, AMENITY a where i.inn_no=ad.inn_no and i.inn_no=a.inn_no and i.inn_city like '%' ||  #{searchWord} || '%' and i.inn_acceptable_no = #{searchPeopleNo} and i.inn_price between #{minPrice} and #{maxPrice})
+	<if test="amenityList != null">
+		where amenity_item in
+		<foreach item="item" collection="amenityList" open="(" separator="," close=")">
+			#{item}
+		</foreach>
+	</if>
+	</select>
+	<select id="selectInnByWordAndAcceptNoAndDateWithPrice" parameterType="fvo" resultType="ivo" resultMap="innResult">
+		<![CDATA[select distinct inn_no, inn_name, inn_city, inn_acceptable_no, inn_price
+			from (select i.inn_no, i.inn_name, i.inn_city, i.inn_area,i.inn_address,i.inn_type,i.inn_acceptable_no,i.inn_price,i.inn_availability,i.member_id,ad.availabledate_st,ad.availabledate_end, a.amenity_item from INN i, AVAILABLEDATE ad, AMENITY a where i.inn_no=ad.inn_no and i.inn_no=a.inn_no and i.inn_city like '%' ||  #{searchWord} || '%' and i.inn_acceptable_no = #{searchPeopleNo} and ad.availabledate_st<=#{searchStartDate} and ad.availabledate_end >=#{searchEndDate} and i.inn_price between #{minPrice} and #{maxPrice})]]>
+	<if test="amenityList != null">
+		where amenity_item in
+		<foreach item="item" collection="amenityList" open="(" separator="," close=")">
+			#{item}
+		</foreach>
+	</if>
+	</select>
 	
 </mapper>
  

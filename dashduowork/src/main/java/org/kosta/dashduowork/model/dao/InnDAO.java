@@ -45,6 +45,11 @@ public interface InnDAO {
 	public abstract void updateinnAvailabilitytoNo(int innNo);
 	public abstract void updateinnAvailabilitytoYes(int innNo);
 	
+	// 6/25일 추가 검색메서드
+	public abstract List<InnVO> selectInnByWordAndAcceptNo(FilterVO fvo);
+	public abstract List<InnVO> selectInnByWordAndAcceptNoAndDate(FilterVO fvo);
+	public abstract List<InnVO> selectInnByWordAndAcceptNoWithPrice(FilterVO fvo);
+	public abstract List<InnVO> selectInnByWordAndAcceptNoAndDateWithPrice(FilterVO fvo);
 }
 
 
