@@ -1,5 +1,8 @@
 package org.kosta.dashduowork.model.dao;
 
+import java.util.HashMap;
+import java.util.List;
+
 import javax.annotation.Resource;
 
 import org.kosta.dashduowork.model.vo.AmenityVO;
@@ -11,11 +14,7 @@ public class AmenityDAOImpl implements AmenityDAO {
 	@Resource(name = "sqlSessionTemplate")
 	private SqlSessionTemplate sqlSessionTemplate;
 
-	@Override
-	public void register(AmenityVO vo) {
-		System.out.println("AmenityVO : " + vo);
-		sqlSessionTemplate.insert("amenity.register", vo);
-	}
+
 	@Override
 	public void update(AmenityVO avo) {
 		sqlSessionTemplate.update("amenity.updateAmenity", avo);
@@ -24,5 +23,11 @@ public class AmenityDAOImpl implements AmenityDAO {
 	@Override
 	public AmenityVO selectAmenity(String innNo) {
 		return sqlSessionTemplate.selectOne("amenity.selectAmenity", innNo);
+	}
+
+	@Override
+	public void register(AmenityVO vo) {
+		sqlSessionTemplate.insert("amenity.register", vo);
+		
 	}
 }

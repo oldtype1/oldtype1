@@ -6,18 +6,13 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 
 <resultMap type="avo" id="amenityResult">
 	<result property="innNo" column="inn_no"/>
-	<result property="amenityWiFi" column="amenity_wifi"/>
-	<result property="amenityBed" column="amenity_bed"/>
-	<result property="amenityTV" column="amenity_tv"/>
-	<result property="amenityKitchen" column="amenity_kitchen"/>
-	<result property="amenityBBQ" column="amenity_bbq"/>
-
+	<result property="amenityItem" column="amenity_item"/>
+	<result property="amenityNo" column="amenity_no"/>
 </resultMap>
 
 <insert id="register" parameterType="avo">
-insert into amenity(amenity_wifi,amenity_bed,amenity_tv,amenity_kitchen,amenity_bbq, inn_no) values
-	(#{amenityWiFi},#{amenityBed},#{amenityTV},#{amenityKitchen},#{amenityBBQ},#{innNo})
-	</insert>
+	insert into amenity(inn_no, amenity_item) values	(#{innNo}, #{amenityItem})
+</insert>
 	
 	
 	<update id="updateAmenity" parameterType="avo">

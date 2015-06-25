@@ -70,6 +70,7 @@ public class InnController {
 		HttpSession session = request.getSession(false);
 		MemberVO mvo = (MemberVO) session.getAttribute("mvo");
 		ivo.setMemberId(mvo.getMemberId());
+		System.out.println("ivo : "+ivo);
 		innService.registerInn(ivo);
 
 		ipvo.setInnNo(ivo.getInnNo());

@@ -98,7 +98,7 @@ update inn set inn_availability='N' where inn_no=1
 create table inn(
 inn_no number primary key,
 inn_name varchar2(50) not null,
-inn_city varchar2(50) not null,
+inn_city varchar2(50),  -- 삭제할 것
 inn_area varchar2(50) not null,
 inn_address varchar2(200) not null,
 inn_type varchar2(50) CHECK (inn_type IN ('집 전체', '개인실', '다인실')),
@@ -110,6 +110,10 @@ member_id varchar2(200) not null,
 constraint fk_member_id foreign key(member_id) references member(member_id) on DELETE CASCADE
 )
 
+ALTER TABLE inn
+DROP COLUMN inn_city;
+
+
 insert into INN
 (inn_no, inn_name, inn_city, inn_area, inn_address, inn_type, inn_acceptable_no, 
 inn_price, inn_info,inn_availability,member_id) 
@@ -117,13 +121,14 @@ values(inn_sequence.nextval,'판교역','성남','판교','판교동','집 전�
 
 -----------------제공시설 테이블(inn_no ref) 오류-----------------------
 create table amenity(
-amenity_no number primary key,
+amenity_no number primary key, -- 삭제
 inn_no number not null,
 amenity_item varchar2(200) not null,
 constraint fk_inn6 foreign key(inn_no) references inn(inn_no) on DELETE CASCADE
 )
 
-
+ALTER TABLE amenity
+DROP COLUMN amenity_no;
 
 
 -----------------댓글테이블(member_id / inn_no ref) ----------------------

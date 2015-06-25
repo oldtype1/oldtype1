@@ -75,10 +75,18 @@ public class InnServiceImpl implements InnService {
       innPicCompDAO.register(vo);      
    }
    @Override
+   @Transactional
    public void registerInnEtc(AmenityVO avo, AvailableDateVO avvo){
       System.out.println("service 들어옴?");
-   
-      amenityDAO.register(avo);
+      System.out.println(avo);
+      for(int i=0; i<avo.getAmenityItems().size(); i++){
+    	  AmenityVO vo = new AmenityVO();
+    	  vo.setInnNo(avo.getInnNo());
+    	  vo.setAmenityItem(avo.getAmenityItems().get(i));
+    	  amenityDAO.register(vo);
+    
+      }
+
       System.out.println("serivce : "+avo);
       availableDateDAO.register(avvo);
       System.out.println("serivce : "+avvo);
@@ -361,7 +369,7 @@ public class InnServiceImpl implements InnService {
 	 @Transactional
 	 public HashMap<String, Object> bookInsert(BookVO bvo, String innNo, String memberId) throws ParseException{
 		 
-		 HashMap<String, Object> result = new HashMap();
+		 HashMap<String, Object> result = new HashMap<String, Object>();
 		 System.out.println("service : "+innNo);
 		 List<BookVO> bookList = new ArrayList<BookVO>();
 		 bookList = bookDAO.selectBookList(innNo);
