@@ -608,6 +608,7 @@ public class InnController {
 	//6/25 검색메서드 추가
 	@RequestMapping(value="searchInnByWordDateNo.do")
 	public String searchByCityDateNo(FilterVO fvo, Model model, HttpServletRequest request){
+		System.out.println("컨트롤러에서 fvo 확인 : "+fvo);
 		InnListVO innListVO=new InnListVO();
 		List<InnVO> list=null;
 		if(fvo.getMinPrice()==null || fvo.getMaxPrice()==null){
@@ -615,6 +616,7 @@ public class InnController {
 		}else{//날짜 들어간경우
 			list=innService.findInnByWordAndAcceptNoAndDateWithPrice(fvo);
 		}
+		System.out.println("받아온 리스트 확인 : "+list);
 		innListVO.setInnList(list);
 		model.addAttribute("innListVO", innListVO);
 		model.addAttribute("filterVO", fvo);
