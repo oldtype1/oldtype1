@@ -527,6 +527,16 @@ public class InnServiceImpl implements InnService {
 		}
 		return list;
 	}
+	@Override
+	public InnVO getInnByInnNo(int innNo) {
+		return innDAO.getInnByInnNo(innNo);
+	}
+	@Override
+	public MemberVO getMemberAccountByInnNo(String innNo) {
+		return memberDAO.getMemberAccountByInnNo(innNo);
+	}
+
+
 }
 
 

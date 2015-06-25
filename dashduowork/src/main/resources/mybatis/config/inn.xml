@@ -189,7 +189,7 @@ select inn_no, wishlist_no, member_id, inn_name,ceil(rownum/5) as page  from(
 	#{acceptableNo},#{innPrice},#{innInfo},'Y',#{memberId})
 	</insert>
 	<select id="select_inn_by_member_id" resultMap="innResult" parameterType="ivo">
-	select inn_no, inn_name, inn_city, inn_area, inn_address, inn_type, inn_acceptable_no, 
+	select inn_no, inn_name, inn_area, inn_address, inn_type, inn_acceptable_no, 
 	inn_price, inn_info,inn_availability,member_id from INN where member_id=#{memberId} 
 	</select>
 	
@@ -263,7 +263,7 @@ where inn_area like '%' ||  #{firstSearchCity} || '%' and inn_acceptable_no>=#{f
 	</select>
 	<!-- 6/19 등록한 숙소 수정 윤정-->
 		<update id="updateInnInfo"  parameterType="ivo">
-	update inn set inn_name=#{innName}, inn_city=#{innCity}, inn_area=#{innArea}, inn_address=#{innAddress}, inn_type=#{innType}, inn_acceptable_no=#{acceptableNo}, 
+	update inn set inn_name=#{innName}, inn_area=#{innArea}, inn_address=#{innAddress}, inn_type=#{innType}, inn_acceptable_no=#{acceptableNo}, 
 inn_price=#{innPrice}, inn_info=#{innInfo},inn_availability=#{innAvailability} where inn_no=#{innNo}
 	</update>
 	<!-- 해당 숙소의 예약리스트 가져오기 -->
@@ -366,7 +366,9 @@ inn_price=#{innPrice}, inn_info=#{innInfo},inn_availability=#{innAvailability} w
 		</foreach>
 	</if>
 	</select>
-	
+		<select id="getInnByInnNo" parameterType="int" resultType="ivo" resultMap="innResult">
+	select inn_no, inn_name, inn_area, inn_address, inn_type, inn_price, inn_info from inn where inn_no=#{value}
+	</select>
 </mapper>
  
  

@@ -134,6 +134,11 @@ public class InnDAOImpl implements InnDAO {
 	public List<InnVO> selectInnByWordAndAcceptNoAndDateWithPrice(FilterVO fvo){
 		return sqlSessionTemplate.selectList("inn.selectInnByWordAndAcceptNoAndDateWithPrice", fvo);
 	}
+	@Override
+	public InnVO getInnByInnNo(int innNo) {
+		return sqlSessionTemplate.selectOne("inn.getInnByInnNo", innNo);
+	}
+
 }
 
 

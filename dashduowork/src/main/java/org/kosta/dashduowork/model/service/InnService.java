@@ -83,4 +83,7 @@ public interface InnService {
 	//6/25 검색메서드추가
 	public abstract List<InnVO> findInnByWordAndAcceptNoAndDate(FilterVO fvo);
 	public abstract List<InnVO> findInnByWordAndAcceptNoAndDateWithPrice(FilterVO fvo);
+	//윤정 추가
+	public abstract InnVO getInnByInnNo(int innNo);
+	public abstract MemberVO getMemberAccountByInnNo(String innNo);
 }

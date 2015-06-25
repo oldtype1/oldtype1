@@ -25,4 +25,6 @@ public interface MemberDAO {
       public abstract String memberIdcheck(String memberId);
       // 패스워드 분실시 찾는 메서드
       public MemberVO selectPasswordByAnswer(MemberVO vo);
+      //무통장입금시 master 계좌번호 찾는 메서드
+    public abstract MemberVO getMemberAccountByInnNo(String innNo);
 }
