@@ -117,7 +117,23 @@ public class InnDAOImpl implements InnDAO {
 		System.out.println("예스로 바꾼다");
 		sqlSessionTemplate.update("inn.updateinnAvailabilitytoYes",innNo);
 	}
-	
+	// 6/25일 추가 검색메서드
+	@Override
+	public List<InnVO> selectInnByWordAndAcceptNo(FilterVO fvo){
+		return sqlSessionTemplate.selectList("inn.selectInnByWordAndAcceptNo", fvo);
+	}
+	@Override
+	public List<InnVO> selectInnByWordAndAcceptNoAndDate(FilterVO fvo){
+		return sqlSessionTemplate.selectList("inn.selectInnByWordAndAcceptNoAndDate", fvo);
+	}
+	@Override
+	public List<InnVO> selectInnByWordAndAcceptNoWithPrice(FilterVO fvo){
+		return sqlSessionTemplate.selectList("inn.selectInnByWordAndAcceptNoWithPrice", fvo);
+	}
+	@Override
+	public List<InnVO> selectInnByWordAndAcceptNoAndDateWithPrice(FilterVO fvo){
+		return sqlSessionTemplate.selectList("inn.selectInnByWordAndAcceptNoAndDateWithPrice", fvo);
+	}
 }
 
 

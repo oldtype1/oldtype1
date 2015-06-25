@@ -153,63 +153,63 @@ public class InnController {
 		model.addAttribute("list", list);
 		return "inn_search_result";
 	}*/
-	@RequestMapping(value ="selectInnByCheckedAmenity.do", method=RequestMethod.POST )
-	@ResponseBody
-	public InnListVO selectInnByCheckedAmenity(FilterVO vo, Model model) {
-		InnListVO innListVO=new InnListVO();
-		System.out.println("필터VO 확인 : "+vo);
-		if(vo.getAmenityBBQ().equals("N")&vo.getAmenityBed().equals("N")&vo.getAmenityKitchen().equals("N")&vo.getAmenityTV().equals("N")&vo.getAmenityWiFi().equals("N")){
-			SearchVO svo=new SearchVO();
-			svo.setAcceptableNo(vo.getFirstSearchPeopleNo());
-			svo.setEndDate(vo.getFirstSearchEndDate());
-			svo.setInnCity(vo.getFirstSearchCity());
-			svo.setStartDate(vo.getFirstSearchStartDate());
-			
-			if(svo.getStartDate()==""){
-				//날짜 안들어간경우		
-				System.out.println("컨트롤러의 지역,인원,가격으로 검색");
-				innListVO=innService.findInnByCityAndAcceptableNoWithPrice(vo);
-			}else{//날짜 들어간경우
-				innListVO=innService.findInnByCityAndDateAndAcceptableNoWithPrice(vo);
-			}
-			model.addAttribute("searchVO", svo);
-		}else{
-			if(vo.getFirstSearchStartDate()==""){//날짜 없는경우
-				System.out.println("날짜 없는곳으로 입장.");
-				//서브쿼리 이용해서 도시+인원검색 후 결과를 filter처리 parameterType으로 새로운 VO를 만들거나 기존 VO에 변수 추가해야할듯
-				innListVO=innService.findInnByCityAndAcceptableNoWithFilter(vo);
-				List<InnVO> list=innListVO.getInnList();
-				for (InnVO innVO : list) {
-					System.out.println(innVO);
-				}
-			}else{//날짜 들어간경우
-				System.out.println("컨트롤러의 지역,인원,가격+필터로 검색");
-				//서브쿼리 이용해서 도시+날짜+인원검색 후 결과를 filter처리
-				innListVO=innService.findInnByCityAndDateAndAcceptableNoWithFilter(vo);
-			}
-		}
-		//model.addAttribute("list", list);
-		//System.out.println("결과 list 확인 : "+list);
-		return innListVO;
-	}
-	@RequestMapping(value="searchByCityDateNo.do")
-	public String searchByCityDateNo(SearchVO vo, Model model, HttpServletRequest request){
-		InnListVO innListVO=new InnListVO();
-		if(vo.getStartDate()==""){
-			//날짜 안들어간경우		
-//			System.out.println("날짜 안들어간 컨트롤러의 값 확인");
-			innListVO=innService.findInnByCityAndAcceptableNo(vo);
-			System.out.println(innListVO.getInnList());
-		}else{//날짜 들어간경우
-			innListVO=innService.findInnByCityAndDateAndAcceptableNo(vo);
-		}
-		model.addAttribute("innListVO", innListVO);
-		model.addAttribute("searchVO", vo);
-		HttpSession session = request.getSession(false);
-        MemberVO memberVO = (MemberVO)session.getAttribute("mvo");
-        System.out.println("searchMemberVO : "+memberVO);
-		return "inn_search_result";
-	}
+//	@RequestMapping(value ="selectInnByCheckedAmenity.do", method=RequestMethod.POST )
+//	@ResponseBody
+//	public InnListVO selectInnByCheckedAmenity(FilterVO vo, Model model) {
+//		InnListVO innListVO=new InnListVO();
+//		System.out.println("필터VO 확인 : "+vo);
+//		if(vo.getAmenityBBQ().equals("N")&vo.getAmenityBed().equals("N")&vo.getAmenityKitchen().equals("N")&vo.getAmenityTV().equals("N")&vo.getAmenityWiFi().equals("N")){
+//			SearchVO svo=new SearchVO();
+//			svo.setAcceptableNo(vo.getFirstSearchPeopleNo());
+//			svo.setEndDate(vo.getFirstSearchEndDate());
+//			svo.setInnCity(vo.getFirstSearchCity());
+//			svo.setStartDate(vo.getFirstSearchStartDate());
+//			
+//			if(svo.getStartDate()==""){
+//				//날짜 안들어간경우		
+//				System.out.println("컨트롤러의 지역,인원,가격으로 검색");
+//				innListVO=innService.findInnByCityAndAcceptableNoWithPrice(vo);
+//			}else{//날짜 들어간경우
+//				innListVO=innService.findInnByCityAndDateAndAcceptableNoWithPrice(vo);
+//			}
+//			model.addAttribute("searchVO", svo);
+//		}else{
+//			if(vo.getFirstSearchStartDate()==""){//날짜 없는경우
+//				System.out.println("날짜 없는곳으로 입장.");
+//				//서브쿼리 이용해서 도시+인원검색 후 결과를 filter처리 parameterType으로 새로운 VO를 만들거나 기존 VO에 변수 추가해야할듯
+//				innListVO=innService.findInnByCityAndAcceptableNoWithFilter(vo);
+//				List<InnVO> list=innListVO.getInnList();
+//				for (InnVO innVO : list) {
+//					System.out.println(innVO);
+//				}
+//			}else{//날짜 들어간경우
+//				System.out.println("컨트롤러의 지역,인원,가격+필터로 검색");
+//				//서브쿼리 이용해서 도시+날짜+인원검색 후 결과를 filter처리
+//				innListVO=innService.findInnByCityAndDateAndAcceptableNoWithFilter(vo);
+//			}
+//		}
+//		//model.addAttribute("list", list);
+//		//System.out.println("결과 list 확인 : "+list);
+//		return innListVO;
+//	}
+//	@RequestMapping(value="searchByCityDateNo.do")
+//	public String searchByCityDateNo(SearchVO vo, Model model, HttpServletRequest request){
+//		InnListVO innListVO=new InnListVO();
+//		if(vo.getStartDate()==""){
+//			//날짜 안들어간경우		
+////			System.out.println("날짜 안들어간 컨트롤러의 값 확인");
+//			innListVO=innService.findInnByCityAndAcceptableNo(vo);
+//			System.out.println(innListVO.getInnList());
+//		}else{//날짜 들어간경우
+//			innListVO=innService.findInnByCityAndDateAndAcceptableNo(vo);
+//		}
+//		model.addAttribute("innListVO", innListVO);
+//		model.addAttribute("searchVO", vo);
+//		HttpSession session = request.getSession(false);
+//        MemberVO memberVO = (MemberVO)session.getAttribute("mvo");
+//        System.out.println("searchMemberVO : "+memberVO);
+//		return "inn_search_result";
+//	}
 	
 	@RequestMapping(value="get_mybooklist.do")
 	public String getMyBookList(String pageNo,HttpServletRequest request,Model model){
@@ -490,45 +490,64 @@ public class InnController {
 		return "redirect:get_myinnlist.do";
 	}
 	// 6/19일 추가 위시리스트reg
-			@RequestMapping("wishListReg.do")
-			public String wishlistreg(HttpServletRequest request, Model model) {
-				System.out.println("위시 " + request.getParameter("innNo"));
-				int innNO = Integer.parseInt(request.getParameter("innNo"));
-				System.out.println(innNO);
-				HttpSession session = request.getSession(false);
-				MemberVO vo = (MemberVO) session.getAttribute("mvo");
-				WishListVO wvo = new WishListVO(0, innNO, vo.getMemberId(), null, null);
-				int count = innService.wishCheck(wvo);
-				if (count > 0) {
-					model.addAttribute("innNo", innNO);
-					return "member_wishlist_fail";
-				} else {
-					innService.wishlistreg(wvo);
-					return "redirect:get_mywishlist.do";
-				}
-			}
-			@RequestMapping("changeWishListPic.do")
-			@ResponseBody
-			public MemberVO changeWishListPic(int innNo, HttpServletRequest request){
-				System.out.println("changeWishListPic 컨트롤러 들어옴"+innNo);
-				String flag="success";
-				HttpSession session=request.getSession(false);
-				MemberVO vo= (MemberVO)session.getAttribute("mvo");
-				InnVO ivo=new InnVO(innNo, vo.getMemberId());
-				System.out.println(ivo+" 새로운 InnVO생성");
-				int wishListNo=innService.getWishListNoByInnNo(ivo);
-				DeleteVO wdvo=new DeleteVO(wishListNo,vo.getMemberId());
-				innService.wishListDelete(wdvo);
-				return vo;
-			}
-			//별점 매기기 
-			@RequestMapping("ratingInn.do")
-			public String ratingInn(InnRatingVO irv,int tradeNo,HttpServletRequest request){				
-				System.out.println("별점 테이블"+irv);
-				System.out.println("별점 거래번호: "+tradeNo);
-				innService.ratingInn(irv,tradeNo);
-				return "redirect:inn_in_show.do?innNo="+irv.getInnNo();
-			}
+	@RequestMapping("wishListReg.do")
+	public String wishlistreg(HttpServletRequest request, Model model) {
+		System.out.println("위시 " + request.getParameter("innNo"));
+		int innNO = Integer.parseInt(request.getParameter("innNo"));
+		System.out.println(innNO);
+		HttpSession session = request.getSession(false);
+		MemberVO vo = (MemberVO) session.getAttribute("mvo");
+		WishListVO wvo = new WishListVO(0, innNO, vo.getMemberId(), null, null);
+		int count = innService.wishCheck(wvo);
+		if (count > 0) {
+			model.addAttribute("innNo", innNO);
+			return "member_wishlist_fail";
+		} else {
+			innService.wishlistreg(wvo);
+			return "redirect:get_mywishlist.do";
+		}
+	}
+	@RequestMapping("changeWishListPic.do")
+	@ResponseBody
+	public MemberVO changeWishListPic(int innNo, HttpServletRequest request){
+		System.out.println("changeWishListPic 컨트롤러 들어옴"+innNo);
+		String flag="success";
+		HttpSession session=request.getSession(false);
+		MemberVO vo= (MemberVO)session.getAttribute("mvo");
+		InnVO ivo=new InnVO(innNo, vo.getMemberId());
+		System.out.println(ivo+" 새로운 InnVO생성");
+		int wishListNo=innService.getWishListNoByInnNo(ivo);
+		DeleteVO wdvo=new DeleteVO(wishListNo,vo.getMemberId());
+		innService.wishListDelete(wdvo);
+		return vo;
+	}
+	//별점 매기기 
+	@RequestMapping("ratingInn.do")
+	public String ratingInn(InnRatingVO irv,int tradeNo,HttpServletRequest request){				
+		System.out.println("별점 테이블"+irv);
+		System.out.println("별점 거래번호: "+tradeNo);
+		innService.ratingInn(irv,tradeNo);
+		return "redirect:inn_in_show.do?innNo="+irv.getInnNo();
+	}
+	
+	//6/25 검색메서드 추가
+	@RequestMapping(value="searchInnByWordDateNo.do")
+	public String searchByCityDateNo(FilterVO fvo, Model model, HttpServletRequest request){
+		InnListVO innListVO=new InnListVO();
+		List<InnVO> list=null;
+		if(fvo.getMinPrice()==null || fvo.getMaxPrice()==null){
+			list=innService.findInnByWordAndAcceptNoAndDate(fvo);
+		}else{//날짜 들어간경우
+			list=innService.findInnByWordAndAcceptNoAndDateWithPrice(fvo);
+		}
+		innListVO.setInnList(list);
+		model.addAttribute("innListVO", innListVO);
+		model.addAttribute("filterVO", fvo);
+//		HttpSession session = request.getSession(false);
+//		MemberVO memberVO = (MemberVO)session.getAttribute("mvo");
+//		System.out.println("searchMemberVO : "+memberVO);
+		return "inn_search_result";
+	}
 			
 }
 

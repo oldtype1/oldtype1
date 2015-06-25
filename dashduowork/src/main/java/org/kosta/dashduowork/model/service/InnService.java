@@ -73,7 +73,11 @@ public interface InnService {
 	public abstract void wishlistreg(WishListVO wvo);
 	public int wishCheck(WishListVO wvo);
 	//위시리스트취소
-		public abstract int getWishListNoByInnNo(InnVO ivo);
-		//별점주기
-		public void ratingInn(InnRatingVO irv,int tradeNo);
+	public abstract int getWishListNoByInnNo(InnVO ivo);
+	//별점주기
+	public void ratingInn(InnRatingVO irv,int tradeNo);
+	
+	//6/25 검색메서드추가
+	public abstract List<InnVO> findInnByWordAndAcceptNoAndDate(FilterVO fvo);
+	public abstract List<InnVO> findInnByWordAndAcceptNoAndDateWithPrice(FilterVO fvo);
 }

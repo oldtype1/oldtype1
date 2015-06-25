@@ -499,6 +499,27 @@ public class InnServiceImpl implements InnService {
  	}
  }
 
+	// 6/25 검색 메서드 추가
+	@Override
+	public List<InnVO> findInnByWordAndAcceptNoAndDate(FilterVO fvo){
+		List<InnVO> list=null;
+		if(fvo.getSearchStartDate()=="" || fvo.getSearchEndDate()==""){
+			list=innDAO.selectInnByWordAndAcceptNo(fvo);
+		}else{
+			list=innDAO.selectInnByWordAndAcceptNoAndDate(fvo);
+		}
+		return list;
+	}
+	@Override
+	public List<InnVO> findInnByWordAndAcceptNoAndDateWithPrice(FilterVO fvo){
+		List<InnVO> list=null;
+		if(fvo.getSearchStartDate()=="" || fvo.getSearchEndDate()==""){
+			list=innDAO.selectInnByWordAndAcceptNoWithPrice(fvo);
+		}else{
+			list=innDAO.selectInnByWordAndAcceptNoAndDateWithPrice(fvo);
+		}
+		return list;
+	}
 }
 
 
