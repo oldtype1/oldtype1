@@ -24,6 +24,8 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
+import Exception.ChildBookTableException;
+
 @Controller
 public class MemberController {
    @Resource(name = "memberServiceImpl")
@@ -145,11 +147,19 @@ public class MemberController {
    }
       
    @RequestMapping("memberSecession.do")
-   public String memberSecession(String memberId, HttpServletRequest request){
+   public String memberSecession(String memberId, HttpServletRequest request,Model model) {
+	   HttpSession session = request.getSession(false);
+		if(session==null||(MemberVO)session.getAttribute("mvo")==null){
+			return "member_session_fail";
+		}
       System.out.println("memberSecession콘트롤러들어옴");
-      HttpSession session=request.getSession();
-      memberService.memberSecession(memberId);
-      session.invalidate();
+      try {
+		memberService.memberSecession(memberId);
+		session.invalidate();
+	} catch (ChildBookTableException e) {
+		model.addAttribute("message", e.getMessage());
+		return "member_memberSecession_fail";	
+	}
       return "member_memberSecession_result";
    }
 

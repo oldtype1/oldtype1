@@ -99,8 +99,10 @@
                              "${requestScope.memberInfo.memberInfo}"></textarea>
                          </div>
                          <input type="hidden" name="memberId" id="memberId" value="${requestScope.memberInfo.memberId}">
-                    <button type="submit" class="btn btn-default">수정하러 가기</button>
+               <c:if test="${sessionScope.mvo.memberId==requestScope.memberInfo.memberId}">
+               <button type="submit" class="btn btn-default">수정하러 가기</button>
                <button type="button" data-target="#exampleModal2" data-toggle="modal" id="memberSecession" class="btn btn-default">회원 탈퇴</button>          
+                </c:if>
                  </div>                                   
              </div>
              </form> 

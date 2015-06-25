@@ -40,6 +40,9 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
+import Exception.ChildBookTableException;
+import Exception.NoInnException;
+
 @Controller
 public class InnController {
 	
@@ -270,22 +273,21 @@ public class InnController {
 		/*innService.tradeDeleteByBookNo(bdvo);*/
 		return "redirect:get_mybooklist.do";
 	}
-	/*등록숙소*/
+	/*등록숙소  6/25 exception으로 수정함 */ 
 	@RequestMapping(value="inndelete.do")
-	public String innDelete(int innNo, HttpServletRequest request){
-		HttpSession session=null;
-		session = request.getSession(false);
+	public String innDelete(int innNo, HttpServletRequest request,Model model){
+		 HttpSession session = request.getSession(false);
+			if(session==null||(MemberVO)session.getAttribute("mvo")==null){
+				return "member_session_fail";
+			}
 		MemberVO vo= (MemberVO)session.getAttribute("mvo");	
-		boolean flag= innService.checkChildBookTable(innNo);
-		 // true는 자식예약테이블이 없으므로 지워준다.
-		if(flag==true){
-			innService.innDelete(new DeleteVO(innNo,vo.getMemberId()));			
-			return "redirect:get_myinnlist.do";
-		}
-		//false 는 자식예약테이블 존재하므로 에러메세지? 띄우줌
-		else{
-		return "member_delete_fail";
-		}
+		try {
+			innService.innDelete(new DeleteVO(innNo,vo.getMemberId()));
+		} catch (ChildBookTableException e) {
+			model.addAttribute("message", e.getMessage());
+			return "member_delete_fail";	
+		}	
+		return "redirect:get_myinnlist.do";
 	}
 	/*거래내역목록*/
 	@RequestMapping(value="tradedelete.do")
@@ -345,7 +347,13 @@ public class InnController {
 	public String inShow(HttpServletRequest request, Model model){
 		String innNo = (String)request.getParameter("innNo");
 		int innNo2=Integer.parseInt(innNo);
-		HashMap<String, Object> map = (HashMap<String, Object>) innService.selectInn(innNo);
+		HashMap<String, Object> map=new HashMap<String, Object>();		
+		try {
+			map = (HashMap<String, Object>)innService.selectInn(innNo);
+		} catch (NoInnException e) {
+			model.addAttribute("message", e.getMessage());
+			return "inn_in_show_fail";	
+		}		
 		System.out.println("상세글보기 컨트롤러 메서드");
 		HttpSession session=request.getSession(false);
 		MemberVO mvo=null;
@@ -374,10 +382,21 @@ public class InnController {
 		return "inn_in_show";
 	}
 	
+	
 	@RequestMapping("innupdateform.do")
 	public String innupdateform(int innNo, HttpServletRequest request, Model model){
+		 HttpSession session = request.getSession(false);
+			if(session==null||(MemberVO)session.getAttribute("mvo")==null){
+				return "member_session_fail";
+			}
 		String innNo2=Integer.toString(innNo);
-		HashMap<String, Object> map = (HashMap<String, Object>) innService.selectInn(innNo2);
+		HashMap<String, Object> map= new HashMap<String, Object>();
+		try {
+			map = (HashMap<String, Object>) innService.selectInn(innNo2);
+		} catch (NoInnException e) {
+			model.addAttribute("message", e.getMessage());
+			return "inn_in_show_fail";	
+		}
 		InnVO ivo = (InnVO)map.get("innVO");
 		List<InnPicCompVO> picList = innService.selectByInnNo(innNo2);
 		List<InnPicCompVO> list=innService.selectFilePathByInnNo(innNo);
