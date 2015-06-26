@@ -133,14 +133,14 @@
 						<div class="col-sm-3">
 							<input type="text" class="form-control" name="availableDateSt"
 								id="availableDateSt" size="15"
-								placeholder="${requestScope.avvo.availableDateSt}"
-								value="${requestScope.avvo.availableDateSt}">
+								placeholder="${requestScope.VOMap.avvo.availableDateSt}"
+								value="${requestScope.VOMap.avvo.availableDateSt}">
 						</div>
 						<div class="col-sm-3">
 							<input type="text" class="form-control" name="availableDateEnd"
 								size="15" id="availableDateEnd"
-								placeholder="${requestScope.avvo.availableDateEnd}"
-								value="${requestScope.avvo.availableDateEnd}">
+								placeholder="${requestScope.VOMap.avvo.availableDateEnd}"
+								value="${requestScope.VOMap.avvo.availableDateEnd}">
 						</div>
 					</div>
 					<div class="form-group">

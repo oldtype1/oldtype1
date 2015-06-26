@@ -356,6 +356,7 @@ public class InnController {
 		ProfilePicVO pvo=innService.selectByProfilePic(ivo.getMemberId());
 		List<AmenityVO> avo =innService.selectAmenity(innNo2);
 		AvailableDateVO avvo=innService.selectAvailableDate(innNo);
+		System.out.println("avvo : "+avvo);
 		map.put("picList", picList);
 		map.put("pvo", pvo);
 		map.put("avo", avo);
@@ -381,9 +382,11 @@ public class InnController {
 		int innNo=Integer.parseInt(innNo2);
 		int availableDateNo=Integer.parseInt(availableDateNo2);
 		List<MultipartFile> file = ipvo.getFile();
+		System.out.println("test...");
 		ivo.setInnNo(innNo);
 		ivo.setMemberId(memberId);
 		innService.updateInnInfo(ivo);
+		System.out.println("test1...");
 		avo.setInnNo(innNo);
 		avvo.setInnNo(innNo);
 		avvo.setAvailableDateNo(availableDateNo);
