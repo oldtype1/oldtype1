@@ -558,26 +558,26 @@ public class InnController {
 			return "redirect:get_myinnlist.do";
 		}
 	// 6/19일 추가 위시리스트reg
-	@RequestMapping("wishListReg.do")
-	public String wishlistreg(HttpServletRequest request, Model model) {
-		 HttpSession session = request.getSession(false);
-			if(session==null||(MemberVO)session.getAttribute("mvo")==null){
-				return "member_session_fail";
-			}	 
-		System.out.println("위시 " + request.getParameter("innNo"));
-		int innNO = Integer.parseInt(request.getParameter("innNo"));
-		System.out.println(innNO);
-		MemberVO vo = (MemberVO) session.getAttribute("mvo");
-		WishListVO wvo = new WishListVO(0, innNO, vo.getMemberId(), null, null);
-		int count = innService.wishCheck(wvo);
-		if (count > 0) {
-			model.addAttribute("innNo", innNO);
-			return "member_wishlist_fail";
-		} else {
-			innService.wishlistreg(wvo);
-			return "redirect:get_mywishlist.do";
+		@RequestMapping("wishListReg.do")
+		@ResponseBody
+		public boolean wishlistreg(int innNo, HttpServletRequest request) {
+			 HttpSession session = request.getSession(false);
+			 boolean flag=false;
+				if(session==null||(MemberVO)session.getAttribute("mvo")==null){
+					flag=false;
+				}	 
+			System.out.println(innNo);
+			MemberVO vo = (MemberVO) session.getAttribute("mvo");
+			WishListVO wvo = new WishListVO(0, innNo, vo.getMemberId(), null, null);
+			int count = innService.wishCheck(wvo);
+			if (count > 0) {
+				flag=false;
+			} else {
+				innService.wishlistreg(wvo);
+				flag=true;
+			}
+			return flag;
 		}
-	}
 	@RequestMapping("changeWishListPic.do")
 	@ResponseBody
 	public MemberVO changeWishListPic(int innNo, HttpServletRequest request){
