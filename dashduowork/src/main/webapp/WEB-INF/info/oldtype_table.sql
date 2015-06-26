@@ -130,7 +130,7 @@ constraint fk_inn6 foreign key(inn_no) references inn(inn_no) on DELETE CASCADE
 ALTER TABLE amenity
 DROP COLUMN amenity_no;
 
-
+drop 
 -----------------댓글테이블(member_id / inn_no ref) ----------------------
 create table comments(
 member_id varchar2(200) not null,

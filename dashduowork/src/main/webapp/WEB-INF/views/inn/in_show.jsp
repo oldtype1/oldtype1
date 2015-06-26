@@ -99,7 +99,7 @@
 				</div>
 				<div class="col-md-7">
 					<form class="form-horizontal" role="form"
-						action="inn_book.do?innNo=${requestScope.VOMap.avo.innNo}&memberId=${sessionScope.mvo.memberId}"
+						action="paymentForm.do?innNo=${requestScope.VOMap.avo.innNo}&memberId=${sessionScope.mvo.memberId}"
 						method="post">
 						<!-- 예약 가능 상황 시 기능 활성화 -->
 		

@@ -4,6 +4,23 @@
 
 <script>
 $(document).ready(function(){
+	var a = $("#directedFlag").val(); // 히든값 확인하기위해      
+    $("#filter_detailForm").hide();
+    $('#button_detail').click(function() {         
+       if(a==0){
+          $("#button_detail").attr("src","${initParam.root}img/directed-back.jpg");
+          a=1;
+       }else if(a==1){
+          $("#button_detail").attr("src","${initParam.root}img/directed.jpg");
+          a=0;
+       }
+       
+       $("#filter_detailForm").slideToggle('fast', function() {
+          return false;
+       });
+       return false;
+    });
+    
 	$("#searchInnCityAjaxForm").submit(function(){
 		if($("#searchCity").val()==""){
 			alert("지역을 입력해주세요.");
@@ -11,7 +28,7 @@ $(document).ready(function(){
 		}
 	});
 });
-function SearchInnCityListByAjax() {		 
+/* function SearchInnCityListByAjax() {		 
 	var availableTags = []; //자동 완성 해당 단어 저장할 배열(객체) 선언 / 항상 초기화 되어야함
 	$.ajax({ //db에 저장되어있는 값들 ajax로 반환
 		type : "post",
@@ -31,7 +48,7 @@ function SearchInnCityListByAjax() {
 	$("#searchCity").autocomplete({//자동완성 기능을 searchCity id에 부여한다.
 		source : availableTags //자동완성 소스는 availableTags 배열을 사용 한다.		
 	});
-	}//function SearchInnCityListByAjax()
+	}//function SearchInnCityListByAjax() */
 $(function() {
 	$( "#slider-range" ).slider({
 	      range: true,
@@ -84,7 +101,7 @@ $(function() {
 			//alert();
 			$.ajax({
 				type : "Post",
-				url : "selectInnByCheckedAmenity.do",
+				url : "searchInnByWordDateNo.do",
 				data : $("#filterForm").serialize(),
 				dataType : "json",
 				success : function(innInfoList) {
@@ -110,55 +127,143 @@ $(function() {
 	});
 </script>
 
+
 <div class="section" style="position: relative; top: 30px;">
-	<div class="container">
-		<div class="row">
-		
-		
-			<div class="col-md-6" style="top: 45px;">
-				<form action="searchByCityDateNo.do" class="navbar-form navbar-left" role="search" id="searchInnCityAjaxForm">
-					<input type="text" class="form-control" name="innCity" id="searchCity" placeholder="State" size="54"	onkeyup="SearchInnCityListByAjax()"><br>
-						<input
-						type="text" class="form-control" name="startDate" id="checkin" size="15"
-						onfocus="this.value=''" placeholder="Checkin" style="width: 150px;"> <input type="text"
-						class="form-control" name="endDate" size="15" id="checkout"
-						onfocus="this.value=''" placeholder="Checkout" style="width: 150px;">
-						<select class="form-control" name="acceptableNo" id="select">
-						<option value="1">게스트 1명</option>
-						<option value="2">게스트 2명</option>
-						<option value="3">게스트 3명</option>
-						<option value="4">게스트 4명</option>
-						<option value="5">게스트 5명</option>
-						<option value="6">게스트 6명</option>
-					</select>
-					<button type="submit" class="btn btn-default">검색</button>
-				</form>
-			</div>
-			
-			<div class="col-md-6">
-				<form id="filterForm" action="selectInnByCheckedAmenity.do">	
-					<p>
-					  <label for="amount">가격 범위:</label>
-					  <input type="text" id="amount" readonly style="border:0; color:black;">
-					</p>
-					<div id="slider-range" style="width: 500px;" ></div>
-					<input type="checkbox" name="amenityWiFi" value="Y">WiFi <input
-						type="checkbox" name="amenityBed" value="Y">Bed <input
-						type="checkbox" name="amenityTV" value="Y">TV <input
-						type="checkbox" name="amenityKitchen" value="Y">주방 <input
-						type="checkbox" name="amenityBBQ" value="Y">바베큐
-						<input type="hidden" name="firstSearchCity" value="${requestScope.searchVO.innCity }">
-						<input type="hidden" name="firstSearchStartDate" value="${requestScope.searchVO.startDate }">
-						<input type="hidden" name="firstSearchEndDate" value="${requestScope.searchVO.endDate }">
-						<input type="hidden" name="firstSearchPeopleNo" value="${requestScope.searchVO.acceptableNo }">
-						<input type="hidden" name="minPrice" id="minPrice" value="0">
-						<input type="hidden" name="maxPrice" id="maxPrice" value="999999">
-				</form>			
-			</div>
-			
-			
-		</div>
-	</div>
+   <div class="container">
+      <div class="row">
+
+
+         <div class="col-md-6" style="top: 45px;">
+            <form action="searchByCityDateNo.do" class="navbar-form navbar-left"
+               role="search" id="searchInnCityAjaxForm">
+               <input type="text" class="form-control" name="innCity"
+                  id="searchCity" placeholder="State" size="54"
+                  onkeyup="SearchInnCityListByAjax()"><br> <input
+                  type="text" class="form-control" name="startDate" id="checkin"
+                  size="15" onfocus="this.value=''" placeholder="Checkin"
+                  style="width: 150px;"> <input type="text"
+                  class="form-control" name="endDate" size="15" id="checkout"
+                  onfocus="this.value=''" placeholder="Checkout"
+                  style="width: 150px;"> <select class="form-control"
+                  name="acceptableNo" id="select">
+                  <option value="1">게스트 1명</option>
+                  <option value="2">게스트 2명</option>
+                  <option value="3">게스트 3명</option>
+                  <option value="4">게스트 4명</option>
+                  <option value="5">게스트 5명</option>
+                  <option value="6">게스트 6명</option>
+               </select>
+               <button type="submit" class="btn btn-default">검색</button>
+            </form>
+         </div>
+
+         <div class="col-md-6">
+            <form id="filterForm" action="selectInnByCheckedAmenity.do">
+               <p>
+                  <label for="amount">가격 범위:</label> <input type="text" id="amount"
+                     readonly style="border: 0; color: black;">
+               </p>
+               <div id="slider-range" style="width: 500px;"></div>
+                <div class="checkbox">
+              <label class="checkbox-inline">
+	                     <input type="checkbox" name="amenityItems" value="1">무선인터넷</label>
+                    <label class="checkbox-inline">
+                      <input type="checkbox"  name="amenityItems" value="2">TV</label>
+                    <label class="checkbox-inline">
+                      <input type="checkbox" name="amenityItems" value="3">부엌</label>
+               </div>
+               <input type="hidden" name="flag" value="0">
+               <input type="hidden" name="searchWord"
+                  value="${requestScope.filterVO.searchWord}"> <input
+                  type="hidden" name="searchStartDate"
+                  value="${requestScope.filterVO.searchStartDate}"> <input
+                  type="hidden" name="searchEndDate"
+                  value="${requestScope.filterVO.searchEndDate}"> <input
+                  type="hidden" name="searchPeopleNo"
+                  value="${requestScope.filterVO.searchPeopleNo}"> <input
+                  type="hidden" name="minPrice" id="minPrice" value="0"> <input
+                  type="hidden" name="maxPrice" id="maxPrice" value="999999">
+               <input type="image" src="${initParam.root}img/directed.jpg"   height="10 width="15" id="button_detail">
+               <input type="hidden" src="${initParam.root}img/directed-back.jpg"   height="10" width="15" id="button_detailback">
+               <input type="hidden"  id="directedFlag" value=0>
+         <div id="filter_detailForm" >
+         ---------------------------------------------------------------------------------------------------<br>
+         <div class="checkbox">
+                    <label class="checkbox-inline">
+                      <input type="checkbox" name="amenityItems" value="4">가족/어린이 환영</label>
+                    <label class="checkbox-inline">
+                      <input type="checkbox"  name="amenityItems" value="5">건조기</label>
+                    <label class="checkbox-inline">
+                      <input type="checkbox" name="amenityItems" value="6">구급 상자</label>
+                   <label class="checkbox-inline">
+                   <input type="checkbox"  name="amenityItems" value="7">난방</label>
+                    <label class="checkbox-inline">
+                      <input type="checkbox" name="amenityItems" value="8">도어락</label>
+                    <label class="checkbox-inline">
+                      <input type="checkbox" name="amenityItems" value="9">무료 주차 포함</label>
+	               </div>
+                  
+                   <div class="checkbox">
+                   <label class="checkbox-inline">
+                      <input type="checkbox"  name="amenityItems" value="10">무료 헬스장</label>
+                    <label class="checkbox-inline">
+                      <input type="checkbox" name="amenityItems" value="11">샴푸</label>
+                    <label class="checkbox-inline">
+                      <input type="checkbox"  name="amenityItems" value="12">세탁기</label>
+                    <label class="checkbox-inline">
+                      <input type="checkbox" name="amenityItems" value="13">소화기</label>
+                    <label class="checkbox-inline">
+                      <input type="checkbox" name="amenityItems" value="14">수영장</label>
+                    <label class="checkbox-inline">
+                      <input type="checkbox"  name="amenityItems" value="15">실내 벽난로</label>
+                    <label class="checkbox-inline">
+                      <input type="checkbox" name="amenityItems" value="16">아침식사</label>
+                    <label class="checkbox-inline">
+                  	 <input type="checkbox"  name="amenityItems" value="17">안전 카드</label>
+                    <label class="checkbox-inline">
+                     <input type="checkbox" name="amenityItems" value="18">애완동물 입실 가능</label>
+                    </div>
+                  
+                  <div class="checkbox">
+                     <label class="checkbox-inline">
+                      <input type="checkbox" name="amenityItems" value="19">에어콘</label>
+                    <label class="checkbox-inline">
+                      <input type="checkbox"  name="amenityItems" value="20">엘리베이터</label>
+                    <label class="checkbox-inline">
+                      <input type="checkbox" name="amenityItems" value="21">욕조</label>
+                    <label class="checkbox-inline">
+                      <input type="checkbox"  name="amenityItems" value="22">이벤트/행사 기능</label>
+             	    <label class="checkbox-inline">
+                      <input type="checkbox" name="amenityItems" value="23">인터넷</label>
+                    <label class="checkbox-inline">
+                      <input type="checkbox" name="amenityItems" value="24">일산화탄소 탐지기</label>
+                    <label class="checkbox-inline">
+                      <input type="checkbox"  name="amenityItems" value="25">초인종/인터폰</label>
+                 </div>
+
+				 <div class="checkbox">
+                    <label class="checkbox-inline">
+				   <input type="checkbox" name="amenityItems" value="26">케이블 TV</label>
+                    <label class="checkbox-inline">
+                      <input type="checkbox"  name="amenityItems" value="27">필수품목</label>
+                    <label class="checkbox-inline">
+                      <input type="checkbox" name="amenityItems" value="28">화재 감지기</label>
+                    <label class="checkbox-inline">
+                      <input type="checkbox" name="amenityItems" value="29">휠체어 사용 가능</label>
+                    <label class="checkbox-inline">
+                      <input type="checkbox"  name="amenityItems" value="30">흡연가능</label>  
+				 </div>	
+         
+         
+         
+          
+         </div>
+                  </form>
+   
+         </div>
+
+      </div>
+   </div>
 </div>
 <br>
 <br>
@@ -170,7 +275,7 @@ $(function() {
 	<div class="container">
 		<div class="row">
 			<div class="col-md-12">
-			지역 : ${requestScope.searchVO.innCity} / 인원 : ${requestScope.searchVO.acceptableNo } 명 에 대한 검색결과
+			지역 : ${requestScope.filterVO.searchWord} / 인원 : ${requestScope.filterVO.searchPeopleNo } 명 에 대한 검색결과
 				<div id="resultViewSearch">
 					<table class="table-hover CSSTableGenerator">
 						<thead>

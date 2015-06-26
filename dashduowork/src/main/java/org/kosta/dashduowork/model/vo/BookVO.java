@@ -17,6 +17,18 @@ public class BookVO {
 
 	
 
+	public BookVO(String memberId, int innNo, String bookCheckIn,
+			String bookCheckOut, String bookCount) {
+		super();
+		this.memberId = memberId;
+		this.innNo = innNo;
+		this.bookCheckIn = bookCheckIn;
+		this.bookCheckOut = bookCheckOut;
+		this.bookCount = bookCount;
+	}
+
+
+
 	public BookVO(int bookNo, String memberId, int innNo, String bookCheckIn,
 			String bookCheckOut, String bookCount, String innName,
 			InnPicCompVO bookMainPic) {

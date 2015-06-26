@@ -1,112 +1,67 @@
 package org.kosta.dashduowork.model.vo;
 
+import java.util.List;
+
 public class FilterVO {
-	private String firstSearchCity;
-	private String firstSearchStartDate;
-	private String firstSearchEndDate;
-	private String firstSearchPeopleNo;
-	private String amenityWiFi;
-	private String amenityBed;
-	private String amenityTV;
-	private String amenityKitchen;
-	private String amenityBBQ;
+	private String searchWord;
+	private String searchStartDate;
+	private String searchEndDate;
+	private String searchPeopleNo;
 	private String minPrice;
 	private String maxPrice;
+	private List<String> amenityItems;
 	public FilterVO() {
 		super();
-		this.amenityWiFi = "N";
-		this.amenityBed = "N";
-		this.amenityTV = "N";
-		this.amenityKitchen = "N";
-		this.amenityBBQ = "N";
+		// TODO Auto-generated constructor stub
 	}
-	public FilterVO(String firstSearchCity, String firstSearchStartDate,
-			String firstSearchEndDate, String firstSearchPeopleNo,
-			String amenityWiFi, String amenityBed, String amenityTV,
-			String amenityKitchen, String amenityBBQ) {
+	public FilterVO(String searchWord, String searchStartDate,
+			String searchEndDate, String searchPeopleNo, String minPrice,
+			String maxPrice, List<String> amenityItems) {
 		super();
-		this.firstSearchCity = firstSearchCity;
-		this.firstSearchStartDate = firstSearchStartDate;
-		this.firstSearchEndDate = firstSearchEndDate;
-		this.firstSearchPeopleNo = firstSearchPeopleNo;
-		this.amenityWiFi = amenityWiFi;
-		this.amenityBed = amenityBed;
-		this.amenityTV = amenityTV;
-		this.amenityKitchen = amenityKitchen;
-		this.amenityBBQ = amenityBBQ;
-	}
-	
-	public FilterVO(String firstSearchCity, String firstSearchStartDate,
-			String firstSearchEndDate, String firstSearchPeopleNo,
-			String amenityWiFi, String amenityBed, String amenityTV,
-			String amenityKitchen, String amenityBBQ, String minPrice,
-			String maxPrice) {
-		super();
-		this.firstSearchCity = firstSearchCity;
-		this.firstSearchStartDate = firstSearchStartDate;
-		this.firstSearchEndDate = firstSearchEndDate;
-		this.firstSearchPeopleNo = firstSearchPeopleNo;
-		this.amenityWiFi = amenityWiFi;
-		this.amenityBed = amenityBed;
-		this.amenityTV = amenityTV;
-		this.amenityKitchen = amenityKitchen;
-		this.amenityBBQ = amenityBBQ;
+		this.searchWord = searchWord;
+		this.searchStartDate = searchStartDate;
+		this.searchEndDate = searchEndDate;
+		this.searchPeopleNo = searchPeopleNo;
 		this.minPrice = minPrice;
 		this.maxPrice = maxPrice;
+		this.amenityItems = amenityItems;
 	}
-	public String getFirstSearchCity() {
-		return firstSearchCity;
+	public FilterVO(String searchWord, String searchStartDate,
+			String searchEndDate, String searchPeopleNo) {
+		super();
+		this.searchWord = searchWord;
+		this.searchStartDate = searchStartDate;
+		this.searchEndDate = searchEndDate;
+		this.searchPeopleNo = searchPeopleNo;
 	}
-	public void setFirstSearchCity(String firstSearchCity) {
-		this.firstSearchCity = firstSearchCity;
+	public FilterVO(String searchWord, String searchPeopleNo) {
+		super();
+		this.searchWord = searchWord;
+		this.searchPeopleNo = searchPeopleNo;
 	}
-	public String getFirstSearchStartDate() {
-		return firstSearchStartDate;
+	public String getSearchWord() {
+		return searchWord;
 	}
-	public void setFirstSearchStartDate(String firstSearchStartDate) {
-		this.firstSearchStartDate = firstSearchStartDate;
+	public void setSearchWord(String searchWord) {
+		this.searchWord = searchWord;
 	}
-	public String getFirstSearchEndDate() {
-		return firstSearchEndDate;
+	public String getSearchStartDate() {
+		return searchStartDate;
 	}
-	public void setFirstSearchEndDate(String firstSearchEndDate) {
-		this.firstSearchEndDate = firstSearchEndDate;
+	public void setSearchStartDate(String searchStartDate) {
+		this.searchStartDate = searchStartDate;
 	}
-	public String getFirstSearchPeopleNo() {
-		return firstSearchPeopleNo;
+	public String getSearchEndDate() {
+		return searchEndDate;
 	}
-	public void setFirstSearchPeopleNo(String firstSearchPeopleNo) {
-		this.firstSearchPeopleNo = firstSearchPeopleNo;
+	public void setSearchEndDate(String searchEndDate) {
+		this.searchEndDate = searchEndDate;
 	}
-	public String getAmenityWiFi() {
-		return amenityWiFi;
+	public String getSearchPeopleNo() {
+		return searchPeopleNo;
 	}
-	public void setAmenityWiFi(String amenityWiFi) {
-		this.amenityWiFi = amenityWiFi;
-	}
-	public String getAmenityBed() {
-		return amenityBed;
-	}
-	public void setAmenityBed(String amenityBed) {
-		this.amenityBed = amenityBed;
-	}
-	public String getAmenityTV() {
-		return amenityTV;
-	}
-	public void setAmenityTV(String amenityTV) {
-		this.amenityTV = amenityTV;
-	}
-	public String getAmenityKitchen() {
-		return amenityKitchen;
-	}
-	public void setAmenityKitchen(String amenityKitchen) {
-		this.amenityKitchen = amenityKitchen;
-	}
-	public String getAmenityBBQ() {
-		return amenityBBQ;
-	}
-	public void setAmenityBBQ(String amenityBBQ) {
-		this.amenityBBQ = amenityBBQ;
+	public void setSearchPeopleNo(String searchPeopleNo) {
+		this.searchPeopleNo = searchPeopleNo;
 	}
 	public String getMinPrice() {
 		return minPrice;
@@ -120,16 +75,19 @@ public class FilterVO {
 	public void setMaxPrice(String maxPrice) {
 		this.maxPrice = maxPrice;
 	}
+	public List<String> getAmenityItems() {
+		return amenityItems;
+	}
+	public void setAmenityItems(List<String> amenityItems) {
+		this.amenityItems = amenityItems;
+	}
 	@Override
 	public String toString() {
-		return "FilterVO [firstSearchCity=" + firstSearchCity
-				+ ", firstSearchStartDate=" + firstSearchStartDate
-				+ ", firstSearchEndDate=" + firstSearchEndDate
-				+ ", firstSearchPeopleNo=" + firstSearchPeopleNo
-				+ ", amenityWiFi=" + amenityWiFi + ", amenityBed=" + amenityBed
-				+ ", amenityTV=" + amenityTV + ", amenityKitchen="
-				+ amenityKitchen + ", amenityBBQ=" + amenityBBQ + ", minPrice="
-				+ minPrice + ", maxPrice=" + maxPrice + "]";
+		return "FilterVO [searchWord=" + searchWord + ", searchStartDate="
+				+ searchStartDate + ", searchEndDate=" + searchEndDate
+				+ ", searchPeopleNo=" + searchPeopleNo + ", minPrice="
+				+ minPrice + ", maxPrice=" + maxPrice + ", amenityItems="
+				+ amenityItems + "]";
 	}
 	
 }

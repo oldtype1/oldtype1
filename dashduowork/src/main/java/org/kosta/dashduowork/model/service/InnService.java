@@ -23,25 +23,29 @@ import org.kosta.dashduowork.model.vo.TradeListVO;
 import org.kosta.dashduowork.model.vo.WishListListVO;
 import org.kosta.dashduowork.model.vo.WishListVO;
 
+import Exception.ChildBookTableException;
+import Exception.NoInnException;
+
 public interface InnService {
-   public InnListVO getmyinnlist(MemberVO vo, String pageNo);
 //   public List<InnVO> findInnByCheckedAmenity(AmenityVO vo); //은식, 동원
    public InnListVO findInnByCityAndAcceptableNo(SearchVO vo); //은식, 동원
    public InnListVO findInnByCityAndDateAndAcceptableNo(SearchVO vo); //은식, 동원
+   /**마이페이지 -->세션 exception 처리 -->안하고 컨트롤러에서 처리..!**/
+   public InnListVO getmyinnlist(MemberVO vo, String pageNo);
    public BookListVO getmybooklist(MemberVO vo, String pageNo);
    public WishListListVO getmywishlist(MemberVO vo, String pageNo);
+   public InnReservationListVO getMyInnReservationList(MemberVO vo, String pageNo);
+   public TradeListVO getmytradelist(MemberVO vo, String pageNo);//거래내역 
    
    public void registerInn(InnVO ivo);
    public void registerInnPic(InnPicCompVO vo);
    public void registerInnEtc(AmenityVO avo, AvailableDateVO avvo);
-	public TradeListVO getmytradelist(MemberVO vo, String pageNo);//거래내역 
    
    //6/15일 추가
 	public InnListVO findInnByCityAndDateAndAcceptableNoWithFilter(FilterVO vo);
 	public InnListVO findInnByCityAndAcceptableNoWithFilter(FilterVO vo);
 
-	public InnReservationListVO getMyInnReservationList(MemberVO vo, String pageNo);
-	public Map<String,Object> selectInn(String innNo); // 은수
+	public Map<String,Object> selectInn(String innNo) throws NoInnException; // 은수
 	//6/16추가
 	public List<InnVO> findInnCityListByInnCityCharacter(SearchVO vo);
    
@@ -50,9 +54,8 @@ public interface InnService {
 	   /**주형 윤정 마이페이지 내역 삭제 메서드**/
 	public void wishListDelete(DeleteVO wdvo);
 	public void bookDelete(DeleteVO bdvo);
-	public void innDelete(DeleteVO idvo);
+	public void innDelete(DeleteVO idvo) throws ChildBookTableException;
 	public void tradeDelete(DeleteVO idvo);
-	public boolean checkChildBookTable(int innNo);
 	
 	//6/18일 추가
 	public InnListVO findInnByCityAndAcceptableNoWithPrice(FilterVO vo);
@@ -73,7 +76,14 @@ public interface InnService {
 	public abstract void wishlistreg(WishListVO wvo);
 	public int wishCheck(WishListVO wvo);
 	//위시리스트취소
-		public abstract int getWishListNoByInnNo(InnVO ivo);
-		//별점주기
-		public void ratingInn(InnRatingVO irv,int tradeNo);
+	public abstract int getWishListNoByInnNo(InnVO ivo);
+	//별점주기
+	public void ratingInn(InnRatingVO irv,int tradeNo);
+	
+	//6/25 검색메서드추가
+	public abstract List<InnVO> findInnByWordAndAcceptNoAndDate(FilterVO fvo);
+	public abstract List<InnVO> findInnByWordAndAcceptNoAndDateWithPrice(FilterVO fvo);
+	//윤정 추가
+	public abstract InnVO getInnByInnNo(int innNo);
+	public abstract MemberVO getMemberAccountByInnNo(String innNo);
 }

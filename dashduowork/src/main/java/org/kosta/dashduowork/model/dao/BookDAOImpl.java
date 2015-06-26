@@ -36,10 +36,24 @@ public class BookDAOImpl implements BookDAO {
 		System.out.println("예약 취소"+bdvo);
 	sqlSessionTemplate.delete("delete.bookDelete", bdvo);
 	}
+	public void bookInsert(BookVO bvo){
+		sqlSessionTemplate.insert("inn.bookInsert", bvo);
+	}
+
+	public List<BookVO> selectBookList(String innNo){
+		return sqlSessionTemplate.selectList("inn.selectBookList", innNo);
+	}
+	
 	@Override
 	public int checkChildBookTable(int innNo) {
 		//6/19 주형- 숙소 삭제시 예약한 테이블이 있나 확인하는 메서드임 
 		return sqlSessionTemplate.selectOne("inn.checkChildBookTable",innNo);
+	}
+	
+	@Override
+	public int checkChildBookTablebymemberId(String memberId) {
+		//6/25 주형-  회원탈퇴시 예약한 테이블이 있나 확인하는 메서드임 
+			return sqlSessionTemplate.selectOne("inn.checkChildBookTablebymemberId",memberId);
 	}
 	/***** 스케쥴러 ******/
 	
@@ -57,13 +71,7 @@ public class BookDAOImpl implements BookDAO {
 		sqlSessionTemplate.delete("scheduler.bookDeleteOutDate");
 	}
 	
-	public void bookInsert(BookVO bvo){
-		sqlSessionTemplate.insert("inn.bookInsert", bvo);
-	}
 
-	public List<BookVO> selectBookList(String innNo){
-		return sqlSessionTemplate.selectList("inn.selectBookList", innNo);
-	}
 	
 	
 }

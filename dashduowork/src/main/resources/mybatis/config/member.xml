@@ -57,6 +57,9 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		<include refid="selectMember" /> where member_answer_type=#{memberAnswerType} and 
 		member_pass_answer=#{memberPassAnswer} and member_id=#{memberId}
 	</select>
+		<select id="getMemberAccountByInnNo" parameterType="String" resultType="mvo" resultMap="memberResult">
+		select m.member_name, m.member_bank_acount, m.member_bank from member m, inn i where i.inn_no=#{value} and i.member_id=m.member_id
+		</select>
 	
 	<!-- <select id="getAddressKind" resultType="string">
 		select distinct(address) from member

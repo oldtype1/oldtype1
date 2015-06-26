@@ -24,6 +24,8 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
+import Exception.ChildBookTableException;
+
 @Controller
 public class MemberController {
    @Resource(name = "memberServiceImpl")
@@ -76,14 +78,19 @@ public class MemberController {
 
    @RequestMapping("member_myprofile_update_form.do")
    // 업데이트하는 폼으로 보낸다. (프로필 보기 와 굉장히 비슷)
-   public String member_myprofile_update_form(String memberId, Model model) {
-      MemberVO mvo = memberService.findMemberById(memberId);
-      ProfilePicVO pvo = memberService.selectProfilePic(memberId);
+   public String member_myprofile_update_form(HttpServletRequest request,Model model) {
+	   HttpSession session = request.getSession(false);
+		if(session==null||(MemberVO)session.getAttribute("mvo")==null){
+			return "member_session_fail";
+		}	   
+		MemberVO mvo= (MemberVO)session.getAttribute("mvo");		
+      /*MemberVO mvo = memberService.findMemberById(memberId);*/
+      ProfilePicVO pvo = memberService.selectProfilePic(mvo.getMemberId());
       if(pvo!=null){
           mvo.setProfilePicVO(pvo);
          }
          else{
-         mvo.setProfilePicVO(new ProfilePicVO(memberId,"http://pingendo.github.io/pingendo-bootstrap/assets/user_placeholder.png"));
+         mvo.setProfilePicVO(new ProfilePicVO(mvo.getMemberId(),"http://pingendo.github.io/pingendo-bootstrap/assets/user_placeholder.png"));
          }
       model.addAttribute("memberInfo", mvo);
       return "member_myprofile_update_form";    
@@ -93,6 +100,10 @@ public class MemberController {
    @RequestMapping("member_updateInfo.do")
    public String member_updateInfo(ProfilePicVO pvo,MemberVO mvo, Model model, BindingResult result,
          HttpServletRequest request) {
+	   HttpSession session = request.getSession(false);
+			if(session==null||(MemberVO)session.getAttribute("mvo")==null){
+				return "member_session_fail";
+			}	  
 	   	System.out.println("mvo : " + mvo);
 	      System.out.println("pvo : " + pvo);	      
 	      MultipartFile file = pvo.getFile();
@@ -117,16 +128,12 @@ public class MemberController {
 	    	  pvo.setFilePath("none");     
 	      }  
       memberService.updateMemberInfo(mvo,pvo);
-      
       MemberVO updateVO = memberService.findMemberById(mvo.getMemberId());
-      HttpSession session = request.getSession();
-      session.setAttribute("mvo", updateVO);
-      
+      session.setAttribute("mvo", updateVO);  
       if (result.hasErrors()) {
           return "member_myprofile_update_form"; // 유효성 검사에 에러가 있으면 가입폼으로 다시 보낸다.
        }
-      return "redirect:member_myprofile.do?memberId="+mvo.getMemberId();
-      
+      return "redirect:member_myprofile.do?memberId="+mvo.getMemberId();      
    }
 
 
@@ -145,11 +152,19 @@ public class MemberController {
    }
       
    @RequestMapping("memberSecession.do")
-   public String memberSecession(String memberId, HttpServletRequest request){
+   public String memberSecession(String memberId, HttpServletRequest request,Model model) {
+	   HttpSession session = request.getSession(false);
+		if(session==null||(MemberVO)session.getAttribute("mvo")==null){
+			return "member_session_fail";
+		}
       System.out.println("memberSecession콘트롤러들어옴");
-      HttpSession session=request.getSession();
-      memberService.memberSecession(memberId);
-      session.invalidate();
+      try {
+		memberService.memberSecession(memberId);
+		session.invalidate();
+	} catch (ChildBookTableException e) {
+		model.addAttribute("message", e.getMessage());
+		return "member_memberSecession_fail";	
+	}
       return "member_memberSecession_result";
    }
 
