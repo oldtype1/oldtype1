@@ -7,14 +7,9 @@
           dateFormat : 'yy-mm-dd'
        }); 
     });
-/*     $(document).ready(function(){
-    	$("#registerForm").submit(function() {
-            $("input[name=amenity]:checked").each(function() {
-               var test = $(this).val();
-               alert(test);
-            });
-    	});
-    }); */
+    $(document).ready(function(){
+		
+    }); 
  </script>
  <c:choose>
  <c:when test="${sessionScope.mvo == null}">

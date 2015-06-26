@@ -61,7 +61,7 @@ public interface InnService {
 	public InnListVO findInnByCityAndAcceptableNoWithPrice(FilterVO vo);
 	public InnListVO findInnByCityAndDateAndAcceptableNoWithPrice(FilterVO vo);
 	//6/19일 추가-윤정- 등록숙소 수정 관련
-	public AmenityVO selectAmenity(String innNo);
+	public List<AmenityVO> selectAmenity(String innNo);
 	public void updateInnInfo(InnVO ivo);
 	public void updateInnEtc(AmenityVO avo, AvailableDateVO avvo);
 	public AvailableDateVO selectAvailableDate(int innNo);

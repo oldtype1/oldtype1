@@ -44,7 +44,7 @@ public class AmenityVO {
 	public void setAmenityItems(ArrayList<String> amenityItems) {
 		this.amenityItems = amenityItems;
 	}
-
+	
 	@Override
 	public String toString() {
 		return "AmenityVO [innNo=" + innNo + ", amenityItem=" + amenityItem

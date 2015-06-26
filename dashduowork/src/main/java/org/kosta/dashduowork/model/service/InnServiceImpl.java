@@ -341,7 +341,7 @@ public class InnServiceImpl implements InnService {
 	}
 	//6/19윤정 추가
 	@Override
-	public AmenityVO selectAmenity(String innNo) {
+	public List<AmenityVO> selectAmenity(String innNo) {
 		return amenityDAO.selectAmenity(innNo);
 	}
 	@Override
@@ -350,10 +350,12 @@ public class InnServiceImpl implements InnService {
 		innDAO.updateInnInfo(ivo);
 	}
 	@Override
+	@Transactional
 	public void updateInnEtc(AmenityVO avo, AvailableDateVO avvo) {
 		System.out.println("InnServiceImple ---Amenity와 AvailableDate"+avo+avvo);
+		amenityDAO.delete(avo.getInnNo());
+		amenityDAO.register(avo);
 		availableDateDAO.update(avvo);
-		amenityDAO.update(avo);
 	}
 	@Override
 	public AvailableDateVO selectAvailableDate(int innNo) {

@@ -420,14 +420,15 @@ public class InnController {
 		List<InnPicCompVO> picList = innService.selectByInnNo(innNo2);
 		List<InnPicCompVO> list=innService.selectFilePathByInnNo(innNo);
 		ProfilePicVO pvo=innService.selectByProfilePic(ivo.getMemberId());
-		AmenityVO avo=innService.selectAmenity(innNo2);
+		List<AmenityVO> avo =innService.selectAmenity(innNo2);
 		AvailableDateVO avvo=innService.selectAvailableDate(innNo);
 		map.put("picList", picList);
 		map.put("pvo", pvo);
+		map.put("avo", avo);
+		map.put("avvo",avvo);
 		model.addAttribute("VOMap", map);
-		model.addAttribute("avo", avo);
-		model.addAttribute("avvo", avvo);
 		model.addAttribute("picList", list);
+		System.out.println(avo);
 		return "member_innupdate_form";
 	}
 	
