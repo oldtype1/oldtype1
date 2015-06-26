@@ -134,39 +134,6 @@ public class InnServiceImpl implements InnService {
 		PagingBean pagingBean=new PagingBean(total,pn);	
 		return new TradeListVO(list, pagingBean);
 	}
-   
-   
-/*   @Override //은식, 동원
-   public List<InnVO> findInnByCheckedAmenity(AmenityVO vo) {
-      System.out.println("Service의 findInnByCheckedAmenity");
-      List<InnVO> list =  innDAO.selectInnByCheckedAmenity(vo);
-      System.out.println(list);
-      return list;
-   }*/
-   //plus+++++++++++++++++++++++++++++++++++++++++++
-	public InnListVO findInnByCityAndAcceptableNo(SearchVO vo) {
-		InnListVO innListVO=new InnListVO();
-		List<InnVO> innList =  innDAO.selectInnByCityAndAcceptableNo(vo);
-//		System.out.println("서비스에서 메서드 확인");
-		for (int i=0;i<innList.size();i++) {
-			int innNo=innList.get(i).getInnNo();
-//			System.out.println("list.getInnNo 확인 : "+innNo);
-			innList.get(i).setInnMainPic(innPicCompDAO.getMyPicList(innNo));
-		}
-		innListVO.setInnList(innList);
-//		System.out.println("숙소리스트 : "+innList);
-		return innListVO;
-	}
-	public InnListVO findInnByCityAndDateAndAcceptableNo(SearchVO vo){
-		InnListVO innListVO=new InnListVO();
-		List<InnVO> innList =  innDAO.selectInnByCityAndDateAndAcceptableNo(vo);
-		for (int i=0;i<innList.size();i++) {
-			int innNo=innList.get(i).getInnNo();
-			innList.get(i).setInnMainPic(innPicCompDAO.getMyPicList(innNo));
-		}
-		innListVO.setInnList(innList);
-		return innListVO;
-	}
 	
 /**주형 -- 예약/위시리스트 사진목록 추가 6/17**/
 	@Override
@@ -239,28 +206,6 @@ public class InnServiceImpl implements InnService {
 		}//4. 거래내역 삭제
 		/**삭제 끝 6/18**/ 
 /**6/19 스케쥴러 이용한 거래내역 인서트,예약완료 삭제 -->스케쥴러 service 에서 수행한다.**/
-		
-   //6/15일 추가내용
-	public InnListVO findInnByCityAndDateAndAcceptableNoWithFilter(FilterVO vo){ //지역&날짜&인원+필터
-		InnListVO innListVO=new InnListVO();
-		List<InnVO> innList =  innDAO.selectInnByCityAndDateAndAcceptableNoWithFilter(vo);
-		for (int i=0;i<innList.size();i++) {
-			int innNo=innList.get(i).getInnNo();
-			innList.get(i).setInnMainPic(innPicCompDAO.getMyPicList(innNo));
-		}
-		innListVO.setInnList(innList);
-		return innListVO;
-	}
-	public InnListVO findInnByCityAndAcceptableNoWithFilter(FilterVO vo){ //지역&날짜&인원+필터
-		InnListVO innListVO=new InnListVO();
-		List<InnVO> innList =  innDAO.selectInnByCityAndAcceptableNoWithFilter(vo);
-		for (int i=0;i<innList.size();i++) {
-			int innNo=innList.get(i).getInnNo();
-			innList.get(i).setInnMainPic(innPicCompDAO.getMyPicList(innNo));
-		}
-		innListVO.setInnList(innList);
-		return innListVO;
-	}
 
 	  public InnReservationListVO getMyInnReservationList(MemberVO vo, String pageNo){
 	      System.out.println("getMyInnReservationList 서비스    "+vo);
@@ -298,8 +243,8 @@ public class InnServiceImpl implements InnService {
 	   }
    //6/17일 추가(지역명 자동완성처리)
    @Override
-	public List<InnVO> findInnCityListByInnCityCharacter(SearchVO vo) {
-		return innDAO.selectInnCityListByInnCityCharacter(vo);
+	public List<InnVO> findInnCityListByInnCityCharacter(FilterVO fvo) {
+		return innDAO.selectInnCityListByInnCityCharacter(fvo);
 	}
    
    @Override
@@ -315,30 +260,6 @@ public class InnServiceImpl implements InnService {
 	  		return pvo;
 	  	}
 	
-	//6/18일 추가
-	public InnListVO findInnByCityAndAcceptableNoWithPrice(FilterVO vo){ //지역&인원+가격
-		System.out.println("서비스의 지역,인원,가격검색");
-		InnListVO innListVO=new InnListVO();
-		List<InnVO> innList = innDAO.selectInnByCityAndAcceptableNoWithPrice(vo);
-		for (int i=0;i<innList.size();i++) {
-			int innNo=innList.get(i).getInnNo();
-			innList.get(i).setInnMainPic(innPicCompDAO.getMyPicList(innNo));
-		}
-		System.out.println("서비스에서 innList 확인 : "+innList);
-		innListVO.setInnList(innList);
-		return innListVO;
-	}
-	
-	public InnListVO findInnByCityAndDateAndAcceptableNoWithPrice(FilterVO vo){
-		InnListVO innListVO=new InnListVO();
-		List<InnVO> innList =  innDAO.selectInnByCityAndDateAndAcceptableNoWithPrice(vo);
-		for (int i=0;i<innList.size();i++) {
-			int innNo=innList.get(i).getInnNo();
-			innList.get(i).setInnMainPic(innPicCompDAO.getMyPicList(innNo));
-		}
-		innListVO.setInnList(innList);
-		return innListVO;
-	}
 	//6/19윤정 추가
 	@Override
 	public List<AmenityVO> selectAmenity(String innNo) {
@@ -510,24 +431,39 @@ public class InnServiceImpl implements InnService {
 
 	// 6/25 검색 메서드 추가
 	@Override
-	public List<InnVO> findInnByWordAndAcceptNoAndDate(FilterVO fvo){
-		List<InnVO> list=null;
+	public InnListVO findInnByWordAndAcceptNoAndDate(FilterVO fvo){
+		InnListVO innListVO=new InnListVO();
+		List<InnVO> innList=null;
 		if(fvo.getSearchStartDate()=="" || fvo.getSearchEndDate()==""){
-			list=innDAO.selectInnByWordAndAcceptNo(fvo);
+			innList=innDAO.selectInnByWordAndAcceptNo(fvo);
 		}else{
-			list=innDAO.selectInnByWordAndAcceptNoAndDate(fvo);
+			innList=innDAO.selectInnByWordAndAcceptNoAndDate(fvo);
 		}
-		return list;
+		for (int i=0;i<innList.size();i++) {
+			int innNo=innList.get(i).getInnNo();
+			innList.get(i).setInnMainPic(innPicCompDAO.getMyPicList(innNo));
+		}
+		innListVO.setInnList(innList);
+		return innListVO;
 	}
 	@Override
-	public List<InnVO> findInnByWordAndAcceptNoAndDateWithPrice(FilterVO fvo){
-		List<InnVO> list=null;
-		if(fvo.getSearchStartDate()=="" || fvo.getSearchEndDate()==""){
-			list=innDAO.selectInnByWordAndAcceptNoWithPrice(fvo);
+	public InnListVO findInnByWordAndAcceptNoAndDateWithPrice(FilterVO fvo){
+		InnListVO innListVO=new InnListVO();
+		List<InnVO> innList=null;
+		if(fvo.getAmenityItems()==null){
+			innListVO=findInnByWordAndAcceptNoAndDate(fvo);
+			innList=innListVO.getInnList();
+		}else if(fvo.getSearchStartDate()=="" || fvo.getSearchEndDate()==""){
+			innList=innDAO.selectInnByWordAndAcceptNoWithPrice(fvo);
 		}else{
-			list=innDAO.selectInnByWordAndAcceptNoAndDateWithPrice(fvo);
+			innList=innDAO.selectInnByWordAndAcceptNoAndDateWithPrice(fvo);
 		}
-		return list;
+		for (int i=0;i<innList.size();i++) {
+			int innNo=innList.get(i).getInnNo();
+			innList.get(i).setInnMainPic(innPicCompDAO.getMyPicList(innNo));
+		}
+		innListVO.setInnList(innList);
+		return innListVO;
 	}
 	@Override
 	public InnVO getInnByInnNo(int innNo) {

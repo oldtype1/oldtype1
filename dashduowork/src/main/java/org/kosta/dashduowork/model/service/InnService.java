@@ -27,9 +27,6 @@ import Exception.ChildBookTableException;
 import Exception.NoInnException;
 
 public interface InnService {
-//   public List<InnVO> findInnByCheckedAmenity(AmenityVO vo); //은식, 동원
-   public InnListVO findInnByCityAndAcceptableNo(SearchVO vo); //은식, 동원
-   public InnListVO findInnByCityAndDateAndAcceptableNo(SearchVO vo); //은식, 동원
    /**마이페이지 -->세션 exception 처리 -->안하고 컨트롤러에서 처리..!**/
    public InnListVO getmyinnlist(MemberVO vo, String pageNo);
    public BookListVO getmybooklist(MemberVO vo, String pageNo);
@@ -40,14 +37,10 @@ public interface InnService {
    public void registerInn(InnVO ivo);
    public void registerInnPic(InnPicCompVO vo);
    public void registerInnEtc(AmenityVO avo, AvailableDateVO avvo);
-   
-   //6/15일 추가
-	public InnListVO findInnByCityAndDateAndAcceptableNoWithFilter(FilterVO vo);
-	public InnListVO findInnByCityAndAcceptableNoWithFilter(FilterVO vo);
 
 	public Map<String,Object> selectInn(String innNo) throws NoInnException; // 은수
 	//6/16추가
-	public List<InnVO> findInnCityListByInnCityCharacter(SearchVO vo);
+	public List<InnVO> findInnCityListByInnCityCharacter(FilterVO fvo);
    
 	public List<InnPicCompVO> selectByInnNo(String innNo);
 	public ProfilePicVO selectByProfilePic(String memberId);
@@ -57,9 +50,6 @@ public interface InnService {
 	public void innDelete(DeleteVO idvo) throws ChildBookTableException;
 	public void tradeDelete(DeleteVO idvo);
 	
-	//6/18일 추가
-	public InnListVO findInnByCityAndAcceptableNoWithPrice(FilterVO vo);
-	public InnListVO findInnByCityAndDateAndAcceptableNoWithPrice(FilterVO vo);
 	//6/19일 추가-윤정- 등록숙소 수정 관련
 	public List<AmenityVO> selectAmenity(String innNo);
 	public void updateInnInfo(InnVO ivo);
@@ -81,8 +71,8 @@ public interface InnService {
 	public void ratingInn(InnRatingVO irv,int tradeNo);
 	
 	//6/25 검색메서드추가
-	public abstract List<InnVO> findInnByWordAndAcceptNoAndDate(FilterVO fvo);
-	public abstract List<InnVO> findInnByWordAndAcceptNoAndDateWithPrice(FilterVO fvo);
+	public abstract InnListVO findInnByWordAndAcceptNoAndDate(FilterVO fvo);
+	public abstract InnListVO findInnByWordAndAcceptNoAndDateWithPrice(FilterVO fvo);
 	//윤정 추가
 	public abstract InnVO getInnByInnNo(int innNo);
 	public abstract MemberVO getMemberAccountByInnNo(String innNo);
