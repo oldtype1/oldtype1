@@ -69,7 +69,7 @@ $(function() {
 			//alert();list.getInnN
 			$.ajax({
 				type : "Post",
-				url : "selectInnByCheckedAmenity.do",
+				url : "searchInnByWordDateNo.do",
 				data : $("#filterForm").serialize(),
 				dataType : "json",
 				success : function(innInfoList) {
@@ -252,11 +252,7 @@ $(function() {
                       <input type="checkbox" name="amenityItems" value="29">휠체어 사용 가능</label>
                     <label class="checkbox-inline">
                       <input type="checkbox"  name="amenityItems" value="30">흡연가능</label>  
-				 </div>	
-         
-         
-         
-          
+				 </div>
          </div>
                   </form>
    

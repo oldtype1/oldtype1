@@ -611,7 +611,7 @@ public class InnController {
 		System.out.println("컨트롤러에서 fvo 확인 : "+fvo);
 		InnListVO innListVO=new InnListVO();
 		List<InnVO> list=null;
-		if(fvo.getMinPrice()==null || fvo.getMaxPrice()==null){
+		if(fvo.getMinPrice()==null || fvo.getMaxPrice()==null || fvo.getAmenityItems()==null){
 			list=innService.findInnByWordAndAcceptNoAndDate(fvo);
 		}else{//날짜 들어간경우
 			list=innService.findInnByWordAndAcceptNoAndDateWithPrice(fvo);

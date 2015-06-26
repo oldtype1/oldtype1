@@ -329,45 +329,34 @@ inn_price=#{innPrice}, inn_info=#{innInfo},inn_availability=#{innAvailability} w
 	<select id="selectInnByWordAndAcceptNo" parameterType="fvo" resultType="ivo" resultMap="innResult">
 		select distinct inn_no, inn_name, inn_area, inn_acceptable_no, inn_price
 			from (select i.inn_no, i.inn_name, i.inn_area,i.inn_address,i.inn_type,i.inn_acceptable_no,i.inn_price,i.inn_availability,i.member_id,ad.availabledate_st,ad.availabledate_end, a.amenity_item from INN i, AVAILABLEDATE ad, AMENITY a where i.inn_no=ad.inn_no and i.inn_no=a.inn_no and i.inn_area like '%' ||  #{searchWord} || '%' and i.inn_acceptable_no >= #{searchPeopleNo})
-	<if test="amenityItems != null">
-		where amenity_item in
-		<foreach item="item" collection="amenityItems" open="(" separator="," close=")">
-			#{item}
-		</foreach>
-	</if>
 	</select>
 	<select id="selectInnByWordAndAcceptNoAndDate" parameterType="fvo" resultType="ivo" resultMap="innResult">
 		<![CDATA[select distinct inn_no, inn_name, inn_area, inn_acceptable_no, inn_price
 			from (select i.inn_no, i.inn_name, i.inn_area,i.inn_address,i.inn_type,i.inn_acceptable_no,i.inn_price,i.inn_availability,i.member_id,ad.availabledate_st,ad.availabledate_end, a.amenity_item from INN i, AVAILABLEDATE ad, AMENITY a where i.inn_no=ad.inn_no and i.inn_no=a.inn_no and i.inn_area like '%' ||  #{searchWord} || '%' and i.inn_acceptable_no >= #{searchPeopleNo} and ad.availabledate_st<=#{searchStartDate} and ad.availabledate_end >=#{searchEndDate})]]>
-	<if test="amenityItems != null">
-		where amenity_item in
-		<foreach item="item" collection="amenityItems" open="(" separator="," close=")">
-			#{item}
-		</foreach>
-	</if>
 	</select>
-	<select id="selectInnByWordAndAcceptNoWithPrice" parameterType="fvo" resultType="ivo" resultMap="innResult">
-		select distinct inn_no, inn_name, inn_area, inn_acceptable_no, inn_price
-			from (select i.inn_no, i.inn_name, i.inn_area,i.inn_address,i.inn_type,i.inn_acceptable_no,i.inn_price,i.inn_availability,i.member_id,ad.availabledate_st,ad.availabledate_end, a.amenity_item from INN i, AVAILABLEDATE ad, AMENITY a where i.inn_no=ad.inn_no and i.inn_no=a.inn_no and i.inn_area like '%' ||  #{searchWord} || '%' and i.inn_acceptable_no >= #{searchPeopleNo} and i.inn_price between #{minPrice} and #{maxPrice})
-	<if test="amenityItems != null">
-		where amenity_item in
-		<foreach item="item" collection="amenityItems" open="(" separator="," close=")">
-			#{item}
-		</foreach>
-	</if>
-	</select>
-	<select id="selectInnByWordAndAcceptNoAndDateWithPrice" parameterType="fvo" resultType="ivo" resultMap="innResult">
-		<![CDATA[select distinct inn_no, inn_name, inn_area, inn_acceptable_no, inn_price
-			from (select i.inn_no, i.inn_name, i.inn_area,i.inn_address,i.inn_type,i.inn_acceptable_no,i.inn_price,i.inn_availability,i.member_id,ad.availabledate_st,ad.availabledate_end, a.amenity_item from INN i, AVAILABLEDATE ad, AMENITY a where i.inn_no=ad.inn_no and i.inn_no=a.inn_no and i.inn_area like '%' ||  #{searchWord} || '%' and i.inn_acceptable_no >= #{searchPeopleNo} and ad.availabledate_st<=#{searchStartDate} and ad.availabledate_end >=#{searchEndDate} and i.inn_price between #{minPrice} and #{maxPrice})]]>
-	<if test="amenityItems != null">
-		where amenity_item in
-		<foreach item="item" collection="amenityItems" open="(" separator="," close=")">
-			#{item}
-		</foreach>
-	</if>
-	</select>
+	
 		<select id="getInnByInnNo" parameterType="int" resultType="ivo" resultMap="innResult">
 	select inn_no, inn_name, inn_area, inn_address, inn_type, inn_price, inn_info from inn where inn_no=#{value}
+	</select>
+	
+	
+	<select id="selectInnByWordAndAcceptNoWithPriceFilter" parameterType="fvo" resultType="ivo" resultMap="innResult">
+		select inn_no,inn_name, inn_area, inn_acceptable_no, inn_price, count(*) from (select *
+from (select i.inn_no, i.inn_name, i.inn_area,i.inn_address,i.inn_type,i.inn_acceptable_no,i.inn_price,i.inn_availability,i.member_id,ad.availabledate_st,ad.availabledate_end, a.amenity_item from INN i, AVAILABLEDATE ad, AMENITY a where i.inn_no=ad.inn_no and i.inn_no=a.inn_no and i.inn_area like '%' || #{searchWord} || '%' and i.inn_acceptable_no >= #{searchPeopleNo} and i.inn_price between #{minPrice} and #{maxPrice})
+where amenity_item in
+		<foreach item="item" collection="amenityItems" open="(" separator="," close=")">
+			#{item}
+		</foreach>
+		) group by inn_no,inn_name, inn_area, inn_acceptable_no, inn_price having count(*)=#{amenityCnt}
+	</select>
+	<select id="selectInnByWordAndAcceptNoAndDateWithPriceFilter" parameterType="fvo" resultType="ivo" resultMap="innResult">
+		<![CDATA[select inn_no,inn_name, inn_area, inn_acceptable_no, inn_price, count(*) from (select *
+from (select i.inn_no, i.inn_name, i.inn_area,i.inn_address,i.inn_type,i.inn_acceptable_no,i.inn_price,i.inn_availability,i.member_id,ad.availabledate_st,ad.availabledate_end, a.amenity_item from INN i, AVAILABLEDATE ad, AMENITY a where i.inn_no=ad.inn_no and i.inn_no=a.inn_no and i.inn_area like '%' || #{searchWord} || '%' and i.inn_acceptable_no >= #{searchPeopleNo} and ad.availabledate_st<=#{searchStartDate} and ad.availabledate_end >=#{searchEndDate} and i.inn_price between #{minPrice} and #{maxPrice})]]>
+where amenity_item in
+		<foreach item="item" collection="amenityItems" open="(" separator="," close=")">
+			#{item}
+		</foreach>
+		) group by inn_no,inn_name, inn_area, inn_acceptable_no, inn_price having count(*)=#{amenityCnt}
 	</select>
 </mapper>
  

@@ -52,7 +52,6 @@ public interface InnDAO {
 	public abstract List<InnVO> selectInnByWordAndAcceptNoAndDateWithPrice(FilterVO fvo);
 	//윤정
 	public abstract InnVO getInnByInnNo(int innNo);
-
 }
 
 
