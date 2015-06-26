@@ -8,6 +8,6 @@ import org.kosta.dashduowork.model.vo.AmenityVO;
 public interface AmenityDAO {
 	public abstract void update(AmenityVO avo);
 	public List<AmenityVO> selectAmenity(String innNo);
-	public void delete(int innNo);
+	public void delete(String innNo);
 	public abstract void register(AmenityVO vo);
 }

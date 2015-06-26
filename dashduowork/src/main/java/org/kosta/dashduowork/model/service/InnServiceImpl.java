@@ -35,7 +35,6 @@ import org.kosta.dashduowork.model.vo.InnVO;
 import org.kosta.dashduowork.model.vo.MemberVO;
 import org.kosta.dashduowork.model.vo.PagingBean;
 import org.kosta.dashduowork.model.vo.ProfilePicVO;
-import org.kosta.dashduowork.model.vo.SearchVO;
 import org.kosta.dashduowork.model.vo.TradeListVO;
 import org.kosta.dashduowork.model.vo.TradeVO;
 import org.kosta.dashduowork.model.vo.WishListListVO;
@@ -274,7 +273,8 @@ public class InnServiceImpl implements InnService {
 	@Transactional
 	public void updateInnEtc(AmenityVO avo, AvailableDateVO avvo) {
 		System.out.println("InnServiceImple ---Amenity와 AvailableDate"+avo+avvo);
-		amenityDAO.delete(avo.getInnNo());
+		String innNo = Integer.toString(avo.getInnNo());
+		amenityDAO.delete(innNo);
 		amenityDAO.register(avo);
 		availableDateDAO.update(avvo);
 	}

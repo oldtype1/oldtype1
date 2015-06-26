@@ -461,7 +461,7 @@
 					<!-- <div class="form-group"></div> -->
 					<center>
 						<input type="hidden" id="availableDateNo" name="availableDateNo"
-							value="${requestScope.avvo.availableDateNo}"> <input
+							value="${requestScope.VOMap.avvo.availableDateNo}"> <input
 							type="hidden" id="innNo" name="innNo"
 							value="${requestScope.VOMap.innVO.innNo}">
 						<button type="submit"

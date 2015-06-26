@@ -370,13 +370,13 @@ public class InnController {
 	@RequestMapping("inn_update.do")
 	public String innUpdate(InnVO ivo, AmenityVO avo, InnPicCompVO ipvo, 
 			AvailableDateVO avvo, Model model, BindingResult result, HttpServletRequest request){
+		System.out.println("innController 들어옴");
 		 HttpSession session = request.getSession(false);
 			if(session==null||(MemberVO)session.getAttribute("mvo")==null){
 				return "member_session_fail";
 			}
 		MemberVO vo= (MemberVO)session.getAttribute("mvo");
 		String memberId=vo.getMemberId();
-		System.out.println("innController 들어옴");
 		String innNo2=request.getParameter("innNo");
 		String availableDateNo2=request.getParameter("availableDateNo");
 		int innNo=Integer.parseInt(innNo2);

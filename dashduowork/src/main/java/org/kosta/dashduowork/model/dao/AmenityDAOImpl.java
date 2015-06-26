@@ -25,7 +25,7 @@ public class AmenityDAOImpl implements AmenityDAO {
 		return sqlSessionTemplate.selectList("amenity.selectAmenity", innNo);
 	}
 
-	public void delete(int innNo){
+	public void delete(String innNo){
 		sqlSessionTemplate.delete("amenity.delete", innNo);
 	}
 	
