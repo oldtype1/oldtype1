@@ -76,4 +76,5 @@ public interface InnService {
 	//윤정 추가
 	public abstract InnVO getInnByInnNo(int innNo);
 	public abstract MemberVO getMemberAccountByInnNo(String innNo);
+	public abstract void bookingInn(BookVO bvo);
 }

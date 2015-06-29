@@ -448,27 +448,13 @@ public class InnController {
 		BookVO bvo=new BookVO(memberId, innNo2, bookCheckIn, bookCheckOut, bookCount);
 		System.out.println(bvo+" 예약하는 숙소 정보");
 		//윤정 추가
-		boolean flag = false;
+		//boolean flag = false;
 		MemberVO mvo = (MemberVO)session.getAttribute("mvo");
 		bvo.setMemberId(mvo.getMemberId());
 		System.out.println(innNo);
 		System.out.println(bvo);
-		HashMap<String, Object> result = new HashMap();
-		result.put("flag",flag);
-		try {
-			 result = innService.bookInsert(bvo, innNo, memberId);
-		} catch (ParseException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		flag = (Boolean) result.get("flag");
-		
-		model.addAttribute("innNo", innNo);
-		System.out.println(flag);
-		if(flag==true){
-			model.addAttribute("result", result);
-			return "inn_book_fail";
-		}		
+	
+		innService.bookingInn(bvo);
 		List<InnPicCompVO> list=innService.selectByInnNo(innNo);
 		InnPicCompVO innMainPic=list.get(0);
 		System.out.println(bvo);
@@ -587,24 +573,43 @@ public class InnController {
 //			System.out.println("searchMemberVO : "+memberVO);
 			return innListVO;
 		}
-	@RequestMapping("paymentForm.do")
-	public String paymentForm(int innNo, String memeberId, Model model, BookVO bvo , HttpServletRequest request){
-		HttpSession session=request.getSession(false);
-		MemberVO vo= (MemberVO)session.getAttribute("mvo");
-		String innNo2=Integer.toString(innNo);
-		String payTotalPrice=request.getParameter("payTotalPrice");
-		System.out.println(payTotalPrice);
-		List<InnPicCompVO> list=innService.selectByInnNo(innNo2);
-		InnPicCompVO innMainPic=list.get(0);
-		System.out.println(bvo);
-		InnVO ivo=innService.getInnByInnNo(innNo);
-		System.out.println(ivo+"InnNo로 찾아온 해당 숙소 정보");
-		model.addAttribute("ivo", ivo);
-		model.addAttribute("bookInfo", bvo);
-		model.addAttribute("innMainPic", innMainPic);
-		model.addAttribute("payTotalPrice", payTotalPrice);
-		return "member_payment_form";
-	}
+		@RequestMapping("paymentForm.do")
+		public String paymentForm(int innNo, String memeberId, Model model, BookVO bvo , HttpServletRequest request){
+			HttpSession session=request.getSession(false);
+			MemberVO vo= (MemberVO)session.getAttribute("mvo");
+			String innNo2=Integer.toString(innNo);
+			String payTotalPrice=request.getParameter("payTotalPrice");
+			System.out.println(payTotalPrice);
+			boolean flag = false;
+			//예약 정보가 이상할 경우 확인
+			bvo.setMemberId(vo.getMemberId());
+			HashMap<String, Object> result = new HashMap();
+			result.put("flag",flag);
+			try {
+				 result = innService.bookInsert(bvo, innNo2, vo.getMemberId());
+			} catch (ParseException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			flag = (Boolean) result.get("flag");
+			model.addAttribute("innNo", innNo);
+			if(flag==true){
+				model.addAttribute("result", result);
+				return "inn_book_fail";
+			}
+			//여기까지 추가해서 	변경
+			System.out.println(flag+"   flag가 false이면 이상없으므로 예약 가능");
+			List<InnPicCompVO> list=innService.selectByInnNo(innNo2);
+			InnPicCompVO innMainPic=list.get(0);
+			System.out.println(bvo);
+			InnVO ivo=innService.getInnByInnNo(innNo);
+			System.out.println(ivo+"InnNo로 찾아온 해당 숙소 정보");
+			model.addAttribute("ivo", ivo);
+			model.addAttribute("bookInfo", bvo);
+			model.addAttribute("innMainPic", innMainPic);
+			model.addAttribute("payTotalPrice", payTotalPrice);
+			return "member_payment_form";
+		}
 	@RequestMapping("getInnMasterAccount.do")
 	@ResponseBody
 	public MemberVO getInnMasterAccount( HttpServletRequest request, Model model){

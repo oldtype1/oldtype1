@@ -478,6 +478,10 @@ public class InnServiceImpl implements InnService {
 	public MemberVO getMemberAccountByInnNo(String innNo) {
 		return memberDAO.getMemberAccountByInnNo(innNo);
 	}
+	@Override
+	public void bookingInn(BookVO bvo) {
+		bookDAO.bookInsert(bvo);
+	}
 
 
 }
