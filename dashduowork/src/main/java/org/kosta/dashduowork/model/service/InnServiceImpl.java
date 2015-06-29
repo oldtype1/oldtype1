@@ -13,6 +13,7 @@ import javax.annotation.Resource;
 import org.kosta.dashduowork.model.dao.AmenityDAO;
 import org.kosta.dashduowork.model.dao.AvailableDateDAO;
 import org.kosta.dashduowork.model.dao.BookDAO;
+import org.kosta.dashduowork.model.dao.CommentDAO;
 import org.kosta.dashduowork.model.dao.InnDAO;
 import org.kosta.dashduowork.model.dao.InnPicCompDAO;
 import org.kosta.dashduowork.model.dao.InnRatingDAO;
@@ -24,6 +25,8 @@ import org.kosta.dashduowork.model.vo.AmenityVO;
 import org.kosta.dashduowork.model.vo.AvailableDateVO;
 import org.kosta.dashduowork.model.vo.BookListVO;
 import org.kosta.dashduowork.model.vo.BookVO;
+import org.kosta.dashduowork.model.vo.CommentListVO;
+import org.kosta.dashduowork.model.vo.CommentVO;
 import org.kosta.dashduowork.model.vo.DeleteVO;
 import org.kosta.dashduowork.model.vo.FilterVO;
 import org.kosta.dashduowork.model.vo.InnListVO;
@@ -66,6 +69,8 @@ public class InnServiceImpl implements InnService {
 	private TradeDAO tradeDAO;
    @Resource(name="innRatingDAOImpl")
    private InnRatingDAO innRatingDAO;
+   @Resource(name="commentDAOImpl")
+   private CommentDAO commentDAO;
    
    @Override
    public void registerInn(InnVO ivo){
@@ -507,7 +512,39 @@ public int selectPeopleNum(int innNo2) {
 	public void bookingInn(BookVO bvo) {
 		bookDAO.bookInsert(bvo);
 	}
-
+	
+	 @Override
+	 public void replyWrite(CommentVO covo) {
+	 	System.out.println("service"+covo);
+	 	commentDAO.replyWrite(covo);
+	 }
+	 
+	 // TODO 기둘
+	@Override
+	public CommentListVO selectByCommemtInnNo(String innNo, String pageNo) {
+		int pn=1;
+		if(pageNo!=null){
+			pn=Integer.parseInt(pageNo);
+		}
+		System.out.println(pn);
+		HashMap<String,String> param = new HashMap<String,String>();
+		param.put("pageNo",Integer.toString(pn));
+		param.put("innNo", innNo);
+		System.out.println("service에서 covo"+innNo+" "+pageNo);
+		List<CommentVO> list = commentDAO.getCommentList(param);
+		int total = commentDAO.totalContent(innNo);
+		PagingBean pagingBean=new PagingBean(total,pn);	
+		System.out.println(pagingBean.getEndPageOfPageGroup());
+		System.out.println(pagingBean.getNowPage());
+		System.out.println(pagingBean.getTotalContents());
+		
+		return new CommentListVO(list, pagingBean);
+	}
+	@Override
+	public void deleteReply(int commentNo) {
+		System.out.println("댓글 삭제 service "+commentNo);
+		commentDAO.deleteReply(commentNo);
+	}
 }
 
 

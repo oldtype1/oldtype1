@@ -136,12 +136,10 @@ create table comments(
 member_id varchar2(200) not null,
 inn_no number not null,
 comments_no number primary key,
-comments_writer varchar2(50) not null,
 comments_date date not null,
 comments_content clob not null,
-comments_point number not null,
 constraint fk_member foreign key(member_id) references member(member_id),
-constraint fk_inn foreign key(inn_no) references inn(inn_no) on DELETE CASCADE
+constraint fk_inn7 foreign key(inn_no) references inn(inn_no) on DELETE CASCADE
 )
 
 -----------------예약테이블(member_id / inn_no ref)-----------------------

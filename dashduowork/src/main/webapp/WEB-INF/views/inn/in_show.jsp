@@ -34,6 +34,7 @@
 			}
 		});
 		
+		
 /* 		$("#bookForm").submit(function(){
 			var start = $("#bookCheckIn").val();
 			var end = $("#bookCheckOut").val();
@@ -82,6 +83,12 @@
 				}
 	}
 			}); 	
+	}
+	function deleteReply(commentNo,innNo){
+		/* alert("삭제"); */
+		 if(confirm("해당 댓글을 삭제하시겠습니까?")){
+			document.location.href="deleteReply.do?commentNo="+commentNo+"&innNo="+innNo;
+		} 
 	}
 </script>
 
@@ -312,5 +319,114 @@
 			</div>
 		</div>
 	</div>
+	
+	<br><br>
+	<html>
+  <head></head>
+  <body>
+  <form action="reply.do">
+ <div class="section">
+      <div class="container">
+        <div class="row " >
+           <table class="table">
+              <thead>
+              <c:choose>
+              <c:when test="${sessionScope.mvo.memberId != null}">
+                <tr>
+                <td></td>
+                <td>
+                  <div class="col-sm-12">
+                  <textarea class="form-control"  placeholder="댓글을 입력" id="repInfo" name="commentContent" required="required" cols="100" rows="2" ></textarea>
+                </div>
+			</td>
+			<td class="col-md-1 text-center " >
+			<input type="submit"  value="댓글달기" id="createbt" />
+			</td>
+			 <td></td>
+			</tr>
+			</c:when>
+			</c:choose>
+			</thead>
+			</table>
+			</div>
+			</div>
+			</div>
+			<input type="hidden" name="innNo" value="${requestScope.VOMap.innVO.innNo}">
+			<input type="hidden" name="memberId" value="${sessionScope.mvo.memberId}">
+  		</form>
+  <c:if test="${requestScope.VOMap.covo.pagingBean.totalContents != 0}">		
+    <div class="section text-center">
+      <div class="container text-center">
+        <div class="row text-center">
+            <table class="table">
+              <thead>
+                    <tr>
+                  <td class="col-md-1">번호</td>
+                  <td class="col-md-1">아이디</td>
+                  <td class="col-md-7">댓글</td>
+                  <td class="col-md-2">시간</td>
+                  <c:choose>
+                  <c:when test="${sessionScope.mvo.memberId!=null}">
+                   <td class="col-md-2">삭제</td>
+                   </c:when>
+                   </c:choose>
+                </tr>
+              </thead>
+              <tbody>
+              <c:forEach items="${requestScope.VOMap.covo.list}"  var="commentList">
+                <tr> 
+                  <td class="col-md-1"> ${commentList.commentNo}</td>
+                  <td class="col-md-1">${commentList.memberId}</td>
+                  <td class="col-md-7"><textarea class="form-control "   rows="2" cols="100" wrap="soft"
+                   readonly="readonly" style="resize: none;">${commentList.commentContent} 
+                   </textarea> </td>
+                  <td class="col-md-2">${commentList.commentDate}</td>
+                  <c:choose>
+                  <c:when test="${commentList.memberId == sessionScope.mvo.memberId}">
+                   <td class="col-md-2">	<input type="button"  class="btn btn-default"  value="댓글 삭제" id="deleteBtn"
+				    	onclick="deleteReply('${commentList.commentNo}','${commentList.innNo}')" ></td>
+               	</c:when>
+                </c:choose>
+                </tr>
+                </c:forEach>
+              </tbody>
+            </table>
+           <div class="section text-center">
+        <div class="container">
+          <div class="row">
+            <div class="col-md-12 text-center">
+              <ul class="pagination pagination-sm">
+						<c:if test="${requestScope.VOMap.covo.pagingBean.previousPageGroup}">
+						<li><a
+							href="inn_in_show.do?pageNo=${requestScope.VOMap.covo.pagingBean.startPageOfPageGroup-1}&innNo=${requestScope.VOMap.innVO.innNo}">Prev</a>
+						</li>
+						</c:if>
+						<c:forEach var="i" begin="${requestScope.VOMap.covo.pagingBean.startPageOfPageGroup}"
+							end="${requestScope.VOMap.covo.pagingBean.endPageOfPageGroup}">
+							<c:if test="${requestScope.VOMap.covo.pagingBean.nowPage!=i}">
+								<li><a href="inn_in_show.do?pageNo=${i}&innNo=${requestScope.VOMap.innVO.innNo}">${i}</a>
+								<li>
+							</c:if>
+							<c:if test="${requestScope.VOMap.covo.pagingBean.nowPage==i}">
+								<li><a href="#">${i}</a></li>
+							</c:if>
+						&nbsp;					
+						</c:forEach>
+					<c:if test="${requestScope.VOMap.covo.pagingBean.nextPageGroup}">
+						<li>
+							<a href="inn_in_show.do?pageNo=${requestScope.VOMap.covo.pagingBean.endPageOfPageGroup+1}&innNo=${requestScope.VOMap.innVO.innNo}">Next</a>
+						</li>
+					</c:if>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+            
+        </div>
+      </div>
+    </div>
+</c:if>
+
 </body>
 </html>

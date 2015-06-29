@@ -9,6 +9,8 @@ import org.kosta.dashduowork.model.vo.AmenityVO;
 import org.kosta.dashduowork.model.vo.AvailableDateVO;
 import org.kosta.dashduowork.model.vo.BookListVO;
 import org.kosta.dashduowork.model.vo.BookVO;
+import org.kosta.dashduowork.model.vo.CommentListVO;
+import org.kosta.dashduowork.model.vo.CommentVO;
 import org.kosta.dashduowork.model.vo.DeleteVO;
 import org.kosta.dashduowork.model.vo.FilterVO;
 import org.kosta.dashduowork.model.vo.InnListVO;
@@ -81,4 +83,10 @@ public interface InnService {
 	public int selectInnRating(int innNo2);
 	//별점 테이블을 가져옴 
 	public int selectPeopleNum(int innNo2);
+	
+	//댓글
+		public void replyWrite(CommentVO covo);
+		public CommentListVO selectByCommemtInnNo(String innNo, String pageNo);
+		//댓글 삭제
+		public void deleteReply(int commentNo);
 }

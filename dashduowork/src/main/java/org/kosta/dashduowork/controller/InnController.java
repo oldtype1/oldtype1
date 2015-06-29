@@ -17,6 +17,8 @@ import org.kosta.dashduowork.model.vo.AmenityVO;
 import org.kosta.dashduowork.model.vo.AvailableDateVO;
 import org.kosta.dashduowork.model.vo.BookListVO;
 import org.kosta.dashduowork.model.vo.BookVO;
+import org.kosta.dashduowork.model.vo.CommentListVO;
+import org.kosta.dashduowork.model.vo.CommentVO;
 import org.kosta.dashduowork.model.vo.DeleteVO;
 import org.kosta.dashduowork.model.vo.FilterVO;
 import org.kosta.dashduowork.model.vo.InnListVO;
@@ -296,13 +298,14 @@ public class InnController {
 	}
 
 	@RequestMapping(value="inn_in_show.do")
-	public String inShow(HttpServletRequest request, Model model){
+	public String inShow(HttpServletRequest request, Model model,CommentListVO cvo, String pageNo){
 		System.out.println("상세글보기 컨트롤러 메서드");
 		 HttpSession session = request.getSession(false);
 			if(session==null){
 				return "member_session_fail";
 			}
 		String innNo = (String)request.getParameter("innNo");
+		System.out.println("커멘트 vo : "+cvo);
 		int innNo2=Integer.parseInt(innNo);
 		HashMap<String, Object> map=new HashMap<String, Object>();		
 		try {
@@ -329,7 +332,10 @@ public class InnController {
 		List<InnPicCompVO> picList = innService.selectByInnNo(innNo);
 		ProfilePicVO pvo=innService.selectByProfilePic(ivo.getMemberId());
 		AvailableDateVO avo = innService.selectByAvailableDateInnNo(innNo);
+		CommentListVO covo =innService.selectByCommemtInnNo(innNo, pageNo);
+		System.out.println("컨트롤러cvo "+covo);
 	
+		map.put("covo", covo);
 		map.put("picList", picList);
 		map.put("pvo", pvo);
 		map.put("avo", avo);
@@ -636,7 +642,29 @@ public class InnController {
 		model.addAttribute("masterVO", masterVO);
 		return masterVO;
 	}
-			
+	//댓글추가
+		@RequestMapping("reply.do")
+		public String replyWrite(CommentVO covo, HttpServletRequest request){
+			System.out.println("controller replyWrite 들어옴?"+covo);
+			HttpSession session = request.getSession(false);
+			MemberVO mvo= (MemberVO) session.getAttribute("mvo");
+			innService.replyWrite(covo);
+			System.out.println(covo);
+
+			return"redirect:inn_in_show.do?innNo="+covo.getInnNo();
+		}
+		//댓굴삭제
+		@RequestMapping("deleteReply.do")
+		public String deleteReply(HttpServletRequest request, int commentNo){
+			System.out.println(commentNo);
+			int innNo = Integer.parseInt(request.getParameter("innNo"));
+			System.out.println("commentNo, innNo : "+ commentNo+" , "+ innNo);
+			HttpSession session=request.getSession(false);
+			MemberVO vo= (MemberVO)session.getAttribute("mvo");
+			innService.deleteReply(commentNo);
+			System.out.println("삭제~~~");
+			return"redirect:inn_in_show.do?innNo="+innNo;
+		}
 }
 
 

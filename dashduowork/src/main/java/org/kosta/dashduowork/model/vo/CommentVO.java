@@ -1,25 +1,22 @@
 package org.kosta.dashduowork.model.vo;
-
 public class CommentVO {
 	private int commentNo;
+	private String memberId;
 	private int innNo;
-	private String commentWriter;
 	private String commentDate;
 	private String commentContent;
-	private String commentPoint;
 	public CommentVO() {
 		super();
 		// TODO Auto-generated constructor stub
 	}
-	public CommentVO(int commentNo, int innNo, String commentWriter,
-			String commentDate, String commentContent, String commentPoint) {
+	public CommentVO(int commentNo, String memberId, int innNo,
+			String commentDate, String commentContent) {
 		super();
 		this.commentNo = commentNo;
+		this.memberId = memberId;
 		this.innNo = innNo;
-		this.commentWriter = commentWriter;
 		this.commentDate = commentDate;
 		this.commentContent = commentContent;
-		this.commentPoint = commentPoint;
 	}
 	public int getCommentNo() {
 		return commentNo;
@@ -27,17 +24,17 @@ public class CommentVO {
 	public void setCommentNo(int commentNo) {
 		this.commentNo = commentNo;
 	}
+	public String getMemberId() {
+		return memberId;
+	}
+	public void setMemberId(String memberId) {
+		this.memberId = memberId;
+	}
 	public int getInnNo() {
 		return innNo;
 	}
 	public void setInnNo(int innNo) {
 		this.innNo = innNo;
-	}
-	public String getCommentWriter() {
-		return commentWriter;
-	}
-	public void setCommentWriter(String commentWriter) {
-		this.commentWriter = commentWriter;
 	}
 	public String getCommentDate() {
 		return commentDate;
@@ -51,19 +48,11 @@ public class CommentVO {
 	public void setCommentContent(String commentContent) {
 		this.commentContent = commentContent;
 	}
-	public String getCommentPoint() {
-		return commentPoint;
-	}
-	public void setCommentPoint(String commentPoint) {
-		this.commentPoint = commentPoint;
-	}
 	@Override
 	public String toString() {
-		return "CommentVO [commentNo=" + commentNo + ", innNo=" + innNo
-				+ ", commentWriter=" + commentWriter + ", commentDate="
-				+ commentDate + ", commentContent=" + commentContent
-				+ ", commentPoint=" + commentPoint + "]";
+		return "CommentVO [commentNo=" + commentNo + ", memberId=" + memberId
+				+ ", innNo=" + innNo + " commentDate=" + commentDate + ", commentContent="
+				+ commentContent + "]";
 	}
-	
 	
 }
