@@ -242,3 +242,8 @@ people_num number,
 constraint fk_rating foreign key(inn_no) references inn(inn_no) on DELETE CASCADE
 )	
 
+create table report(
+   word varchar2(30) primary key,
+   cnt number(5) not null
+)
+

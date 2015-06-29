@@ -4,26 +4,55 @@
 <html>
 
 <head>
-<!-- <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    
-    <script type="text/javascript" src="http://cdnjs.cloudflare.com/ajax/libs/jquery/2.0.3/jquery.min.js">
-    </script>
-    <script type="text/javascript" src="http://netdna.bootstrapcdn.com/bootstrap/3.3.4/js/bootstrap.min.js"></script>
-    <link href="http://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.3.0/css/font-awesome.min.css"
-    rel="stylesheet" type="text/css"> 
-    
-    <link href="http://pingendo.github.io/pingendo-bootstrap/themes/default/bootstrap.css"
-    rel="stylesheet" type="text/css"> -->
+
 <script type="text/javascript">
 	$(document).ready(function() {
+	
 		var price = $("#totalPrice").val();
 		$("#bookCount").change(function() {
 			var bookCount = $("#bookCount").val();
-			$("#totalPrice").val(price * bookCount);
-
+			var start = $("#bookCheckIn").val();
+			var end = $("#bookCheckOut").val();
+			
+			var dateStartArray = start.split("-");  
+			var dateEndArray = end.split("-");  
+			var dateStartObj = new Date(dateStartArray[0], Number(dateStartArray[1])-1, dateStartArray[2]);  
+			var dateEndObj = new Date(dateEndArray[0], Number(dateEndArray[1])-1, dateEndArray[2]);  
+			
+			var betweenDay = (dateEndObj.getTime() - dateStartObj.getTime())/1000/60/60/24;
+		
+			if((start == "")||(end == ""))
+				$("#totalPrice").val(price * bookCount);
+			else
+			$("#totalPrice").val(price * bookCount * Number(betweenDay));
+			
+			if($("#totalPrice").val()<0){
+				alert("체크아웃은 반드시 체크인보다 후의 날짜이어야 합니다!");
+			    $("#bookCheckIn").val("");
+				$("#bookCheckOut").val("");
+				$("#totalPrice").val(price);
+			}
 		});
-	});
+		
+/* 		$("#bookForm").submit(function(){
+			var start = $("#bookCheckIn").val();
+			var end = $("#bookCheckOut").val();
+			
+			var dateStartArray = start.split("-");  
+			var dateEndArray = end.split("-");  
+			var dateStartObj = new Date(dateStartArray[0], Number(dateStartArray[1])-1, dateStartArray[2]);  
+			var dateEndObj = new Date(dateEndArray[0], Number(dateEndArray[1])-1, dateEndArray[2]);  
+			
+			var betweenDay = (dateEndObj.getTime() - dateStartObj.getTime())/1000/60/60/24;
+			if(betweenDay<0){
+				
+				return false;
+			}
+		}); */
+		
+	}); // document
+	
+	
 	function changeWishListPic(innNo){
 		 $.ajax({
 			type:"get",
@@ -59,6 +88,7 @@
 </head>
 
 <body>
+
 	<br>
 	<br>
 	<div class="section">
@@ -118,7 +148,7 @@
 				<div class="col-md-7">
 					<form class="form-horizontal" role="form"
 						action="paymentForm.do?innNo=${requestScope.VOMap.avo.innNo}&memberId=${sessionScope.mvo.memberId}"
-						method="post">
+						method="post" id="bookForm">
 						<!-- 예약 가능 상황 시 기능 활성화 -->
 		
 						<div class="form-group">
@@ -126,24 +156,13 @@
 								<label for="inputEmail3" class="control-label input-lg">체크인</label>
 							</div>
 							<div class="col-sm-8">
-<%-- 					<c:choose>
-					<c:when test="${( (requestScope.VOMap.innVO.innAvailability =='Y') && (sessionScope.mvo.memberId != null) )
-						&& (requestScope.VOMap.innVO.memberId != sessionScope.mvo.memberId)}"> --%>
+
 								<input type="date" class="form-control" name="bookCheckIn"
 									id="bookCheckIn" size="15" onfocus="this.value=''"
 									min="${requestScope.VOMap.avo.availableDateSt}"
 									max="${requestScope.VOMap.avo.availableDateEnd}"
 									required="required">
-<%-- 					</c:when>
-					<c:when test="${( (requestScope.VOMap.innVO.innAvailability =='Y' || requestScope.VOMap.innVO.innAvailability =='N')
-					&&sessionScope.mvo.memberId == null)||(requestScope.VOMap.innVO.memberId == sessionScope.mvo.memberId)}">
-						<input type="date" class="form-control" name="bookCheckIn"
-									id="bookCheckIn" size="15" onfocus="this.value=''"
-									min="${requestScope.VOMap.avo.availableDateSt}"
-									max="${requestScope.VOMap.avo.availableDateEnd}"
-									required="required" disabled="disabled">
-					</c:when>
-					</c:choose> --%>
+
 							</div>
 						</div>
 						<div class="form-group">
@@ -151,23 +170,13 @@
 								<label for="inputEmail3" class="control-label input-lg">체크아웃</label>
 							</div>
 							<div class="col-sm-8">
-<%-- 							<c:choose>
-					<c:when test="${(requestScope.VOMap.innVO.innAvailability =='Y' && sessionScope.mvo.memberId != null)
-						&&(requestScope.VOMap.innVO.memberId != sessionScope.mvo.memberId)}"> --%>
+
 								<input type="date" class="form-control" name="bookCheckOut"
 									size="15" id="bookCheckOut" onfocus="this.value=''"
 									min="${requestScope.VOMap.avo.availableDateSt}"
 									max="${requestScope.VOMap.avo.availableDateEnd}"
 									required="required">
-<%-- 							</c:when>
-					<c:otherwise>
-								<input type="date" class="form-control" name="bookCheckOut"
-									size="15" id="bookCheckOut" onfocus="this.value=''"
-									min="${requestScope.VOMap.avo.availableDateSt}"
-									max="${requestScope.VOMap.avo.availableDateEnd}"
-									required="required" disabled="disabled">
-				</c:otherwise>
-						</c:choose>			 --%>
+
 							</div>
 						</div>
 						<div class="form-group">
@@ -175,18 +184,10 @@
 								<label class="control-label input-lg">인원수</label>
 							</div>
 							<div class="col-sm-8">
-<%-- 							<c:choose>
-						<c:when test="${(requestScope.VOMap.innVO.innAvailability =='Y' && sessionScope.mvo.memberId != null)
-						&&(requestScope.VOMap.innVO.memberId != sessionScope.mvo.memberId)}"> --%>
+
 								<input type="number" name="bookCount" id="bookCount" min="1"
 									max="${requestScope.VOMap.innVO.acceptableNo}" required="required">&ensp; 명
-<%-- 						</c:when>
-						<c:when test="${(requestScope.VOMap.innVO.innAvailability =='N' && sessionScope.mvo.memberId != null)
-					||(requestScope.VOMap.innVO.memberId == sessionScope.mvo.memberId)||sessionScope.mvo.memberId==null}">
-						<input type="number" name="bookCount" id="bookCount" min="1"
-									max="${requestScope.VOMap.innVO.acceptableNo}" required="required" disabled="disabled">&ensp; 명
-									</c:when>
-						</c:choose>	 --%>
+				
 							</div>
 						</div>
 						<div class="form-group has-feedback">
@@ -195,28 +196,20 @@
 									가격</label>
 							</div>
 							<div class="col-sm-8">
-<%-- 						<c:choose>
-						<c:when test="${(requestScope.VOMap.innVO.innAvailability =='Y' && sessionScope.mvo.memberId != null)
-						&&(requestScope.VOMap.innVO.memberId != sessionScope.mvo.memberId)}"> --%>
+
 								<input type="text" class="form-control input-lg" id="totalPrice"
 									readonly="readonly"
 									value="${requestScope.VOMap.innVO.innPrice}">
-<%-- 						</c:when>
-						<c:when test="${(requestScope.VOMap.innVO.innAvailability =='N' && sessionScope.mvo.memberId != null)
-					||(requestScope.VOMap.innVO.memberId == sessionScope.mvo.memberId)||sessionScope.mvo.memberId==null}">
-									<input type="text" class="form-control input-lg" id="totalPrice"
-									readonly="readonly" value="${requestScope.VOMap.innVO.innPrice}" disabled="disabled">
-						</c:when>
-						</c:choose> --%>
+
 							</div>
 						</div>
-
+			
 						
 						<c:choose>
 						<c:when test="${requestScope.VOMap.innVO.innAvailability =='Y' && sessionScope.mvo.memberId != null &&requestScope.VOMap.innVO.memberId != sessionScope.mvo.memberId}">
 						<input type="submit"
 							class="btn btn-danger btn-lg col-sm-10 input-lg" value="예약하기">
-							<div id="wishListImage">
+							<p id="wishListImage">
 							<c:choose>
 								<c:when test="${requestScope.wishFlag=='no' }">
 									<%-- <a href="wishListReg.do?innNo=${requestScope.VOMap.avo.innNo}"><img src="${initParam.root }img/ins.jpg"></a> --%>
@@ -227,12 +220,12 @@
 								<!-- </div> -->
 								</c:otherwise>
 							</c:choose>
-							</div>
+							</p>
 							</c:when>
 							<c:when test="${requestScope.VOMap.innVO.innAvailability =='N' && sessionScope.mvo.memberId != null &&requestScope.VOMap.innVO.memberId != sessionScope.mvo.memberId}">
 							    <input type="button"
 						     	class="btn btn-danger btn-lg col-sm-10 input-lg" value="휴면중인 숙소입니다." disabled="disabled">
-						    <div id="wishListImage">
+						    <p id="wishListImage">
 							<c:choose>
 								<c:when test="${requestScope.wishFlag=='no' }">
 									<a href="wishListReg.do?innNo=${requestScope.VOMap.avo.innNo}"><img src="${initParam.root }img/ins.jpg"></a>
@@ -242,7 +235,7 @@
 								<!-- </div> -->
 								</c:otherwise>
 							</c:choose>
-							</div>
+							</p>
 							</c:when>
 							<c:when test="${(requestScope.VOMap.innVO.innAvailability =='Y' || requestScope.VOMap.innVO.innAvailability =='N')&&sessionScope.mvo.memberId == null}">
 							<input type="button"
@@ -253,6 +246,16 @@
 						     	class="btn btn-danger btn-lg col-sm-12 input-lg" value="${requestScope.VOMap.innVO.memberId}님의 숙소입니다!" disabled="disabled">
 							</c:when>
 							</c:choose>
+							<c:if test="${requestScope.count!=0}">
+					<c:forEach  begin="1" end="${requestScope.count}">	
+		<img src="${initParam.root}img/star.jpg" style="margin-top: 15px; margin-left:5px" width="50" height="50" >
+					</c:forEach>	
+					<p style="margin-top: 15px; margin-left:5px" >${requestScope.peopleNum}명이 이 숙소를 평가하였습니다.</p>
+					</c:if>
+					<c:if test="${requestScope.count==0}">
+						<br>
+						<font size="4" style="margin-top: 20px; margin-left:10px">등록된 별점이 없습니다.</font>
+					</c:if>
 					</form>
 				</div>
 			</div>
@@ -270,14 +273,7 @@
 			<div class="row">
 				<div class="col-md-12">
 					<form class="form-horizontal text-center" role="form">
-						<%--  <div class="form-group">
-                <div class="col-sm-2">
-                  <label for="inputEmail3" class="control-label input-lg">숙소명</label>
-                </div>
-                <div class="col-sm-10">
-                  <input type="text" class="form-control input-lg" id="inputEmail3" value="${requestScope.VOMap.innVO.innName}" readonly="readonly">
-                </div>
-              </div> --%>
+
 						<div class="form-group">
 							<div class="col-sm-2">
 								<label for="inputEmail3" class="control-label input-lg">주소</label>

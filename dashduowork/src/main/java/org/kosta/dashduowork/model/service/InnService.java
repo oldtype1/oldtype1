@@ -68,7 +68,7 @@ public interface InnService {
 	//위시리스트취소
 	public abstract int getWishListNoByInnNo(InnVO ivo);
 	//별점주기
-	public void ratingInn(InnRatingVO irv,int tradeNo);
+	public void ratingInn(InnRatingVO irv,int tradeNo) throws NoInnException;
 	
 	//6/25 검색메서드추가
 	public abstract InnListVO findInnByWordAndAcceptNoAndDate(FilterVO fvo);
@@ -76,4 +76,9 @@ public interface InnService {
 	//윤정 추가
 	public abstract InnVO getInnByInnNo(int innNo);
 	public abstract MemberVO getMemberAccountByInnNo(String innNo);
+	public abstract void bookingInn(BookVO bvo);
+	//상세보기--별 점수를 불러오기 6/29 주형
+	public int selectInnRating(int innNo2);
+	//별점 테이블을 가져옴 
+	public int selectPeopleNum(int innNo2);
 }
