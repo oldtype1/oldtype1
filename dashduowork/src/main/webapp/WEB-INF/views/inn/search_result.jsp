@@ -3,7 +3,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <style>
 .photo_main {position: relative;}
-.photo_main_up{ position: absolute;left: 0; bottom: 50px;font-size: 1.83em;  width: 300px;
+.photo_main_up{ position: absolute;left: 10px; bottom: 50px;font-size: 1.83em;  width: 300px;
 font-weight: bold;opacity: 0.7; filter: alpha(opacity=60);background-color: #C6C6C6 }
 </style>
 <script src="https://maps.googleapis.com/maps/api/js?sensor=false"></script> 
@@ -163,21 +163,27 @@ $(function() {
 				data : $("#filterForm").serialize(),
 				dataType : "json",
 				success : function(innInfoList) {
-					var tableInfo="<table class='table-hover CSSTableGenerator'><thead><tr><th >숙소 번호</th><th>숙소 사진</th><th>숙소명</th><th>위치</th><th>유형</th><th>수용가능인원</th><th>가격</th></tr></thead>";
-					tableInfo+="<tbody>";
+					var tableInfo="<table><tr>";
 					if (innInfoList.innList.length != 0) {			
 						$.each(innInfoList.innList, function(index, info) {
-							if(info.innMainPic==null){
+							if((index+1)%2==1){
+								tableInfo+="</tr><tr>";
+							}
+							tableInfo+="<td class=photo_main><a href='inn_in_show.do?innNo="+info.innNo+"'>";
+							tableInfo+="<img class='img-rounded' src='"+info.innMainPic.filePath+"' height='320' width='350'><br>"+info.innName+"</a>";
+							tableInfo+="<span class='photo_main_up' style='width:100px;'>"+info.innPrice+"</span>/ "+info.innType;
+							tableInfo+="<input type='button' value='지도보기' onclick='mapping('"+info.innName+"','"+info.innArea+"' ,'"+info.innAddress+"')'></td>";
+							/* if(info.innMainPic==null){
 								tableInfo+="<tr><td>"+info.innNo+"</td><td><img class='img-rounded' src='${initParam.root}img/no_img.gif' height='150' width='150'></td><td><a href='inn_in_show.do?innNo="+info.innNo+"'>"+info.innName+"</td><td>"+info.innArea+"</td><td>"+info.innType+"</td><td>"+info.acceptableNo+"</td><td>"+info.innPrice+"</td></tr>";
 							}else{
 								tableInfo+="<tr><td>"+info.innNo+"</td><td><img class='img-rounded' src='"+info.innMainPic.filePath+"' height='150' width='150'></td><td><a href='inn_in_show.do?innNo="+info.innNo+"'>"+info.innName+"</td><td>"+info.innArea+"</td><td>"+info.innType+"</td><td>"+info.acceptableNo+"</td><td>"+info.innPrice+"</td></tr>";
-							}
+							} */
 						}); //each
 					}//if
 					else if(innInfoList.innList.length == 0){
-						tableInfo+="<tr><td colspan='9' align='center'>검색 및 필터조건에 해당하는 숙소가 존재하지 않습니다.</td></tr>"
+						tableInfo+="<td align='center'>검색결과가 존재하지 않습니다.</td>";
 					}
-					tableInfo+="</tbody></table>";
+					tableInfo+="</tr></table>";
 					$("#resultViewSearch").html(tableInfo);
 				}
 			});//ajax
@@ -195,21 +201,27 @@ $(function() {
 				data : $("#filterForm").serialize(),
 				dataType : "json",
 				success : function(innInfoList) {
-					var tableInfo="<table class='table-hover CSSTableGenerator'><thead><tr><th >숙소 번호</th><th>숙소 사진</th><th>숙소명</th><th>위치</th><th>유형</th><th>수용가능인원</th><th>가격</th></tr></thead>";
-					tableInfo+="<tbody>";
+					var tableInfo="<table><tr>";
 					if (innInfoList.innList.length != 0) {
 						$.each(innInfoList.innList, function(index, info) {
-							if(info.innMainPic==null){
+							if((index+1)%2==1){
+								tableInfo+="</tr><tr>";
+							}
+							tableInfo+="<td class=photo_main><a href='inn_in_show.do?innNo="+info.innNo+"'>";
+							tableInfo+="<img class='img-rounded' src='"+info.innMainPic.filePath+"' height='320' width='350'><br>"+info.innName+"</a>";
+							tableInfo+="<span class='photo_main_up' style='width:100px;'>"+info.innPrice+"</span>/ "+info.innType;
+							tableInfo+="<input type='button' value='지도보기' onclick='mapping('"+info.innName+"','"+info.innArea+"' ,'"+info.innAddress+"')'></td>";
+							/* if(info.innMainPic==null){
 								tableInfo+="<tr><td>"+info.innNo+"</td><td><img class='img-rounded' src='${initParam.root}img/no_img.gif' height='150' width='150'></td><td><a href='inn_in_show.do?innNo="+info.innNo+"'>"+info.innName+"</td><td>"+info.innArea+"</td><td>"+info.innType+"</td><td>"+info.acceptableNo+"</td><td>"+info.innPrice+"</td></tr>";
 							}else{
 								tableInfo+="<tr><td>"+info.innNo+"</td><td><img class='img-rounded' src='"+info.innMainPic.filePath+"' height='150' width='150'></td><td><a href='inn_in_show.do?innNo="+info.innNo+"'>"+info.innName+"</td><td>"+info.innArea+"</td><td>"+info.innType+"</td><td>"+info.acceptableNo+"</td><td>"+info.innPrice+"</td></tr>";
-							}
+							} */
 						}); //each
 					}//if
 					else if(innInfoList.innList.length == 0){
-						tableInfo+="<tr><td colspan='7' align='center'>검색 및 필터조건에 해당하는 숙소가 존재하지 않습니다.</td></tr>"
+						tableInfo+="<td align='center'>검색결과가 존재하지 않습니다.</td>";
 					}
-					tableInfo+="</tbody></table>";
+					tableInfo+="</tr></table>";
 					$("#resultViewSearch").html(tableInfo);
 				}
 			});//ajax
@@ -228,18 +240,18 @@ $(function() {
       <div class="row">
       
       <div class="col-md-8" style="top: 45px;">
-            <form action="searchByCityDateNo.do" class="navbar-form navbar-left"
+            <form action="searchInnByWordDateNo.do" class="navbar-form navbar-left"
                role="search" id="searchInnCityAjaxForm">
-               <input type="text" class="form-control" name="innCity"
+               <input type="text" class="form-control" name="searchWord"
                   id="searchCity" placeholder="State" size="54"
                   onkeyup="SearchInnCityListByAjax()"><br> <input
-                  type="text" class="form-control" name="startDate" id="checkin"
+                  type="text" class="form-control" name="searchStartDate" id="checkin"
                   size="15" onfocus="this.value=''" placeholder="Checkin"
                   style="width: 150px;"> <input type="text"
-                  class="form-control" name="endDate" size="15" id="checkout"
+                  class="form-control" name="searchEndDate" size="15" id="checkout"
                   onfocus="this.value=''" placeholder="Checkout"
                   style="width: 150px;"> <select class="form-control"
-                  name="acceptableNo" id="select">
+                  name="searchPeopleNo" id="select">
                   <option value="1">게스트 1명</option>
                   <option value="2">게스트 2명</option>
                   <option value="3">게스트 3명</option>
@@ -380,11 +392,11 @@ $(function() {
 									<c:forEach var="list" items="${requestScope.innListVO.innList}" varStatus="status">
 										<c:if test="${(status.index+1)%2==1}"></tr><tr></c:if>
 										<td class=photo_main><a href="inn_in_show.do?innNo=${list.innNo}">
-						<img class="img-rounded" src="${list.innMainPic.filePath}" height="320" width="350">				
+										<img class="img-rounded" src="${list.innMainPic.filePath}" height="320" width="350">				
 										 <br>
 										 ${list.innName}</a>
-										 <span class='photo_main_up'>이미지위에글자</span>	
-										 ${list.innType}
+										 <span class='photo_main_up'  style="width:100px;">${list.innPrice}</span>	
+										 / ${list.innType}
 										 <input type="button" value="지도보기" onclick="mapping('${list.innName}','${list.innArea}' ,'${list.innAddress}')"></td>
 									</c:forEach>
 									</tr>
