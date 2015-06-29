@@ -10,6 +10,7 @@ public class FilterVO {
 	private String minPrice;
 	private String maxPrice;
 	private List<String> amenityItems;
+	private int amenityCnt;
 	public FilterVO() {
 		super();
 		// TODO Auto-generated constructor stub
@@ -25,6 +26,7 @@ public class FilterVO {
 		this.minPrice = minPrice;
 		this.maxPrice = maxPrice;
 		this.amenityItems = amenityItems;
+		this.amenityCnt = amenityItems.size();
 	}
 	public FilterVO(String searchWord, String searchStartDate,
 			String searchEndDate, String searchPeopleNo) {
@@ -80,6 +82,13 @@ public class FilterVO {
 	}
 	public void setAmenityItems(List<String> amenityItems) {
 		this.amenityItems = amenityItems;
+		this.amenityCnt = amenityItems.size();
+	}
+	public void setAmenityCnt(List<String> amenityItems){
+		this.amenityCnt = this.amenityItems.size();
+	}
+	public int getAmenityCnt(){
+		return amenityCnt;
 	}
 	@Override
 	public String toString() {
@@ -87,7 +96,8 @@ public class FilterVO {
 				+ searchStartDate + ", searchEndDate=" + searchEndDate
 				+ ", searchPeopleNo=" + searchPeopleNo + ", minPrice="
 				+ minPrice + ", maxPrice=" + maxPrice + ", amenityItems="
-				+ amenityItems + "]";
+				+ amenityItems + ", amenityCnt=" + amenityCnt + "]";
 	}
+	
 	
 }

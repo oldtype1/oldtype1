@@ -31,10 +31,28 @@
 			//data:"",
 			dataType:"json",
 			success:function(data){
-				 $("#wishListImage").html("");
-				$("#wishListImage").html( "<a href=wishListReg.do?innNo="+innNo+"><img src='${initParam.root }img/ins.jpg'></a>");
+
+					 $("#wishListImage").html("");
+						$("#wishListImage").html( "<input type='image' src='${initParam.root }img/ins.jpg' onclick='InsertWishListPic("+innNo+")'>");
 			}
 		}); 	
+	}
+	function InsertWishListPic(innNo){
+		 $.ajax({
+			type:"get",
+			url:"wishListReg.do?innNo="+innNo,
+			//data:"",
+			//dataType:"json",
+			success:function(data){
+				if(data){
+					 $("#wishListImage").html("");
+						$("#wishListImage").html( "<input type='image' src='${initParam.root }img/wish.jpg' onclick='changeWishListPic("+innNo+")'>");
+				}
+				else{
+					location.href="${initParam.root }member/wishlist_fail.jsp";
+				}
+	}
+			}); 	
 	}
 </script>
 
@@ -201,7 +219,8 @@
 							<div id="wishListImage">
 							<c:choose>
 								<c:when test="${requestScope.wishFlag=='no' }">
-									<a href="wishListReg.do?innNo=${requestScope.VOMap.avo.innNo}"><img src="${initParam.root }img/ins.jpg"></a>
+									<%-- <a href="wishListReg.do?innNo=${requestScope.VOMap.avo.innNo}"><img src="${initParam.root }img/ins.jpg"></a> --%>
+								<input type="image" src="${initParam.root }img/ins.jpg" onclick="InsertWishListPic('${requestScope.VOMap.avo.innNo}')">
 								</c:when>
 								<c:otherwise>
 								<input type="image" src="${initParam.root }img/wish.jpg" onclick="changeWishListPic('${requestScope.VOMap.avo.innNo}')">

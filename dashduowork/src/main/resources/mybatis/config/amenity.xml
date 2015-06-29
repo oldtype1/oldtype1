@@ -13,7 +13,10 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 <insert id="register" parameterType="avo">
 	insert into amenity(inn_no, amenity_item) values	(#{innNo}, #{amenityItem})
 </insert>
-	
+
+<insert id ="delete" parameterType="int">
+	delete from amenity where inn_no = #{value}
+</insert>
 	
 	<update id="updateAmenity" parameterType="avo">
 update amenity set amenity_wifi=#{amenityWiFi}, amenity_bed=#{amenityBed}, amenity_tv=#{amenityTV}, amenity_kitchen=#{amenityKitchen}, amenity_bbq=#{amenityBBQ} where inn_no=#{innNo}

@@ -4,6 +4,9 @@
 
 <script>
 $(document).ready(function(){
+	$( "#dialog" ).dialog({
+		position: [50,80]
+	});
 	var a = $("#directedFlag").val(); // 히든값 확인하기위해      
     $("#filter_detailForm").hide();
     $('#button_detail').click(function() {         
@@ -28,7 +31,7 @@ $(document).ready(function(){
 		}
 	});
 });
-/* function SearchInnCityListByAjax() {		 
+function SearchInnCityListByAjax() {		 
 	var availableTags = []; //자동 완성 해당 단어 저장할 배열(객체) 선언 / 항상 초기화 되어야함
 	$.ajax({ //db에 저장되어있는 값들 ajax로 반환
 		type : "post",
@@ -48,12 +51,12 @@ $(document).ready(function(){
 	$("#searchCity").autocomplete({//자동완성 기능을 searchCity id에 부여한다.
 		source : availableTags //자동완성 소스는 availableTags 배열을 사용 한다.		
 	});
-	}//function SearchInnCityListByAjax() */
+}//function SearchInnCityListByAjax()
 $(function() {
 	$( "#slider-range" ).slider({
 	      range: true,
 	      min: 0,
-	      max: 300000,
+	      max: 40000,
 	      values: [ 1000, 50000 ],
 	      slide: function( event, ui ) {
 	        $( "#amount" ).val( "₩" + ui.values[ 0 ] + " - ₩" + ui.values[ 1 ] );
@@ -69,11 +72,11 @@ $(function() {
 			//alert();list.getInnN
 			$.ajax({
 				type : "Post",
-				url : "selectInnByCheckedAmenity.do",
+				url : "searchInnByWordDateNoWithFilter.do",
 				data : $("#filterForm").serialize(),
 				dataType : "json",
 				success : function(innInfoList) {
-					var tableInfo="<table class='table table-hover'><thead><tr><th >숙소 번호</th><th>숙소 사진</th><th>숙소명</th><th>위치</th><th>유형</th><th>수용가능인원</th><th>가격</th></tr></thead>";
+					var tableInfo="<table class='table-hover CSSTableGenerator'><thead><tr><th >숙소 번호</th><th>숙소 사진</th><th>숙소명</th><th>위치</th><th>유형</th><th>수용가능인원</th><th>가격</th></tr></thead>";
 					tableInfo+="<tbody>";
 					if (innInfoList.innList.length != 0) {			
 						$.each(innInfoList.innList, function(index, info) {
@@ -101,11 +104,11 @@ $(function() {
 			//alert();
 			$.ajax({
 				type : "Post",
-				url : "searchInnByWordDateNo.do",
+				url : "searchInnByWordDateNoWithFilter.do",
 				data : $("#filterForm").serialize(),
 				dataType : "json",
 				success : function(innInfoList) {
-					var tableInfo="<table class='table table-hover'><thead><tr><th >숙소 번호</th><th>숙소 사진</th><th>숙소명</th><th>위치</th><th>유형</th><th>수용가능인원</th><th>가격</th></tr></thead>";
+					var tableInfo="<table class='table-hover CSSTableGenerator'><thead><tr><th >숙소 번호</th><th>숙소 사진</th><th>숙소명</th><th>위치</th><th>유형</th><th>수용가능인원</th><th>가격</th></tr></thead>";
 					tableInfo+="<tbody>";
 					if (innInfoList.innList.length != 0) {
 						$.each(innInfoList.innList, function(index, info) {
@@ -126,7 +129,11 @@ $(function() {
 		}); //change
 	});
 </script>
-
+<div id="dialog" title="검색어 순위">
+  <c:forEach var="list" items="${requestScope.wordlist }" varStatus="i">
+  	${i.index+1}. ${list.word }<br>
+  </c:forEach>
+</div>
 
 <div class="section" style="position: relative; top: 30px;">
    <div class="container">
@@ -134,18 +141,18 @@ $(function() {
 
 
          <div class="col-md-6" style="top: 45px;">
-            <form action="searchByCityDateNo.do" class="navbar-form navbar-left"
+            <form action="searchInnByWordDateNo.do" class="navbar-form navbar-left"
                role="search" id="searchInnCityAjaxForm">
-               <input type="text" class="form-control" name="innCity"
+               <input type="text" class="form-control" name="searchWord"
                   id="searchCity" placeholder="State" size="54"
                   onkeyup="SearchInnCityListByAjax()"><br> <input
-                  type="text" class="form-control" name="startDate" id="checkin"
+                  type="text" class="form-control" name="searchStartDate" id="checkin"
                   size="15" onfocus="this.value=''" placeholder="Checkin"
                   style="width: 150px;"> <input type="text"
-                  class="form-control" name="endDate" size="15" id="checkout"
+                  class="form-control" name="searchEndDate" size="15" id="checkout"
                   onfocus="this.value=''" placeholder="Checkout"
                   style="width: 150px;"> <select class="form-control"
-                  name="acceptableNo" id="select">
+                  name="searchPeopleNo" id="select">
                   <option value="1">게스트 1명</option>
                   <option value="2">게스트 2명</option>
                   <option value="3">게스트 3명</option>
@@ -252,11 +259,7 @@ $(function() {
                       <input type="checkbox" name="amenityItems" value="29">휠체어 사용 가능</label>
                     <label class="checkbox-inline">
                       <input type="checkbox"  name="amenityItems" value="30">흡연가능</label>  
-				 </div>	
-         
-         
-         
-          
+				 </div>
          </div>
                   </form>
    
