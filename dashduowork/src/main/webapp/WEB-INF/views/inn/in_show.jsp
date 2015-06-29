@@ -34,10 +34,10 @@
 			}
 		});
 		
-		
-/* 		$("#bookForm").submit(function(){
+		$("#bookCheckIn").change(function(){
 			var start = $("#bookCheckIn").val();
 			var end = $("#bookCheckOut").val();
+			var bookCount = $("#bookCount").val();
 			
 			var dateStartArray = start.split("-");  
 			var dateEndArray = end.split("-");  
@@ -45,11 +45,51 @@
 			var dateEndObj = new Date(dateEndArray[0], Number(dateEndArray[1])-1, dateEndArray[2]);  
 			
 			var betweenDay = (dateEndObj.getTime() - dateStartObj.getTime())/1000/60/60/24;
-			if(betweenDay<0){
+			
+			if((start != "")&&(end != "")){
+				if(bookCount == "")
+					$("#totalPrice").val(price * Number(betweenDay));
+				else
+					$("#totalPrice").val(price * bookCount * Number(betweenDay));
 				
-				return false;
-			}
-		}); */
+				if($("#totalPrice").val()<0){
+					alert("체크아웃은 반드시 체크인보다 후의 날짜이어야 합니다!");
+				    $("#bookCheckIn").val("");
+					$("#bookCheckOut").val("");
+					$("#totalPrice").val(price);
+				}
+					
+			} // if
+		}); // bookCheckIn
+		
+		$("#bookCheckOut").change(function(){
+			var start = $("#bookCheckIn").val();
+			var end = $("#bookCheckOut").val();
+			var bookCount = $("#bookCount").val();
+			
+			var dateStartArray = start.split("-");  
+			var dateEndArray = end.split("-");  
+			var dateStartObj = new Date(dateStartArray[0], Number(dateStartArray[1])-1, dateStartArray[2]);  
+			var dateEndObj = new Date(dateEndArray[0], Number(dateEndArray[1])-1, dateEndArray[2]);  
+			
+			var betweenDay = (dateEndObj.getTime() - dateStartObj.getTime())/1000/60/60/24;
+			
+			if((start != "")&&(end != "")){
+				if(bookCount == "")
+					$("#totalPrice").val(price * Number(betweenDay));
+				else
+					$("#totalPrice").val(price * bookCount * Number(betweenDay));
+				
+				if($("#totalPrice").val()<0){
+					alert("체크아웃은 반드시 체크인보다 후의 날짜이어야 합니다!");
+				    $("#bookCheckIn").val("");
+					$("#bookCheckOut").val("");
+					$("#totalPrice").val(price);
+				}
+					
+			} // if
+		}); // bookCheckOut	
+		
 		
 	}); // document
 	
@@ -336,7 +376,8 @@
                 <td></td>
                 <td>
                   <div class="col-sm-12">
-                  <textarea class="form-control"  placeholder="댓글을 입력" id="repInfo" name="commentContent" required="required" cols="100" rows="2" ></textarea>
+                  <textarea class="form-control"  placeholder="댓글을 입력" id="repInfo" name="commentContent" 
+                  required="required" cols="100" rows="2" style="resize: none;"></textarea>
                 </div>
 			</td>
 			<td class="col-md-1 text-center " >

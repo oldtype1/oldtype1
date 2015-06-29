@@ -56,6 +56,7 @@ CREATE SEQUENCE inn_pic_sequence;
 CREATE SEQUENCE amenity_sequence;
 CREATE SEQUENCE availabledate_no_sequence;
 CREATE SEQUENCE trade_sequence;
+CREATE SEQUENCE comment_no_sequence;
 
 DROP SEQUENCE inn_sequence;
 DROP SEQUENCE book_sequence;
@@ -65,6 +66,7 @@ DROP SEQUENCE inn_pic_sequence;
 DROP SEQUENCE amenity_sequence;
 DROP SEQUENCE availabledate_no_sequence;
 DROP SEQUENCE trade_sequence;
+DROP SEQUENCE comment_no_sequence;
 
 -----------------멤버테이블-----------------------
 create table member(
@@ -142,6 +144,9 @@ constraint fk_member foreign key(member_id) references member(member_id),
 constraint fk_inn7 foreign key(inn_no) references inn(inn_no) on DELETE CASCADE
 )
 
+ALTER TABLE comments
+DROP COLUMN amenity_no;
+
 -----------------예약테이블(member_id / inn_no ref)-----------------------
 create table book(
 member_id varchar2(200) not null,
@@ -211,6 +216,8 @@ inn_no number,
 rating_check VARCHAR2(1) CHECK (rating_check IN ('Y','N')),
 constraint fk_member10 foreign key(member_id) references member(member_id) on DELETE CASCADE
 )
+
+alter table Trade add(ratingcheck varchar2(200))
 
 --inn_no: inn_name 클릭시 숙소 상세보기로 넘어가기 위한 inn_no 추가
 --rating_check: 별점 매겼는지 안매겻는지 위한 체크 칼럼을 추가

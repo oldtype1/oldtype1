@@ -2,14 +2,59 @@
     pageEncoding="UTF-8"%>
  <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
      <script type="text/javascript">
-    $(function(){
-		$("#availableDateSt, #availableDateEnd").datepicker({
-          dateFormat : 'yy-mm-dd'
-       }); 
-    });
-    $(document).ready(function(){
-		
-    }); 
+     $(document).ready(function () {
+    	    $.datepicker.regional['ko'] = {
+    	        closeText: '닫기',
+    	        prevText: '이전달',
+    	        nextText: '다음달',
+    	        currentText: '오늘',
+    	        monthNames: ['1월(JAN)','2월(FEB)','3월(MAR)','4월(APR)','5월(MAY)','6월(JUN)',
+    	        '7월(JUL)','8월(AUG)','9월(SEP)','10월(OCT)','11월(NOV)','12월(DEC)'],
+    	        monthNamesShort: ['1월','2월','3월','4월','5월','6월',
+    	        '7월','8월','9월','10월','11월','12월'],
+    	        dayNames: ['일','월','화','수','목','금','토'],
+    	        dayNamesShort: ['일','월','화','수','목','금','토'],
+    	        dayNamesMin: ['일','월','화','수','목','금','토'],
+    	        weekHeader: 'Wk',
+    	        dateFormat: 'yy-mm-dd',
+    	        showAnim: "slide",
+    	        beforeShowDay: noBefore,
+    	        firstDay: 0,
+    	        isRTL: false,
+    	        showMonthAfterYear: true,
+    	        yearSuffix: '',
+       	        changeMonth: true,
+    	        changeYear: true,
+    	        showButtonPanel: true,
+    	        yearRange: 'c-99:c+99',
+    	    };
+    	    
+    	 // 이전 날짜들은 선택막기
+    	    function noBefore(date){
+    	  	   if (date < new Date())
+    	            return [false];
+    	      return [true];
+    	     }
+
+    	    
+    	    $.datepicker.setDefaults($.datepicker.regional['ko']);
+    	 
+    	    var now = new Date();
+    	    var nowAll = now.getFullYear() + "-" + (now.getMonth()+1) + "-" + now.getDate();
+    	    alert(nowAll);
+    	    
+    	    $('#availableDateSt').datepicker();
+       	    $('#availableDateSt').datepicker("option", "maxDate", $("#availableDateEnd").val());
+    	    $('#availableDateSt').datepicker("option", "onClose", function ( toDay ) {
+    	        $("#availableDateEnd").datepicker( "option", "minDate", toDay );
+    	    });
+   
+    	    $('#availableDateEnd').datepicker();
+    	    $('#availableDateEnd').datepicker("option", "minDate", $("#availableDateSt").val());
+    	    $('#availableDateEnd').datepicker("option", "onClose", function ( toDay ) {
+    	        $("#availableDateSt").datepicker( "option", "maxDate", toDay );
+    	    });
+    	});
  </script>
  <c:choose>
  <c:when test="${sessionScope.mvo == null}">
@@ -98,10 +143,12 @@
                   <label class="control-label">날짜</label>
                 </div>
                 <div class="col-sm-3">
-                   <input type="text" class="form-control" name="availableDateSt" id="availableDateSt" size="15" onfocus="this.value=''" placeholder="Checkin" required="required">
+                   <input type="text" class="form-control" name="availableDateSt" id="availableDateSt"
+                    size="15" onfocus="this.value=''" placeholder="Checkin" required="required" autocomplete="off" readonly="readonly" >
                 </div>
                 <div class="col-sm-3">
-                   <input type="text" class="form-control" name="availableDateEnd" size="15" id="availableDateEnd" onfocus="this.value=''" placeholder="Checkout" required="required">
+                   <input type="text" class="form-control" name="availableDateEnd" size="15" 
+                   id="availableDateEnd"  onfocus="this.value=''" placeholder="Checkout" required="required" autocomplete="off" readonly="readonly" >
                 </div>
               </div>
               <div class="form-group">
