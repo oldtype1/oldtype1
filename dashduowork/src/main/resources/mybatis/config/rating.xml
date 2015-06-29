@@ -9,8 +9,8 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 <result property="peopleNumber" column="people_num"/>
 </resultMap>
 
-<select id="checkRatingTable" parameterType="int" resultType="int">
-select count(*) from rating where inn_no=#{value} 
+<select id="checkRatingTable" parameterType="int" resultMap="innRatingResult">
+select * from rating where inn_no=#{value} 
 </select>
 <update id="updateInnRating" parameterType="innratevo">
 update rating set point=point+#{point},people_num=people_num+1 where inn_no=#{innNo}

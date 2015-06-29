@@ -209,7 +209,7 @@
 						<c:when test="${requestScope.VOMap.innVO.innAvailability =='Y' && sessionScope.mvo.memberId != null &&requestScope.VOMap.innVO.memberId != sessionScope.mvo.memberId}">
 						<input type="submit"
 							class="btn btn-danger btn-lg col-sm-10 input-lg" value="예약하기">
-							<div id="wishListImage">
+							<p id="wishListImage">
 							<c:choose>
 								<c:when test="${requestScope.wishFlag=='no' }">
 									<%-- <a href="wishListReg.do?innNo=${requestScope.VOMap.avo.innNo}"><img src="${initParam.root }img/ins.jpg"></a> --%>
@@ -220,12 +220,12 @@
 								<!-- </div> -->
 								</c:otherwise>
 							</c:choose>
-							</div>
+							</p>
 							</c:when>
 							<c:when test="${requestScope.VOMap.innVO.innAvailability =='N' && sessionScope.mvo.memberId != null &&requestScope.VOMap.innVO.memberId != sessionScope.mvo.memberId}">
 							    <input type="button"
 						     	class="btn btn-danger btn-lg col-sm-10 input-lg" value="휴면중인 숙소입니다." disabled="disabled">
-						    <div id="wishListImage">
+						    <p id="wishListImage">
 							<c:choose>
 								<c:when test="${requestScope.wishFlag=='no' }">
 									<a href="wishListReg.do?innNo=${requestScope.VOMap.avo.innNo}"><img src="${initParam.root }img/ins.jpg"></a>
@@ -235,7 +235,7 @@
 								<!-- </div> -->
 								</c:otherwise>
 							</c:choose>
-							</div>
+							</p>
 							</c:when>
 							<c:when test="${(requestScope.VOMap.innVO.innAvailability =='Y' || requestScope.VOMap.innVO.innAvailability =='N')&&sessionScope.mvo.memberId == null}">
 							<input type="button"
@@ -246,6 +246,16 @@
 						     	class="btn btn-danger btn-lg col-sm-12 input-lg" value="${requestScope.VOMap.innVO.memberId}님의 숙소입니다!" disabled="disabled">
 							</c:when>
 							</c:choose>
+							<c:if test="${requestScope.count!=0}">
+					<c:forEach  begin="1" end="${requestScope.count}">	
+		<img src="${initParam.root}img/star.jpg" style="margin-top: 15px; margin-left:5px" width="50" height="50" >
+					</c:forEach>	
+					<p style="margin-top: 15px; margin-left:5px" >${requestScope.peopleNum}명이 이 숙소를 평가하였습니다.</p>
+					</c:if>
+					<c:if test="${requestScope.count==0}">
+						<br>
+						<font size="4" style="margin-top: 20px; margin-left:10px">등록된 별점이 없습니다.</font>
+					</c:if>
 					</form>
 				</div>
 			</div>

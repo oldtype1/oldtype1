@@ -334,6 +334,12 @@ public class InnController {
 		map.put("pvo", pvo);
 		map.put("avo", avo);
 		model.addAttribute("VOMap", map);
+		
+		int count= innService.selectInnRating(innNo2); //별점
+		int PeopleNum= innService.selectPeopleNum(innNo2); //별점을 매긴 사람수
+		System.out.println(innNo2+"번 숙소의 별점은: "+count);
+		model.addAttribute("count", count);					//별점
+		model.addAttribute("peopleNum",PeopleNum); //별점을 매긴 사람수
 		return "inn_in_show";
 	}
 	
@@ -518,16 +524,22 @@ public class InnController {
 		innService.wishListDelete(wdvo);
 		return vo;
 	}
-	//별점 매기기 
+	//별점 매기기 -->6/29 exception 추가
 	@RequestMapping("ratingInn.do")
-	public String ratingInn(InnRatingVO irv,int tradeNo,HttpServletRequest request){	
+	public String ratingInn(InnRatingVO irv,int tradeNo,HttpServletRequest request,Model model){	
 		   HttpSession session = request.getSession(false);
 			if(session==null||(MemberVO)session.getAttribute("mvo")==null){
 				return "member_session_fail";
-			}	  
+			}
+			try{
+				innService.ratingInn(irv,tradeNo);
+			}
+			catch (NoInnException e) {
+				model.addAttribute("message", e.getMessage());
+				return "inn_in_show_fail";	
+			}	
 		System.out.println("별점 테이블"+irv);
 		System.out.println("별점 거래번호: "+tradeNo);
-		innService.ratingInn(irv,tradeNo);
 		return "redirect:inn_in_show.do?innNo="+irv.getInnNo();
 	}
 	

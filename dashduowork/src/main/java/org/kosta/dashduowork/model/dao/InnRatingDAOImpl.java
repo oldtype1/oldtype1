@@ -11,10 +11,10 @@ public class InnRatingDAOImpl implements InnRatingDAO {
 	private SqlSessionTemplate sqlSessionTemplate;
 
 	@Override
-	public int checkRatingTable(int innNo) {
-		int count = sqlSessionTemplate.selectOne("rating.checkRatingTable",innNo);
-		System.out.println("이 숙소에 이미 별점등록?"+count);
-		return count;
+	public InnRatingVO checkRatingTable(int innNo) {
+		InnRatingVO rvo = sqlSessionTemplate.selectOne("rating.checkRatingTable",innNo);
+		System.out.println("이 숙소에 이미 별점등록?"+ rvo);
+		return rvo;
 	}
 
 	@Override
@@ -27,6 +27,12 @@ public class InnRatingDAOImpl implements InnRatingDAO {
 	public void insertNewInnRating(InnRatingVO irv) {
 		System.out.println("뉴숙소 별점 추가 :"+irv);
 		sqlSessionTemplate.insert("rating.insertNewInnRating",irv);
+	}
+
+	@Override
+	public int selectInnRating(int innNo2) {
+		System.out.println(innNo2+"번의 별점 가져오기");
+		return sqlSessionTemplate.selectOne("rating.selectInnRating",innNo2);
 	}
 
 }

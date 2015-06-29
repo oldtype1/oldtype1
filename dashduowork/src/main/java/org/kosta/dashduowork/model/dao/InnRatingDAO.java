@@ -4,8 +4,9 @@ import org.kosta.dashduowork.model.vo.InnRatingVO;
 
 public interface InnRatingDAO {
 
-	int checkRatingTable(int innNo);
+	InnRatingVO checkRatingTable(int innNo);
 	void updateInnRating(InnRatingVO irv);
 	void insertNewInnRating(InnRatingVO irv);
+	int selectInnRating(int innNo2);
 
 }

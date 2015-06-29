@@ -417,22 +417,47 @@ public class InnServiceImpl implements InnService {
  	System.out.println("getWishListNoByInnNo  Service"+ivo);
  	return wishListDAO.getWishListNoByInnNo(ivo);
  }
- 
- //6/23 별점 비즈니스 
- @Override
- public void ratingInn(InnRatingVO irv,int tradeNo) {
- 	//숙소가 별점 테이블에 처음 추가되는거면 insert
- 	//이미 숙소가 별점에 추가되어있으면 update
- 	int count = innRatingDAO.checkRatingTable(irv.getInnNo());
- 	if(count>0){ //이미 있으니 업데이트
- 		innRatingDAO.updateInnRating(irv);
- 		tradeDAO.updateRatingCheck(tradeNo);
- 	}
- 	else{ // 없으니 인서트 
- 		innRatingDAO.insertNewInnRating(irv);
- 		tradeDAO.updateRatingCheck(tradeNo);
- 	}
- }
+//6/23 별점 비즈니스 
+@Override
+public void ratingInn(InnRatingVO irv,int tradeNo) throws NoInnException{
+	//숙소가 별점 테이블에 처음 추가되는거면 insert
+	//이미 숙소가 별점에 추가되어있으면 update
+	 InnVO vo =  innDAO.selectInn(Integer.toString(irv.getInnNo()));
+	 if(vo==null){
+  	  throw new NoInnException("삭제된 숙소 입니다!"); 
+    }
+	 InnRatingVO rvo = innRatingDAO.checkRatingTable(irv.getInnNo());
+	if(rvo!=null){ //이미 있으니 업데이트
+		innRatingDAO.updateInnRating(irv);
+		tradeDAO.updateRatingCheck(tradeNo);
+	}
+	else{ // 없으니 인서트 
+		innRatingDAO.insertNewInnRating(irv);
+		tradeDAO.updateRatingCheck(tradeNo);
+	}
+}
+//상세보기 -- 별점(점수) 가져오기 비즈니스 6/29
+@Override
+	public int selectInnRating(int innNo2) {
+	 InnRatingVO rvo=innRatingDAO.checkRatingTable(innNo2);
+	 if(rvo!=null){ //별점 테이블이 있을경우에만!
+		return innRatingDAO.selectInnRating(innNo2);
+	}
+	 else{
+		 return 0;
+	 }
+}
+@Override
+public int selectPeopleNum(int innNo2) {
+	InnRatingVO rvo= innRatingDAO.checkRatingTable(innNo2);
+	if(rvo==null){
+		return 0;
+	}
+	else{
+		return rvo.getPeopleNumber();
+	}
+}
+///별점 비즈니스 6/29 끝
 
 	// 6/25 검색 메서드 추가
 	@Override
@@ -482,7 +507,6 @@ public class InnServiceImpl implements InnService {
 	public void bookingInn(BookVO bvo) {
 		bookDAO.bookInsert(bvo);
 	}
-
 
 }
 
