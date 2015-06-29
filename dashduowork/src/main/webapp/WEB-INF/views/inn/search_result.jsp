@@ -172,7 +172,7 @@ $(function() {
 							tableInfo+="<td class=photo_main><a href='inn_in_show.do?innNo="+info.innNo+"'>";
 							tableInfo+="<img class='img-rounded' src='"+info.innMainPic.filePath+"' height='320' width='350'><br>"+info.innName+"</a>";
 							tableInfo+="<span class='photo_main_up' style='width:100px;'>"+info.innPrice+"</span>/ "+info.innType;
-							tableInfo+="<input type='button' value='지도보기' onclick='mapping('"+info.innName+"','"+info.innArea+"' ,'"+info.innAddress+"')'></td>";
+							tableInfo+="<a href='#'><img src='${initParam.root }/img/map.jpg' onclick='mapping("+info.innName+","+info.innArea+" ,"+info.innAddress+")'></a></td>";
 							/* if(info.innMainPic==null){
 								tableInfo+="<tr><td>"+info.innNo+"</td><td><img class='img-rounded' src='${initParam.root}img/no_img.gif' height='150' width='150'></td><td><a href='inn_in_show.do?innNo="+info.innNo+"'>"+info.innName+"</td><td>"+info.innArea+"</td><td>"+info.innType+"</td><td>"+info.acceptableNo+"</td><td>"+info.innPrice+"</td></tr>";
 							}else{
@@ -210,7 +210,7 @@ $(function() {
 							tableInfo+="<td class=photo_main><a href='inn_in_show.do?innNo="+info.innNo+"'>";
 							tableInfo+="<img class='img-rounded' src='"+info.innMainPic.filePath+"' height='320' width='350'><br>"+info.innName+"</a>";
 							tableInfo+="<span class='photo_main_up' style='width:100px;'>"+info.innPrice+"</span>/ "+info.innType;
-							tableInfo+="<input type='button' value='지도보기' onclick='mapping('"+info.innName+"','"+info.innArea+"' ,'"+info.innAddress+"')'></td>";
+							tableInfo+="<a href='#'><img src='${initParam.root }/img/map.jpg' onclick='mapping('"+info.innName+"','"+info.innArea+"','"+info.innAddress+"')'></a></td>";
 							/* if(info.innMainPic==null){
 								tableInfo+="<tr><td>"+info.innNo+"</td><td><img class='img-rounded' src='${initParam.root}img/no_img.gif' height='150' width='150'></td><td><a href='inn_in_show.do?innNo="+info.innNo+"'>"+info.innName+"</td><td>"+info.innArea+"</td><td>"+info.innType+"</td><td>"+info.acceptableNo+"</td><td>"+info.innPrice+"</td></tr>";
 							}else{
@@ -380,7 +380,7 @@ $(function() {
 		<div class="row">
 			<div class="col-md-8">
 <input type="hidden" id="local" value="${requestScope.filterVO.searchWord}">
-			지역 : ${requestScope.filterVO.searchWord} / 인원 : ${requestScope.filterVO.searchPeopleNo } 명 에 대한 검색결과
+			지역 : ${requestScope.filterVO.searchWord} / 인원 : ${requestScope.filterVO.searchPeopleNo } 명 에 대한 검색결과 <span class="glyphicons glyphicons-google-maps"></span><br>
 				<div id="resultViewSearch">
 					<table>
 						<c:choose>
@@ -397,7 +397,8 @@ $(function() {
 										 ${list.innName}</a>
 										 <span class='photo_main_up'  style="width:100px;">${list.innPrice}</span>	
 										 / ${list.innType}
-										 <input type="button" value="지도보기" onclick="mapping('${list.innName}','${list.innArea}' ,'${list.innAddress}')"></td>
+										 <%-- <input type="button" value="위치확인" onclick="mapping('${list.innName}','${list.innArea}' ,'${list.innAddress}')" class="btn btn-default"> --%>
+										 <a href="#"><img src="${initParam.root }/img/map.jpg" onclick="mapping('${list.innName}','${list.innArea}' ,'${list.innAddress}')"></a></td>
 									</c:forEach>
 									</tr>
 								</c:otherwise>
