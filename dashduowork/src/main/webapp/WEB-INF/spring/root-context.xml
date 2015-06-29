@@ -3,7 +3,9 @@
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xmlns:context="http://www.springframework.org/schema/context"
 	xmlns:task="http://www.springframework.org/schema/task"
-	xsi:schemaLocation="http://www.springframework.org/schema/task http://www.springframework.org/schema/task/spring-task-3.1.xsd
+	xmlns:aop="http://www.springframework.org/schema/aop"
+	xsi:schemaLocation="http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-3.1.xsd
+		http://www.springframework.org/schema/task http://www.springframework.org/schema/task/spring-task-3.1.xsd
 		http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
 		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-3.1.xsd">
 
@@ -16,9 +18,10 @@
 		<context:exclude-filter type="annotation"
 			expression="org.springframework.stereotype.Controller" />
 	</context:component-scan>
-	<!-- AOP 설정 -->
-	<!-- <aop:aspectj-autoproxy></aop:aspectj-autoproxy> -->
-	<!-- MyBatis -->
+		<!-- AOP 설정 -->
+	<aop:aspectj-autoproxy/><bean id="AspectUsingAnnotation" class="org.kosta.dashduowork.aop.common.AspectUsingAnnotation"></bean>
+	
+<!-- MyBatis -->
 	<bean id="dataSource" class="org.apache.commons.dbcp.BasicDataSource">
 		<property name="driverClassName">
 			<value>oracle.jdbc.driver.OracleDriver</value>

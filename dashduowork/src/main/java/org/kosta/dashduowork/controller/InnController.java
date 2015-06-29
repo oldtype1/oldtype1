@@ -13,6 +13,7 @@ import javax.servlet.http.HttpSession;
 import org.kosta.dashduowork.model.dao.InnDAO;
 import org.kosta.dashduowork.model.service.InnService;
 import org.kosta.dashduowork.model.service.MemberService;
+import org.kosta.dashduowork.model.service.ReportService;
 import org.kosta.dashduowork.model.vo.AmenityVO;
 import org.kosta.dashduowork.model.vo.AvailableDateVO;
 import org.kosta.dashduowork.model.vo.BookListVO;
@@ -49,6 +50,8 @@ public class InnController {
 	private InnService innService;
 	@Resource(name="memberServiceImpl")
 	private MemberService memberService;
+	@Resource(name="reportServiceImpl")
+	private ReportService reportService;
 	
 	@RequestMapping("inn_register_from.do")
 	public String innRegister(HttpServletRequest request) {
@@ -554,7 +557,10 @@ public class InnController {
 		}else{//날짜 들어간경우
 			innListVO=innService.findInnByWordAndAcceptNoAndDateWithPrice(fvo);
 		}
+		List wordlist=reportService.selectReport();
+		System.out.println("InnController 검색어순위 "+wordlist);
 		System.out.println("검색결과 확인 : "+innListVO.getInnList());
+		model.addAttribute("wordlist", wordlist);
 		model.addAttribute("innListVO", innListVO);
 		model.addAttribute("filterVO", fvo);
 //		HttpSession session = request.getSession(false);

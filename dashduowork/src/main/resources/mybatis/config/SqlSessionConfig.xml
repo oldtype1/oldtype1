@@ -33,6 +33,7 @@ PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
 		<mapper resource="mybatis/config/delete.xml"/>	
 			<mapper resource="mybatis/config/scheduler.xml"/>		
 			<mapper resource="mybatis/config/rating.xml"/>	
+			<mapper resource="mybatis/config/report.xml"/>
 	</mappers>
 </configuration>
 
