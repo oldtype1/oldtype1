@@ -9,7 +9,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	<update id="updateReport" >
 		update report set cnt=cnt+1 where word=#{value}
 	</update>
-	<select id="selectReport" resultType="java.util.HashMap">
+	<select id="selectReport" resultType="reportvo">
 	<![CDATA[
 		SELECT WORD,CNT,RANKING FROM(
 		SELECT WORD,CNT,RANK() OVER(ORDER BY cnt DESC) AS RANKING FROM report

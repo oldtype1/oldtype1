@@ -21,6 +21,7 @@ PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
 		<typeAlias type="org.kosta.dashduowork.model.vo.InnReservationVO" alias="irvo"/>
 		<typeAlias type="org.kosta.dashduowork.model.vo.TradeVO" alias="tvo"/>	
 		<typeAlias type="org.kosta.dashduowork.model.vo.InnRatingVO" alias="innratevo"/>
+		<typeAlias type="org.kosta.dashduowork.model.vo.ReportVO" alias="reportvo"/>
 	</typeAliases>	
 <!--     sql mapping config xml 을 연결 -->
 	<mappers>

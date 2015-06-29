@@ -1,10 +1,10 @@
 package org.kosta.dashduowork.model.dao;
 
-import java.sql.SQLException;
 import java.util.List;
 
 import javax.annotation.Resource;
 
+import org.kosta.dashduowork.model.vo.ReportVO;
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.stereotype.Repository;
 @Repository
@@ -23,7 +23,7 @@ public class ReportDAOImpl implements ReportDAO{
 		return sqlSessionTemplate.update("report.updateReport",word);
 	}
 
-	public List selectReport() {
+	public List<ReportVO> selectReport() {
 		return sqlSessionTemplate.selectList("report.selectReport");
 	}
 	

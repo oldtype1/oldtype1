@@ -5,6 +5,7 @@ import java.util.List;
 import javax.annotation.Resource;
 
 import org.kosta.dashduowork.model.dao.ReportDAO;
+import org.kosta.dashduowork.model.vo.ReportVO;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -20,7 +21,7 @@ public void saveReport(String word){
 		reportDAO.insertReport(word);			
 }
 @Override
-public List selectReport(){
+public List<ReportVO> selectReport(){
 return reportDAO.selectReport();
 }
 

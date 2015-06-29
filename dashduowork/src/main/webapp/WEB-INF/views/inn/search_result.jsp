@@ -4,6 +4,9 @@
 
 <script>
 $(document).ready(function(){
+	$( "#dialog" ).dialog({
+		position: [50,80]
+	});
 	var a = $("#directedFlag").val(); // 히든값 확인하기위해      
     $("#filter_detailForm").hide();
     $('#button_detail').click(function() {         
@@ -126,7 +129,11 @@ $(function() {
 		}); //change
 	});
 </script>
-
+<div id="dialog" title="검색어 순위">
+  <c:forEach var="list" items="${requestScope.wordlist }" varStatus="i">
+  	${i.index+1}. ${list.word }<br>
+  </c:forEach>
+</div>
 
 <div class="section" style="position: relative; top: 30px;">
    <div class="container">

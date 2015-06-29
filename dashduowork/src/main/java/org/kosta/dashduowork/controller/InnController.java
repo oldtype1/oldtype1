@@ -10,7 +10,6 @@ import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
-import org.kosta.dashduowork.model.dao.InnDAO;
 import org.kosta.dashduowork.model.service.InnService;
 import org.kosta.dashduowork.model.service.MemberService;
 import org.kosta.dashduowork.model.service.ReportService;
@@ -27,7 +26,7 @@ import org.kosta.dashduowork.model.vo.InnReservationListVO;
 import org.kosta.dashduowork.model.vo.InnVO;
 import org.kosta.dashduowork.model.vo.MemberVO;
 import org.kosta.dashduowork.model.vo.ProfilePicVO;
-import org.kosta.dashduowork.model.vo.SearchVO;
+import org.kosta.dashduowork.model.vo.ReportVO;
 import org.kosta.dashduowork.model.vo.TradeListVO;
 import org.kosta.dashduowork.model.vo.WishListListVO;
 import org.kosta.dashduowork.model.vo.WishListVO;
@@ -557,7 +556,7 @@ public class InnController {
 		}else{//날짜 들어간경우
 			innListVO=innService.findInnByWordAndAcceptNoAndDateWithPrice(fvo);
 		}
-		List wordlist=reportService.selectReport();
+		List<ReportVO> wordlist=reportService.selectReport();
 		System.out.println("InnController 검색어순위 "+wordlist);
 		System.out.println("검색결과 확인 : "+innListVO.getInnList());
 		model.addAttribute("wordlist", wordlist);
