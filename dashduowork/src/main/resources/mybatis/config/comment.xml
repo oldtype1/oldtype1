@@ -1,0 +1,119 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="comment">
+
+<resultMap type="covo" id="commentResult">
+	<result property="memberId" column="member_id"/>
+	<result property="commentNo" column="comments_no"/>
+	<result property="innNo" column="inn_no"/>
+	<result property="commentDate" column="comments_date"/>
+	<result property="commentContent" column="comments_content"/>
+
+</resultMap>
+
+<insert id="replyWrite" parameterType="covo">
+	<selectKey keyProperty="commentNo"  resultType="int"  order="BEFORE">
+       select comment_no_sequence.nextval from dual
+   </selectKey>
+	insert into comments(member_id,comments_no,inn_no,comments_date,comments_content) values
+	(#{memberId},#{commentNo},#{innNo},to_char(sysdate, 'YYYY-MM-DD'),#{commentContent})
+	</insert>
+	<select id="selectByCommemtInnNo" parameterType="clvo" resultType="covo" resultMap="commentResult">
+	<!-- 	select member_id,comments_no,inn_no,to_char(sysdate, 'YYYY-MM-DD')as comments_date,comments_content from comments where inn_no=#{value} -->
+	SELECT member_id,comments_no,inn_no,comments_date,comments_content
+					    FROM(	 
+								SELECT member_id,comments_no,inn_no,comments_date,comments_content,CEIL(rownum/5) AS page  
+								FROM ( 
+									SELECT inn_no,member_id,comments_no,to_char(sysdate,'YYYY.MM.DD') as comments_date, comments_content  
+									FROM comments  order by comments_no desc								
+									 ) 
+    ) WHERE PAGE= #{pageNo} and inn_no= #{innNo}
+	</select>
+	<delete id="deleteReply" parameterType="covo" >
+	delete from comments where comments_no=#{value}
+	</delete>
+	
+	<select id="totalContent" resultType="int" parameterType="String">
+		select count(*) from comments where inn_no=#{value}	
+	</select>
+	
+	<select id="getCommentList" resultMap="commentResult" resultType="covo" parameterType="hashMap">
+SELECT member_id,comments_no,inn_no,comments_date,comments_content
+					    FROM(	 
+								SELECT member_id,comments_no,inn_no,comments_date,comments_content,CEIL(rownum/5) AS page  
+								FROM ( 
+									SELECT inn_no,member_id,comments_no,to_char(sysdate,'YYYY.MM.DD') as comments_date, comments_content  
+									FROM comments where inn_no=#{innNo} order by comments_no desc								
+									 ) 
+    ) WHERE PAGE=#{pageNo}
+	</select>	
+	
+	
+<!-- 	
+	<update id="updateAmenity" parameterType="avo">
+update amenity set amenity_wifi=#{amenityWiFi}, amenity_bed=#{amenityBed}, amenity_tv=#{amenityTV}, amenity_kitchen=#{amenityKitchen}, amenity_bbq=#{amenityBBQ} where inn_no=#{innNo}
+</update>
+
+<select id="selectAmenity" parameterType="String" resultType="avo" resultMap="amenityResult">
+	select*from amenity where inn_no=#{value}
+	</select> -->
+	<!-- <sql id="innlist">
+		select inn_no,inn_name,inn_city,inn_area,inn_address,inn_type,inn_acceptable_no,
+		inn_price,inn_info,inn_availability,member_id from inn
+	</sql> 
+	
+	<select id="getmyinnlist" parameterType="String" resultType="ivo" resultMap="innResult">
+		<include refid="innlist" />
+		where member_id=#{value}
+	</select>-->
+		
+	<!-- <select id="getAddressKind" resultType="string">
+		select distinct(address) from member
+	</select>
+	<select id="findByAddress" resultType="mvo">
+		<include refid="selectMember" />
+		where address=#{value}
+	</select>
+	<select id="findMemberById" resultType="mvo">
+		<include refid="selectMember" />
+		where id=#{value}
+	</select>
+	<insert id="registerMember" parameterType="mvo">
+		insert into member(id,password,name,address)
+		values(#{id},#{password},#{name},#{address})
+	</insert>
+	<select id="idcheck" resultType="int">
+		select count(*) from member where id=#{value}
+	</select>
+	<update id="updateMember" parameterType="mvo">
+		update member set password=#{password},name=#{name},address=#{address}
+		where id=#{id}
+	</update> -->
+</mapper>
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
