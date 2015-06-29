@@ -13,17 +13,46 @@
 			var bookCount = $("#bookCount").val();
 			var start = $("#bookCheckIn").val();
 			var end = $("#bookCheckOut").val();
+			
 			var dateStartArray = start.split("-");  
 			var dateEndArray = end.split("-");  
 			var dateStartObj = new Date(dateStartArray[0], Number(dateStartArray[1])-1, dateStartArray[2]);  
 			var dateEndObj = new Date(dateEndArray[0], Number(dateEndArray[1])-1, dateEndArray[2]);  
 			
 			var betweenDay = (dateEndObj.getTime() - dateStartObj.getTime())/1000/60/60/24;
-			
-	
+		
+			if((start == "")||(end == ""))
+				$("#totalPrice").val(price * bookCount);
+			else
 			$("#totalPrice").val(price * bookCount * Number(betweenDay));
-			});
+			
+			if($("#totalPrice").val()<0){
+				alert("체크아웃은 반드시 체크인보다 후의 날짜이어야 합니다!");
+			    $("#bookCheckIn").val("");
+				$("#bookCheckOut").val("");
+				$("#totalPrice").val(price);
+			}
 		});
+		
+/* 		$("#bookForm").submit(function(){
+			var start = $("#bookCheckIn").val();
+			var end = $("#bookCheckOut").val();
+			
+			var dateStartArray = start.split("-");  
+			var dateEndArray = end.split("-");  
+			var dateStartObj = new Date(dateStartArray[0], Number(dateStartArray[1])-1, dateStartArray[2]);  
+			var dateEndObj = new Date(dateEndArray[0], Number(dateEndArray[1])-1, dateEndArray[2]);  
+			
+			var betweenDay = (dateEndObj.getTime() - dateStartObj.getTime())/1000/60/60/24;
+			if(betweenDay<0){
+				
+				return false;
+			}
+		}); */
+		
+	}); // document
+	
+	
 	function changeWishListPic(innNo){
 		 $.ajax({
 			type:"get",
@@ -119,7 +148,7 @@
 				<div class="col-md-7">
 					<form class="form-horizontal" role="form"
 						action="paymentForm.do?innNo=${requestScope.VOMap.avo.innNo}&memberId=${sessionScope.mvo.memberId}"
-						method="post">
+						method="post" id="bookForm">
 						<!-- 예약 가능 상황 시 기능 활성화 -->
 		
 						<div class="form-group">
@@ -174,7 +203,7 @@
 
 							</div>
 						</div>
-						<input type="hidden" id="betweenDay">
+			
 						
 						<c:choose>
 						<c:when test="${requestScope.VOMap.innVO.innAvailability =='Y' && sessionScope.mvo.memberId != null &&requestScope.VOMap.innVO.memberId != sessionScope.mvo.memberId}">
