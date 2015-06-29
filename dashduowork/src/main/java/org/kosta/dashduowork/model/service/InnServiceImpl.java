@@ -275,7 +275,12 @@ public class InnServiceImpl implements InnService {
 		System.out.println("InnServiceImple ---Amenity와 AvailableDate"+avo+avvo);
 		String innNo = Integer.toString(avo.getInnNo());
 		amenityDAO.delete(innNo);
-		amenityDAO.register(avo);
+		for(int i=0; i<avo.getAmenityItems().size(); i++){
+	    	  AmenityVO vo = new AmenityVO();
+	    	  vo.setInnNo(avo.getInnNo());
+	    	  vo.setAmenityItem(avo.getAmenityItems().get(i));
+	    	  amenityDAO.register(vo);
+	      }
 		availableDateDAO.update(avvo);
 	}
 	@Override

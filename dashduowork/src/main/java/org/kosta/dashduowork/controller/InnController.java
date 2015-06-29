@@ -416,7 +416,7 @@ public class InnController {
 			ipvo.setFilePath(ipvo.getFilePathes().get(i));
 			innService.registerInnPic(ipvo);
 		}
-		return "redirect:innupdateform.do?innNo="+innNo;
+		return "redirect:get_myinnlist.do";
 	}
 		
 	@RequestMapping("deleteInnPic.do")
