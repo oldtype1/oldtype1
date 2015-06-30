@@ -139,6 +139,7 @@ function SearchInnCityListByAjax() {
       source : availableTags //자동완성 소스는 availableTags 배열을 사용 한다.      
    });
 }//function SearchInnCityListByAjax()
+<<<<<<< HEAD
 $(function() {
    $( "#slider-range" ).slider({
          range: true,
@@ -227,13 +228,159 @@ $(function() {
          });//ajax
       }); //change
    });
+=======
+
+
+$(function() { 
+	$( "#slider-range" ).slider({
+	      range: true,
+	      min: 0,
+	      max: 50000,
+	      values: [ 1000, 60000 ],
+	      slide: function( event, ui ) {
+	        $( "#amount" ).val( "₩" + ui.values[ 0 ] + " - ₩" + ui.values[ 1 ] );
+	        $("#minPrice").val($( "#slider-range" ).slider( "values", 0 ));
+	        $("#maxPrice").val($( "#slider-range" ).slider( "values", 1 ));
+	      }
+	    });
+	    $( "#amount" ).val( "₩" + $( "#slider-range" ).slider( "values", 0 ) + " - ₩" + $( "#slider-range" ).slider( "values", 1 ) );
+	    
+<<<<<<< HEAD
+	    $("#slider-range").mouseup(function(){
+	    	$("#resultViewPage").html("");
+=======
+	    
+	    
+	    
+	    //============================여기서부터 신경쓰자 동원아=============================
+	    	
+	    	
+	    	
+	    $("#slider-range").mouseup(function(){  //가격바 움직였을때 에이젝스
+	    	/* alert($("#minPrice").val()); */
+>>>>>>> branch 'master' of https://github.com/oldtype1/oldtype1.git
+	    	$("#resultViewSearch").html("");
+	    	$("#resultViewPage").html("");	 // 페이징 빈을 일단 이거에 따라서 바꿔줘야하니까  	
+			//alert();list.getInnN
+			$.ajax({
+				type : "Post",
+				url : "searchInnByWordDateNoWithFilter.do",
+				data : $("#filterForm").serialize(),
+				dataType : "json",
+				success : function(innInfoList) {
+<<<<<<< HEAD
+					var tableInfo="<table><tr>";
+					if (innInfoList.innList.length != 0) {			
+						$.each(innInfoList.innList, function(index, info) {
+							if((index+1)%2==1){
+								tableInfo+="</tr><tr>";
+							}
+							tableInfo+="<td class=photo_main><a href='inn_in_show.do?innNo="+info.innNo+"'>";
+							tableInfo+="<img class='img-rounded' src='"+info.innMainPic.filePath+"' height='320' width='350'><br>"+info.innName+"</a>";
+							tableInfo+="<span class='photo_main_up' style='width:120px;'>₩"+info.innPrice+"</span>/ "+info.innType;
+							tableInfo+="<a href='#'><img src='${initParam.root }/img/map.jpg' onclick='mapping("+info.innName+","+info.innArea+" ,"+info.innAddress+")'></a></td>";
+							/* if(info.innMainPic==null){
+=======
+					//var pageBean = "<ul class='pagination pagination-sm'>";
+					var tableInfo="<table class='table-hover CSSTableGenerator'><thead><tr><th >숙소 번호</th><th>숙소 사진</th><th>숙소명</th><th>위치</th><th>유형</th><th>수용가능인원</th><th>가격</th></tr></thead>";
+					tableInfo+="<tbody>";
+					
+					if (innInfoList.innList.length != 0) {						
+						$.each(innInfoList.innList, function(index, info) {							
+							if(info.innMainPic==null){ //이건 이미지 넣으려고 하는거야. 신경꺼
+>>>>>>> branch 'master' of https://github.com/oldtype1/oldtype1.git
+								tableInfo+="<tr><td>"+info.innNo+"</td><td><img class='img-rounded' src='${initParam.root}img/no_img.gif' height='150' width='150'></td><td><a href='inn_in_show.do?innNo="+info.innNo+"'>"+info.innName+"</td><td>"+info.innArea+"</td><td>"+info.innType+"</td><td>"+info.acceptableNo+"</td><td>"+info.innPrice+"</td></tr>";
+							}else{
+								tableInfo+="<tr><td>"+info.innNo+"</td><td><img class='img-rounded' src='"+info.innMainPic.filePath+"' height='150' width='150'></td><td><a href='inn_in_show.do?innNo="+info.innNo+"'>"+info.innName+"</td><td>"+info.innArea+"</td><td>"+info.innType+"</td><td>"+info.acceptableNo+"</td><td>"+info.innPrice+"</td></tr>";
+							}							
+						});
+					}//if
+					
+					else if(innInfoList.innList.length == 0){ //받아온 데이터들이 0이면 당연히 페이징도 작동안하겠지?
+						tableInfo+="<tr><td colspan='9' align='center'>검색 및 필터조건에 해당하는 숙소가 존재하지 않습니다.</td></tr>";
+						//$("#resultViewPage").html("");
+					}
+					tableInfo+="</tbody></table>";
+					//pageBean+="</ul> ";
+					$("#resultViewSearch").html(tableInfo);
+					//$("#resultViewPage").html(pageBean);
+				}
+				
+				
+			});//ajax
+	    });//mouseup
+	    
+	   
+	    
+		$("#checkin, #checkout").datepicker({
+			dateFormat : 'yy-mm-dd'
+		});
+	    
+		$("#filterForm").change(function() {    //어메니티 체크박스 누르고 땟다 할때 에이젝스
+			$("#resultViewSearch").html("");
+<<<<<<< HEAD
+			$("#resultViewPage").html("");
+			
+=======
+			$("#resultViewPage").html("");	 
+>>>>>>> branch 'master' of https://github.com/oldtype1/oldtype1.git
+			//alert();
+			$.ajax({
+				type : "Post",
+				url : "searchInnByWordDateNoWithFilter.do",
+				data : $("#filterForm").serialize(),
+				dataType : "json",
+				success : function(innInfoList) {
+					var tableInfo="<table class='table-hover CSSTableGenerator'><thead><tr><th >숙소 번호</th><th>숙소 사진</th><th>숙소명</th><th>위치</th><th>유형</th><th>수용가능인원</th><th>가격</th></tr></thead>";
+					tableInfo+="<tbody>";
+					if (innInfoList.innList.length != 0) {
+						$.each(innInfoList.innList, function(index, info) {
+<<<<<<< HEAD
+							if((index+1)%2==1){
+								tableInfo+="</tr><tr>";
+							}
+							tableInfo+="<td class=photo_main><a href='inn_in_show.do?innNo="+info.innNo+"'>";
+							tableInfo+="<img class='img-rounded' src='"+info.innMainPic.filePath+"' height='320' width='350'><br>"+info.innName+"</a>";
+							tableInfo+="<span class='photo_main_up' style='width:120px;'>₩"+info.innPrice+"</span>/ "+info.innType;
+							tableInfo+="<a href='#'><img src='${initParam.root }/img/map.jpg' onclick='mapping('"+info.innName+"','"+info.innArea+"','"+info.innAddress+"')'></a></td>";
+							/* if(info.innMainPic==null){
+=======
+							if(info.innMainPic==null){
+>>>>>>> branch 'master' of https://github.com/oldtype1/oldtype1.git
+								tableInfo+="<tr><td>"+info.innNo+"</td><td><img class='img-rounded' src='${initParam.root}img/no_img.gif' height='150' width='150'></td><td><a href='inn_in_show.do?innNo="+info.innNo+"'>"+info.innName+"</td><td>"+info.innArea+"</td><td>"+info.innType+"</td><td>"+info.acceptableNo+"</td><td>"+info.innPrice+"</td></tr>";
+							}else{
+								tableInfo+="<tr><td>"+info.innNo+"</td><td><img class='img-rounded' src='"+info.innMainPic.filePath+"' height='150' width='150'></td><td><a href='inn_in_show.do?innNo="+info.innNo+"'>"+info.innName+"</td><td>"+info.innArea+"</td><td>"+info.innType+"</td><td>"+info.acceptableNo+"</td><td>"+info.innPrice+"</td></tr>";
+							}
+						}); //each
+					}//if
+					else if(innInfoList.innList.length == 0){
+						tableInfo+="<tr><td colspan='7' align='center'>검색 및 필터조건에 해당하는 숙소가 존재하지 않습니다.</td></tr>";
+					}
+					tableInfo+="</tbody></table>";
+					$("#resultViewSearch").html(tableInfo);
+				}
+			});//ajax
+		}); //change
+	}); //function끝나는거 가장큰 중괄호 씨바
+>>>>>>> branch 'master' of https://github.com/oldtype1/oldtype1.git
 </script>
 
+<<<<<<< HEAD
 <div id="dialog" title="검색어 순위">
   <c:forEach var="list" items="${requestScope.wordlist }" varStatus="i" begin="0" end="4" step="1">
      ${i.count}. ${list.word }<br>
   </c:forEach>
 </div>
+=======
+<<<<<<< HEAD
+<div id="dialog" title="검색어 순위">
+  <c:forEach var="list" items="${requestScope.wordlist }" varStatus="i" begin="0" end="4" step="1">
+  	${i.count}. ${list.word }<br>
+  </c:forEach>
+</div>
+=======
+>>>>>>> branch 'master' of https://github.com/oldtype1/oldtype1.git
+>>>>>>> branch 'master' of https://github.com/oldtype1/oldtype1.git
 
 <div class="section" style="position: relative; top: 30px;">
    <div class="container">
@@ -376,6 +523,7 @@ $(function() {
 <br>
 
 <div class="section">
+<<<<<<< HEAD
    <div class="container">
       <div class="row">
          <div class="col-md-8">
@@ -411,6 +559,156 @@ $(function() {
           </body>
       </div>
    </div>
+=======
+	<div class="container">
+		<div class="row">
+<<<<<<< HEAD
+			<div class="col-md-8">
+<input type="hidden" id="local" value="${requestScope.filterVO.searchWord}">
+			지역 : ${requestScope.filterVO.searchWord} / 인원 : ${requestScope.filterVO.searchPeopleNo } 명 에 대한 검색결과 <span class="glyphicons glyphicons-google-maps"></span><br>
+				<div id="resultViewSearch">
+					<table>
+						<c:choose>
+							<c:when test="${requestScope.innListVO.innList.size()==0}" >
+								<td align="center">검색결과가 존재하지 않습니다.</td>
+							</c:when>	
+								<c:otherwise>
+									<tr>
+									<c:forEach var="list" items="${requestScope.innListVO.innList}" varStatus="status">
+										<c:if test="${(status.index+1)%2==1}"></tr><tr></c:if>
+										<td class=photo_main><a href="inn_in_show.do?innNo=${list.innNo}">
+										<img class="img-rounded" src="${list.innMainPic.filePath}" height="320" width="350">				
+										 <br>
+										 ${list.innName}</a>
+										 <span class='photo_main_up'  style="width:120px;">₩${list.innPrice}</span>	
+										 / ${list.innType}
+										 <%-- <input type="button" value="위치확인" onclick="mapping('${list.innName}','${list.innArea}' ,'${list.innAddress}')" class="btn btn-default"> --%>
+										 <a href="#"><img src="${initParam.root }/img/map.jpg" onclick="mapping('${list.innName}','${list.innArea}' ,'${list.innAddress}')"></a></td>
+									</c:forEach>
+									</tr>
+								</c:otherwise>
+						</c:choose>
+					</table>
+				</div>
+			</div>
+			<body onload="initialize()"> 
+			 <div id="map_canvas" style="z-index: 3; width:380px; height:800px; float: left;"> </div>
+			 </body>
+		</div>
+	</div>
+</div>
+<div class="section text-center">
+        <div class="container">
+          <div class="row">
+            <div class="col-md-12 text-center">
+            <div id="resultViewPage"> <!--ajax로 바꿔줄꺼야. 페이징빈 ...   -->
+              <ul class="pagination pagination-sm">
+                  
+                  <c:set var="pb" value="${requestScope.innListVO.pagingBean}"></c:set>
+						
+						<c:if test="${pb.previousPageGroup}">
+						<li><a
+							href="searchInnByWordDateNo.do?pageNo=${pb.startPageOfPageGroup-1}">Prev</a>
+						</li>
+						</c:if>
+						
+						<c:forEach var="i" begin="${pb.startPageOfPageGroup}"
+							end="${pb.endPageOfPageGroup}">
+							<c:if test="${pb.nowPage!=i}">
+								<li><a href="searchInnByWordDateNo.do?pageNo=${i}&amenityItems=${requestScope.filterVO.amenityItems}&searchWord=${requestScope.filterVO.searchWord}&searchPeopleNo=${requestScope.filterVO.searchPeopleNo}&searchStartDate=${requestScope.filterVO.searchStartDate}&searchEndDate=${requestScope.filterVO.searchEndDate}&minPrice=${requestScope.filterVO.minPrice}&maxPrice=${requestScope.filterVO.maxPrice}&amenityCnt=${requestScope.filterVO.amenityCnt}">${i}</a>
+								<li>
+							</c:if>
+							<c:if test="${pb.nowPage==i}">
+								<li><a href="#">${i}</a></li>
+							</c:if>
+						&nbsp;					
+						</c:forEach>
+			
+					<c:if test="${pb.nextPageGroup}">
+						<li>
+							<a href="searchInnByWordDateNo.do?pageNo=${pb.endPageOfPageGroup+1}">Next</a>
+						</li>
+					</c:if>
+			
+              </ul> 
+			</div>    
+            </div>
+          </div>
+        </div>
+      </div>
+=======
+			<div class="col-md-12">
+			지역 : ${requestScope.filterVO.searchWord} / 인원 : ${requestScope.filterVO.searchPeopleNo } 명 에 대한 검색결과
+				<div id="resultViewSearch"> <!-- 이얏호 여기가 resultViewSearch구나 은식형이 ajax주려고 div로 감싼거야 -->
+					<table class="table-hover CSSTableGenerator">
+						<thead>
+							<tr>
+								<th >숙소 번호</th>
+								<th>숙소 사진</th>
+								<th>숙소명</th>
+								<th>위치</th>
+								<th>유형</th>
+								<th>수용가능인원</th>
+								<th>가격</th>
+							</tr>
+						</thead>
+						<tbody>
+							<c:choose>
+								<c:when test="${requestScope.list.size()==0}" >
+										<tr><td colspan='7' align="center">검색결과가 존재하지 않습니다.</td></tr>
+								</c:when>
+								<c:otherwise>
+									<c:forEach var="list" items="${requestScope.innListVO.innList}">
+										<tr valign="middle">
+										<c:choose>
+										
+										
+											<c:when test="${list.innAvailability=='N' }">
+												<td><font color="#DEDEDE">${list.innNo }</font></td>
+												<td>
+												<c:choose>
+													<c:when test="${list.innMainPic.filePath!=null}"><img class="img-rounded" src="${list.innMainPic.filePath}" height="150" width="150"></c:when>
+													<c:otherwise><img class="media-object" src="${initParam.root}img/no_img.gif" height="150" width="150"></c:otherwise>
+												</c:choose>
+												</td>
+												<td><a href="inn_in_show.do?innNo=${list.innNo}">${list.innName }</a></td>
+												<td><font color="#DEDEDE">${list.innArea }</font></td>
+												<td><font color="#DEDEDE">${list.innType }</font></td>
+												<td><font color="#DEDEDE">${list.acceptableNo }</font></td>
+												<td><font color="#DEDEDE">${list.innPrice }</font></td>
+											</c:when>
+											
+											
+											<c:otherwise>
+												<td>${list.innNo }</td>
+											<td>
+											<c:choose>
+												<c:when test="${list.innMainPic.filePath!=null}"><img class="img-rounded" src="${list.innMainPic.filePath}" height="150" width="150"></c:when>
+												<c:otherwise><img class="img-rounded" src="${initParam.root}img/no_img.gif" height="150" width="150"></c:otherwise>
+											</c:choose>
+											</td>
+											<td><a href="inn_in_show.do?innNo=${list.innNo}">${list.innName }</a></td>
+											<td>${list.innArea }</td>
+											<td>${list.innType }</td>
+											<td>${list.acceptableNo }</td>
+											<td>${list.innPrice }</td>
+											</c:otherwise>
+										
+												
+											
+											
+										</c:choose>
+										</tr>
+									</c:forEach>
+								</c:otherwise>
+							</c:choose>
+						</tbody>
+					</table>
+				</div>
+			</div>
+		</div>
+	</div>
+>>>>>>> branch 'master' of https://github.com/oldtype1/oldtype1.git
 </div>
  
  
@@ -452,4 +750,10 @@ $(function() {
             </div>
           </div>
         </div>
+<<<<<<< HEAD
       </div>
+=======
+      </div>
+
+>>>>>>> branch 'master' of https://github.com/oldtype1/oldtype1.git
+>>>>>>> branch 'master' of https://github.com/oldtype1/oldtype1.git

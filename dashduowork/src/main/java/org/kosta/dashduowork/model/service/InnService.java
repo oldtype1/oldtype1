@@ -72,6 +72,13 @@ public interface InnService {
 	//별점주기
 	public void ratingInn(InnRatingVO irv,int tradeNo) throws NoInnException;
 	
+<<<<<<< HEAD
+	//6/25 검색메서드추가
+//	public abstract InnListVO findInnByWordAndAcceptNoAndDate(FilterVO fvo);
+	public abstract InnListVO findInnByWordAndAcceptNoAndDate(String pageNo, FilterVO fvo);
+	public abstract InnListVO findInnByWordAndAcceptNoAndDateWithPrice(FilterVO fvo);
+=======
+>>>>>>> branch 'master' of https://github.com/oldtype1/oldtype1.git
 	//윤정 추가
 	public abstract InnVO getInnByInnNo(int innNo);
 	public abstract MemberVO getMemberAccountByInnNo(String innNo);

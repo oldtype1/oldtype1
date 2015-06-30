@@ -93,6 +93,25 @@ public class InnDAOImpl implements InnDAO {
 		System.out.println("예스로 바꾼다");
 		sqlSessionTemplate.update("inn.updateinnAvailabilitytoYes",innNo);
 	}
+<<<<<<< HEAD
+	// 6/25일 추가 검색메서드
+//	@Override
+//	public List<InnVO> selectInnByWordAndAcceptNo(FilterVO fvo){
+//		return sqlSessionTemplate.selectList("inn.selectInnByWordAndAcceptNo", fvo);
+//	}
+//	@Override
+//	public List<InnVO> selectInnByWordAndAcceptNoAndDate(FilterVO fvo){
+//		return sqlSessionTemplate.selectList("inn.selectInnByWordAndAcceptNoAndDate", fvo);
+//	}
+	@Override
+	public List<InnVO> selectInnByWordAndAcceptNoWithPrice(FilterVO fvo){
+		return sqlSessionTemplate.selectList("inn.selectInnByWordAndAcceptNoWithPriceFilter", fvo);
+	}
+	@Override
+	public List<InnVO> selectInnByWordAndAcceptNoAndDateWithPrice(FilterVO fvo){
+		return sqlSessionTemplate.selectList("inn.selectInnByWordAndAcceptNoAndDateWithPriceFilter", fvo);
+	}
+=======
 	
 	// 기본 이름 + 인원수
 		@Override
@@ -161,11 +180,43 @@ public class InnDAOImpl implements InnDAO {
 	
 	
 	
+>>>>>>> branch 'master' of https://github.com/oldtype1/oldtype1.git
 	@Override
 	public InnVO getInnByInnNo(int innNo) {
 		return sqlSessionTemplate.selectOne("inn.getInnByInnNo", innNo);
 	}
+	// 6/25일 추가 검색메서드
+	// 기본 이름 + 인원수
+	@Override
+	public List<InnVO> selectInnByWordAndAcceptNo(HashMap<String, Object> param){
+		System.out.println("=============InnDAIImpl영역입장===========");
+		System.out.println("selectInnByWordAndAcceptNo에 들어가는데 과연 나올까요???");
+		List<InnVO> list = null;
+		list =  sqlSessionTemplate.selectList("inn.selectInnByWordAndAcceptNo", param);
+		System.out.println("InnDAOImpl에서 받은 list입니다."+ list);
+		return list;
+	}
+				
+	@Override
+	public int getTotalSearchingCountWithNoDate(HashMap<String, Object> param){
+		return sqlSessionTemplate.selectOne("inn.getTotalSearchingCountWithNoDate",param);
+	}
 	
+	//기본 이름 +인원수 ++ 날짜
+	@Override
+	public List<InnVO> selectInnByWordAndAcceptNoAndDate(HashMap<String, Object> param){
+		System.out.println("=============InnDAIImpl영역입장===========");
+		System.out.println("selectInnByWordAndAcceptNoAndDate에 들어가는데 과연 나올까요???");
+		List<InnVO> list = null;
+		list = sqlSessionTemplate.selectList("inn.selectInnByWordAndAcceptNoAndDate", param);
+		System.out.println("InnDAOImpl에서 받은 list입니다."+ list);
+		return list;
+	}
+	
+	@Override
+	public int getTotalSearchingCountWithDate(HashMap<String, Object> param){
+		return sqlSessionTemplate.selectOne("inn.getTotalSearchingCountWithDate",param);
+	}
 }
 
 
