@@ -550,47 +550,52 @@ public class InnController {
 	}
 	
 	//6/25 검색메서드 추가
-	@RequestMapping(value="searchInnByWordDateNo.do")
-	public String searchByCityDateNo(FilterVO fvo, Model model, HttpServletRequest request){
-		InnListVO innListVO=new InnListVO();
-		System.out.println("컨트롤러에서 fvo 확인 : "+fvo);
-		List<InnVO> list=null;
-		if(fvo.getMinPrice()==null || fvo.getMaxPrice()==null || fvo.getAmenityItems()==null){
-			innListVO=innService.findInnByWordAndAcceptNoAndDate(fvo);
-		}else{//날짜 들어간경우
-			innListVO=innService.findInnByWordAndAcceptNoAndDateWithPrice(fvo);
-		}
-		List<ReportVO> wordlist=reportService.selectReport();
-		System.out.println("InnController 검색어순위 "+wordlist);
-		System.out.println("검색결과 확인 : "+innListVO.getInnList());
-		model.addAttribute("wordlist", wordlist);
-		model.addAttribute("innListVO", innListVO);
-		model.addAttribute("filterVO", fvo);
-//		HttpSession session = request.getSession(false);
-//		MemberVO memberVO = (MemberVO)session.getAttribute("mvo");
-//		System.out.println("searchMemberVO : "+memberVO);
-		return "inn_search_result";
-	}
 	//6/25 검색메서드 추가
-		@RequestMapping(value="searchInnByWordDateNoWithFilter.do")
-		@ResponseBody
-		public InnListVO searchInnByWordDateNoWitFilter(FilterVO fvo, Model model, HttpServletRequest request){
-			System.out.println("컨트롤러에서 fvo 확인 : "+fvo);
+		@RequestMapping(value="searchInnByWordDateNo.do")
+		public String searchByCityDateNo(String pageNo, FilterVO fvo, Model model, HttpServletRequest request){
 			InnListVO innListVO=new InnListVO();
-			List<InnVO> list=null;
-			if(fvo.getMinPrice()==null || fvo.getMaxPrice()==null){
-				innListVO=innService.findInnByWordAndAcceptNoAndDate(fvo);
-			}else{//날짜 들어간경우
-				System.out.println("가격 들어옴!");
-				innListVO=innService.findInnByWordAndAcceptNoAndDateWithPrice(fvo);
+			System.out.println("컨트롤러에서 fvo 확인 : "+fvo);
+			if(fvo.getMinPrice()==null || fvo.getMaxPrice()==null || fvo.getAmenityItems()==null || fvo.getMinPrice()=="" || fvo.getMaxPrice()==""){
+				System.out.println("=======controller영역에 입장하셨습니다.=========");
+				System.out.println("가격바 움직이지않았어요");
+				innListVO=innService.findInnByWordAndAcceptNoAndDate(pageNo, fvo);
+			}else{
+				System.out.println("=======controller영역에 입장하셨습니다.=========");
+				System.out.println("가격바 움직였어요");
+				innListVO=innService.findInnByWordAndAcceptNoAndDateWithPrice(pageNo, fvo);
 			}
+			System.out.println("검색결과 확인 : "+innListVO.getInnList());
 			model.addAttribute("innListVO", innListVO);
 			model.addAttribute("filterVO", fvo);
 //			HttpSession session = request.getSession(false);
 //			MemberVO memberVO = (MemberVO)session.getAttribute("mvo");
 //			System.out.println("searchMemberVO : "+memberVO);
-			return innListVO;
+			return "inn_search_result";
 		}
+		//6/25 검색메서드 추가
+			@RequestMapping(value="searchInnByWordDateNoWithFilter.do")
+			@ResponseBody
+			public InnListVO searchInnByWordDateNoWitFilter(String pageNo, FilterVO fvo, Model model, HttpServletRequest request){
+				System.out.println("컨트롤러에서 fvo 확인 : "+fvo);
+				InnListVO innListVO=new InnListVO();
+				if(fvo.getMinPrice()==null || fvo.getMaxPrice()==null){
+					System.out.println("=======controller ajax영역에 입장하셨습니다.=========");
+					System.out.println("가격바 움직이지않았어요");
+					innListVO=innService.findInnByWordAndAcceptNoAndDate(pageNo, fvo);
+				}else{//날짜 들어간경우
+					System.out.println("=======controller ajax영역에 입장하셨습니다.=========");
+					System.out.println("가격바 움직였어요");
+					innListVO=innService.findInnByWordAndAcceptNoAndDateWithPrice(pageNo,fvo);
+				}
+				System.out.println("검색결과 확인 : "+innListVO.getInnList());
+				model.addAttribute("innListVO", innListVO);
+				model.addAttribute("filterVO", fvo);
+//				HttpSession session = request.getSession(false);
+//				MemberVO memberVO = (MemberVO)session.getAttribute("mvo");
+//				System.out.println("searchMemberVO : "+memberVO);
+				return innListVO;
+			}
+			
 		@RequestMapping("paymentForm.do")
 		public String paymentForm(int innNo, String memeberId, Model model, BookVO bvo , HttpServletRequest request){
 			HttpSession session=request.getSession(false);

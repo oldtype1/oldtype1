@@ -52,3 +52,6 @@ insert into availabledate(availabledate_no, inn_no, availabledate_st, availabled
 select * from MEMBER;
 select member_id, member_name, member_tel, member_info, member_pass, member_answer_type,  member_pass_answer from member
  where member_answer_type='나의 부모님 성함은?' and member_pass_answer='이정옥' and member_id='oldtype_1@hanmali.net'
+ 
+ 
+ 
