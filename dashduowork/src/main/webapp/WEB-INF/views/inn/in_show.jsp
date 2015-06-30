@@ -58,12 +58,6 @@
 					$("#bookCheckOut").val("");
 					$("#totalPrice").val(price);
 				}
-				if(betweenDay == 0){
-					alert("체크인과 체크아웃 날짜가 같을 수는 없습니다!");
-				    $("#bookCheckIn").val("");
-					$("#bookCheckOut").val("");
-					$("#totalPrice").val(price);
-				}
 					
 			} // if
 		}); // bookCheckIn
@@ -88,12 +82,6 @@
 				
 				if($("#totalPrice").val()<0){
 					alert("체크아웃은 반드시 체크인보다 후의 날짜이어야 합니다!");
-				    $("#bookCheckIn").val("");
-					$("#bookCheckOut").val("");
-					$("#totalPrice").val(price);
-				}
-				if(betweenDay == 0){
-					alert("체크인과 체크아웃 날짜가 같을 수는 없습니다!");
 				    $("#bookCheckIn").val("");
 					$("#bookCheckOut").val("");
 					$("#totalPrice").val(price);
