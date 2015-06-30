@@ -263,7 +263,6 @@ inn_price=#{innPrice}, inn_info=#{innInfo} where inn_no=#{innNo}
 		update member set password=#{password},name=#{name},address=#{address}
 		where id=#{id}
 	</update> -->
-<<<<<<< HEAD
 	<!-- 6/25 검색 추가, 동적쿼리 사용 검색 -->
 	<!-- <select id="selectInnByWordAndAcceptNo" parameterType="fvo" resultType="ivo" resultMap="innResult">
 		select distinct inn_no, inn_name, inn_area, inn_address, inn_acceptable_no, inn_price, inn_type
@@ -295,10 +294,7 @@ inn_price=#{innPrice}, inn_info=#{innInfo} where inn_no=#{innNo}
 			</if>
 			)))where page =#{pageNo}
 	</select>
-=======
->>>>>>> branch 'master' of https://github.com/oldtype1/oldtype1.git
 	
-<<<<<<< HEAD
 	<select id="getTotalSearchingCountWithNoDate" parameterType="hashmap" resultType="int">
 			select count(distinct inn_no) from(select i.inn_no,i.inn_name,i.inn_area,i.inn_address,i.inn_type,i.inn_acceptable_no, 
 		i.inn_price,i.inn_info,i.inn_availability,i.member_id, av.availabledate_st, av.availabledate_end from inn i, AVAILABLEDATE av, amenity a
@@ -338,151 +334,28 @@ inn_price=#{innPrice}, inn_info=#{innInfo} where inn_no=#{innNo}
 	
 	
 		<select id="getInnByInnNo" parameterType="int" resultType="ivo" resultMap="innResult">
-=======
-
-	<select id="getInnByInnNo" parameterType="int" resultType="ivo" resultMap="innResult">
->>>>>>> branch 'master' of https://github.com/oldtype1/oldtype1.git
 	select inn_no, inn_name, inn_area, inn_address, inn_type, inn_price, inn_info from inn where inn_no=#{value}
 	</select>
-
-	<!-- 기본 -->
-	<!-- 6/25 검색 추가, 동적쿼리 사용 검색 -->
-	<select id="selectInnByWordAndAcceptNo" parameterType="hashmap" resultType="ivo" resultMap="innResult">
-		select inn_no, inn_name, inn_area, inn_acceptable_no, inn_price, inn_type from
-		(select inn_no, inn_name, inn_area, inn_acceptable_no, inn_price, inn_type, ceil(rownum/5) as page
-		from (select distinct inn_no, inn_name, inn_area, inn_acceptable_no, inn_price, inn_type
-		from (select i.inn_no, i.inn_name, i.inn_area,i.inn_address,i.inn_type,i.inn_acceptable_no,i.inn_price,
-		i.inn_availability,i.member_id,ad.availabledate_st,ad.availabledate_end, a.amenity_item from INN i, 
-		AVAILABLEDATE ad, AMENITY a where i.inn_no=ad.inn_no and i.inn_no=a.inn_no and i.inn_area 
-		like '%' ||  #{address} || '%' and i.inn_acceptable_no >= #{acceptableNo}
-			 <if test="minPrice!=null and maxPrice!=null">    
-				 and i.inn_price between #{minPrice} and #{maxPrice} 
-			</if>
-			)))where page =#{pageNo}
-	</select>
-	
-	<select id="getTotalSearchingCountWithNoDate" parameterType="hashmap" resultType="int">
-			select count(*) from(select i.inn_no,i.inn_name,i.inn_area,i.inn_address,i.inn_type,i.inn_acceptable_no, 
-		i.inn_price,i.inn_info,i.inn_availability,i.member_id, av.availabledate_st, av.availabledate_end from inn i, AVAILABLEDATE av 
-		where i.inn_no=av.inn_no and i.inn_area like '%' ||  #{address} || '%' and i.inn_acceptable_no>=#{acceptableNo}
-		<if test="minPrice!=null and maxPrice!=null">
-				 and i.inn_price between #{minPrice} and #{maxPrice}
-			</if>
-			)	
-		</select>
-
-
-
 	
 	
-	<!-- 기본+날짜 -->
-	<select id="selectInnByWordAndAcceptNoAndDate" parameterType="hashmap" resultType="ivo" resultMap="innResult">
-		<![CDATA[select inn_no, inn_name, inn_area, inn_acceptable_no, inn_price, inn_type from
-		(select inn_no, inn_name, inn_area, inn_acceptable_no, inn_price, inn_type, ceil(rownum/5) as page
-		from (select distinct inn_no, inn_name, inn_area, inn_acceptable_no, inn_price, inn_type
-		from (select i.inn_no, i.inn_name, i.inn_area,i.inn_address,i.inn_type,i.inn_acceptable_no,i.inn_price,
-		i.inn_availability,i.member_id,ad.availabledate_st,ad.availabledate_end, a.amenity_item from INN i, 
-		AVAILABLEDATE ad, AMENITY a where i.inn_no=ad.inn_no and i.inn_no=a.inn_no and i.inn_area 
-		like '%' ||  #{address} || '%' and i.inn_acceptable_no >= #{acceptableNo} 
-		and ad.availabledate_st<=#{startDate} and ad.availabledate_end >=#{endDate}]]>
-			 <if test="minPrice!=null and maxPrice!=null">    
-				 and i.inn_price between #{minPrice} and #{maxPrice} 
-			</if>
-			)))where page =#{pageNo}
-	</select>
-
-	<select id="getTotalSearchingCountWithDate" parameterType="hashmap" resultType="int">
-		<![CDATA[select count(*) from(select i.inn_no,i.inn_name,i.inn_area,i.inn_address,i.inn_type,i.inn_acceptable_no, 
-		i.inn_price,i.inn_info,i.inn_availability,i.member_id, av.availabledate_st, av.availabledate_end from inn i, AVAILABLEDATE av 
-		where i.inn_no=av.inn_no and i.inn_area like '%' ||  #{address} || '%' and i.inn_acceptable_no>=#{acceptableNo} 
-		and av.availabledate_st<=#{startDate} and av.availabledate_end >=#{endDate}]]>
-		<if test="minPrice!=null and maxPrice!=null">
-				 and i.inn_price between #{minPrice} and #{maxPrice}
-			</if>
-			)	
-		</select>
-	
-	
-	
-	
-	
-	
-	<!-- 기본 + 필터 -->
-	<select id="selectInnByWordAndAcceptNoWithPriceFilter" parameterType="hashmap" resultType="ivo" resultMap="innResult">
-		<![CDATA[select* from
-	(select distinct inn_no,inn_name, inn_area, inn_acceptable_no, inn_price, inn_type, ceil(rownum/5) as page from
-	(select distinct inn_no,inn_name, inn_area, inn_acceptable_no, inn_price, inn_type, count(*) from (select *
-	from (select i.inn_no, i.inn_name, i.inn_area,i.inn_address,i.inn_type,i.inn_acceptable_no,
-	i.inn_price,i.inn_availability,i.member_id,ad.availabledate_st,ad.availabledate_end, a.amenity_item
-	from INN i, AVAILABLEDATE ad, AMENITY a where i.inn_no=ad.inn_no and i.inn_no=a.inn_no and i.inn_area 
-	like '%' || #{address} || '%' and i.inn_acceptable_no >= #{acceptableNo} and i.inn_price between #{minPrice} and #{maxPrice})
-	where amenity_item in]]>
-	<foreach item="item" collection="amenityItems" open="(" separator="," close=")">
+	<select id="selectInnByWordAndAcceptNoWithPriceFilter" parameterType="fvo" resultType="ivo" resultMap="innResult">
+		select inn_no,inn_name, inn_area, inn_address, inn_acceptable_no, inn_price, inn_type, count(*) from (select *
+from (select i.inn_no, i.inn_name, i.inn_area,i.inn_address,i.inn_type,i.inn_acceptable_no,i.inn_price,i.inn_availability,i.member_id,ad.availabledate_st,ad.availabledate_end, a.amenity_item from INN i, AVAILABLEDATE ad, AMENITY a where i.inn_no=ad.inn_no and i.inn_no=a.inn_no and i.inn_area like '%' || #{searchWord} || '%' and i.inn_acceptable_no >= #{searchPeopleNo} and i.inn_price between #{minPrice} and #{maxPrice})
+where amenity_item in
+		<foreach item="item" collection="amenityItems" open="(" separator="," close=")">
 			#{item}
 		</foreach>
-	) group by inn_no,inn_name, inn_area, inn_acceptable_no, inn_price, 
-	inn_type having count(*)=#{amenityCnt}))where page = #{pageNo}
+		) group by inn_no,inn_name, inn_area, inn_address, inn_acceptable_no, inn_price, inn_type having count(*)=#{amenityCnt}
 	</select>
-	
-	
-
-		
-	<select id="getTotalSearchingCountWithNoDateAndPriceAndAmenity" parameterType="hashmap" resultType="int">
-	select count(*) from(select count(*) from (select *
-	from (select i.inn_no, i.inn_name, i.inn_area,i.inn_address,i.inn_type,i.inn_acceptable_no,
-	i.inn_price,i.inn_availability,i.member_id,ad.availabledate_st,ad.availabledate_end, a.amenity_item 
-	from INN i, AVAILABLEDATE ad, AMENITY a where i.inn_no=ad.inn_no and i.inn_no=a.inn_no and i.inn_area 
-	like '%' ||  #{address} || '%' and i.inn_acceptable_no >= #{acceptableNo} 
-	<if test="minPrice!=null and maxPrice!=null">
-		 and i.inn_price between #{minPrice} and #{maxPrice}
-	</if>
-	)where amenity_item in 
-	<foreach item="item" collection="amenityItems" open="(" separator="," close=")">
-			#{item}
-	</foreach>
-	) group by inn_no,inn_name, inn_area, inn_acceptable_no, inn_price, inn_type having count(*)=#{amenityCnt})
-	</select>	
-	
-	
-		
-		
-		<!-- 기본 + 필터 + 날짜 -->
-<select id="selectInnByWordAndAcceptNoAndDateWithPriceFilter" parameterType="hashmap" resultType="ivo" resultMap="innResult">
-		<![CDATA[select* from
-	(select distinct inn_no,inn_name, inn_area, inn_acceptable_no, inn_price, inn_type, ceil(rownum/5) as page from
-	(select distinct inn_no,inn_name, inn_area, inn_acceptable_no, inn_price, inn_type, count(*) from (select *
-	from (select i.inn_no, i.inn_name, i.inn_area,i.inn_address,i.inn_type,i.inn_acceptable_no,
-	i.inn_price,i.inn_availability,i.member_id,ad.availabledate_st,ad.availabledate_end, a.amenity_item
-	from INN i, AVAILABLEDATE ad, AMENITY a where i.inn_no=ad.inn_no and i.inn_no=a.inn_no and i.inn_area 
-	like '%' || #{address} || '%' and i.inn_acceptable_no >= #{acceptableNo} and i.inn_price between #{minPrice} and #{maxPrice} 
-	and ad.availabledate_st<=#{startDate} and ad.availabledate_end >=#{endDate})
-	where amenity_item in ]]>
-	<foreach item="item" collection="amenityItems" open="(" separator="," close=")">
+	<select id="selectInnByWordAndAcceptNoAndDateWithPriceFilter" parameterType="fvo" resultType="ivo" resultMap="innResult">
+		<![CDATA[select inn_no,inn_name, inn_area, inn_address, inn_acceptable_no, inn_price, inn_type, count(*) from (select *
+from (select i.inn_no, i.inn_name, i.inn_area,i.inn_address,i.inn_type,i.inn_acceptable_no,i.inn_price,i.inn_availability,i.member_id,ad.availabledate_st,ad.availabledate_end, a.amenity_item from INN i, AVAILABLEDATE ad, AMENITY a where i.inn_no=ad.inn_no and i.inn_no=a.inn_no and i.inn_area like '%' || #{searchWord} || '%' and i.inn_acceptable_no >= #{searchPeopleNo} and ad.availabledate_st<=#{searchStartDate} and ad.availabledate_end >=#{searchEndDate} and i.inn_price between #{minPrice} and #{maxPrice})]]>
+where amenity_item in
+		<foreach item="item" collection="amenityItems" open="(" separator="," close=")">
 			#{item}
 		</foreach>
-	) group by inn_no,inn_name, inn_area, inn_acceptable_no, inn_price, 
-	inn_type having count(*)=#{amenityCnt}))where page = #{pageNo}
+		) group by inn_no,inn_name, inn_area, inn_address, inn_acceptable_no, inn_price, inn_type having count(*)=#{amenityCnt}
 	</select>
-		
-		
-		
-		<select id="getTotalSearchingCountWithDateAndPriceAndAmenity" parameterType="hashmap" resultType="int">
-	<![CDATA[select count(*) from(select count(*) from (select *
-	from (select i.inn_no, i.inn_name, i.inn_area,i.inn_address,i.inn_type,i.inn_acceptable_no,
-	i.inn_price,i.inn_availability,i.member_id,ad.availabledate_st,ad.availabledate_end, a.amenity_item 
-	from INN i, AVAILABLEDATE ad, AMENITY a where i.inn_no=ad.inn_no and i.inn_no=a.inn_no and i.inn_area 
-	like '%' ||  #{address} || '%' and i.inn_acceptable_no >= #{acceptableNo} and ad.availabledate_st<=#{startDate} 
-	and ad.availabledate_end >=#{endDate}]]>
-	<if test="minPrice!=null and maxPrice!=null">
-		 and i.inn_price between #{minPrice} and #{maxPrice}
-	</if>
-	)where amenity_item in 
-	<foreach item="item" collection="amenityItems" open="(" separator="," close=")">
-			#{item}
-	</foreach>
-	) group by inn_no,inn_name, inn_area, inn_acceptable_no, inn_price, inn_type having count(*)=#{amenityCnt})
-	</select>	
-	
 </mapper>
  
  
