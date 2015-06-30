@@ -298,7 +298,7 @@
 							</c:when>
 							<c:when test="${(requestScope.VOMap.innVO.innAvailability =='Y' || requestScope.VOMap.innVO.innAvailability =='N')&&sessionScope.mvo.memberId == null}">
 							<input type="button"
-						     	class="btn btn-danger btn-lg col-sm-12 input-lg" value="로그인 후 이용하세요!." disabled="disabled">
+						     	class="btn btn-danger btn-lg col-sm-12 input-lg" value="로그인 후 이용하세요!" disabled="disabled">
 							</c:when>
 							<c:when test="${requestScope.VOMap.innVO.memberId == sessionScope.mvo.memberId}">
 								<input type="button"
@@ -333,6 +333,22 @@
 				<div class="col-md-12">
 					<form class="form-horizontal text-center" role="form">
 
+				<input type="hidden" id="amelist" value="${requestScope.VOMap.ameList}">	
+				<table class="table table-condensed ">
+				
+				<td>무선 인터넷</td> <td>TV</td><td>부엌</td><td>가족/어린이 환영</td><td>건조기</td><td>구급상자</td><td>난방</td><td>도어맨</td><td>무료 주차 포함</td><td>무료 헬스장</td>
+				</tr>
+				<tr>
+				<td>샴푸</td><td>세탁기</td><td>소화기</td><td>수영장</td><td>실내 벽난로</td><td>아침식사</td><td>안전 카드</td><td>애완동물 입실 가능</td><td>에어콘</td><td>엘리베이터</td>
+				</tr>
+				<tr>
+				<td>욕조</td><td>이벤트/행사 가능</td><td>인터넷</td><td>일산화탄소 탐지기</td><td>초인종/인터폰</td><td>케이블 TV</td><td>필수품목</td><td>화재 감지기</td><td>휠체어 사용 가능</td><td>흡연가능</td>
+				</tr>
+	
+				</table>
+		
+			
+<br><br><br>
 						<div class="form-group">
 							<div class="col-sm-2">
 								<label for="inputEmail3" class="control-label input-lg">주소</label>

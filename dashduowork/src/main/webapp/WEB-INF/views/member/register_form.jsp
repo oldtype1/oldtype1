@@ -42,6 +42,10 @@
 				$("#regCancel").click(function() {
 					location.href = "home.do";
 				});
+				$("#regForm").submit(function(){
+					if(!confirm("아이디는 한 번 결정하시면 변경이 불가능합니다.\n회원가입 하시겠습니까?"))
+						return false;
+				});
 			});
 </script>
 

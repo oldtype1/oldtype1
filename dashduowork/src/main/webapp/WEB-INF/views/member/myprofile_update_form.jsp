@@ -48,7 +48,7 @@
                          <div class="form-group">
                              <label class="control-label" for="exampleInputEmail1">Email address</label>
                              <input class="form-control" id="exampleInputEmail1"
-                             placeholder="${requestScope.memberInfo.memberId}" type="text" name="memberId" value="${requestScope.memberInfo.memberId}">
+                             placeholder="${requestScope.memberInfo.memberId}" type="text" name="memberId" value="${requestScope.memberInfo.memberId}" readonly="readonly">
                          </div>
                          <div class="form-group">
                              <label class="control-label" for="exampleInputPassword1">Password</label>

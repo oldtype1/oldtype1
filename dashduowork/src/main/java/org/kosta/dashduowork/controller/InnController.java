@@ -333,12 +333,14 @@ public class InnController {
 		ProfilePicVO pvo=innService.selectByProfilePic(ivo.getMemberId());
 		AvailableDateVO avo = innService.selectByAvailableDateInnNo(innNo);
 		CommentListVO covo =innService.selectByCommemtInnNo(innNo, pageNo);
+		List<AmenityVO> amenityList = innService.selectAmenity(innNo);
 		System.out.println("컨트롤러cvo "+covo);
 	
 		map.put("covo", covo);
 		map.put("picList", picList);
 		map.put("pvo", pvo);
 		map.put("avo", avo);
+		map.put("ameList", amenityList);
 		model.addAttribute("VOMap", map);
 		
 		int count= innService.selectInnRating(innNo2); //별점
