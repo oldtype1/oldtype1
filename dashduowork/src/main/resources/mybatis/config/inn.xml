@@ -264,7 +264,7 @@ inn_price=#{innPrice}, inn_info=#{innInfo} where inn_no=#{innNo}
 		where id=#{id}
 	</update> -->
 	<!-- 6/25 검색 추가, 동적쿼리 사용 검색 -->
-	<select id="selectInnByWordAndAcceptNo" parameterType="fvo" resultType="ivo" resultMap="innResult">
+	<!-- <select id="selectInnByWordAndAcceptNo" parameterType="fvo" resultType="ivo" resultMap="innResult">
 		select distinct inn_no, inn_name, inn_area, inn_address, inn_acceptable_no, inn_price, inn_type
 			from (select i.inn_no, i.inn_name, i.inn_area,i.inn_address,i.inn_type,i.inn_acceptable_no,i.inn_price,i.inn_availability,i.member_id,ad.availabledate_st,ad.availabledate_end, a.amenity_item from INN i, AVAILABLEDATE ad, AMENITY a where i.inn_no=ad.inn_no and i.inn_no=a.inn_no and i.inn_area like '%' ||  #{searchWord} || '%' and i.inn_acceptable_no >= #{searchPeopleNo}
 			<if test="minPrice!=null and maxPrice!=null">
@@ -279,7 +279,59 @@ inn_price=#{innPrice}, inn_info=#{innInfo} where inn_no=#{innNo}
 				 and i.inn_price between #{minPrice} and #{maxPrice}
 			</if>
 			)
+	</select> -->
+	<!-- 6/25 검색 추가, 동적쿼리 사용 검색 -->
+	<select id="selectInnByWordAndAcceptNo" parameterType="hashmap" resultType="ivo" resultMap="innResult">
+		select inn_no, inn_name, inn_area, inn_acceptable_no, inn_price, inn_type from
+		(select inn_no, inn_name, inn_area, inn_acceptable_no, inn_price, inn_type, ceil(rownum/4) as page
+		from (select distinct inn_no, inn_name, inn_area, inn_acceptable_no, inn_price, inn_type
+		from (select i.inn_no, i.inn_name, i.inn_area,i.inn_address,i.inn_type,i.inn_acceptable_no,i.inn_price,
+		i.inn_availability,i.member_id,ad.availabledate_st,ad.availabledate_end, a.amenity_item from INN i, 
+		AVAILABLEDATE ad, AMENITY a where i.inn_no=ad.inn_no and i.inn_no=a.inn_no and i.inn_area 
+		like '%' ||  #{address} || '%' and i.inn_acceptable_no >= #{acceptableNo}
+			 <if test="minPrice!=null and maxPrice!=null">    
+				 and i.inn_price between #{minPrice} and #{maxPrice} 
+			</if>
+			)))where page =#{pageNo}
 	</select>
+	
+	<select id="getTotalSearchingCountWithNoDate" parameterType="hashmap" resultType="int">
+			select count(distinct inn_no) from(select i.inn_no,i.inn_name,i.inn_area,i.inn_address,i.inn_type,i.inn_acceptable_no, 
+		i.inn_price,i.inn_info,i.inn_availability,i.member_id, av.availabledate_st, av.availabledate_end from inn i, AVAILABLEDATE av, amenity a
+		where i.inn_no=av.inn_no and i.inn_no=a.inn_no and i.inn_area like '%' ||  #{address} || '%' and i.inn_acceptable_no>=#{acceptableNo}
+		<if test="minPrice!=null and maxPrice!=null">
+				 and i.inn_price between #{minPrice} and #{maxPrice}
+			</if>
+			)	
+		</select>
+	
+	<!-- 기본+날짜 -->
+	<select id="selectInnByWordAndAcceptNoAndDate" parameterType="hashmap" resultType="ivo" resultMap="innResult">
+		<![CDATA[select inn_no, inn_name, inn_area, inn_acceptable_no, inn_price, inn_type from
+		(select inn_no, inn_name, inn_area, inn_acceptable_no, inn_price, inn_type, ceil(rownum/4) as page
+		from (select distinct inn_no, inn_name, inn_area, inn_acceptable_no, inn_price, inn_type
+		from (select i.inn_no, i.inn_name, i.inn_area,i.inn_address,i.inn_type,i.inn_acceptable_no,i.inn_price,
+		i.inn_availability,i.member_id,ad.availabledate_st,ad.availabledate_end, a.amenity_item from INN i, 
+		AVAILABLEDATE ad, AMENITY a where i.inn_no=ad.inn_no and i.inn_no=a.inn_no and i.inn_area 
+		like '%' ||  #{address} || '%' and i.inn_acceptable_no >= #{acceptableNo} 
+		and ad.availabledate_st<=#{startDate} and ad.availabledate_end >=#{endDate}]]>
+			 <if test="minPrice!=null and maxPrice!=null">    
+				 and i.inn_price between #{minPrice} and #{maxPrice} 
+			</if>
+			)))where page =#{pageNo}
+	</select>
+
+	<select id="getTotalSearchingCountWithDate" parameterType="hashmap" resultType="int">
+      <![CDATA[select count(distinct inn_no) from(select i.inn_no,i.inn_name,i.inn_area,i.inn_address,i.inn_type,i.inn_acceptable_no, 
+      i.inn_price,i.inn_info,i.inn_availability,i.member_id, av.availabledate_st, av.availabledate_end from inn i, AVAILABLEDATE av, amenity a
+      where i.inn_no=av.inn_no and i.inn_no=a.inn_no and i.inn_area like '%' ||  #{address} || '%' and i.inn_acceptable_no>=#{acceptableNo} 
+      and av.availabledate_st<=#{startDate} and av.availabledate_end >=#{endDate}]]>
+      <if test="minPrice!=null and maxPrice!=null">
+             and i.inn_price between #{minPrice} and #{maxPrice}
+         </if>
+         )   
+      </select>
+	
 	
 		<select id="getInnByInnNo" parameterType="int" resultType="ivo" resultMap="innResult">
 	select inn_no, inn_name, inn_area, inn_address, inn_type, inn_price, inn_info from inn where inn_no=#{value}

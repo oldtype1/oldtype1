@@ -465,28 +465,73 @@ public int selectPeopleNum(int innNo2) {
 ///별점 비즈니스 6/29 끝
 
 	// 6/25 검색 메서드 추가
+//	@Override
+//	public InnListVO findInnByWordAndAcceptNoAndDate(FilterVO fvo){
+//		InnListVO innListVO=new InnListVO();
+//		List<InnVO> innList=null;
+//		if(fvo.getSearchStartDate()=="" || fvo.getSearchEndDate()==""){
+//			innList=innDAO.selectInnByWordAndAcceptNo(fvo);
+//		}else{
+//			innList=innDAO.selectInnByWordAndAcceptNoAndDate(fvo);
+//		}
+//		for (int i=0;i<innList.size();i++) {
+//			int innNo=innList.get(i).getInnNo();
+//			innList.get(i).setInnMainPic(innPicCompDAO.getMyPicList(innNo));
+//		}
+//		innListVO.setInnList(innList);
+//		return innListVO;
+//	}
 	@Override
-	public InnListVO findInnByWordAndAcceptNoAndDate(FilterVO fvo){
-		InnListVO innListVO=new InnListVO();
+	public InnListVO findInnByWordAndAcceptNoAndDate(String pageNo, FilterVO fvo){
+		int pn=1;
+		if(pageNo!=null){
+			pn=Integer.parseInt(pageNo);
+			System.out.println(pn+" 이거는 페이징넘버하는곳");
+		}
+		HashMap<String, Object> param = new HashMap<String,Object>();
+		param.put("pageNo",Integer.toString(pn));
+		param.put("address", fvo.getSearchWord());
+		param.put("acceptableNo", fvo.getSearchPeopleNo());
+		param.put("startDate",fvo.getSearchStartDate());
+		param.put("endDate",fvo.getSearchEndDate());
+		param.put("minPrice", fvo.getMinPrice());
+		param.put("maxPrice", fvo.getMaxPrice());
+		param.put("amenityItems", fvo.getAmenityItems());
+		param.put("amenityCnt", Integer.toString(fvo.getAmenityCnt()));
+		InnListVO innListVO=new InnListVO(); //페이지 넘버랑 받은 리스트들 저장할 리스트
 		List<InnVO> innList=null;
+		int total = 0;
 		if(fvo.getSearchStartDate()=="" || fvo.getSearchEndDate()==""){
-			innList=innDAO.selectInnByWordAndAcceptNo(fvo);
+			if(fvo.getMinPrice()==""){ // 하... 
+				param.put("minPrice", null);
+			}
+			if(fvo.getMaxPrice()==""){
+				param.put("maxPrice", null);
+			}
+			innList=innDAO.selectInnByWordAndAcceptNo(param);
+			total = innDAO.getTotalSearchingCountWithNoDate(param);
 		}else{
-			innList=innDAO.selectInnByWordAndAcceptNoAndDate(fvo);
+			innList=innDAO.selectInnByWordAndAcceptNoAndDate(param);
+			total = innDAO.getTotalSearchingCountWithDate(param);
 		}
 		for (int i=0;i<innList.size();i++) {
 			int innNo=innList.get(i).getInnNo();
 			innList.get(i).setInnMainPic(innPicCompDAO.getMyPicList(innNo));
 		}
+		PagingBean pagingBean = new PagingBean(total, pn);
 		innListVO.setInnList(innList);
-		return innListVO;
+		return new InnListVO(innList,pagingBean);
 	}
 	@Override
 	public InnListVO findInnByWordAndAcceptNoAndDateWithPrice(FilterVO fvo){
 		InnListVO innListVO=new InnListVO();
 		List<InnVO> innList=null;
 		if(fvo.getAmenityItems()==null){
-			innListVO=findInnByWordAndAcceptNoAndDate(fvo);
+			/*if(pageNo!=null){
+				pn=Integer.parseInt(pageNo);
+				System.out.println(pn+" 이거는 페이징넘버하는곳");
+			}*/
+			innListVO=findInnByWordAndAcceptNoAndDate("1",fvo);
 			innList=innListVO.getInnList();
 		}else if(fvo.getSearchStartDate()=="" || fvo.getSearchEndDate()==""){
 			innList=innDAO.selectInnByWordAndAcceptNoWithPrice(fvo);
