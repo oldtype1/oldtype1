@@ -1,11 +1,7 @@
 package org.kosta.dashduowork.aop.common;
 
 import java.util.HashMap;
-<<<<<<< HEAD
 import java.util.List;
-=======
->>>>>>> branch 'master' of https://github.com/oldtype1/oldtype1.git
-
 import javax.annotation.Resource;
 
 import org.aspectj.lang.ProceedingJoinPoint;
