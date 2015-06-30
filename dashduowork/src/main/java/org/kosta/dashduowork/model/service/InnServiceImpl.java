@@ -279,13 +279,18 @@ public class InnServiceImpl implements InnService {
 	public void updateInnEtc(AmenityVO avo, AvailableDateVO avvo) {
 		System.out.println("InnServiceImple ---Amenity와 AvailableDate"+avo+avvo);
 		String innNo = Integer.toString(avo.getInnNo());
-		amenityDAO.delete(innNo);
-		for(int i=0; i<avo.getAmenityItems().size(); i++){
-	    	  AmenityVO vo = new AmenityVO();
-	    	  vo.setInnNo(avo.getInnNo());
-	    	  vo.setAmenityItem(avo.getAmenityItems().get(i));
-	    	  amenityDAO.register(vo);
-	      }
+	
+		
+		if(avo.getAmenityItems() != null){
+			amenityDAO.delete(innNo);
+			for(int i=0; i<avo.getAmenityItems().size(); i++){
+		    	  AmenityVO vo = new AmenityVO();
+		    	  vo.setInnNo(avo.getInnNo());
+		    	  vo.setAmenityItem(avo.getAmenityItems().get(i));
+		    	  amenityDAO.register(vo);
+		      }
+		}
+		
 		availableDateDAO.update(avvo);
 	}
 	@Override
@@ -464,6 +469,7 @@ public int selectPeopleNum(int innNo2) {
 }
 ///별점 비즈니스 6/29 끝
 
+<<<<<<< HEAD
 	// 6/25 검색 메서드 추가
 //	@Override
 //	public InnListVO findInnByWordAndAcceptNoAndDate(FilterVO fvo){
@@ -521,7 +527,17 @@ public int selectPeopleNum(int innNo2) {
 		PagingBean pagingBean = new PagingBean(total, pn);
 		innListVO.setInnList(innList);
 		return new InnListVO(innList,pagingBean);
+=======
+// 6/25 검색 메서드 추가
+@Override
+public InnListVO findInnByWordAndAcceptNoAndDate(String pageNo, FilterVO fvo){
+	int pn=1;
+	if(pageNo!=null){
+		pn=Integer.parseInt(pageNo);
+		System.out.println(pn+" 이거는 페이징넘버하는곳");
+>>>>>>> branch 'master' of https://github.com/oldtype1/oldtype1.git
 	}
+<<<<<<< HEAD
 	@Override
 	public InnListVO findInnByWordAndAcceptNoAndDateWithPrice(FilterVO fvo){
 		InnListVO innListVO=new InnListVO();
@@ -537,14 +553,113 @@ public int selectPeopleNum(int innNo2) {
 			innList=innDAO.selectInnByWordAndAcceptNoWithPrice(fvo);
 		}else{
 			innList=innDAO.selectInnByWordAndAcceptNoAndDateWithPrice(fvo);
+=======
+	HashMap<String, Object> param = new HashMap<String,Object>();
+	param.put("pageNo",Integer.toString(pn));
+	param.put("address", fvo.getSearchWord());
+	param.put("acceptableNo", fvo.getSearchPeopleNo());
+	param.put("startDate",fvo.getSearchStartDate());
+	param.put("endDate",fvo.getSearchEndDate());
+	param.put("minPrice", fvo.getMinPrice());
+	param.put("maxPrice", fvo.getMaxPrice());
+	param.put("amenityItems", fvo.getAmenityItems());
+	param.put("amenityCnt", Integer.toString(fvo.getAmenityCnt()));
+	InnListVO innListVO=new InnListVO(); //페이지 넘버랑 받은 리스트들 저장할 리스트
+	List<InnVO> innList=null;
+	int total = 0;
+	if(fvo.getSearchStartDate()=="" || fvo.getSearchEndDate()==""){
+		if(fvo.getMinPrice()==""){ // 하... 
+			param.put("minPrice", null);
+>>>>>>> branch 'master' of https://github.com/oldtype1/oldtype1.git
 		}
-		for (int i=0;i<innList.size();i++) {
-			int innNo=innList.get(i).getInnNo();
-			innList.get(i).setInnMainPic(innPicCompDAO.getMyPicList(innNo));
+		if(fvo.getMaxPrice()==""){
+			param.put("maxPrice", null);
 		}
-		innListVO.setInnList(innList);
-		return innListVO;
+		System.out.println("얘가 문제네");
+		System.out.println("==========InnServiceImpl영역으로 들어옴========");
+		System.out.println("InnServiceImpl에서의 pageNo : "+ pn);		
+		System.out.println("날짜안건드렸어요.");
+		System.out.println("이제 " + param +" 을 가지고 들어갈거야");
+		innList=innDAO.selectInnByWordAndAcceptNo(param);
+		System.out.println("InnServiceImpl인데요, 이제 total함수로 들어갈순간이에요. ");
+		total = innDAO.getTotalSearchingCountWithNoDate(param);
+	}else{
+		System.out.println("==========InnServiceImpl영역으로 들어옴========");
+		System.out.println("InnServiceImpl에서의 pageNo : "+ pn);		
+		System.out.println("날짜 건드렸어요.");
+		System.out.println("이제 " + param +" 을 가지고 들어갈거야");
+		innList=innDAO.selectInnByWordAndAcceptNoAndDate(param);
+		System.out.println("InnServiceImpl인데요, 이제 total함수로 들어갈순간이에요. ");
+		total = innDAO.getTotalSearchingCountWithDate(param);
 	}
+	for (int i=0;i<innList.size();i++) {
+		int innNo=innList.get(i).getInnNo();
+		innList.get(i).setInnMainPic(innPicCompDAO.getMyPicList(innNo));
+	}
+	System.out.println("===========다시 InnServiceImpl로 왔어요=========");
+	System.out.println("방금 당신이 검색한것들의 총 갯수 리스트죠. total은 : "+total);
+	PagingBean pagingBean = new PagingBean(total, pn);
+	innListVO.setInnList(innList);
+	System.out.println("페이징마다 보여줄 리스트 목록들 : "+ innListVO.getInnList());
+	System.out.println("한페이지에 보여줄 목록 갯수! 5이상이면 5여야해 5개 보여주는거니까 : " + innListVO.getInnList().size());
+	return new InnListVO(innList,pagingBean);
+}
+
+
+
+@Override
+public InnListVO findInnByWordAndAcceptNoAndDateWithPrice(String pageNo, FilterVO fvo){
+	int pn=1;
+	if(pageNo!=null){
+		pn=Integer.parseInt(pageNo);
+		System.out.println(pn+" 이거는 페이징넘버하는곳");
+	}
+	HashMap<String,Object> param = new HashMap<String,Object>();
+	param.put("pageNo",Integer.toString(pn));
+	param.put("address", fvo.getSearchWord());
+	param.put("acceptableNo", fvo.getSearchPeopleNo());
+	param.put("startDate",fvo.getSearchStartDate());
+	param.put("endDate",fvo.getSearchEndDate());
+	param.put("minPrice", fvo.getMinPrice());
+	param.put("maxPrice", fvo.getMaxPrice());
+	param.put("amenityItems", fvo.getAmenityItems());
+	param.put("amenityCnt", Integer.toString(fvo.getAmenityCnt()));
+	InnListVO innListVO=new InnListVO(); //페이지 넘버랑 받은 리스트들 저장할 리스트
+	List<InnVO> innList=null;
+	int total = 0;
+	if(fvo.getAmenityItems()==null){
+		innListVO=findInnByWordAndAcceptNoAndDate(Integer.toString(pn),fvo);
+		innList=innListVO.getInnList();
+	}else if(fvo.getSearchStartDate()=="" || fvo.getSearchEndDate()=="" || fvo.getSearchStartDate()==null || fvo.getSearchEndDate()==null ){
+		System.out.println("==========InnServiceImpl ajax영역으로 들어옴========");
+		System.out.println("InnServiceImpl에서의 pageNo : "+ pn);		
+		System.out.println("날짜안건드렸어요.");
+		System.out.println("이제 " + param +" 을 가지고 들어갈거야");
+		innList=innDAO.selectInnByWordAndAcceptNoWithPrice(param);
+		System.out.println("InnServiceImpl인데요, 이제 total함수로 들어갈순간이에요. ");
+		total = innDAO.getTotalSearchingCountWithNoDateAndPriceAndAmenity(param);			
+	}else{
+		System.out.println("==========InnServiceImpl ajax영역으로 들어옴========");
+		System.out.println("InnServiceImpl에서의 pageNo : "+ pn);		
+		System.out.println("날짜 건드렸어요.");
+		System.out.println("이제 " + param +" 을 가지고 들어갈거야");
+		innList=innDAO.selectInnByWordAndAcceptNoAndDateWithPrice(param);
+		System.out.println("InnServiceImpl인데요, 이제 total함수로 들어갈순간이에요. ");
+		total = innDAO.getTotalSearchingCountWithDateAndPriceAndAmenity(param);
+	}
+	for (int i=0;i<innList.size();i++) {
+		int innNo=innList.get(i).getInnNo();
+		innList.get(i).setInnMainPic(innPicCompDAO.getMyPicList(innNo));
+	}
+	System.out.println("===========다시 InnServiceImpl ajax로 왔어요=========");
+	System.out.println("방금 당신이 검색한것들의 총 갯수 리스트죠. total은 : "+total);
+	PagingBean pagingBean = new PagingBean(total, pn);
+	innListVO.setInnList(innList);
+	System.out.println("페이징마다 보여줄 리스트 목록들 : "+ innListVO.getInnList());
+	System.out.println("당연히 rowNum이니까 5여야 해요 아니면 틀린거 : " + innListVO.getInnList().size());
+	return new InnListVO(innList,pagingBean);
+}
+	
 	@Override
 	public InnVO getInnByInnNo(int innNo) {
 		return innDAO.getInnByInnNo(innNo);
