@@ -70,11 +70,21 @@ public class InnController {
 	@Resource(name="viewPath")
 	private String viewPath;
 	
+	/**
+	 *  코드 제작 : 은수, 정은
+	 *  숙소 등록 메서드로서 
+	 * @param request
+	 * @param ivo
+	 * @param ipvo
+	 * @param avo
+	 * @param avvo
+	 * @return
+	 */
 	@Transactional
 	@RequestMapping(value = "inn_register.do", method = RequestMethod.POST)
 	public String register(HttpServletRequest request, InnVO ivo,
 			InnPicCompVO ipvo, AmenityVO avo, AvailableDateVO avvo) {
-		System.out.println("Inn register start....");
+		System.out.println("Inn register start...."); 
 		List<MultipartFile> file = ipvo.getFile();
 		System.out.println("notice");
 		//세션이 없을때 처리
@@ -333,12 +343,14 @@ public class InnController {
 		ProfilePicVO pvo=innService.selectByProfilePic(ivo.getMemberId());
 		AvailableDateVO avo = innService.selectByAvailableDateInnNo(innNo);
 		CommentListVO covo =innService.selectByCommemtInnNo(innNo, pageNo);
+		List<AmenityVO> amenityList = innService.selectAmenity(innNo);
 		System.out.println("컨트롤러cvo "+covo);
 	
 		map.put("covo", covo);
 		map.put("picList", picList);
 		map.put("pvo", pvo);
 		map.put("avo", avo);
+		map.put("ameList", amenityList);
 		model.addAttribute("VOMap", map);
 		
 		int count= innService.selectInnRating(innNo2); //별점
