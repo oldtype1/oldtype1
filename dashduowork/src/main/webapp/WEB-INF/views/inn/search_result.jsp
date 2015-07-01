@@ -8,48 +8,11 @@ font-weight: bold;opacity: 0.7; filter: alpha(opacity=60);background-color: #C6C
 </style>
 <script src="https://maps.googleapis.com/maps/api/js?sensor=false"></script> 
 <script>
+
 function initialize() {
-	var geocoder = new google.maps.Geocoder();
-	var addr = $("#local").val();
-	var lat = "";
-	var lng = "";
-	geocoder.geocode({
-		'address' : addr
-	},
-	function(results, status) {
-		if (results != "") {
-			var location = results[0].geometry.location;
-			lat = location.lat();
-			lng = location.lng();
-			var latlng = new google.maps.LatLng(lat, lng);
-			var myOptions = {
-				zoom : 16,
-				center : latlng,
-				mapTypeControl : true,
-				mapTypeId : google.maps.MapTypeId.ROADMAP
-			};
-			
-			var map = new google.maps.Map(document
-					.getElementById("map_canvas"), myOptions);	
-			
-			var marker = new google.maps.Marker({ 
-				  position: latlng, 
-				  map: map, 
-				  title: "검색한키워드"//마커에 올렸을때 나타나는 내용
-				}); 
-			
-			google.maps.event.addListener(marker, 'mouseover', function() { 
-				var infowindow = new google.maps.InfoWindow( 
-				            { content: addr, 
-				              size: new google.maps.Size(100,100) 
-				            })
-				infowindow.open(map, marker);
-				});		
-			
-		}else
-			$("#map_canvas").html("위도와 경도를 찾을 수 없습니다.");
-	})
+	mapping($("#innname").val(),$("#innarea").val(),$("#innaddress").val());	
 }
+
  function mapping(innName,innAddress,detailAddress){
 	var geocoder = new google.maps.Geocoder();
 	var addr = innAddress+" "+detailAddress;
@@ -65,18 +28,20 @@ function initialize() {
 			lng = location.lng();
 			var latlng = new google.maps.LatLng(lat, lng);
 			var myOptions = {
-				zoom : 16,
+				zoom : 15,
 				center : latlng,
 				mapTypeControl : true,
 				mapTypeId : google.maps.MapTypeId.ROADMAP
 			};
 			var map = new google.maps.Map(document
-					.getElementById("map_canvas"), myOptions);			
+					.getElementById("map_canvas"), myOptions);		
+			
 			var marker = new google.maps.Marker({ 
 				  position: latlng, 
 				  map: map, 
 				  title: "검색한 숙소"//마커에 올렸을때 나타나는 내용
 				}); 
+			
 			google.maps.event.addListener(marker, 'mouseover', function() { 
 				var infowindow = new google.maps.InfoWindow( 
 				            { content: innName, 
@@ -87,7 +52,6 @@ function initialize() {
 		}else
 			$("#map_canvas").html("위도와 경도를 찾을 수 없습니다.");
 	})
-//클릭할때 마다 마커를 찍는다.
 } 
 
 $(document).ready(function(){
@@ -171,13 +135,13 @@ $(function() {
 							}
 							tableInfo+="<td class=photo_main><a href='inn_in_show.do?innNo="+info.innNo+"'>";
 							tableInfo+="<img class='img-rounded' src='"+info.innMainPic.filePath+"' height='320' width='350'><br>"+info.innName+"</a>";
-							tableInfo+="<span class='photo_main_up' style='width:120px;'>₩"+info.innPrice+"</span>/ "+info.innType;
-							tableInfo+="<a href='#'><img src='${initParam.root }/img/map.jpg' onclick='mapping("+info.innName+","+info.innArea+" ,"+info.innAddress+")'></a></td>";
-							/* if(info.innMainPic==null){
-								tableInfo+="<tr><td>"+info.innNo+"</td><td><img class='img-rounded' src='${initParam.root}img/no_img.gif' height='150' width='150'></td><td><a href='inn_in_show.do?innNo="+info.innNo+"'>"+info.innName+"</td><td>"+info.innArea+"</td><td>"+info.innType+"</td><td>"+info.acceptableNo+"</td><td>"+info.innPrice+"</td></tr>";
-							}else{
-								tableInfo+="<tr><td>"+info.innNo+"</td><td><img class='img-rounded' src='"+info.innMainPic.filePath+"' height='150' width='150'></td><td><a href='inn_in_show.do?innNo="+info.innNo+"'>"+info.innName+"</td><td>"+info.innArea+"</td><td>"+info.innType+"</td><td>"+info.acceptableNo+"</td><td>"+info.innPrice+"</td></tr>";
-							} */
+							tableInfo+="<span class='photo_main_up' style='width:100px;'>"+info.innPrice+"</span>/ "+info.innType;							
+							
+							tableInfo+="<img  class='mapIcon' src='${initParam.root }/img/map.jpg'>"; 							
+						 	tableInfo+="<input type='hidden' name='innName' value='"+info.innName+"'>";
+							tableInfo+="<input type='hidden' name='innArea' value='"+info.innArea+"'>";
+							tableInfo+="<input type='hidden' name='innAddress' value='"+info.innAddress+"'></td>"; 
+
 						}); //each
 					}//if
 					else if(innInfoList.innList.length == 0){
@@ -188,6 +152,15 @@ $(function() {
 				}
 			});//ajax
 	    });//mouseup
+	    
+	    //동적으로 생성되는 아이콘의 이벤트 
+	    $("#resultViewSearch").on("mouseover",".mapIcon",function(){
+	    	//alert($(this).next().val());
+	    	var innName=$(this).next().val();
+	    	var innArea=$(this).next().next().val();
+	    	var innAddress=$(this).next().next().next().val();	    	
+	    	mapping(innName,innArea,innAddress);
+	    }); 
 	    
 		$("#checkin, #checkout").datepicker({
 			dateFormat : 'yy-mm-dd'
@@ -211,13 +184,12 @@ $(function() {
 							}
 							tableInfo+="<td class=photo_main><a href='inn_in_show.do?innNo="+info.innNo+"'>";
 							tableInfo+="<img class='img-rounded' src='"+info.innMainPic.filePath+"' height='320' width='350'><br>"+info.innName+"</a>";
-							tableInfo+="<span class='photo_main_up' style='width:120px;'>₩"+info.innPrice+"</span>/ "+info.innType;
-							tableInfo+="<a href='#'><img src='${initParam.root }/img/map.jpg' onclick='mapping('"+info.innName+"','"+info.innArea+"','"+info.innAddress+"')'></a></td>";
-							/* if(info.innMainPic==null){
-								tableInfo+="<tr><td>"+info.innNo+"</td><td><img class='img-rounded' src='${initParam.root}img/no_img.gif' height='150' width='150'></td><td><a href='inn_in_show.do?innNo="+info.innNo+"'>"+info.innName+"</td><td>"+info.innArea+"</td><td>"+info.innType+"</td><td>"+info.acceptableNo+"</td><td>"+info.innPrice+"</td></tr>";
-							}else{
-								tableInfo+="<tr><td>"+info.innNo+"</td><td><img class='img-rounded' src='"+info.innMainPic.filePath+"' height='150' width='150'></td><td><a href='inn_in_show.do?innNo="+info.innNo+"'>"+info.innName+"</td><td>"+info.innArea+"</td><td>"+info.innType+"</td><td>"+info.acceptableNo+"</td><td>"+info.innPrice+"</td></tr>";
-							} */
+							tableInfo+="<span class='photo_main_up' style='width:100px;'>"+info.innPrice+"</span>/ "+info.innType;						
+					
+							tableInfo+="<img  class='mapIcon' src='${initParam.root }/img/map.jpg'>"; 							
+						 	tableInfo+="<input type='hidden' name='innName' value='"+info.innName+"'>";
+							tableInfo+="<input type='hidden' name='innArea' value='"+info.innArea+"'>";
+							tableInfo+="<input type='hidden' name='innAddress' value='"+info.innAddress+"'></td>";
 						}); //each
 					}//if
 					else if(innInfoList.innList.length == 0){
@@ -377,6 +349,13 @@ $(function() {
 <br>
 <br>
 
+<c:forEach var="list" items="${requestScope.innListVO.innList}" end="1">
+<input type="hidden" id="innarea"  value="${list.innArea}">
+<input type="hidden" id="innaddress"  value="${list.innAddress}">
+</c:forEach> 
+<input type="hidden" id="innname"  value=" ${requestScope.filterVO.searchWord}">
+
+<body onload="initialize()"> 
 <div class="section">
 	<div class="container">
 		<div class="row">
@@ -400,7 +379,7 @@ $(function() {
 										 <span class='photo_main_up'  style="width:120px;">₩${list.innPrice}</span>	
 										 / ${list.innType}
 										 <%-- <input type="button" value="위치확인" onclick="mapping('${list.innName}','${list.innArea}' ,'${list.innAddress}')" class="btn btn-default"> --%>
-										 <a href="#"><img src="${initParam.root }/img/map.jpg" onclick="mapping('${list.innName}','${list.innArea}' ,'${list.innAddress}')"></a></td>
+										 <img src="${initParam.root }/img/map.jpg" onmouseover="mapping('${list.innName}','${list.innArea}' ,'${list.innAddress}')"></td>
 									</c:forEach>
 									</tr>
 								</c:otherwise>
@@ -408,12 +387,13 @@ $(function() {
 					</table>
 				</div>
 			</div>
-			<body onload="initialize()"> 
+			
 			 <div id="map_canvas" style="z-index: 3; width:380px; height:800px; float: left;"> </div>
-			 </body>
+			 
 		</div>
 	</div>
 </div>
+</body>
 <div class="section text-center">
         <div class="container">
           <div class="row">
