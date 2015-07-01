@@ -199,7 +199,7 @@ public class MemberController {
     * @param mvo : 가입 페이지에서 멤버 정보를 저장하기 위한 VO 객체, 밸리데이션이 적용되었다.
     * @param result : 밸리데이션 후 오류 판별에 사용되는 객체
     * @return : String \n- member_register_form : 회원가입 시 밸리데이션에 위배되는 상황 발생 시, 회원 가입 폼으로 
-    * 돌려보내고 오류메세지를 표시한다.\n- home : 회원가입에 문제 없을 시 회원가입을 끝내고 홈으로 돌려보낸다.
+    * 돌려보내고 오류메세지를 표시한다.\n- redirect:home : 회원가입에 문제 없을 시 회원가입을 끝내고 홈으로 돌려보낸다. insert 작업이므로 redirect를 사용함
     * @작성자 : 은수, 정은
     * @Method설명 : 회원 가입 메서드. 밸리데이션을 적용하였다.
     */
