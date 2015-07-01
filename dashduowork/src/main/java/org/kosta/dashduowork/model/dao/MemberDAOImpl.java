@@ -19,9 +19,18 @@ public class MemberDAOImpl implements MemberDAO {
 	 * org.kosta.dashduowork.model.dao.MemberDAO#login(org.kosta.dashduowork
 	 * .model.vo.MemberVO)
 	 */
+	
+	/**
+	 * 로그인
+	   * @param vo : 회원정보를 가져오는 객체이다
+	   * @return
+	   * @작성자 : 은수, 정은
+	   * @Method설명 : 회원 로그인 하는 메서드
+	   */
 	@Override
 	public MemberVO login(MemberVO vo) {
-		return (MemberVO) sqlSessionTemplate.selectOne("member.login", vo);
+		//DB의 member정보를 select 하여 입력한 정보와 일치하는 지 확인
+		return (MemberVO) sqlSessionTemplate.selectOne("member.login", vo); 
 	}
 
 	public MemberVO findMemberById(String memberId) {

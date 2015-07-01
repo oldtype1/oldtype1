@@ -7,8 +7,15 @@ import org.kosta.dashduowork.model.vo.ProfilePicVO;
 import Exception.ChildBookTableException;
 
 public interface MemberService {
-
-   public abstract MemberVO login(MemberVO vo);
+	  
+	/**
+	 * 로그인
+	   * @param vo : 회원정보를 가져오는 객체이다
+	   * @return
+	   * @작성자 : 은수, 정은
+	   * @Method설명 : 회원 로그인 하는 메서드
+	   */
+	  public abstract MemberVO login(MemberVO vo);
       public abstract MemberVO findMemberById(String memberId);
       public abstract void updateMemberInfo(MemberVO mvo,ProfilePicVO pvo);
       public abstract void memberSecession(String memberId) throws ChildBookTableException;

@@ -21,9 +21,16 @@ public class MemberServiceImpl implements MemberService {
    /* (non-Javadoc)
     * @see org.kosta.dashduowork.model.service.MemberService#login(org.kosta.dashduowork.model.vo.MemberVO)
     */
+   /**
+    * 로그인
+	   * @param vo : 회원정보를 가져오는 객체이다
+	   * @return
+	   * @작성자 : 은수, 정은
+	   * @Method설명 : 회원 로그인 하는 메서드
+	   */
    @Override
    public MemberVO login(MemberVO vo){
-      return memberDAO.login(vo);
+      return memberDAO.login(vo); //memberDAO에서 login(vo)을 호출
    }
       @Override
       public MemberVO findMemberById(String memberId) {

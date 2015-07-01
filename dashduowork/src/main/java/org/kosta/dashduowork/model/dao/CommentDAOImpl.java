@@ -22,7 +22,7 @@ import org.springframework.stereotype.Repository;
 		@Override
 		public void replyWrite(CommentVO covo) {
 			System.out.println("CommentDAO"+covo);
-			sqlSessionTemplate.insert("comment.replyWrite",covo);
+			sqlSessionTemplate.insert("comment.replyWrite",covo);//댓글 정보를 DB에 insert
 			
 		}
 	/*
@@ -40,7 +40,7 @@ import org.springframework.stereotype.Repository;
 		@Override
 		public void deleteReply(int commentNo) {
 			System.out.println("댓글삭제 dao"+commentNo);
-			sqlSessionTemplate.delete("comment.deleteReply",commentNo);
+			sqlSessionTemplate.delete("comment.deleteReply",commentNo);//댓글 정보를 DB에서 delete
 		}
 
 		@Override
