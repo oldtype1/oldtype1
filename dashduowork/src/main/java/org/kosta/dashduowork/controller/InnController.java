@@ -477,7 +477,7 @@ public class InnController {
 		bvo.setMemberId(mvo.getMemberId());
 		System.out.println(innNo);
 		System.out.println(bvo);
-	
+		// TODO 
 		innService.bookingInn(bvo);
 		List<InnPicCompVO> list=innService.selectByInnNo(innNo);
 		InnPicCompVO innMainPic=list.get(0);

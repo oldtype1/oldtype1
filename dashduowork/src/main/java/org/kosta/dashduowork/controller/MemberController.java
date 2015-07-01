@@ -80,7 +80,7 @@ public class MemberController {
    @RequestMapping("member_myprofile.do")
    public String member_myprofile(String memberId, Model model){
       MemberVO mvo=memberService.findMemberById(memberId);
-     ProfilePicVO pvo = memberService.selectProfilePic(memberId);
+      ProfilePicVO pvo = memberService.selectProfilePic(memberId);
      if(pvo!=null){
       mvo.setProfilePicVO(pvo);
      }
@@ -100,8 +100,7 @@ public class MemberController {
 			return "member_session_fail";
 		}	   
 		MemberVO mvo= (MemberVO)session.getAttribute("mvo");		
-      /*MemberVO mvo = memberService.findMemberById(memberId);*/
-      ProfilePicVO pvo = memberService.selectProfilePic(mvo.getMemberId());
+        ProfilePicVO pvo = memberService.selectProfilePic(mvo.getMemberId());
       if(pvo!=null){
           mvo.setProfilePicVO(pvo);
          }
@@ -190,7 +189,6 @@ public class MemberController {
       // Validation 을 위해 register_form.jsp 에서 사용할 수 있도록 객체를 생성해 전달한다.
       // <form:form action="register.do" commandName="memberVO">
       return new ModelAndView("member_register_form", "memberVO", new MemberVO());
-
    }
 
    /**
@@ -233,20 +231,6 @@ public class MemberController {
 	return info;	
 		}
      
-      /*
-       * @RequestMapping(value="member_register_form.do",method=RequestMethod.GET
-       * ) public ModelAndView registerForm(){ // Validation 을 위해
-       * register_form.jsp 에서 사용할 수 있도록 객체를 생성해 전달한다. //<form:form
-       * action="register.do" commandName="memberVO"> return new
-       * ModelAndView("member_register_form","memberVO",new MemberVO()); }
-       */
-      /*
-       * @RequestMapping(value="register.do",method=RequestMethod.POST) public
-       * String register(@Valid MemberVO memberVO,BindingResult result){
-       * if(result.hasErrors()){ return "member_register_form"; // 유효성 검사에 에러가
-       * 있으면 가입폼으로 다시 보낸다. } return "home";// 문제 없으면 결과 페이지로 이동한다. }
-       */
-
     @RequestMapping(value ="searchPass.do", method=RequestMethod.POST )
 	public String searchPass(MemberVO vo, Model model) {
 	   System.out.println("controller에서 seachPass 실행 : "+vo);
