@@ -135,7 +135,7 @@ $(function() {
 							}
 							tableInfo+="<td class=photo_main><a href='inn_in_show.do?innNo="+info.innNo+"'>";
 							tableInfo+="<img class='img-rounded' src='"+info.innMainPic.filePath+"' height='320' width='350'><br>"+info.innName+"</a>";
-							tableInfo+="<span class='photo_main_up' style='width:100px;'>"+info.innPrice+"</span>/ "+info.innType;							
+							tableInfo+="<span class='photo_main_up' style='width:120px;'>₩"+info.innPrice+"</span>/ "+info.innType;							
 							
 							tableInfo+="<img  class='mapIcon' src='${initParam.root }/img/map.jpg'>"; 							
 						 	tableInfo+="<input type='hidden' name='innName' value='"+info.innName+"'>";
@@ -184,7 +184,7 @@ $(function() {
 							}
 							tableInfo+="<td class=photo_main><a href='inn_in_show.do?innNo="+info.innNo+"'>";
 							tableInfo+="<img class='img-rounded' src='"+info.innMainPic.filePath+"' height='320' width='350'><br>"+info.innName+"</a>";
-							tableInfo+="<span class='photo_main_up' style='width:100px;'>"+info.innPrice+"</span>/ "+info.innType;						
+							tableInfo+="<span class='photo_main_up' style='width:120px;'>₩"+info.innPrice+"</span>/ "+info.innType;						
 					
 							tableInfo+="<img  class='mapIcon' src='${initParam.root }/img/map.jpg'>"; 							
 						 	tableInfo+="<input type='hidden' name='innName' value='"+info.innName+"'>";

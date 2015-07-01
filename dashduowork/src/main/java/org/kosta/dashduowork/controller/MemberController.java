@@ -113,8 +113,7 @@ public class MemberController {
 
  //업데이트 컨트롤러
    @RequestMapping("member_updateInfo.do")
-   public String member_updateInfo(ProfilePicVO pvo,MemberVO mvo, Model model, BindingResult result,
-         HttpServletRequest request) {
+   public String member_updateInfo(ProfilePicVO pvo,MemberVO mvo, Model model, HttpServletRequest request) {
 	   HttpSession session = request.getSession(false);
 			if(session==null||(MemberVO)session.getAttribute("mvo")==null){
 				return "member_session_fail";
@@ -145,9 +144,7 @@ public class MemberController {
       memberService.updateMemberInfo(mvo,pvo);
       MemberVO updateVO = memberService.findMemberById(mvo.getMemberId());
       session.setAttribute("mvo", updateVO);  
-      if (result.hasErrors()) {
-          return "member_myprofile_update_form"; // 유효성 검사에 에러가 있으면 가입폼으로 다시 보낸다.
-       }
+
       return "redirect:member_myprofile.do?memberId="+mvo.getMemberId();      
    }
 

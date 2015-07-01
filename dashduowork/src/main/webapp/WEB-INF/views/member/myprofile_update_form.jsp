@@ -43,27 +43,27 @@
                          <div class="form-group">
                              <label class="control-label" for="exampleInputEmail1">Name</label>
                              <input class="form-control" id="exampleInputEmail1"  placeholder="${requestScope.memberInfo.memberName}"
-                             type="text" name="memberName" value="${requestScope.memberInfo.memberName}">
+                             type="text" name="memberName" value="${requestScope.memberInfo.memberName}" required="required">
                          </div>
                          <div class="form-group">
                              <label class="control-label" for="exampleInputEmail1">Email address</label>
-                             <input class="form-control" id="exampleInputEmail1"
+                             <input class="form-control" id="exampleInputEmail1" 
                              placeholder="${requestScope.memberInfo.memberId}" type="text" name="memberId" value="${requestScope.memberInfo.memberId}" readonly="readonly">
                          </div>
                          <div class="form-group">
                              <label class="control-label" for="exampleInputPassword1">Password</label>
-                             <input class="form-control" id="exampleInputPassword1"
+                             <input class="form-control" required="required" id="exampleInputPassword1"
                              placeholder="${requestScope.memberInfo.memberPass}"value="${requestScope.memberInfo.memberPass}"type="text" name="memberPass">
                          </div>
                          <div class="form-group">
                              <label class="control-label" for="exampleInputEmail1">Phone</label>
-                             <input class="form-control" id="exampleInputEmail1" placeholder="${requestScope.memberInfo.memberTel}" value="${requestScope.memberInfo.memberTel}"
-                             type="text" name="memberTel">
+                             <input required="required" class="form-control" id="exampleInputEmail1" placeholder="${requestScope.memberInfo.memberTel}" value="${requestScope.memberInfo.memberTel}"
+                             type="number" name="memberTel">
                          </div>
                          
                           <div class="form-group">
 							<label for="exampleinputInfo3" class="control-label">은행 / 계좌 번호</label>
-							<select class="form-control" name="memberBank" id="memberBank">
+							<select class="form-control" name="memberBank" id="memberBank" required="required">
                				 <option value="">은행을 선택하세요.</option>
  							 <option value="국민">국민은행</option>
  							 <option value="신한">신한은행</option>
@@ -71,13 +71,13 @@
  					   		  <option value="농협">농협</option>
  					  		  <option value="우체국">우체국</option>
   		       				   </select>
-  						<input type="text" name="memberBankAcount" id="memberBankAcount" placeholder="${requestScope.memberInfo.memberBankAcount}"  
+  						<input type="number" required="required" name="memberBankAcount" id="memberBankAcount" placeholder="${requestScope.memberInfo.memberBankAcount}"  
 						 value="${requestScope.memberInfo.memberBankAcount}" class="form-control">
 						</div>
 			
 					<div class="form-group">
 							<label for="exampleinputInfo3" class="control-label">자기 소개</label>
-							<textarea style="resize: none;" rows="4" cols="50" class="form-control"
+							<textarea required="required" style="resize: none;" rows="4" cols="50" class="form-control"
 								name="memberInfo" placeholder="${requestScope.memberInfo.memberInfo}" >${requestScope.memberInfo.memberInfo}</textarea>
 						</div>
 						

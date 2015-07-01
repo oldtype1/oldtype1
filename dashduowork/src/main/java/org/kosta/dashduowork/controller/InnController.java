@@ -291,21 +291,6 @@ public class InnController {
 		return "redirect:get_mytradelist.do";
 	}
 	/** 끝**/
-	
-	//6/17일 추가(지역명 자동완성)
-	@RequestMapping(value="searchCityAuto.do")
-	@ResponseBody
-	public List<InnVO> findCityAuto(FilterVO fvo) {
-//		System.out.println("컨트롤러에서 FilterVO내용확인인데 에이젝스야 : "+vo); //확인완료
-//		System.out.println(vo.getInnCity()+"가 나와야해");
-		List<InnVO> list=null;
-		list = innService.findInnCityListByInnCityCharacter(fvo);
-		System.out.println("컨트롤러 내용 : "+list);
-		/*for(int i=0;i<list.size();i++){
-			System.out.println(list.get(i).getInnCity() + " searchCity");
-		}	*/
-		return list;
-	}
 
 	@RequestMapping(value="inn_in_show.do")
 	public String inShow(HttpServletRequest request, Model model,CommentListVO cvo, String pageNo){
@@ -561,6 +546,29 @@ public class InnController {
 		return "redirect:inn_in_show.do?innNo="+irv.getInnNo();
 	}
 	
+	
+	//////////////////////////////////////////////////////////
+	//////////////////////////////////////////////////////////
+	// 
+	// 									검색 관련 메서드
+	//
+	//////////////////////////////////////////////////////////
+	//////////////////////////////////////////////////////////
+	//6/17일 추가(지역명 자동완성)
+	/**
+	 * @param fvo : 검색어를 받아오기 위해 사용.
+	 * @return : DB에서 받아온 데이터 리스트를 view에 전달하기 위해 사용.
+	 * @작성자 은식,동원
+	 * @Method 설명 : @ResponseBody 처리하여 입력받은 값에 따른 결과를 실시간으로 view에 전달하는 역할을 하는 메서드.
+	 * 							  view에 전달하는 값은 입력값이 포함된 모든 주소의 리스트
+	 */
+	@RequestMapping(value="searchCityAuto.do")
+	@ResponseBody
+	public List<InnVO> findCityAuto(FilterVO fvo) {
+		List<InnVO> list=null;
+		list = innService.findInnCityListByInnCityCharacter(fvo);
+		return list;
+	}
 	//6/25 검색메서드 추가
 	/**
 	 * @param pageNo : 페이지 넘버를 받아오기 위해 사용. 
@@ -569,14 +577,13 @@ public class InnController {
 	 * @return : tiles-inn.xml에서 경로 설정 -> search_result.jsp로 이동   
 	 * @작성자 은식,동원
 	 * @Method 설명 : 1) 초기화면 숙소 검색 요소 세가지(숙소 지역명 / 숙소 사용 희망일(시작 && 끝) / 숙소 사용 인원수).
-	 * 						    위 세가지 조건에 해당되는 숙소 검색 메서드. 
-	 *                       2) 필터이용 검색에는 페이징을 추가하지 않음.
+	 * 						    	 위 세가지 조건에 해당되는 숙소 검색 메서드. 
+	 *                       	 2) 필터이용 검색에는 페이징을 추가하지 않음.
 	 * 					    
 	 */
 	@RequestMapping(value="searchInnByWordDateNo.do")
-	public String searchByCityDateNo(String pageNo, FilterVO fvo, Model model, HttpServletRequest request){
+	public String searchInnByCityDateNo(String pageNo, FilterVO fvo, Model model){
 		InnListVO innListVO=new InnListVO();
-		System.out.println("컨트롤러에서 fvo 확인 : "+fvo);
 		List<InnVO> list=null;
 		if(fvo.getMinPrice()==null || fvo.getMaxPrice()==null || fvo.getAmenityItems()==null || fvo.getMinPrice()=="" || fvo.getMaxPrice()==""){
 			innListVO=innService.findInnByWordAndAcceptNoAndDate(pageNo, fvo);
@@ -584,47 +591,37 @@ public class InnController {
 			innListVO=innService.findInnByWordAndAcceptNoAndDateWithPrice(fvo);
 		}
 		List<ReportVO> wordlist=reportService.selectReport();
-		System.out.println("InnController 검색어순위 "+wordlist);
-		System.out.println("검색결과 확인 : "+innListVO.getInnList());
 		model.addAttribute("wordlist", wordlist);
 		model.addAttribute("innListVO", innListVO);
 		model.addAttribute("filterVO", fvo);
-//		HttpSession session = request.getSession(false);
-//		MemberVO memberVO = (MemberVO)session.getAttribute("mvo");
-//		System.out.println("searchMemberVO : "+memberVO);
 		return "inn_search_result";
 	}
-	
-	
 	//6/25 검색메서드 추가
 	/**
 	 * @param fvo : 숙소 검색 요구 조건을 받아오기 위해 사용.
 	 * @return InnListVO : ajax로 요청 -> 해당 리스트(기본조건+필터 검색)를 보냄.
 	 * @작성자 은식,동원
 	 * @Method 설명 : 1) 초기화면 숙소 검색 요소 세가지(숙소 지역명 / 숙소 사용 희망일(시작 && 끝) / 숙소 사용 인원수)
-	 *                          에 필터검색 조건을 추가한 메서드(ajax로 보여준다).
-	 *                       2) 필터이용 검색에는 페이징을 추가하지 않음.
+	 *                          	 에 필터검색 조건을 추가한 메서드(ajax로 보여준다).
+	 *                       	 2) 필터이용 검색에는 페이징을 추가하지 않음.
 	 * 					    
 	 */
-		@RequestMapping(value="searchInnByWordDateNoWithFilter.do")
-		@ResponseBody
-		public InnListVO searchInnByWordDateNoWitFilter(FilterVO fvo, Model model, HttpServletRequest request){
-			System.out.println("컨트롤러에서 fvo 확인 : "+fvo);
-			InnListVO innListVO=new InnListVO();
-			List<InnVO> list=null;
-			if(fvo.getMinPrice()==null || fvo.getMaxPrice()==null){
-				innListVO=innService.findInnByWordAndAcceptNoAndDate("1",fvo);
-			}else{//날짜 들어간경우
-				System.out.println("가격 들어옴!");
-				innListVO=innService.findInnByWordAndAcceptNoAndDateWithPrice(fvo);
-			}
-			model.addAttribute("innListVO", innListVO);
-			model.addAttribute("filterVO", fvo);
-//			HttpSession session = request.getSession(false);
-//			MemberVO memberVO = (MemberVO)session.getAttribute("mvo");
-//			System.out.println("searchMemberVO : "+memberVO);
-			return innListVO;
+	@RequestMapping(value="searchInnByWordDateNoWithFilter.do")
+	@ResponseBody
+	public InnListVO searchInnByWordDateNoWithFilter(FilterVO fvo, Model model){
+		InnListVO innListVO=new InnListVO();
+		List<InnVO> list=null;
+		if(fvo.getMinPrice()==null || fvo.getMaxPrice()==null){
+			innListVO=innService.findInnByWordAndAcceptNoAndDate("1",fvo);
+		}else{
+			innListVO=innService.findInnByWordAndAcceptNoAndDateWithPrice(fvo);
 		}
+		model.addAttribute("innListVO", innListVO);
+		model.addAttribute("filterVO", fvo);
+		return innListVO;
+	}
+	
+	
 		@RequestMapping("paymentForm.do")
 		public String paymentForm(int innNo, String memeberId, Model model, BookVO bvo , HttpServletRequest request){
 			HttpSession session=request.getSession(false);
