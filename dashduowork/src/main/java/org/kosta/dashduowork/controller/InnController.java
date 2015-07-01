@@ -653,6 +653,14 @@ public class InnController {
 
 			return"redirect:inn_in_show.do?innNo="+covo.getInnNo();
 		}
+		/**
+		 * 코드 제작 : 은수, 정은
+		 * 상세보기에서 댓글을 삭제하는 메서드이다.
+		 * 자신이 쓴 댓글만 삭제할 수 있다.
+		 * @param request
+		 * @param commentNo : 댓글번호를 받아온다
+		 * @return
+		 */
 		//댓굴삭제
 		@RequestMapping("deleteReply.do")
 		public String deleteReply(HttpServletRequest request, int commentNo){
