@@ -13,11 +13,16 @@ import org.springframework.stereotype.Repository;
 	public class CommentDAOImpl implements CommentDAO {
 		@Resource(name="sqlSessionTemplate")
 		private SqlSessionTemplate sqlSessionTemplate;	
-
+		
+		/**
+		 * @param covo : 페이지에서 댓글 쓴 정보를 담기 위한 그릇이다.
+		 * @작성자 : 은수, 정은
+		 * @Method설명 : 상세보기에 댓글추가하는 메서드
+		 */
 		@Override
 		public void replyWrite(CommentVO covo) {
 			System.out.println("CommentDAO"+covo);
-			sqlSessionTemplate.insert("comment.replyWrite",covo);
+			sqlSessionTemplate.insert("comment.replyWrite",covo);//댓글 정보를 DB에 insert
 			
 		}
 	/*
@@ -27,10 +32,15 @@ import org.springframework.stereotype.Repository;
 			return sqlSessionTemplate.selectList("comment.selectByCommemtInnNo",cvo);
 		}
 	*/
+		/**
+		 * @param commentNo ; 댓글번호를 받아온다
+		 * @작성자 : 은수, 정은
+		 * @Method설명 : 상세보기에서 댓글을 삭제하는 메서드이며  자신이 쓴 댓글만 삭제할 수 있다.
+		 */
 		@Override
 		public void deleteReply(int commentNo) {
 			System.out.println("댓글삭제 dao"+commentNo);
-			sqlSessionTemplate.delete("comment.deleteReply",commentNo);
+			sqlSessionTemplate.delete("comment.deleteReply",commentNo);//댓글 정보를 DB에서 delete
 		}
 
 		@Override

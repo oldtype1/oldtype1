@@ -3,6 +3,7 @@ package org.kosta.dashduowork.controller;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.servlet.ModelAndView;
 
 @Controller
 public class TilesViewController {
@@ -18,5 +19,10 @@ public class TilesViewController {
 	public String showView(@PathVariable String viewId){
 		System.out.println("TilesViewController가 TilesViewResolver로 응답 : "+viewId);
 		return viewId;
+	}
+	@RequestMapping("home.do")
+	public ModelAndView home(){
+		System.out.println("home 응답 : ");
+		return new ModelAndView("home","view","home");
 	}
 }
