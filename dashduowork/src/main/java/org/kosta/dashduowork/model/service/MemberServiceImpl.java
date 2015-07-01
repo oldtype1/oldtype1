@@ -22,7 +22,6 @@ public class MemberServiceImpl implements MemberService {
     * @see org.kosta.dashduowork.model.service.MemberService#login(org.kosta.dashduowork.model.vo.MemberVO)
     */
    /**
-    * 로그인
 	   * @param vo : 회원정보를 가져오는 객체이다
 	   * @return
 	   * @작성자 : 은수, 정은

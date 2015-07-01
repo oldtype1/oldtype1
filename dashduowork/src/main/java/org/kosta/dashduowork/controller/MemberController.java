@@ -36,7 +36,6 @@ public class MemberController {
 	private String viewPath;
 	
 	/**
-	 * 로그인
 	 * @param vo : 회원정보를 가져오는 객체이다
 	 * @param request : 로그인 세션을 받아오기 위해서 썼다
 	 * @return "member_login_fail" -> 로그인 상태가 아니면 이동
@@ -44,6 +43,7 @@ public class MemberController {
 	 * @작성자 : 은수, 정은
 	 * @Method설명 : 회원이 로그인하는 메서드
 	 */
+	//post 방식일때만 로그인가능
    @RequestMapping(value = "login.do", method = RequestMethod.POST)
    public String login(MemberVO vo, HttpServletRequest request) {
       MemberVO mvo = memberService.login(vo); //memberService에서 login(vo)를 호출해 로그인
@@ -60,7 +60,6 @@ public class MemberController {
       }
    }
    /**
-    * 로그아웃
     * @param request : 로그인 세션을 받아오기 위해서 썼다
     * @return "home" -> 로그아웃후 home으로 돌아간다.
     * @작성자 : 은수, 정은
