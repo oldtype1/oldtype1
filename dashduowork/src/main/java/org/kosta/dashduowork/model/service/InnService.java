@@ -73,7 +73,8 @@ public interface InnService {
 	public void ratingInn(InnRatingVO irv,int tradeNo) throws NoInnException;
 	
 	//6/25 검색메서드추가
-	public abstract InnListVO findInnByWordAndAcceptNoAndDate(FilterVO fvo);
+//	public abstract InnListVO findInnByWordAndAcceptNoAndDate(FilterVO fvo);
+	public abstract InnListVO findInnByWordAndAcceptNoAndDate(String pageNo, FilterVO fvo);
 	public abstract InnListVO findInnByWordAndAcceptNoAndDateWithPrice(FilterVO fvo);
 	//윤정 추가
 	public abstract InnVO getInnByInnNo(int innNo);
