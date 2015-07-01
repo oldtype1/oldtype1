@@ -13,7 +13,8 @@ public interface MemberService {
       public abstract void updateMemberInfo(MemberVO mvo,ProfilePicVO pvo);
       public abstract void memberSecession(String memberId) throws ChildBookTableException;
       public abstract String memberPasswordcheck(String memberId);
-      public void memberRegister(MemberVO mvo, ProfilePicVO pvo);
+      public void memberRegister(MemberVO mvo, ProfilePicVO pvo, 
+    		  String viewPath, String uploadPath) throws Exception;
       public abstract ProfilePicVO selectProfilePic(String memberId);
       public abstract String memberIdcheck(String memberId);
       public MemberVO searchPass(MemberVO vo);

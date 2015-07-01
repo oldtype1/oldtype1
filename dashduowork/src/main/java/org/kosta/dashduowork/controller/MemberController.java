@@ -177,46 +177,31 @@ public class MemberController {
 
    }
 
-   // 6/10
+   /**
+    * 
+    * @param pvo : 가입 페이지에서 선택된 사진을 저장하기 위한 VO객체 
+    * @param mvo : 가입 페이지에서 멤버 정보를 저장하기 위한 VO 객체, 밸리데이션이 적용되었다.
+    * @param result : 밸리데이션 후 오류 판별에 사용되는 객체
+    * @return : String \n- member_register_form : 회원가입 시 밸리데이션에 위배되는 상황 발생 시, 회원 가입 폼으로 
+    * 돌려보내고 오류메세지를 표시한다.\n- home : 회원가입에 문제 없을 시 회원가입을 끝내고 홈으로 돌려보낸다.
+    * @작성자 : 은수, 정은
+    * @Method설명 : 회원 가입 메서드. 밸리데이션을 적용하였다.
+    */
    @RequestMapping(value = "member_register.do", method = RequestMethod.POST)
    public String registerMember(ProfilePicVO pvo, @Valid MemberVO mvo,
          BindingResult result) {
-
-      /*
-       * -- 파일 업로드 부분
-       * 
-       * 파일 얻는 메서드 : list.get(i) 을 호출하면 File이 반환 실제 디렉토리로 전송(업로드) 메서드 :
-       * 파일.transferTo(파일객체) ModelAndView 에서 결과 페이지로 업로드한 파일 정보를 문자열배열로 할당해
-       * jsp에서 사용하도록 한다.
-       */
-      System.out.println("mvo : " + mvo);
-      System.out.println("pvo : " + pvo);
-      MultipartFile file = pvo.getFile();
-      // System.out.println(list.get(i).getOriginalFilename().equals(""));
-      String fileName = mvo.getMemberId()+"_"+file.getOriginalFilename();
-
-      System.out.println(file.isEmpty());
-      
-      if(file.getOriginalFilename().equals("")){
-    	  pvo.setFilePath("http://pingendo.github.io/pingendo-bootstrap/assets/user_placeholder.png");
-      }
-      else if (!fileName.equals("")) {
-         try {
-        	 pvo.setFilePath(viewPath+fileName);
-			file.transferTo(new File(uploadPath+fileName));
-			System.out.println("fileupload ok:"+fileName);
-         } catch (Exception e) {
-            e.printStackTrace();
-         }
-      } else {
-         pvo.setFilePath("none");
-            }         
-         if (result.hasErrors()) {
+   
+         if (result.hasErrors()) { // 밸리데이션 결과상 위배사항이 있으면
             return "member_register_form"; // 유효성 검사에 에러가 있으면 가입폼으로 다시 보낸다.
-         }
-         memberService.memberRegister(mvo, pvo);
-         return "home";// 문제 없으면 결과 페이지로 이동한다.
-      }
+         } // if
+         try {
+			memberService.memberRegister(mvo, pvo, viewPath, uploadPath);
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} // catch
+         return "redirect:home.do";// 문제 없으면 결과 페이지로 이동한다.
+      } // end of registerMember method
    
    @RequestMapping("member_idcheck.do")
 		@ResponseBody
