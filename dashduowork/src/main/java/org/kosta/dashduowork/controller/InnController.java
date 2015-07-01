@@ -133,7 +133,14 @@ public class InnController {
 		innService.registerInnEtc(avo, avvo);
 		return "redirect:get_myinnlist.do";
 	}
-	/**마이페이지 목록 불러오기**/
+	/** 
+	 * @작성자:주형
+	 * @Method설명: 마이페이지 등록숙소 - 사용자가 등록한 숙소 리스트 불러오기
+	 * @param pageNo : 페이징빈을 적용하여 보여줄 페이지 번호가 넘어옴
+	 * @param request: 로그인한 멤버(세션)을 받음 
+	 * @param model: vo: 로그인 사용자 lvo: 사용자의 숙소리스트+페이징빈 정보
+	 * @return
+	 */
 	@RequestMapping(value="get_myinnlist.do")
 	public String getMyInnList(String pageNo,HttpServletRequest request, Model model){		
 		HttpSession session = request.getSession(false);
@@ -153,6 +160,15 @@ public class InnController {
 		  model.addAttribute("lvo", lvo);
 		return "member_inn_list";	
 	}
+	/** 
+	 * @작성자:주형
+	 * @Method설명: 마이페이지 거래내역 - 사용자가 예약했던 숙소와 
+	 * 예약된 사용자의 숙소 리스트 불러오기
+	 * @param pageNo : 페이징빈을 적용하여 보여줄 페이지 번호가 넘어옴
+	 * @param request: 로그인한 멤버(세션)을 받음 
+	 * @param model: vo: 로그인 사용자 tvo: 사용자 거래내역+페이징빈 정보
+	 * @return
+	 */
 	@RequestMapping(value="get_mytradelist.do")
 	public String getMyTradeList(String pageNo,HttpServletRequest request,Model model){		
 		HttpSession session=request.getSession(false);
@@ -481,7 +497,14 @@ public class InnController {
 		model.addAttribute("payTotalPrice", payTotalPrice);	
 		return "inn_book_ok";
 	}
-	//숙소가능여부 변경 6/19
+	/**
+	 *  @작성자:주형
+	 * @Method설명: 숙소가능여부 변경 6/19
+	 * @param request : 로그인한 멤버 받아옴-->없으면 세션만료
+	 * @param innNo: 숙소 번호 받아옴
+	 * @param innAvailability: 숙소가능여부 컬럼 --> y면 n로 n면 y로 바꿔준다.
+	 * @return redirect로 등록숙소 리스트로 보낸다.
+	 */
 		@RequestMapping("updateinnAvailability.do")
 		public String updateinnAvailability(HttpServletRequest request,int innNo,String innAvailability){
 			   HttpSession session = request.getSession(false);
@@ -528,6 +551,16 @@ public class InnController {
 		return vo;
 	}
 	//별점 매기기 -->6/29 exception 추가
+	/**
+	 * @작성자:주형
+	 * @Method설명: 거래목록에서 별점 매기는 메서드
+	 * @param irv: 별점객체로 숙소번호,총별점,(이용자들이)매긴횟수 3가지가 있다.
+	 * @param tradeNo: 거래번호--> 별점을 매긴 거래내역은 별점체크 확인을 N으로 바꿔준다.
+	 * (최초에 별점을 매기지 않은 경우에만 별점을 주고 그다음부터는 체크 안함)
+	 * @param request: 로그인한 멤버 받아옴-->없으면 세션만료 
+	 * @param model: 별점을 매기는 숙소가 없을 경우 exception메세지 주기 위함
+	 * @return: 별점메서드(ratinginn)을 실행한 후 redirect로 숙소 상세페이지로 이동
+	 */
 	@RequestMapping("ratingInn.do")
 	public String ratingInn(InnRatingVO irv,int tradeNo,HttpServletRequest request,Model model){	
 		   HttpSession session = request.getSession(false);
