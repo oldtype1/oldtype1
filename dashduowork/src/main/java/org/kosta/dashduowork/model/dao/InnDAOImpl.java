@@ -59,18 +59,7 @@ public class InnDAOImpl implements InnDAO {
 	public InnPicCompVO selectOneInnPicPath(int innNo){
 		return sqlSessionTemplate.selectOne("innPic.selectOneInnPicPath", innNo);
 	}
-	//6/17일 추가(지역 자동완성)
-	@Override
-	public List<InnVO> selectInnCityListByInnCityCharacter(FilterVO fvo) {
-		return sqlSessionTemplate.selectList("inn.selectInnCityListByInnCityCharacter", fvo);
-	}
-	//6/18일 추가(+가격)
-	public List<InnVO> selectInnByCityAndAcceptableNoWithPrice(FilterVO vo) {
-		return sqlSessionTemplate.selectList("inn.selectInnByCityAndAcceptableNoWithPrice",vo);
-	}
-	public List<InnVO> selectInnByCityAndDateAndAcceptableNoWithPrice(FilterVO vo) {
-		return sqlSessionTemplate.selectList("inn.selectInnByCityAndDateAndAcceptableNoWithPrice",vo);
-	}
+	
 	//6/19일 추가 -윤정-
 	@Override
 	public AmenityVO selectAmenity(String innNo) {
@@ -93,22 +82,25 @@ public class InnDAOImpl implements InnDAO {
 		System.out.println("예스로 바꾼다");
 		sqlSessionTemplate.update("inn.updateinnAvailabilitytoYes",innNo);
 	}
-	// 6/25일 추가 검색메서드
-//	@Override
-//	public List<InnVO> selectInnByWordAndAcceptNo(FilterVO fvo){
-//		return sqlSessionTemplate.selectList("inn.selectInnByWordAndAcceptNo", fvo);
-//	}
-//	@Override
-//	public List<InnVO> selectInnByWordAndAcceptNoAndDate(FilterVO fvo){
-//		return sqlSessionTemplate.selectList("inn.selectInnByWordAndAcceptNoAndDate", fvo);
-//	}
 	
+	//////////////////////////////////////////////////////////
+	//////////////////////////////////////////////////////////
+	// 
+	// 									검색 관련 메서드
+	//
+	//////////////////////////////////////////////////////////
+	//////////////////////////////////////////////////////////	
+	//6/17일 추가(지역 자동완성)
+	@Override
+	public List<InnVO> selectInnCityListByInnCityCharacter(FilterVO fvo) {
+		return sqlSessionTemplate.selectList("inn.selectInnCityListByInnCityCharacter", fvo);
+	}
 	/**
 	 * @param fvo : 검색요구조건에 해당하는 fvo를 함께 받기 위해 사용.
 	 * @return : 검색 요구조건에 맞는 숙소들을 받기 위해 list 사용.
 	 * @작성자 : 은식,동원
 	 * @Method 설명 : 1) 숙소 검색 조건에 해당하는 숙소들을 mybatis와 직접적으로 연동해서 받아오는 메서드
-	 * 						 2) 필터검색 포함+숙소 사용 희망일 포함안함
+	 * 						 	  2) 필터검색 포함+숙소 사용 희망일 포함안함
 	 */
 	@Override
 	public List<InnVO> selectInnByWordAndAcceptNoWithPrice(FilterVO fvo){
@@ -120,7 +112,7 @@ public class InnDAOImpl implements InnDAO {
 	 * @return : 검색 요구조건에 맞는 숙소들을 받기 위해 list 사용.
 	 * @작성자 : 은식,동원
 	 * @Method 설명 : 1) 숙소 검색 조건에 해당하는 숙소들을 mybatis와 직접적으로 연동해서 받아오는 메서드
-	 * 						 2) 필터검색 포함+숙소 사용 희망일 포함
+	 * 						 	  2) 필터검색 포함+숙소 사용 희망일 포함
 	 */
 	@Override
 	public List<InnVO> selectInnByWordAndAcceptNoAndDateWithPrice(FilterVO fvo){

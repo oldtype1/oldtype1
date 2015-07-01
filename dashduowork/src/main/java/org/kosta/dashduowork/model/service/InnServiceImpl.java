@@ -245,11 +245,6 @@ public class InnServiceImpl implements InnService {
 	      return map;
 	      }   
 	   }
-   //6/17일 추가(지역명 자동완성처리)
-   @Override
-	public List<InnVO> findInnCityListByInnCityCharacter(FilterVO fvo) {
-		return innDAO.selectInnCityListByInnCityCharacter(fvo);
-	}
    
    @Override
 	public List<InnPicCompVO> selectByInnNo(String innNo) {
@@ -464,42 +459,39 @@ public int selectPeopleNum(int innNo2) {
 }
 ///별점 비즈니스 6/29 끝
 
-	// 6/25 검색 메서드 추가
-//	@Override
-//	public InnListVO findInnByWordAndAcceptNoAndDate(FilterVO fvo){
-//		InnListVO innListVO=new InnListVO();
-//		List<InnVO> innList=null;
-//		if(fvo.getSearchStartDate()=="" || fvo.getSearchEndDate()==""){
-//			innList=innDAO.selectInnByWordAndAcceptNo(fvo);
-//		}else{
-//			innList=innDAO.selectInnByWordAndAcceptNoAndDate(fvo);
-//		}
-//		for (int i=0;i<innList.size();i++) {
-//			int innNo=innList.get(i).getInnNo();
-//			innList.get(i).setInnMainPic(innPicCompDAO.getMyPicList(innNo));
-//		}
-//		innListVO.setInnList(innList);
-//		return innListVO;
-//	}
 
-/**
- * @param pageNo : 페이지 넘버를 받아오기 위해 사용. 
- * @param fvo : 숙소 검색 요구 조건을 받아오기 위해 사용(필터검색 사용 안함)
- * @return : 검색 요구 조건(숙소 정보+ 해당 페이징 처리)에 대한 정보를 담기 위한 리스트.
- * @작성자 은식,동원
- * @Method 설명 : 1) 초기화면 구성 요소 세가지(숙소 지역명 / 숙소 사용 희망일(시작 + 끝) / 숙소 사용 인원수).
- * 						    위 세가지 조건에 해당되는 숙소 검색 메서드(필터검색 사용 안함)
- *                       2) 검색한 숙소 목록을 페이징 하기위한 메서드(필터검색에 해당하는 숙소목록에는 페이징 처리하지 않는다.)
- */
+	//////////////////////////////////////////////////////////
+	//////////////////////////////////////////////////////////
+	// 
+	// 									검색 관련 메서드
+	//
+	//////////////////////////////////////////////////////////
+	//////////////////////////////////////////////////////////
+	//6/17일 추가(지역명 자동완성처리)
+	@Override
+	public List<InnVO> findInnCityListByInnCityCharacter(FilterVO fvo) {
+		return innDAO.selectInnCityListByInnCityCharacter(fvo);
+	}
+	/**
+	 * @param pageNo : 페이지 넘버를 받아오기 위해 사용. 
+	 * @param fvo : 숙소 검색 요구 조건을 받아오기 위해 사용(필터검색 사용 안함)
+	 * @return : 검색 요구 조건(숙소 정보+ 해당 페이징 처리)에 대한 정보를 담기 위한 리스트.
+	 * @작성자 은식,동원
+	 * @Method 설명 : 1) 초기화면 구성 요소 세가지(숙소 지역명 / 숙소 사용 희망일(시작 + 끝) / 숙소 사용 인원수).
+	 * 						    위 세가지 조건에 해당되는 숙소 검색 메서드(필터검색 사용 안함)
+	 *                       2) 검색한 숙소 목록을 페이징 하기위한 메서드(필터검색에 해당하는 숙소목록에는 페이징 처리하지 않는다.)
+	 */
 	@Override
 	public InnListVO findInnByWordAndAcceptNoAndDate(String pageNo, FilterVO fvo){
+		InnListVO innListVO=new InnListVO(); //페이지 넘버랑 받은 리스트들 저장할 리스트
+		List<InnVO> innList=null;
 		int pn=1;
+		int total = 0;
 		if(pageNo!=null){
 			pn=Integer.parseInt(pageNo);
-			System.out.println(pn+" 이거는 페이징넘버하는곳");
 		}
 		HashMap<String, Object> param = new HashMap<String,Object>();
-		param.put("pageNo",Integer.toString(pn));
+		param.put("pageNo", pn);
 		param.put("address", fvo.getSearchWord());
 		param.put("acceptableNo", fvo.getSearchPeopleNo());
 		param.put("startDate",fvo.getSearchStartDate());
@@ -507,18 +499,13 @@ public int selectPeopleNum(int innNo2) {
 		param.put("minPrice", fvo.getMinPrice());
 		param.put("maxPrice", fvo.getMaxPrice());
 		param.put("amenityItems", fvo.getAmenityItems());
-		param.put("amenityCnt", Integer.toString(fvo.getAmenityCnt()));
-		InnListVO innListVO=new InnListVO(); //페이지 넘버랑 받은 리스트들 저장할 리스트
-		List<InnVO> innList=null;
-		int total = 0;
+		param.put("amenityCnt", fvo.getAmenityCnt());
 		if(fvo.getSearchStartDate()=="" || fvo.getSearchEndDate()==""){
-			if(fvo.getMinPrice()==""){ // 하... 
+			if(fvo.getMinPrice()=="" || fvo.getMaxPrice()==""){
 				param.put("minPrice", null);
-			}
-			if(fvo.getMaxPrice()==""){
 				param.put("maxPrice", null);
 			}
-			innList=innDAO.selectInnByWordAndAcceptNo(param);
+			innList = innDAO.selectInnByWordAndAcceptNo(param);
 			total = innDAO.getTotalSearchingCountWithNoDate(param);
 		}else{
 			innList=innDAO.selectInnByWordAndAcceptNoAndDate(param);
@@ -547,10 +534,6 @@ public int selectPeopleNum(int innNo2) {
 		InnListVO innListVO=new InnListVO();
 		List<InnVO> innList=null;
 		if(fvo.getAmenityItems()==null){
-			/*if(pageNo!=null){
-				pn=Integer.parseInt(pageNo);
-				System.out.println(pn+" 이거는 페이징넘버하는곳");
-			}*/
 			innListVO=findInnByWordAndAcceptNoAndDate("1",fvo);
 			innList=innListVO.getInnList();
 		}else if(fvo.getSearchStartDate()=="" || fvo.getSearchEndDate()==""){
