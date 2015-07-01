@@ -558,6 +558,11 @@ public int selectPeopleNum(int innNo2) {
 		bookDAO.bookInsert(bvo);
 	}
 	
+	/**
+	 * @param covo : 페이지에서 댓글 쓴 정보를 담기 위한 그릇이다.
+	 * @작성자 : 은수, 정은
+	 * @Method설명 : 상세보기에 댓글추가하는 메서드
+	 */
 	 @Override
 	 public void replyWrite(CommentVO covo) {
 	 	System.out.println("service"+covo);
@@ -585,6 +590,12 @@ public int selectPeopleNum(int innNo2) {
 		
 		return new CommentListVO(list, pagingBean);
 	}
+	
+	/**
+	 * @param commentNo ; 댓글번호를 받아온다
+	 * @작성자 : 은수, 정은
+	 * @Method설명 : 상세보기에서 댓글을 삭제하는 메서드이며  자신이 쓴 댓글만 삭제할 수 있다.
+	 */
 	@Override
 	public void deleteReply(int commentNo) {
 		System.out.println("댓글 삭제 service "+commentNo);
