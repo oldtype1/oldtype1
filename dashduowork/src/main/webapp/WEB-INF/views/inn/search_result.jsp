@@ -143,8 +143,8 @@ $(function() {
 	$( "#slider-range" ).slider({
 	      range: true,
 	      min: 0,
-	      max: 40000,
-	      values: [ 1000, 50000 ],
+	      max: 50000,
+	      values: [ 1000, 60000 ],
 	      slide: function( event, ui ) {
 	        $( "#amount" ).val( "₩" + ui.values[ 0 ] + " - ₩" + ui.values[ 1 ] );
 	        $("#minPrice").val($( "#slider-range" ).slider( "values", 0 ));
@@ -154,7 +154,7 @@ $(function() {
 	    $( "#amount" ).val( "₩" + $( "#slider-range" ).slider( "values", 0 ) + " - ₩" + $( "#slider-range" ).slider( "values", 1 ) );
 	    
 	    $("#slider-range").mouseup(function(){
-	    	/* alert($("#minPrice").val()); */
+	    	$("#resultViewPage").html("");
 	    	$("#resultViewSearch").html("");
 			//alert();list.getInnN
 			$.ajax({
@@ -171,7 +171,7 @@ $(function() {
 							}
 							tableInfo+="<td class=photo_main><a href='inn_in_show.do?innNo="+info.innNo+"'>";
 							tableInfo+="<img class='img-rounded' src='"+info.innMainPic.filePath+"' height='320' width='350'><br>"+info.innName+"</a>";
-							tableInfo+="<span class='photo_main_up' style='width:100px;'>"+info.innPrice+"</span>/ "+info.innType;
+							tableInfo+="<span class='photo_main_up' style='width:120px;'>₩"+info.innPrice+"</span>/ "+info.innType;
 							tableInfo+="<a href='#'><img src='${initParam.root }/img/map.jpg' onclick='mapping("+info.innName+","+info.innArea+" ,"+info.innAddress+")'></a></td>";
 							/* if(info.innMainPic==null){
 								tableInfo+="<tr><td>"+info.innNo+"</td><td><img class='img-rounded' src='${initParam.root}img/no_img.gif' height='150' width='150'></td><td><a href='inn_in_show.do?innNo="+info.innNo+"'>"+info.innName+"</td><td>"+info.innArea+"</td><td>"+info.innType+"</td><td>"+info.acceptableNo+"</td><td>"+info.innPrice+"</td></tr>";
@@ -194,6 +194,8 @@ $(function() {
 		});
 		$("#filterForm").change(function() {
 			$("#resultViewSearch").html("");
+			$("#resultViewPage").html("");
+			
 			//alert();
 			$.ajax({
 				type : "Post",
@@ -209,7 +211,7 @@ $(function() {
 							}
 							tableInfo+="<td class=photo_main><a href='inn_in_show.do?innNo="+info.innNo+"'>";
 							tableInfo+="<img class='img-rounded' src='"+info.innMainPic.filePath+"' height='320' width='350'><br>"+info.innName+"</a>";
-							tableInfo+="<span class='photo_main_up' style='width:100px;'>"+info.innPrice+"</span>/ "+info.innType;
+							tableInfo+="<span class='photo_main_up' style='width:120px;'>₩"+info.innPrice+"</span>/ "+info.innType;
 							tableInfo+="<a href='#'><img src='${initParam.root }/img/map.jpg' onclick='mapping('"+info.innName+"','"+info.innArea+"','"+info.innAddress+"')'></a></td>";
 							/* if(info.innMainPic==null){
 								tableInfo+="<tr><td>"+info.innNo+"</td><td><img class='img-rounded' src='${initParam.root}img/no_img.gif' height='150' width='150'></td><td><a href='inn_in_show.do?innNo="+info.innNo+"'>"+info.innName+"</td><td>"+info.innArea+"</td><td>"+info.innType+"</td><td>"+info.acceptableNo+"</td><td>"+info.innPrice+"</td></tr>";
@@ -230,8 +232,8 @@ $(function() {
 </script>
 
 <div id="dialog" title="검색어 순위">
-  <c:forEach var="list" items="${requestScope.wordlist }" varStatus="i">
-  	${i.index+1}. ${list.word }<br>
+  <c:forEach var="list" items="${requestScope.wordlist }" varStatus="i" begin="0" end="4" step="1">
+  	${i.count}. ${list.word }<br>
   </c:forEach>
 </div>
 
@@ -395,7 +397,7 @@ $(function() {
 										<img class="img-rounded" src="${list.innMainPic.filePath}" height="320" width="350">				
 										 <br>
 										 ${list.innName}</a>
-										 <span class='photo_main_up'  style="width:100px;">${list.innPrice}</span>	
+										 <span class='photo_main_up'  style="width:120px;">₩${list.innPrice}</span>	
 										 / ${list.innType}
 										 <%-- <input type="button" value="위치확인" onclick="mapping('${list.innName}','${list.innArea}' ,'${list.innAddress}')" class="btn btn-default"> --%>
 										 <a href="#"><img src="${initParam.root }/img/map.jpg" onclick="mapping('${list.innName}','${list.innArea}' ,'${list.innAddress}')"></a></td>
@@ -412,78 +414,42 @@ $(function() {
 		</div>
 	</div>
 </div>
-
-
-<%-- <div class="section">
-	<div class="container">
-		<div class="row">
-			<div class="col-md-12">
-			지역 : ${requestScope.filterVO.searchWord} / 인원 : ${requestScope.filterVO.searchPeopleNo } 명 에 대한 검색결과
-				<div id="resultViewSearch">
-					<table class="table-hover CSSTableGenerator">
-						<thead>
-							<tr>
-								<th >숙소 번호</th>
-								<th>숙소 사진</th>
-								<th>숙소명</th>
-								<th>위치</th>
-								<th>유형</th>
-								<th>수용가능인원</th>
-								<th>가격</th>
-							</tr>
-						</thead>
-						<tbody>
-							<c:choose>
-								<c:when test="${requestScope.list.size()==0}" >
-										<tr><td colspan='7' align="center">검색결과가 존재하지 않습니다.</td></tr>
-								</c:when>
-								<c:otherwise>
-									<c:forEach var="list" items="${requestScope.innListVO.innList}">
-										<tr valign="middle">
-										<c:choose>
-										
-										
-											<c:when test="${list.innAvailability=='N' }">
-												<td><font color="#DEDEDE">${list.innNo }</font></td>
-												<td>
-												<c:choose>
-													<c:when test="${list.innMainPic.filePath!=null}"><img class="img-rounded" src="${list.innMainPic.filePath}" height="150" width="150"></c:when>
-													<c:otherwise><img class="media-object" src="${initParam.root}img/no_img.gif" height="150" width="150"></c:otherwise>
-												</c:choose>
-												</td>
-												<td><a href="inn_in_show.do?innNo=${list.innNo}">${list.innName }</a></td>
-												<td><font color="#DEDEDE">${list.innArea }</font></td>
-												<td><font color="#DEDEDE">${list.innType }</font></td>
-												<td><font color="#DEDEDE">${list.acceptableNo }</font></td>
-												<td><font color="#DEDEDE">${list.innPrice }</font></td>
-											</c:when>
-											
-											
-											<c:otherwise>
-												<td>${list.innNo }</td>
-											<td>
-											<c:choose>
-												<c:when test="${list.innMainPic.filePath!=null}"><img class="img-rounded" src="${list.innMainPic.filePath}" height="150" width="150"></c:when>
-												<c:otherwise><img class="img-rounded" src="${initParam.root}img/no_img.gif" height="150" width="150"></c:otherwise>
-											</c:choose>
-											</td>
-											<td><a href="inn_in_show.do?innNo=${list.innNo}">${list.innName }</a></td>
-											<td>${list.innArea }</td>
-											<td>${list.innType }</td>
-											<td>${list.acceptableNo }</td>
-											<td>${list.innPrice }</td>
-											</c:otherwise>
-	
-										</c:choose>
-										</tr>
-									</c:forEach>
-								</c:otherwise>
-							</c:choose>
-						</tbody>
-					</table>
-				</div>
-			</div>
-		</div>
-	</div>
-</div>
- --%>
+<div class="section text-center">
+        <div class="container">
+          <div class="row">
+            <div class="col-md-12 text-center">
+            <div id="resultViewPage"> <!--ajax로 바꿔줄꺼야. 페이징빈 ...   -->
+              <ul class="pagination pagination-sm">
+                  
+                  <c:set var="pb" value="${requestScope.innListVO.pagingBean}"></c:set>
+						
+						<c:if test="${pb.previousPageGroup}">
+						<li><a
+							href="searchInnByWordDateNo.do?pageNo=${pb.startPageOfPageGroup-1}">Prev</a>
+						</li>
+						</c:if>
+						
+						<c:forEach var="i" begin="${pb.startPageOfPageGroup}"
+							end="${pb.endPageOfPageGroup}">
+							<c:if test="${pb.nowPage!=i}">
+								<li><a href="searchInnByWordDateNo.do?pageNo=${i}&amenityItems=${requestScope.filterVO.amenityItems}&searchWord=${requestScope.filterVO.searchWord}&searchPeopleNo=${requestScope.filterVO.searchPeopleNo}&searchStartDate=${requestScope.filterVO.searchStartDate}&searchEndDate=${requestScope.filterVO.searchEndDate}&minPrice=${requestScope.filterVO.minPrice}&maxPrice=${requestScope.filterVO.maxPrice}&amenityCnt=${requestScope.filterVO.amenityCnt}">${i}</a>
+								<li>
+							</c:if>
+							<c:if test="${pb.nowPage==i}">
+								<li><a href="#">${i}</a></li>
+							</c:if>
+						&nbsp;					
+						</c:forEach>
+			
+					<c:if test="${pb.nextPageGroup}">
+						<li>
+							<a href="searchInnByWordDateNo.do?pageNo=${pb.endPageOfPageGroup+1}">Next</a>
+						</li>
+					</c:if>
+			
+              </ul> 
+			</div>    
+            </div>
+          </div>
+        </div>
+      </div>
