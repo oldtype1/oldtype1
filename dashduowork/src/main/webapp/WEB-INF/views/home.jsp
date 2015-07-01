@@ -38,14 +38,16 @@ function SearchInnCityListByAjax() {
 	});
 
 </script>
-
-
-<div class="section" style="width: 100%; height:50px;">
 <video id="videobcg" preload="auto" autoplay="true" loop="loop" muted="muted" volume="0">
      <source src="https://a0.muscache.com/airbnb/static/Paris-P1-1.mp4" type="video/mp4">
      <source src="https://a0.muscache.com/airbnb/static/Paris-P1-0.webm" type="video/webm">
 </video>
-	<div class="container">
+<div class="section">
+   <div class="container">
+      <div class="row"></div>
+   </div>
+</div>
+<div class="container">
   <div class="row">
     <div class="col-md-12 text-center"  style="color: white; position: relative; top: 300px;">
       <h1 class="text-inverse">환영합니다!</h1>
