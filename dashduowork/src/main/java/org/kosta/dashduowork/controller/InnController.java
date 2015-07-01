@@ -462,7 +462,7 @@ public class InnController {
 		bvo.setMemberId(mvo.getMemberId());
 		System.out.println(innNo);
 		System.out.println(bvo);
-		// TODO 
+		// TODO booking안에서 검사와 예약을 나눌 것
 		innService.bookingInn(bvo);
 		List<InnPicCompVO> list=innService.selectByInnNo(innNo);
 		InnPicCompVO innMainPic=list.get(0);
