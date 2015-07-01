@@ -322,7 +322,7 @@
 					<form class="form-horizontal text-center" role="form">
 
 				<input type="hidden" id="amelist" value="${requestScope.VOMap.ameList}">	
-				<table class="table table-condensed ">
+<!-- 				<table class="table table-condensed ">
 				
 				<td>무선 인터넷</td> <td>TV</td><td>부엌</td><td>가족/어린이 환영</td><td>건조기</td><td>구급상자</td><td>난방</td><td>도어맨</td><td>무료 주차 포함</td><td>무료 헬스장</td>
 				</tr>
@@ -333,7 +333,7 @@
 				<td>욕조</td><td>이벤트/행사 가능</td><td>인터넷</td><td>일산화탄소 탐지기</td><td>초인종/인터폰</td><td>케이블 TV</td><td>필수품목</td><td>화재 감지기</td><td>휠체어 사용 가능</td><td>흡연가능</td>
 				</tr>
 	
-				</table>
+				</table> -->
 		
 			
 <br><br><br>
