@@ -45,7 +45,7 @@ public class MemberController {
 	 */
 	//post 방식일때만 로그인가능
    @RequestMapping(value = "login.do", method = RequestMethod.POST)
-   public String login(MemberVO vo, HttpServletRequest request) {
+   public String login(MemberVO vo, HttpServletRequest request, Model model) {
       MemberVO mvo = memberService.login(vo); //memberService에서 login(vo)를 호출해 로그인
       System.out.println(vo);
       if (mvo == null) // 로그인 상태가 아니면 member_login_fail로
@@ -56,6 +56,7 @@ public class MemberController {
          session.setAttribute("mvo", mvo); //로그인 하려는 멤버의 정보를 세션에 저장한다.
          MemberVO memberVO = (MemberVO)session.getAttribute("mvo");//세션에 들어갔는지 확인하는 코드
          System.out.println("memberVO : "+memberVO);
+         model.addAttribute("view", "home");
          return "home";
       }
    }
@@ -66,12 +67,13 @@ public class MemberController {
 	* @Method설명 : 회원이 로그아웃하는 메서드
     */
    @RequestMapping("logout.do")
-   public String logoutMember(HttpServletRequest request) {
+   public String logoutMember(HttpServletRequest request, Model model) {
       HttpSession session = null;
       session = request.getSession(false); //현재 session이 존재하면 기존 session 리턴하고 존재하지 않으면 null 리턴
       if (session != null) { //세션이 null이면
          session.invalidate();//세션 종료 시에
       }
+      model.addAttribute("view", "home");
       return "home";
    }
 
@@ -194,7 +196,7 @@ public class MemberController {
    // 6/10
    @RequestMapping(value = "member_register.do", method = RequestMethod.POST)
    public String registerMember(ProfilePicVO pvo, @Valid MemberVO mvo,
-         BindingResult result) {
+         BindingResult result, Model model) {
 
       /*
        * -- 파일 업로드 부분
@@ -229,6 +231,7 @@ public class MemberController {
             return "member_register_form"; // 유효성 검사에 에러가 있으면 가입폼으로 다시 보낸다.
          }
          memberService.memberRegister(mvo, pvo);
+         model.addAttribute("view", "home");
          return "home";// 문제 없으면 결과 페이지로 이동한다.
       }
    
