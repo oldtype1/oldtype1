@@ -642,36 +642,47 @@ public class InnController {
 		model.addAttribute("masterVO", masterVO);
 		return masterVO;
 	}
+	/**
+	 * @param covo : 페이지에서 댓글 쓴 정보를 담기 위한 그릇이다.
+	 * @param request : 로그인 세션을 받아오기 위해서 썼다
+	 * @return : "redirect:inn_in_show.do?innNo="+covo.getInnNo();
+	 * -> insert 작업에 재반복을 막기 위해 redirect로 접근해 
+	 * innNo를 정보를 가지고 inn_in_show.do로 이동해서 정보를 뿌려준다. 
+	 * @작성자 : 은수, 정은
+	 * @Method설명 : 상세보기에 댓글추가하는 메서드
+	 */
 	//댓글추가
 		@RequestMapping("reply.do")
 		public String replyWrite(CommentVO covo, HttpServletRequest request){
 			System.out.println("controller replyWrite 들어옴?"+covo);
+			//현재 session이 존재하면 기존 session 리턴하고 존재하지 않으면 null 리턴
 			HttpSession session = request.getSession(false);
-			MemberVO mvo= (MemberVO) session.getAttribute("mvo");
-			innService.replyWrite(covo);
+			MemberVO mvo= (MemberVO) session.getAttribute("mvo");//로그인세션
+			innService.replyWrite(covo); //innService의  replyWrite(covo)를 호출하여 댓글를 추가 한다.
 			System.out.println(covo);
-
-			return"redirect:inn_in_show.do?innNo="+covo.getInnNo();
+			return"redirect:inn_in_show.do?innNo="+covo.getInnNo();//inn_in_show.do로 리턴한다.
 		}
 		/**
-		 * 코드 제작 : 은수, 정은
-		 * 상세보기에서 댓글을 삭제하는 메서드이다.
-		 * 자신이 쓴 댓글만 삭제할 수 있다.
-		 * @param request
+		 * @param request : 로그인 세션을 받아오기 위해서 썼다
 		 * @param commentNo : 댓글번호를 받아온다
-		 * @return
+		 *@return : "redirect:inn_in_show.do?innNo="+innNo;
+		 * -> insert 작업에 재반복을 막기 위해 redirect로 접근해 
+	 	 * innNo를 정보를 가지고 inn_in_show.do로 이동해서 정보를 뿌려준다. 
+		 * @작성자 : 은수, 정은
+		 * @Method설명 : 상세보기에서 댓글을 삭제하는 메서드이며  자신이 쓴 댓글만 삭제할 수 있다.
 		 */
 		//댓굴삭제
 		@RequestMapping("deleteReply.do")
 		public String deleteReply(HttpServletRequest request, int commentNo){
-			System.out.println(commentNo);
-			int innNo = Integer.parseInt(request.getParameter("innNo"));
+			System.out.println(commentNo); 
+			int innNo = Integer.parseInt(request.getParameter("innNo"));//숙소넘버를 받아온다.
 			System.out.println("commentNo, innNo : "+ commentNo+" , "+ innNo);
+			//현재 session이 존재하면 기존 session 리턴하고 존재하지 않으면 null 리턴
 			HttpSession session=request.getSession(false);
-			MemberVO vo= (MemberVO)session.getAttribute("mvo");
-			innService.deleteReply(commentNo);
+			MemberVO vo= (MemberVO)session.getAttribute("mvo");//로그인세션
+			innService.deleteReply(commentNo);//innService의  deleteReply(commentNo)를 호출하여 삭제 한다.
 			System.out.println("삭제~~~");
-			return"redirect:inn_in_show.do?innNo="+innNo;
+			return"redirect:inn_in_show.do?innNo="+innNo;//inn_in_show.do로 리턴한다.
 		}
 }
 
