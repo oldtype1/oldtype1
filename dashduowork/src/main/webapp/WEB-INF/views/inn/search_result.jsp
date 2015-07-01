@@ -217,7 +217,7 @@ $(function() {
             <form action="searchInnByWordDateNo.do" class="navbar-form navbar-left"
                role="search" id="searchInnCityAjaxForm">
                <input type="text" class="form-control" name="searchWord"
-                  id="searchCity" placeholder="State" size="54"
+                  id="searchCity" placeholder="State" size="51"
                   onkeyup="SearchInnCityListByAjax()"><br> <input
                   type="text" class="form-control" name="searchStartDate" id="checkin"
                   size="15" onfocus="this.value=''" placeholder="Checkin"
