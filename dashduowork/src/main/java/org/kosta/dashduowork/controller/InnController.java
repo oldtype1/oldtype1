@@ -562,6 +562,17 @@ public class InnController {
 	}
 	
 	//6/25 검색메서드 추가
+	/**
+	 * @param pageNo : 페이지 넘버를 받아오기 위해 사용. 
+	 * @param fvo : 숙소 검색 요구 조건을 받아오기 위해 사용.
+	 * @param model : (숙소 정보 + 페이징 정보)를 view에 전달하기 위해 사용. 
+	 * @return : tiles-inn.xml에서 경로 설정 -> search_result.jsp로 이동   
+	 * @작성자 은식,동원
+	 * @Method 설명 : 1) 초기화면 숙소 검색 요소 세가지(숙소 지역명 / 숙소 사용 희망일(시작 && 끝) / 숙소 사용 인원수).
+	 * 						    위 세가지 조건에 해당되는 숙소 검색 메서드. 
+	 *                       2) 필터이용 검색에는 페이징을 추가하지 않음.
+	 * 					    
+	 */
 	@RequestMapping(value="searchInnByWordDateNo.do")
 	public String searchByCityDateNo(String pageNo, FilterVO fvo, Model model, HttpServletRequest request){
 		InnListVO innListVO=new InnListVO();
@@ -583,7 +594,18 @@ public class InnController {
 //		System.out.println("searchMemberVO : "+memberVO);
 		return "inn_search_result";
 	}
+	
+	
 	//6/25 검색메서드 추가
+	/**
+	 * @param fvo : 숙소 검색 요구 조건을 받아오기 위해 사용.
+	 * @return InnListVO : ajax로 요청 -> 해당 리스트(기본조건+필터 검색)를 보냄.
+	 * @작성자 은식,동원
+	 * @Method 설명 : 1) 초기화면 숙소 검색 요소 세가지(숙소 지역명 / 숙소 사용 희망일(시작 && 끝) / 숙소 사용 인원수)
+	 *                          에 필터검색 조건을 추가한 메서드(ajax로 보여준다).
+	 *                       2) 필터이용 검색에는 페이징을 추가하지 않음.
+	 * 					    
+	 */
 		@RequestMapping(value="searchInnByWordDateNoWithFilter.do")
 		@ResponseBody
 		public InnListVO searchInnByWordDateNoWitFilter(FilterVO fvo, Model model, HttpServletRequest request){

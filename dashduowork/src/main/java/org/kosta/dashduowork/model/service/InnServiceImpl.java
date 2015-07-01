@@ -481,6 +481,16 @@ public int selectPeopleNum(int innNo2) {
 //		innListVO.setInnList(innList);
 //		return innListVO;
 //	}
+
+/**
+ * @param pageNo : 페이지 넘버를 받아오기 위해 사용. 
+ * @param fvo : 숙소 검색 요구 조건을 받아오기 위해 사용(필터검색 사용 안함)
+ * @return : 검색 요구 조건(숙소 정보+ 해당 페이징 처리)에 대한 정보를 담기 위한 리스트.
+ * @작성자 은식,동원
+ * @Method 설명 : 1) 초기화면 구성 요소 세가지(숙소 지역명 / 숙소 사용 희망일(시작 + 끝) / 숙소 사용 인원수).
+ * 						    위 세가지 조건에 해당되는 숙소 검색 메서드(필터검색 사용 안함)
+ *                       2) 검색한 숙소 목록을 페이징 하기위한 메서드(필터검색에 해당하는 숙소목록에는 페이징 처리하지 않는다.)
+ */
 	@Override
 	public InnListVO findInnByWordAndAcceptNoAndDate(String pageNo, FilterVO fvo){
 		int pn=1;
@@ -522,6 +532,16 @@ public int selectPeopleNum(int innNo2) {
 		innListVO.setInnList(innList);
 		return new InnListVO(innList,pagingBean);
 	}
+	
+	
+	/**
+	 * @param fvo : 숙소 검색 요구 조건을 받아오기 위해 사용(필터검색 사용)
+	 * @return : 검색 요구 조건(필터검색포함)에 대한 정보를 담기 위한 리스트.
+	 * @작성자 은식,동원
+	 * @Method 설명 : 초기화면 구성 요소 세가지(숙소 지역명 / 숙소 사용 희망일(시작 + 끝) / 숙소 사용 인원수)에 
+	 *                       필터검색을 추가한 메서드.
+	 * 						
+	 */
 	@Override
 	public InnListVO findInnByWordAndAcceptNoAndDateWithPrice(FilterVO fvo){
 		InnListVO innListVO=new InnListVO();

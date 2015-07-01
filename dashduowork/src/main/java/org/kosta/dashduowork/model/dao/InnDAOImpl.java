@@ -102,10 +102,26 @@ public class InnDAOImpl implements InnDAO {
 //	public List<InnVO> selectInnByWordAndAcceptNoAndDate(FilterVO fvo){
 //		return sqlSessionTemplate.selectList("inn.selectInnByWordAndAcceptNoAndDate", fvo);
 //	}
+	
+	/**
+	 * @param fvo : 검색요구조건에 해당하는 fvo를 함께 받기 위해 사용.
+	 * @return : 검색 요구조건에 맞는 숙소들을 받기 위해 list 사용.
+	 * @작성자 : 은식,동원
+	 * @Method 설명 : 1) 숙소 검색 조건에 해당하는 숙소들을 mybatis와 직접적으로 연동해서 받아오는 메서드
+	 * 						 2) 필터검색 포함+숙소 사용 희망일 포함안함
+	 */
 	@Override
 	public List<InnVO> selectInnByWordAndAcceptNoWithPrice(FilterVO fvo){
 		return sqlSessionTemplate.selectList("inn.selectInnByWordAndAcceptNoWithPriceFilter", fvo);
 	}
+	
+	/**
+	 * @param fvo : 검색요구조건에 해당하는 fvo를 함께 받기 위해 사용.
+	 * @return : 검색 요구조건에 맞는 숙소들을 받기 위해 list 사용.
+	 * @작성자 : 은식,동원
+	 * @Method 설명 : 1) 숙소 검색 조건에 해당하는 숙소들을 mybatis와 직접적으로 연동해서 받아오는 메서드
+	 * 						 2) 필터검색 포함+숙소 사용 희망일 포함
+	 */
 	@Override
 	public List<InnVO> selectInnByWordAndAcceptNoAndDateWithPrice(FilterVO fvo){
 		return sqlSessionTemplate.selectList("inn.selectInnByWordAndAcceptNoAndDateWithPriceFilter", fvo);
@@ -116,6 +132,14 @@ public class InnDAOImpl implements InnDAO {
 	}
 	// 6/25일 추가 검색메서드
 	// 기본 이름 + 인원수
+	
+	/**
+	 * @param param : 페이징 처리를 하기위한 pageNo와 검색요구조건에 해당하는 fvo를 함께 받기 위해서 HashMap사용. 
+	 * @return : 검색 요구조건에 맞는 숙소들을 받기 위해 list 사용.
+	 * @작성자 : 은식,동원
+	 * @Method 설명 : 1) 숙소 검색 조건에 해당하는 숙소들을 mybatis와 직접적으로 연동해서 받아오는 메서드.
+	 * 						 2) 숙소지역명 + 사용 인원 만으로 숙소 검색(숙소 사용 희망일 포함안함)
+	 */
 	@Override
 	public List<InnVO> selectInnByWordAndAcceptNo(HashMap<String, Object> param){
 		System.out.println("=============InnDAIImpl영역입장===========");
@@ -125,13 +149,28 @@ public class InnDAOImpl implements InnDAO {
 		System.out.println("InnDAOImpl에서 받은 list입니다."+ list);
 		return list;
 	}
-				
+	
+	
+	/**
+	 * @param param : 페이지 넘버를 받아오기 위해 사용.
+	 * @return : 검색 요구조건에 해당하는 숙소들의 총 개수를 보내기 위해 사용.
+	 * @작성자 : 은식, 동원
+	 * @Method 설명 : 1) 숙소 검색 조건에 해당하는 숙소들을 mybatis와 직접적으로 연동해서 받아오는 메서드. 
+	 * 						 2) 숙소지역명 + 사용 인원 만으로 검색(숙소 사용 희망일 포함안함)한 숙소 목록 개수를 받아오기 위한 메서드
+	 */
 	@Override
 	public int getTotalSearchingCountWithNoDate(HashMap<String, Object> param){
 		return sqlSessionTemplate.selectOne("inn.getTotalSearchingCountWithNoDate",param);
 	}
 	
 	//기본 이름 +인원수 ++ 날짜
+	/**
+	 * @param param : 페이징 처리를 하기위한 pageNo와 검색요구조건에 해당하는 fvo를 함께 받기 위해서 HashMap사용. 
+	 * @return : 검색 요구조건에 맞는 숙소들을 받기 위해 list 사용.(필터검색아님)
+	 * @작성자 : 은식,동원
+	 * @Method 설명 : 1) 숙소 검색 조건에 해당하는 숙소들을 mybatis와 직접적으로 연동해서 받아오는 메서드.(필터검색아님)
+	 * 						 2) 숙소지역명 + 숙소 사용 희망일(시작 && 끝) + 사용 인원으로 숙소 검색
+	 */
 	@Override
 	public List<InnVO> selectInnByWordAndAcceptNoAndDate(HashMap<String, Object> param){
 		System.out.println("=============InnDAIImpl영역입장===========");
@@ -142,6 +181,13 @@ public class InnDAOImpl implements InnDAO {
 		return list;
 	}
 	
+	
+	/**
+	 * @param param : 페이지 넘버를 받아오기 위해 사용.
+	 * @return : 검색 요구조건에 해당하는 숙소들의 총 개수를 보내기 위해 사용.
+	 * @작성자 : 은식, 동원
+	 * @Method 설명 : 숙소지역명 + 숙소 사용 희망일(시작 && 끝) + 사용 인원으로 검색한 숙소 목록 개수를 받아오기 위한 메서드
+	 */
 	@Override
 	public int getTotalSearchingCountWithDate(HashMap<String, Object> param){
 		return sqlSessionTemplate.selectOne("inn.getTotalSearchingCountWithDate",param);
