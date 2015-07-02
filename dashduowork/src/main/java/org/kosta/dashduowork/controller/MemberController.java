@@ -131,11 +131,7 @@ public class MemberController {
       model.addAttribute("memberInfo", mvo);
       return "member_myprofile_update_form";    
    }
-<<<<<<< HEAD
 
- //업데이트 컨트롤러
-   //TODO 서비스로 보내기
-=======
    /**
     * @작성자 : 주형
 	* @Method설명 : 마이페이지-회원 프로필 수정하기
@@ -144,7 +140,7 @@ public class MemberController {
     * @param request:세션체크
     * @return: 업데이트 후 마이프로필 다시 보기
     */
->>>>>>> branch 'master' of https://github.com/oldtype1/oldtype1.git
+
    @RequestMapping("member_updateInfo.do")
    public String member_updateInfo(ProfilePicVO pvo,MemberVO mvo, 
 		   	 Model model, HttpServletRequest request, String uploadPath, String viewPath) {
