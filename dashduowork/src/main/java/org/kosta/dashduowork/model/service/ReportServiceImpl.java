@@ -14,16 +14,15 @@ public class ReportServiceImpl implements ReportService{
 	private ReportDAO reportDAO;
 	
 	@Override
-public void saveReport(String word){	
-		System.out.println(word+"Service에 들어온 word");
-	int result=reportDAO.updateReport(word);
-	if(result==0)
-		reportDAO.insertReport(word);			
-}
-@Override
-public List<ReportVO> selectReport(){
-return reportDAO.selectReport();
-}
+	public void saveReport(String word){
+		int result=reportDAO.updateReport(word);
+		if(result==0)
+			reportDAO.insertReport(word);			
+	}
+	@Override
+	public List<ReportVO> selectReport(){
+		return reportDAO.selectReport();
+	}
 
 	
 }

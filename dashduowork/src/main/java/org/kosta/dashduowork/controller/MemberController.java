@@ -77,12 +77,20 @@ public class MemberController {
       return "home";
    }
    /**
+<<<<<<< HEAD
     * 
     * @param memberId : 멤버와 멤버 관련 사진을 DB에서 뽑아내기 위한 키
     * @param model 
     * @return
     * @작성자 : 은수, 정은
 	* @Method설명 : 마이페이지에서 멤버의 정보를 찾는 메서드
+=======
+    * @작성자 : 주형
+	* @Method설명 : 마이페이지-회원 프로필 보기
+    * @param memberId: 프로필을 볼 회원의 아이디를 받는다.
+    * @param model: 회원의 정보를 넘겨준다.
+    * @return 마이프로필 페이지로 간다.
+>>>>>>> branch 'master' of https://github.com/oldtype1/oldtype1.git
     */
    @RequestMapping("member_myprofile.do")
    public String member_myprofile(String memberId, Model model){
@@ -98,7 +106,13 @@ public class MemberController {
       //mvo.getProfilePicVO().getFilePath()
       	return "member_myprofile";
    }
-
+   /**
+    * @작성자 : 주형
+	* @Method설명 : 마이페이지-회원 프로필 수정폼 보기
+    * @param request:세션체크
+    * @param model: 회원의 정보를 넘겨준다.
+    * @return 업데이트 폼 페이지로 넘겨준다.
+    */
    @RequestMapping("member_myprofile_update_form.do")
    // 업데이트하는 폼으로 보낸다. (프로필 보기 와 굉장히 비슷)
    public String member_myprofile_update_form(HttpServletRequest request,Model model) {
@@ -117,9 +131,20 @@ public class MemberController {
       model.addAttribute("memberInfo", mvo);
       return "member_myprofile_update_form";    
    }
+<<<<<<< HEAD
 
  //업데이트 컨트롤러
    //TODO 서비스로 보내기
+=======
+   /**
+    * @작성자 : 주형
+	* @Method설명 : 마이페이지-회원 프로필 수정하기
+    * @param pvo: 회원 프로필사진 
+    * @param mvo: 수정할 멤버 정보
+    * @param request:세션체크
+    * @return: 업데이트 후 마이프로필 다시 보기
+    */
+>>>>>>> branch 'master' of https://github.com/oldtype1/oldtype1.git
    @RequestMapping("member_updateInfo.do")
    public String member_updateInfo(ProfilePicVO pvo,MemberVO mvo, 
 		   	 Model model, HttpServletRequest request, String uploadPath, String viewPath) {
