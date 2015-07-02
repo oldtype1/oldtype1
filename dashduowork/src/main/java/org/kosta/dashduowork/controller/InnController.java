@@ -190,6 +190,14 @@ public class InnController {
 		return "member_trade_list";
 	
 	}
+	/** 작성자: 김윤정
+	    * @param pageNo : 페이징빈을 적용하여 보여줄 페이지 번호가 넘어온다.
+	    * @param request: 로그인한 멤버(세션)을 받는다.
+	    * @param model: vo: 로그인 사용자 blvo: 사용자의 예약리스트+페이징빈 정보
+	    * @return : 세션이 만료되거나 예외상황에는 return "member_session_fail"으로 보내준다
+	    * 					그 이외에는 return "member_book_list"으로 보내준다.
+	    * @Method 설명 : 사용자가 현재 예약한 숙소 리스트를 불러온다.
+	    */
 	@RequestMapping(value="get_mybooklist.do")
 	public String getMyBookList(String pageNo,HttpServletRequest request,Model model){
 		HttpSession session=request.getSession(false);
@@ -210,7 +218,14 @@ public class InnController {
 		return"member_book_list";
 	}
 
-	
+	/** 작성자: 김윤정
+	    * @param pageNo : 페이징빈을 적용하여 보여줄 페이지 번호가 넘어옴
+	    * @param request: 로그인한 멤버(세션)을 받음 
+	    * @param model: vo: 로그인 사용자 wlvo: 사용자의 위시리스트+페이징빈 정보
+	    * @return : 세션이 만료되거나 예외상황에는 return "member_session_fail"으로 보내준다
+	    * 					그 이외에는 return "member_wish_list"으로 보내준다.
+	    * @Method 설명 : 현재 사용자의 위시리스트에 있는 숙소 목록을 불러온다.
+	    */
 	@RequestMapping(value="get_mywishlist.do")
 	public String getMyWishList(String pageNo,HttpServletRequest request,Model model){
 		HttpSession session=request.getSession(false);
@@ -230,7 +245,14 @@ public class InnController {
 		model.addAttribute("wlvo", wlvo);
 		return"member_wish_list";
 	}
-	
+	/** 작성자: 김윤정
+	    * @param pageNo : 페이징빈을 적용하여 보여줄 페이지 번호가 넘어옴
+	    * @param request: 로그인한 멤버(세션)을 받음 
+	    * @param model: vo: 로그인 사용자 irlvo: 사용자가 등록한 숙소의 예약 리스트+페이징빈 정보
+	    * @return : 세션이 만료되거나 예외상황에는 return "member_session_fail"으로 보내준다
+	    * 					그 이외에는 return "member_innReservation_list"으로 보내준다.
+	    * @Method 설명 : 현재 사용자가 등록한 숙소의 예약 목록을 불러온다.
+	    */
 	@RequestMapping(value="get_innReservation_list.do")
 	public String getInnReservationList(String pageNo, HttpServletRequest request, Model model){
 		HttpSession session=request.getSession(false);
@@ -252,7 +274,16 @@ public class InnController {
 	}
 
 	/**목록 삭제 컨트롤러--주형윤정**/
-	/*위시리스트*/
+	/** 작성자: 김윤정
+	    * @param wishListNo : 위시리스트 번호를 받아온다.
+	    * @param request: 로그인한 멤버(세션)을 받아온다.
+	    * @return : 세션이 만료되거나 예외상황에는 return "member_session_fail"으로 보내준다
+	    * 					그 이외에는 return "redirect:get_mywishlist.do"으로 보내준다.
+	    * 	->  작업을 완료한 후 redirect로 get_mywishlist.do로 이동해 
+	    * 		해당 숙소가 삭제된 사용자의 위시리스트를 불러온다.
+	    * @Method 설명 : 위시리스트 목록에서 받아온 위시리스트 번호로 
+	    * 							해당 숙소를 위시리스트목록에서 삭제한다.
+	    */
 	@RequestMapping(value="wishlistdelete.do")
 	public String wishListDelete(int wishListNo, HttpServletRequest request){
 		 HttpSession session = request.getSession(false);
@@ -265,6 +296,16 @@ public class InnController {
 		return "redirect:get_mywishlist.do";
 	}	
 	/*예약숙소취소*/
+	/** 작성자: 김윤정
+	    * @param bookNo : 예약 번호를 받아온다.
+	    * @param request: 로그인한 멤버(세션)을 받아온다.
+	    * @return : 세션이 만료되거나 예외상황에는 return "member_session_fail"으로 보내준다
+	    * 					그 이외에는 return "redirect:get_mybooklist.do"으로 보내준다.
+	    * 	->  작업을 완료한 후 redirect로 get_mybooklist.do로 이동해 
+	    * 		해당 숙소가 삭제된 사용자의 예약리스트를 불러온다.
+	    * @Method 설명 : 예약 목록에서 받아온 위시리스트 번호로 
+	    * 							해당 숙소를 예약 목록에서 삭제한다.
+	    */
 	@RequestMapping(value="bookdelete.do")
 	public String bookDelete(int bookNo, HttpServletRequest request){
 		HttpSession session = request.getSession(false);
@@ -277,6 +318,18 @@ public class InnController {
 		return "redirect:get_mybooklist.do";
 	}
 	/*등록숙소  6/25 exception으로 수정함 */ 
+	/** 작성자: 김윤정
+	    * @param innNo : 숙소 번호를 받아온다.
+	    * @param request: 로그인한 멤버(세션)을 받아온다.
+	    * @return : 세션이 만료되거나 예외상황에는 return "member_session_fail"으로 보내준다
+	    * 				   삭제하려는 숙소가 다른 사용자에게 예약되어 삭제가 불가한
+	    * 					경우에는 return "member_delete_fail"로 보내주며 message를 보여준다.
+	    * 					그 이외에는 return "redirect:get_myinnlist.do"으로 보내준다.
+	    * 	->  작업을 완료한 후 redirect로 get_myinnlist.do로 이동해 
+	    * 		해당 숙소가 삭제된 등록 숙소 목록을 불러온다.
+	    * @Method 설명 : 등록 숙소 목록에서 받아온 숙소 번호로 
+	    * 							해당 숙소를 숙소 목록에서 삭제한다.
+	    */
 	@RequestMapping(value="inndelete.do")
 	public String innDelete(int innNo, HttpServletRequest request,Model model){
 		 HttpSession session = request.getSession(false);
@@ -293,6 +346,15 @@ public class InnController {
 		return "redirect:get_myinnlist.do";
 	}
 	/*거래내역목록*/
+	/** 작성자: 김윤정
+	    * @param tradeNo : 거래 번호를 받아온다.
+	    * @param request: 로그인한 멤버(세션)을 받아온다.
+	    * @return : 세션이 만료되거나 예외상황에는 return "member_session_fail"으로 보내준다
+	    * 					그 이외에는 return "redirect:get_mytradelist.do"으로 보내준다.
+	    * 	->  작업을 완료한 후 redirect로 get_mytradelist.do로 이동해 
+	    * 		해당 거래가 삭제된 거래 목록을 불러온다.
+	    * @Method 설명 : 거래 목록에서 받아온 거래 번호로 해당 거래를 거래내역 목록에서 삭제한다.
+	    */
 	@RequestMapping(value="tradedelete.do")
 	public String tradeDelete(int tradeNo,HttpServletRequest request){
 		 HttpSession session = request.getSession(false);
@@ -362,7 +424,16 @@ public class InnController {
 		return "inn_in_show";
 	}
 	
-	
+	/** 작성자: 김윤정
+	    * @param innNo : 숙소 번호를 받아온다.
+	    * @param request: 로그인한 멤버(세션)을 받아온다.
+	    * @param model: map, avo, avvo, list : 해당 숙소의 상세 정보
+	    * @return : 세션이 만료되거나 예외상황에는 return "member_session_fail"으로 보내준다
+	    * 					해당숙소가 존재안하는등 에러상황에는 return "inn_in_show_fail"으로 보내준다
+	    * 					그 이외에는 return "member_innupdate_form"으로 보내준다.
+	    * @Method 설명 : 숙소번호로 받아온 숙소 정보를 "member_innupdate_form"으로 보내주어
+	    * 							숙소 기존 정보를 사용자에게 나타내준다.
+	    */
 	@RequestMapping("innupdateform.do")
 	public String innupdateform(int innNo, HttpServletRequest request, Model model){
 		 HttpSession session = request.getSession(false);
@@ -393,7 +464,15 @@ public class InnController {
 		System.out.println(avo);
 		return "member_innupdate_form";
 	}
-	
+	/** 작성자: 김윤정
+	    * @param innNo, ivo, avo, ipvo , avvo : 변경할 숙소 기본 정보, 숙소 ammenity, 숙소 사진, 가능 날짜를 받아온다.
+	    * @param request: 로그인한 멤버(세션)을 받아온다.
+	    * @param model: map, avo, avvo, list : 해당 숙소의 상세 정보
+	    * @return : 세션이 만료되거나 예외상황에는 return "member_session_fail"으로 보내준다
+	    * 					그 이외에는"redirect:innupdateform.do?innNo="+innNo로 보내준다.
+	    * -> 받아온 InnPicCompVO의 파일 이름을 중복을 예방을 위해 Math.random() 붙여준다
+	    * @Method 설명 : 받아온 변경할 숙소의 정보를 수정한다.
+	    */
 	@RequestMapping("inn_update.do")
 	public String innUpdate(InnVO ivo, AmenityVO avo, InnPicCompVO ipvo, 
 			AvailableDateVO avvo, Model model, BindingResult result, HttpServletRequest request){
@@ -445,7 +524,13 @@ public class InnController {
 		}
 		return "redirect:get_myinnlist.do";
 	}
-		
+	/** 작성자: 김윤정
+	    * @param innNo, innPicNo : 숙소 수정 페이지에서 숙소 번호와 삭제할 사진 번호를 받아온다
+	    * @param request: 로그인한 멤버(세션)을 받아온다
+	    * @return : List<InnPicCompVO>로 return 해준다.
+	    * @Method 설명 : innPicNo에 해당하는 사진을 삭제한다.
+	    * @ResponseBody : Ajax 방식으로 보내준다.
+	    */
 	@RequestMapping("deleteInnPic.do")
 	@ResponseBody
 	public List<InnPicCompVO> deleteInnPic(int innPicNo, int innNo, HttpServletRequest request){
@@ -536,6 +621,13 @@ public class InnController {
 			}
 			return flag;
 		}
+		/** 작성자: 김윤정
+		    * @param innNo : 해당 숙소 번호를 받아온다.
+		    * @param request: 로그인한 멤버(세션)을 받아온다.
+		    * @return : MemberVO 
+		    * @Method 설명 : inn_in_show.jsp에서 위시리스트클릭시 해당 이미지를 바꿔준다. 
+		    * @ResponseBody : Ajax 방식으로 보내준다.
+		    */
 	@RequestMapping("changeWishListPic.do")
 	@ResponseBody
 	public MemberVO changeWishListPic(int innNo, HttpServletRequest request){
@@ -653,8 +745,16 @@ public class InnController {
 		model.addAttribute("filterVO", fvo);
 		return innListVO;
 	}
-	
-	
+	/** 작성자: 김윤정
+	    * @param innNo, memberId, bvo : 해당 숙소 번호와 사용자 아이디 해당 숙소 예약정보를 받아온다.
+	    * @param request : 로그인한 멤버(세션)을 받아온다.
+	    * @param model : ivo, bvo, innMainPic, payTotalPrice : 결제페이지로 예약 정보, 숙소 사진, 결제 금액을 보내준다.
+	    * @return : bvo로 받아온 예약 정보의 날짜가 예약가능 한지 검사하는 메서드를 거친 후  예약 불가시 
+	    * 					return "inn_book_fail" 보내준다. 
+	    * 					예약가능시에는 return "member_payment_form"으로 보내준다.
+	    * @Method 설명 : 숙소 상세페이지에서 받아온 정보가 예약가능한지 검사하는 메서드를
+	    * 							거친 후 예약 가능 유무에 따라 다른 페이지를 return 해준다.
+	    */
 		@RequestMapping("paymentForm.do")
 		public String paymentForm(int innNo, String memeberId, Model model, BookVO bvo , HttpServletRequest request){
 			HttpSession session=request.getSession(false);
@@ -692,6 +792,15 @@ public class InnController {
 			model.addAttribute("payTotalPrice", payTotalPrice);
 			return "member_payment_form";
 		}
+		/** 작성자: 김윤정
+		    * @param request : 로그인한 멤버(세션)을 받아온다.
+		    * @param model : 해당 숙소를 등록한 사용자(숙소 주인)의 계좌번호를 보내준다.
+		    * @Method 설명 : "member_payment_form"의 select에서 무통장 입금을 누를 경우 
+		    * 							해당숙소의 번호를 받아와 해당 숙소를 등록한 사용자(숙소 주인)의 계좌번호를
+		    * 							보내준다.
+		    * @ResponseBody : Ajax 방식으로 보내준다
+		    * 							
+		    */
 	@RequestMapping("getInnMasterAccount.do")
 	@ResponseBody
 	public MemberVO getInnMasterAccount( HttpServletRequest request, Model model){
