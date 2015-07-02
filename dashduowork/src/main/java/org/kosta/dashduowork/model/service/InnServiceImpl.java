@@ -383,6 +383,10 @@ public class InnServiceImpl implements InnService {
 			if(flag==false){
 			System.out.println("ok : "+innNo);
 			System.out.println("정상적으로 예약되었습니다.");
+
+/*			innDAO.updateInnAvailabilityOff(innNo);*/
+			//bookDAO.bookInsert(bvo);
+
 			result.put("flag", flag);
 		}
 		return result;
@@ -515,7 +519,8 @@ public int selectPeopleNum(int innNo2) {
 		}
 		PagingBean pagingBean = new PagingBean(total, pn);
 		innListVO.setInnList(innList);
-		return new InnListVO(innList,pagingBean);
+		innListVO.setPagingBean(pagingBean);
+		return innListVO;
 	}
 	
 	
