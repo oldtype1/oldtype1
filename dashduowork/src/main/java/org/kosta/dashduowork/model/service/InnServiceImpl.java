@@ -271,16 +271,19 @@ public class InnServiceImpl implements InnService {
 	}
 	@Override
 	@Transactional
+	//TODO Null 뜨는 거 고쳐야 함 - 고침
 	public void updateInnEtc(AmenityVO avo, AvailableDateVO avvo) {
 		System.out.println("InnServiceImple ---Amenity와 AvailableDate"+avo+avvo);
 		String innNo = Integer.toString(avo.getInnNo());
 		amenityDAO.delete(innNo);
+		if(avo.getAmenityItems() != null){
 		for(int i=0; i<avo.getAmenityItems().size(); i++){
 	    	  AmenityVO vo = new AmenityVO();
 	    	  vo.setInnNo(avo.getInnNo());
 	    	  vo.setAmenityItem(avo.getAmenityItems().get(i));
 	    	  amenityDAO.register(vo);
 	      }
+		}// if
 		availableDateDAO.update(avvo);
 	}
 	@Override
@@ -302,7 +305,7 @@ public class InnServiceImpl implements InnService {
 	 }
 	 // 예약
 	 @Transactional
-	 public HashMap<String, Object> bookInsert(BookVO bvo, String innNo, String memberId) throws ParseException{
+	 public HashMap<String, Object> bookOptionCheck(BookVO bvo, String innNo, String memberId) throws ParseException{
 		 
 		 HashMap<String, Object> result = new HashMap<String, Object>();
 		 System.out.println("service : "+innNo);
@@ -360,10 +363,7 @@ public class InnServiceImpl implements InnService {
 			     	} // if in for
 			 } // for
 		}// if
-/*		 if(ivo.getInnAvailability()=="N"){
-			 System.out.println("예약완료된 숙소입니다!");
-			 return flag=true;
-		 }*/
+
 		 if(checkIn.after(checkOut)||checkOut.before(checkIn)){
 			 System.out.println("예약일자가 엉터리야! 장난하냐??");
 			 flag=true;
@@ -383,8 +383,6 @@ public class InnServiceImpl implements InnService {
 			if(flag==false){
 			System.out.println("ok : "+innNo);
 			System.out.println("정상적으로 예약되었습니다.");
-/*			innDAO.updateInnAvailabilityOff(innNo);*/
-			bookDAO.bookInsert(bvo);
 			result.put("flag", flag);
 		}
 		return result;

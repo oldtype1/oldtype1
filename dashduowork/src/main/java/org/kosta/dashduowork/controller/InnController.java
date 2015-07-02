@@ -635,7 +635,7 @@ public class InnController {
 			HashMap<String, Object> result = new HashMap();
 			result.put("flag",flag);
 			try {
-				 result = innService.bookInsert(bvo, innNo2, vo.getMemberId());
+				 result = innService.bookOptionCheck(bvo, innNo2, vo.getMemberId());
 			} catch (ParseException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();

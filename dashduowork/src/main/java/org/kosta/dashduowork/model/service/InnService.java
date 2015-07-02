@@ -61,7 +61,7 @@ public interface InnService {
 	public abstract void deleteInnPic(int innPicNo);
 	public AvailableDateVO selectByAvailableDateInnNo(String innNo);
 
-	public HashMap<String, Object> bookInsert(BookVO bvo, String innNo, String memberId) throws ParseException;
+	public HashMap<String, Object> bookOptionCheck(BookVO bvo, String innNo, String memberId) throws ParseException;
 	public void updateinnAvailability(int innNo, String innAvailability);
 	
 	//위시리스트

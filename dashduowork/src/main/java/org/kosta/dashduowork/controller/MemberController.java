@@ -76,7 +76,14 @@ public class MemberController {
       model.addAttribute("view", "home");
       return "home";
    }
-
+   /**
+    * 
+    * @param memberId : 멤버와 멤버 관련 사진을 DB에서 뽑아내기 위한 키
+    * @param model 
+    * @return
+    * @작성자 : 은수, 정은
+	* @Method설명 : 마이페이지에서 멤버의 정보를 찾는 메서드
+    */
    @RequestMapping("member_myprofile.do")
    public String member_myprofile(String memberId, Model model){
       MemberVO mvo=memberService.findMemberById(memberId);
@@ -112,36 +119,21 @@ public class MemberController {
    }
 
  //업데이트 컨트롤러
+   //TODO 서비스로 보내기
    @RequestMapping("member_updateInfo.do")
-   public String member_updateInfo(ProfilePicVO pvo,MemberVO mvo, Model model, HttpServletRequest request) {
+   public String member_updateInfo(ProfilePicVO pvo,MemberVO mvo, 
+		   	 Model model, HttpServletRequest request, String uploadPath, String viewPath) {
+	 
 	   HttpSession session = request.getSession(false);
 			if(session==null||(MemberVO)session.getAttribute("mvo")==null){
 				return "member_session_fail";
 			}	  
-	   	System.out.println("mvo : " + mvo);
-	      System.out.println("pvo : " + pvo);	      
-	      MultipartFile file = pvo.getFile();
-	      String fileName = mvo.getMemberId()+"_"+file.getOriginalFilename();
-	      System.out.println(file.isEmpty());	      
-	     
-	      if(file.getOriginalFilename().equals("")){
-	    	  pvo.setFilePath("http://pingendo.github.io/pingendo-bootstrap/assets/user_placeholder.png");
-	      }
-	      else if (!fileName.equals("")) {
-	         try {
-	        	 pvo.setFilePath(viewPath+fileName);
-	        	 //mvo.getProfilePicVO().setFilePath(viewPath+fileName);
-				file.transferTo(new File(uploadPath+fileName));
-				System.out.println("fileupload ok:"+fileName);
-	         } catch (Exception e) {
-	            e.printStackTrace();
-	         }
-	      }
-	      else {
-	    	  //mvo.getProfilePicVO().setFilePath("http://pingendo.github.io/pingendo-bootstrap/assets/placeholder.png");
-	    	  pvo.setFilePath("none");     
-	      }  
-      memberService.updateMemberInfo(mvo,pvo);
+	 try {
+		memberService.updateMemberInfo(mvo,pvo, uploadPath, viewPath);
+	} catch (Exception e) {
+		// TODO Auto-generated catch block
+		e.printStackTrace();
+	}
       MemberVO updateVO = memberService.findMemberById(mvo.getMemberId());
       session.setAttribute("mvo", updateVO);  
 

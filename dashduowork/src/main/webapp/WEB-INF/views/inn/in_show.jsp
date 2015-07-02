@@ -6,8 +6,13 @@
 <head>
 
 <script type="text/javascript">
-	$(document).ready(function() {
-	
+	 $(document).ready(function() {
+		 $('[type="date"].form-control').prop('bookCheckIn', function(){
+		        return new Date().toJSON().split('T')[0];
+		    });
+		 $('[type="date"].form-control').prop('bookCheckOut', function(){
+		        return new Date().toJSON().split('T')[0];
+		    });
 		var price = $("#totalPrice").val();
 		$("#bookCount").change(function() {
 			var bookCount = $("#bookCount").val();
@@ -59,6 +64,14 @@
 					$("#totalPrice").val(price);
 				}
 					
+				if(betweenDay == 0){
+					alert("체크인과 체크아웃은 같은 날짜가 될 수 없습니다.");	
+					 $("#bookCheckIn").val("");
+					 $("#bookCheckOut").val("");
+					 $("#totalPrice").val(price);
+				}
+			
+					
 			} // if
 		}); // bookCheckIn
 		
@@ -87,6 +100,13 @@
 					$("#totalPrice").val(price);
 				}
 					
+				if(betweenDay == 0){
+					alert("체크인과 체크아웃은 같은 날짜가 될 수 없습니다.");	
+					 $("#bookCheckIn").val("");
+					 $("#bookCheckOut").val("");
+					 $("#totalPrice").val(price);
+				}
+				
 			} // if
 		}); // bookCheckOut	
 		
@@ -209,6 +229,7 @@
 									min="${requestScope.VOMap.avo.availableDateSt}"
 									max="${requestScope.VOMap.avo.availableDateEnd}"
 									required="required">
+									
 
 							</div>
 						</div>
