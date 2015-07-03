@@ -41,7 +41,7 @@
     	 
     	    var now = new Date();
     	    var nowAll = now.getFullYear() + "-" + (now.getMonth()+1) + "-" + now.getDate();
-    	    alert(nowAll);
+    	    /* alert(nowAll); */
     	    
     	    $('#availableDateSt').datepicker();
        	    $('#availableDateSt').datepicker("option", "maxDate", $("#availableDateEnd").val());
