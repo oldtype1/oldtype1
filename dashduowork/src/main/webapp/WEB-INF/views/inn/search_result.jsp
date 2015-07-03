@@ -107,8 +107,8 @@ $(function() {
 	$( "#slider-range" ).slider({
 	      range: true,
 	      min: 0,
-	      max: 50000,
-	      values: [ 1000, 60000 ],
+	      max: 60000,
+	      values: [ 1000, 50000 ],
 	      slide: function( event, ui ) {
 	        $( "#amount" ).val( "₩" + ui.values[ 0 ] + " - ₩" + ui.values[ 1 ] );
 	        $("#minPrice").val($( "#slider-range" ).slider( "values", 0 ));
