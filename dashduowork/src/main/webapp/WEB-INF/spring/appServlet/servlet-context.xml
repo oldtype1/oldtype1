@@ -49,7 +49,7 @@
 	<!-- upload path!!! -->
 	<bean id="uploadPath" class="java.lang.String">
 		<constructor-arg>
-			<value>C:\\Users\\KOSTA\\git\\oldtype1\\dashduowork\\src\\main\\webapp\\upload\\</value>
+			<value>C:\\java-Kosta\\servers\\oldtype-tomcat\\webapps\\dashduowork\\upload\\</value>
 		</constructor-arg>
 	</bean>
 	<bean id="viewPath" class="java.lang.String">
