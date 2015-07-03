@@ -196,8 +196,13 @@ select distinct inn_area from inn where inn_area like '%' ||  #{searchWord} || '
 	select count(*) from(
 	 select i.member_id as master from book b, inn i 
  	 where b.inn_no=i.inn_no
-	)
-	 where master= #{value}
+	) where master= #{value}
+	</select>
+	<select id="checkMyChildBookTablebymemberId" parameterType="String" resultType="int">
+	select count(*) from(
+	 select b.member_id as master from book b, inn i 
+ 	 where b.inn_no=i.inn_no
+	) where master= #{value}
 	</select>
 	<!-- 6/19 등록한 숙소 수정 윤정-->
 		<update id="updateInnInfo"  parameterType="ivo">

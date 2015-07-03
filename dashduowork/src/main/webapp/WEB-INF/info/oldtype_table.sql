@@ -100,7 +100,6 @@ update inn set inn_availability='N' where inn_no=1
 create table inn(
 inn_no number primary key,
 inn_name varchar2(50) not null,
-inn_city varchar2(50),  -- 삭제할 것
 inn_area varchar2(50) not null,
 inn_address varchar2(200) not null,
 inn_type varchar2(50) CHECK (inn_type IN ('집 전체', '개인실', '다인실')),
@@ -111,7 +110,7 @@ inn_availability VARCHAR2(1) CHECK (inn_availability IN ('Y','N')),
 member_id varchar2(200) not null,
 constraint fk_member_id foreign key(member_id) references member(member_id) on DELETE CASCADE
 )
-
+select * from inn
 ALTER TABLE inn
 DROP COLUMN inn_city;
 
@@ -123,7 +122,6 @@ values(inn_sequence.nextval,'판교역','성남','판교','판교동','집 전�
 
 -----------------제공시설 테이블(inn_no ref) 오류-----------------------
 create table amenity(
-amenity_no number primary key, -- 삭제
 inn_no number not null,
 amenity_item varchar2(200) not null,
 constraint fk_inn6 foreign key(inn_no) references inn(inn_no) on DELETE CASCADE
@@ -187,7 +185,7 @@ constraint fk_inn4 foreign key(inn_no) references inn(inn_no) on DELETE CASCADE
 -----------------예약가능일자 테이블(inn_no ref)-----------------------
 create table availabledate(
 availabledate_no number primary key,
-inn_no number not null,
+	 number not null,
 availabledate_st date not null,
 availabledate_end date not null,
 constraint fk_inn5 foreign key(inn_no) references inn(inn_no) on DELETE CASCADE 
@@ -214,7 +212,7 @@ member_id varchar2(200) not null,
 master varchar2(50) not null,
 inn_no number,
 rating_check VARCHAR2(1) CHECK (rating_check IN ('Y','N')),
-constraint fk_member10 foreign key(member_id) references member(member_id) on DELETE CASCADE
+constraint fk_member10 foreign key(member_id) references member(member_id) --on DELETE CASCADE --삭제할것
 )
 
 alter table Trade add(ratingcheck varchar2(200))

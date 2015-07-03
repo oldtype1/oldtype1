@@ -55,6 +55,11 @@ public class BookDAOImpl implements BookDAO {
 		//6/25 주형-  회원탈퇴시 예약한 테이블이 있나 확인하는 메서드임 
 			return sqlSessionTemplate.selectOne("inn.checkChildBookTablebymemberId",memberId);
 	}
+	@Override
+	public int checkMyChildBookTablebymemberId(String memberId) {
+		//7/3 - 추가
+		return sqlSessionTemplate.selectOne("inn.checkMyChildBookTablebymemberId",memberId);
+	}
 	/***** 스케쥴러 ******/
 	
 	//6.19 주형-체크아웃 시간 지난 예약 목록을 가져온다.(거래목록에 넣기위해)
@@ -71,7 +76,6 @@ public class BookDAOImpl implements BookDAO {
 		sqlSessionTemplate.delete("scheduler.bookDeleteOutDate");
 	}
 	
-
 	
 	
 }
