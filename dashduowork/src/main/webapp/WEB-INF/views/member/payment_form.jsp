@@ -71,7 +71,7 @@ $(document).ready(function(){
 			"</select></td>"+
 			"</tr>"+
 			"<tr><td class='col-md-3'>CVC</td>"+
-			"<td><input type='text' size=4 maxlength=4></td>"+
+			"<td><input type='text' id='cvc' name='cvc' size=4 maxlength=4></td>"+
 			"</tr>"+
 			"</table>";
 			$("#paymentInfo").html("");
@@ -98,6 +98,45 @@ $(document).ready(function(){
 	}		
 	})
 	$("#paybutton").click(function(){
+		if($('input:radio[name=checkPayment]:checked').val()=="creditcard"){		
+			if($("select[name=cardInfo]").val()==""){
+				alert("카드를 선택하세요");
+				return false;
+			}
+			if($("select[name=installmentPlan]").val()==""){
+				alert("카드 할부 선택하세요");
+				return false;
+			}
+			if($("#cardno1").val()==""||$("#cardno2").val()==""||$("#cardno3").val()==""||$("#cardno4").val()==""){
+				alert("카드 번호를 입력하세요");
+				return false;
+			}
+			if(isNaN($("#cardno1").val())==true||isNaN($("#cardno2").val())==true||isNaN($("#cardno3").val())==true||isNaN($("#cardno4").val())==true){
+				alert("카드 번호를 숫자로 입력하세요");
+				return false;
+			}
+			if($("select[name=creditcardmonth]").val()==""){
+				alert("카드 유효 기간을 선택하세요");
+				return false;
+			}
+			if($("select[name=creditcardyear]").val()==""){
+				alert("카드 유효 기간을 선택하세요");
+				return false;
+			}	
+			if($("#cvc").val()==""){
+				alert("CVC를 입력하세요");
+				return false;
+			}
+			if(isNaN($("#cvc").val())==true){
+				alert("CVC를 숫자로 입력하세요");
+				return false;
+			}
+		}
+		
+		if($('input:radio[name=checkPayment]:checked').val()==null){
+			alert("결제방식을 선택하세요");
+			 return false;
+		}
 		 if(!(confirm("해당 숙소를 예약하시겠습니까?"))){
 			 return false;
 		 }
