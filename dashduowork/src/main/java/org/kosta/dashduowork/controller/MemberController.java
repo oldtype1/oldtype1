@@ -143,7 +143,7 @@ public class MemberController {
 
    @RequestMapping("member_updateInfo.do")
    public String member_updateInfo(ProfilePicVO pvo,MemberVO mvo, 
-		   	 Model model, HttpServletRequest request, String uploadPath, String viewPath) {
+		   	 Model model, HttpServletRequest request) {
 	 
 	   HttpSession session = request.getSession(false);
 			if(session==null||(MemberVO)session.getAttribute("mvo")==null){

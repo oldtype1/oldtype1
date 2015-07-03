@@ -144,11 +144,11 @@
                 </div>
                 <div class="col-sm-3">
                    <input type="text" class="form-control" name="availableDateSt" id="availableDateSt"
-                    size="15" onfocus="this.value=''" placeholder="Checkin" required="required" autocomplete="off" readonly="readonly" >
+                    size="15" onfocus="this.value=''" placeholder="Checkin" required="required" autocomplete="off" >
                 </div>
                 <div class="col-sm-3">
                    <input type="text" class="form-control" name="availableDateEnd" size="15" 
-                   id="availableDateEnd"  onfocus="this.value=''" placeholder="Checkout" required="required" autocomplete="off" readonly="readonly" >
+                   id="availableDateEnd"  onfocus="this.value=''" placeholder="Checkout" required="required" autocomplete="off" >
                 </div>
               </div>
               <div class="form-group">
