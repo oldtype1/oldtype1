@@ -82,11 +82,18 @@ public class MemberServiceImpl implements MemberService {
 
 	@Override
 	public void memberSecession(String memberId) throws ChildBookTableException {
-		int count = bookDAO.checkChildBookTablebymemberId(memberId);
-		System.out.println("book 자식테이블" + count);
-		if (count > 0) {// 참조하는 자식테이블이 있으므로 에러난다.
-			throw new ChildBookTableException("고객님께 예약된 숙소가 있어 탈퇴할 수 없습니다!");
-		} else {// 참조하는 자식테이블이 없다.
+		int count = bookDAO.checkChildBookTablebymemberId(memberId);//누가 내숙소 예약시
+		int count1 = bookDAO.checkMyChildBookTablebymemberId(memberId); //7/3-->내가 다른사람 숙소 예약시 
+	
+		System.out.println("book 자식테이블 내꺼예약" + count +"내가예약:"+count1);
+		
+		if (count>0) {// 참조하는 자식테이블이 있으므로 에러난다.
+			throw new ChildBookTableException("고객님의 숙소가 예약되어 있어 탈퇴할 수 없습니다!");
+		} 
+		else if(count1>0){
+			throw new ChildBookTableException("고객님이 예약된 숙소가 있어 탈퇴할 수 없습니다!");
+		}		
+		else {// 참조하는 자식테이블이 없다.
 			System.out.println("자식테이블이 없으므로 회원탈퇴합니다.");
 			memberDAO.memberSecession(memberId);
 		}

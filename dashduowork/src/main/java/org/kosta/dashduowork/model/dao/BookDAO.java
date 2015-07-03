@@ -19,4 +19,5 @@ public interface BookDAO {
 	public void bookInsert(BookVO bvo);
 	public List<BookVO> selectBookList(String innNo);
 	public abstract int checkChildBookTablebymemberId(String memberId);
+	public abstract int checkMyChildBookTablebymemberId(String memberId);
 }
