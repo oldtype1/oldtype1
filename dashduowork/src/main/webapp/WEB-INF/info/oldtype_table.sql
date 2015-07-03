@@ -246,7 +246,7 @@ constraint fk_rating foreign key(inn_no) references inn(inn_no) on DELETE CASCAD
 )	
 
 create table report(
-   word varchar2(30) primary key,
+   word varchar2(400) primary key,
    cnt number(5) not null
 )
 
