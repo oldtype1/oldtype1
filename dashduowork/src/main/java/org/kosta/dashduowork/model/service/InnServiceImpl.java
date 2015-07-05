@@ -502,6 +502,7 @@ public int selectPeopleNum(int innNo2) {
 		param.put("maxPrice", fvo.getMaxPrice());
 		param.put("amenityItems", fvo.getAmenityItems());
 		param.put("amenityCnt", fvo.getAmenityCnt());
+		System.out.println("서비스클래스에서 param맵 확인 : "+param);
 		if(fvo.getSearchStartDate()=="" || fvo.getSearchEndDate()==""){
 			if(fvo.getMinPrice()=="" || fvo.getMaxPrice()==""){
 				param.put("minPrice", null);
@@ -517,7 +518,8 @@ public int selectPeopleNum(int innNo2) {
 			int innNo=innList.get(i).getInnNo();
 			innList.get(i).setInnMainPic(innPicCompDAO.getMyPicList(innNo));
 		}
-		PagingBean pagingBean = new PagingBean(total, pn);
+		PagingBean pagingBean = new PagingBean(total, pn, 4);
+		System.out.println(pagingBean.toString());
 		innListVO.setInnList(innList);
 		innListVO.setPagingBean(pagingBean);
 		return innListVO;

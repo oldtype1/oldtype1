@@ -708,6 +708,7 @@ public class InnController {
 	 */
 	@RequestMapping(value="searchInnByWordDateNo.do")
 	public String searchInnByCityDateNo(String pageNo, FilterVO fvo, Model model){
+		System.out.println("컨트롤러에서 pageNo확인 : "+pageNo);
 		InnListVO innListVO=new InnListVO();
 		List<InnVO> list=null;
 		if(fvo.getMinPrice()==null || fvo.getMaxPrice()==null || fvo.getAmenityItems()==null || fvo.getMinPrice()=="" || fvo.getMaxPrice()==""){
