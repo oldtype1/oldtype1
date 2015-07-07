@@ -58,6 +58,8 @@ public class MemberServiceImpl implements MemberService {
 
 		System.out.println("mvo : " + mvo);
 		System.out.println("pvo : " + pvo);
+		System.out.println(uploadPath);
+		System.out.println(viewPath);
 		MultipartFile file = pvo.getFile();
 		String fileName = mvo.getMemberId() + "_" + file.getOriginalFilename();
 		System.out.println(file.isEmpty());

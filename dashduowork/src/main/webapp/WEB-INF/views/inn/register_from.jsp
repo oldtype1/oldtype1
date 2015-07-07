@@ -41,7 +41,7 @@
     	 
     	    var now = new Date();
     	    var nowAll = now.getFullYear() + "-" + (now.getMonth()+1) + "-" + now.getDate();
-    	    alert(nowAll);
+    	    /* alert(nowAll); */
     	    
     	    $('#availableDateSt').datepicker();
        	    $('#availableDateSt').datepicker("option", "maxDate", $("#availableDateEnd").val());
@@ -144,11 +144,11 @@
                 </div>
                 <div class="col-sm-3">
                    <input type="text" class="form-control" name="availableDateSt" id="availableDateSt"
-                    size="15" onfocus="this.value=''" placeholder="Checkin" required="required" autocomplete="off" readonly="readonly" >
+                    size="15" onfocus="this.value=''" placeholder="Checkin" required="required" autocomplete="off" >
                 </div>
                 <div class="col-sm-3">
                    <input type="text" class="form-control" name="availableDateEnd" size="15" 
-                   id="availableDateEnd"  onfocus="this.value=''" placeholder="Checkout" required="required" autocomplete="off" readonly="readonly" >
+                   id="availableDateEnd"  onfocus="this.value=''" placeholder="Checkout" required="required" autocomplete="off" >
                 </div>
               </div>
               <div class="form-group">

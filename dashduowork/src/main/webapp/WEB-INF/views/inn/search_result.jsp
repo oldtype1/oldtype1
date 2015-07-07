@@ -107,8 +107,8 @@ $(function() {
 	$( "#slider-range" ).slider({
 	      range: true,
 	      min: 0,
-	      max: 50000,
-	      values: [ 1000, 60000 ],
+	      max: 60000,
+	      values: [ 1000, 50000 ],
 	      slide: function( event, ui ) {
 	        $( "#amount" ).val( "₩" + ui.values[ 0 ] + " - ₩" + ui.values[ 1 ] );
 	        $("#minPrice").val($( "#slider-range" ).slider( "values", 0 ));
@@ -405,7 +405,7 @@ $(function() {
 						
 						<c:if test="${pb.previousPageGroup}">
 						<li><a
-							href="searchInnByWordDateNo.do?pageNo=${pb.startPageOfPageGroup-1}">Prev</a>
+							href="searchInnByWordDateNo.do?pageNo=${pb.startPageOfPageGroup-1}&amenityItems=${requestScope.filterVO.amenityItems}&searchWord=${requestScope.filterVO.searchWord}&searchPeopleNo=${requestScope.filterVO.searchPeopleNo}&searchStartDate=${requestScope.filterVO.searchStartDate}&searchEndDate=${requestScope.filterVO.searchEndDate}&minPrice=${requestScope.filterVO.minPrice}&maxPrice=${requestScope.filterVO.maxPrice}&amenityCnt=${requestScope.filterVO.amenityCnt}">Prev</a>
 						</li>
 						</c:if>
 						
@@ -423,7 +423,7 @@ $(function() {
 			
 					<c:if test="${pb.nextPageGroup}">
 						<li>
-							<a href="searchInnByWordDateNo.do?pageNo=${pb.endPageOfPageGroup+1}">Next</a>
+							<a href="searchInnByWordDateNo.do?pageNo=${pb.endPageOfPageGroup+1}&amenityItems=${requestScope.filterVO.amenityItems}&searchWord=${requestScope.filterVO.searchWord}&searchPeopleNo=${requestScope.filterVO.searchPeopleNo}&searchStartDate=${requestScope.filterVO.searchStartDate}&searchEndDate=${requestScope.filterVO.searchEndDate}&minPrice=${requestScope.filterVO.minPrice}&maxPrice=${requestScope.filterVO.maxPrice}&amenityCnt=${requestScope.filterVO.amenityCnt}">Next</a>
 						</li>
 					</c:if>
 			

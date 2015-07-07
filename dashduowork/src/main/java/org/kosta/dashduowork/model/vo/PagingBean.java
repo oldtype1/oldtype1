@@ -20,7 +20,7 @@ public class PagingBean {
 	/**
 	 * 페이지 당 보여줄 게시물 수 
 	 */
-	private int contentNumberPerPage=CommonConstants.CONTENT_NUMBER_PER_PAGE;
+	private int contentNumberPerPage;
 	/**
 	 * 페이지 그룹 당 페이지 수 
 	 */
@@ -37,7 +37,15 @@ public class PagingBean {
 	public PagingBean(int totalContents,int nowPage){
 		this.totalContents=totalContents;
 		this.nowPage=nowPage;
+		this.contentNumberPerPage=CommonConstants.CONTENT_NUMBER_PER_PAGE;
 	}
+	public PagingBean(int totalContents,int nowPage, int contentNumberPerPage){
+		this.totalContents=totalContents;
+		this.nowPage=nowPage;
+		this.contentNumberPerPage=contentNumberPerPage;
+	}
+	
+
 	/**
 	 * 현재 페이지 리턴
 	 * @return
@@ -178,6 +186,15 @@ public class PagingBean {
 	public void setTotalContents(int totalContents) {
 		this.totalContents = totalContents;
 	}
+	
+	@Override
+	public String toString() {
+		return "PagingBean [nowPage=" + nowPage + ", contentNumberPerPage="
+				+ contentNumberPerPage + ", pageNumberPerPageGroup="
+				+ pageNumberPerPageGroup + ", totalContents=" + totalContents
+				+ "]";
+	}
+
 	public static void main(String args[]){         
 		  PagingBean p=new PagingBean(47,1);
 		  // 전체 페이지 수 : 10
