@@ -150,7 +150,7 @@ public class MemberController {
 				return "member_session_fail";
 			}	  
 	 try {
-		memberService.updateMemberInfo(mvo,pvo, uploadPath, viewPath);
+		memberService.updateMemberInfo(mvo, pvo, uploadPath, viewPath);
 	} catch (Exception e) {
 		// TODO Auto-generated catch block
 		e.printStackTrace();
